@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin panel — Mirzacho‘l tumani Xalq ta’limi bo‘limi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&subset=latin,latin-ext&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-shell="app" data-page="admin" data-title="Admin panel" data-crumb="Admin panel">
+<main>
+<div class="page-head"><div><h1>Admin panel</h1><p>Boshqaruv bo‘limlari — faqat vakolatli foydalanuvchilar uchun</p></div></div>
+<div class="admin-grid">
+ <a class="card admin-tile" href="xodimlar.html"><span class="ic-chip c-blue" data-i="users"></span><div><b>Xodimlar</b><small>Qo‘shish, tahrirlash</small></div></a>
+ <a class="card admin-tile" href="yangiliklar.html"><span class="ic-chip c-red" data-i="news"></span><div><b>Yangiliklar</b><small>Nashrlarni boshqarish</small></div></a>
+ <a class="card admin-tile" href="topshiriqlar.html"><span class="ic-chip c-orange" data-i="clipboard"></span><div><b>Topshiriqlar</b><small>Nazorat</small></div></a>
+ <a class="card admin-tile" href="hujjatlar.html"><span class="ic-chip c-blue" data-i="file"></span><div><b>Hujjatlar</b><small>Hujjatlar bazasi</small></div></a>
+ <a class="card admin-tile" href="yutuqlar.html#sertifikatlar"><span class="ic-chip c-violet" data-i="award"></span><div><b>Sertifikatlar</b><small>Berish va ko‘rish</small></div></a>
+ <a class="card admin-tile" href="#muassasalar"><span class="ic-chip c-teal" data-i="school"></span><div><b>Ta’lim muassasalari</b><small>Ro‘yxat</small></div></a>
+ <a class="card admin-tile" href="hisobotlar.html"><span class="ic-chip c-green" data-i="chart"></span><div><b>Hisobotlar</b><small>Statistika</small></div></a>
+ <a class="card admin-tile" href="#sozlamalar"><span class="ic-chip c-teal" data-i="settings"></span><div><b>Sozlamalar</b><small>Interfeys va profil</small></div></a>
+</div>
+<section id="muassasalar" style="margin-top:28px"><div class="page-head" style="margin-bottom:12px"><div><h2 style="font-size:20px">Ta’lim muassasalari</h2><p>Standart admin jadvali: qidiruv, filtr, amallar, sahifalash</p></div><button class="btn btn-primary" data-toast="Maket: qo‘shish ishlamaydi"><span data-i="plus" data-c="sm"></span>Muassasa qo‘shish</button></div>
+<div class="toolbar" style="margin-bottom:12px"><div class="search"><span data-i="search" data-c="sm"></span><input placeholder="Qidirish" aria-label="Qidirish"></div><select class="select" aria-label="Turi"><option>Turi: Barchasi</option></select></div>
+<div class="table-wrap"><table class="t"><thead><tr><th>Nomi</th><th>Turi</th><th>Rahbar</th><th>Status</th><th></th></tr></thead><tbody>
+<tr><td><b>Namuna maktab №1</b></td><td>Umumiy o‘rta ta’lim</td><td>Namuna Rahbar</td><td><span class="badge b-ok">Faol</span></td><td><div class="dd"><button class="btn btn-ghost btn-sm btn-icon" data-dd aria-label="Amallar"><span data-i="more"></span></button><div class="dd-menu" style="min-width:160px"><button><span data-i="edit" data-c="sm"></span>Tahrirlash</button><button class="danger"><span data-i="trash" data-c="sm"></span>O‘chirish</button></div></div></td></tr>
+<tr><td><b>Namuna maktabgacha ta’lim muassasasi</b></td><td>MTT</td><td>Namuna Mudira</td><td><span class="badge b-ok">Faol</span></td><td><button class="btn btn-ghost btn-sm btn-icon" aria-label="Amallar"><span data-i="more"></span></button></td></tr></tbody></table></div></section>
+<section id="sozlamalar" class="card card-pad" style="margin-top:28px"><h2 style="font-size:18px;margin-bottom:16px">Profil sozlamalari (forma namunasi)</h2>
+ <div class="form-section"><h3>Shaxsiy ma’lumotlar</h3><p>Majburiy maydonlar * bilan belgilangan.</p><div class="form-grid"><div class="field"><label class="req" for="s1">F.I.O.</label><input class="input" id="s1"></div><div class="field"><label for="s2">Telefon</label><input class="input" id="s2"><span class="hint">Format: +998 XX XXX XX XX</span></div></div></div>
+ <div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn btn-secondary">Bekor qilish</button><button class="btn btn-primary" data-toast="Maket: saqlash ishlamaydi">Saqlash</button></div></section>
+</main>
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

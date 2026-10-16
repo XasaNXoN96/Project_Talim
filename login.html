@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tizimga kirish — Mirzacho‘l tumani Xalq ta’limi bo‘limi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&subset=latin,latin-ext&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<div class="login">
+  <main class="login-form">
+    <a class="brand" href="index.html"><span data-logo style="display:block;width:52px;height:52px"></span><div><b>Mirzacho‘l tumani</b><span>Xalq ta’limi bo‘limi</span></div></a>
+    <h1>Tizimga kirish</h1>
+    <p class="muted">Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting.</p>
+    <form id="loginForm" style="display:grid;gap:16px;margin-top:24px" novalidate>
+      <div class="alert err" id="loginErr" role="alert" hidden><span data-i="alert"></span><span></span></div>
+      <div class="field"><label for="lu">Elektron pochta yoki login</label><div class="input-wrap"><span data-i="user" data-c="sm"></span><input class="input" id="lu" autocomplete="username" placeholder="login@example.uz"></div></div>
+      <div class="field"><label for="lp">Parol</label><div class="input-wrap"><span data-i="lock" data-c="sm"></span><input class="input" id="lp" type="password" autocomplete="current-password" placeholder="••••••••"><button class="btn-eye" type="button" data-eye="#lp" aria-label="Parolni ko‘rsatish"><span data-i="eye"></span></button></div></div>
+      <div class="row between wrap"><label class="check"><input type="checkbox"> Meni eslab qolish</label><a href="#" class="small">Parolni unutdingizmi?</a></div>
+      <button class="btn btn-primary btn-lg btn-block" id="loginBtn" type="submit">Kirish</button>
+      <p class="xs muted"><span class="demo-tag">Maket</span> Tekshiruv faqat ko‘rinish uchun: bo‘sh maydonlar — xato holati; parol «xato» — noto‘g‘ri ma’lumot holati; boshqa qiymat — yuklanish va o‘tish.</p>
+    </form>
+  </main>
+  <aside class="login-art"><div data-ph="building"></div><div><h2>Ta’lim — kelajak poydevori</h2><p>Mirzacho‘l tumani Xalq ta’limi bo‘limi xodimlar portali</p></div></aside>
+</div>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
