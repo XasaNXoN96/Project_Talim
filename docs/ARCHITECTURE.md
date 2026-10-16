@@ -1,5 +1,7 @@
 # Архитектура production-версии
 
+> **⚠️ Частично устарел (этап 0).** Выбор стека, Redis, WebSocket и отдельный API заменены решением в [STACK_DECISION.md](STACK_DECISION.md) (Django, монолит, без Redis/WebSocket на старте). Формулировка о локализации данных (§6.1) уточнена в [LEGAL_AND_DATA_CHECKLIST.md](LEGAL_AND_DATA_CHECKLIST.md). Актуальные разделы: §1 (аудит), §4, §5, §6.2–6.4, §7. Порядок действий — [STAGE_0_PLAN.md](STAGE_0_PLAN.md) §10.
+
 **Проект:** Mirzacho‘l tumani Xalq ta’limi bo‘limi · **Статус документа:** черновик для согласования · **База аудита:** ветка `claude/charming-feynman-3h7nwq`, коммит `ec3231b`
 
 Связанные документы: [DATA_MODEL.md](DATA_MODEL.md) · [ROLES_PERMISSIONS.md](ROLES_PERMISSIONS.md) · [ROADMAP.md](ROADMAP.md)

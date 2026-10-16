@@ -1,5 +1,7 @@
 # План внедрения, риски, сроки и расходы
 
+> **⚠️ Устарел в части оценок (этап 0).** Оценки в человеко-неделях были рассчитаны на команду 3–5 человек, React и отдельный API; пересчитаны в [BUDGET_AND_ESTIMATES.md](BUDGET_AND_ESTIMATES.md). Этапы — в [FEATURE_ROADMAP.md](FEATURE_ROADMAP.md). Релизные вехи и риски использованы как основа.
+
 Часть пакета документов: [ARCHITECTURE.md](ARCHITECTURE.md) · [DATA_MODEL.md](DATA_MODEL.md) · [ROLES_PERMISSIONS.md](ROLES_PERMISSIONS.md)
 
 > **Все оценки — порядок величины на основе объёма макета (24 страницы, 15 разделов портала) и типового состава команды.**

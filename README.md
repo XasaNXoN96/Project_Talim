@@ -18,4 +18,7 @@ dashboard · yangiliklar · xodimlar · yutuqlar · sertifikatlar · topshiriqla
 Barcha yo‘llar nisbiy — `/Project_Talim/` ostida ishlaydi. Til almashtirish tugmalari (RU/EN) hozircha faqat vizual.
 
 ## Документация production-версии
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [docs/DATA_MODEL.md](docs/DATA_MODEL.md) · [docs/ROLES_PERMISSIONS.md](docs/ROLES_PERMISSIONS.md) · [docs/ROADMAP.md](docs/ROADMAP.md) · [docs/REFINED_PLAN.md](docs/REFINED_PLAN.md) — черновик для согласования.
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [docs/DATA_MODEL.md](docs/DATA_MODEL.md) · [docs/ROLES_PERMISSIONS.md](docs/ROLES_PERMISSIONS.md) · [docs/ROADMAP.md](docs/ROADMAP.md) · [docs/REFINED_PLAN.md](docs/REFINED_PLAN.md) — черновик для согласования (ранние версии, см. пометки об актуальности).
+
+### Этап 0 (актуальный пакет)
+[docs/STAGE_0_PLAN.md](docs/STAGE_0_PLAN.md) · [docs/STACK_DECISION.md](docs/STACK_DECISION.md) · [docs/FEATURE_ROADMAP.md](docs/FEATURE_ROADMAP.md) · [docs/LEGAL_AND_DATA_CHECKLIST.md](docs/LEGAL_AND_DATA_CHECKLIST.md) · [docs/BUDGET_AND_ESTIMATES.md](docs/BUDGET_AND_ESTIMATES.md)

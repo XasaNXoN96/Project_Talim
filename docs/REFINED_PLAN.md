@@ -1,5 +1,7 @@
 # Уточнённый план перед этапом 0
 
+> **⚠️ Частично устарел (этап 0).** Стек (A или B) → выбран Django ([STACK_DECISION.md](STACK_DECISION.md)); этапы и оценки варианта B → [FEATURE_ROADMAP.md](FEATURE_ROADMAP.md) (вариант C) и [BUDGET_AND_ESTIMATES.md](BUDGET_AND_ESTIMATES.md); вопросы заказчику → [STAGE_0_PLAN.md](STAGE_0_PLAN.md) §7. Оставлен как история решений.
+
 **Статус:** черновик для согласования · **Основа:** [ARCHITECTURE.md](ARCHITECTURE.md), [DATA_MODEL.md](DATA_MODEL.md), [ROLES_PERMISSIONS.md](ROLES_PERMISSIONS.md), [ROADMAP.md](ROADMAP.md) (коммит `e6833ac`)
 
 Этот документ **упрощает** прежние рекомендации. Там, где он расходится с ARCHITECTURE.md, действует он. Цены и сроки — допущения; юридические вопросы помечены **[проверить]**.
