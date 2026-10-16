@@ -49,6 +49,7 @@
   };
   const icon = (n, c = '') => `<svg class="ico ${c}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const body = document.body;
   window.TALIM = { icon, ORG };
 
   /* ---- logo (temporary brand mark: open book + spark) ---- */
@@ -67,29 +68,60 @@
   };
   let uid = 0;
   const initVisuals = () => {
-  $$('[data-ph]').forEach(el => {
-    const k = el.dataset.ph; el.classList.add('ph');
+  $$('[data-ph]:not([data-phd])').forEach(el => {
+    el.dataset.phd = 1; const k = el.dataset.ph; el.classList.add('ph');
     el.innerHTML = (scenes[k] || scenes.building)(++uid);
     el.setAttribute('role', 'img'); el.setAttribute('aria-label', 'Namuna tasvir (dizayn maketi)');
   });
   /* avatars */
   const pal = ['#1f6bff', '#12a05c', '#e07b0a', '#7a4fe0', '#0e9aa7', '#d9363e', '#183166'];
-  $$('.av[data-name]').forEach(el => {
+  $$('.av[data-name]:not([data-done])').forEach(el => {
+    el.dataset.done = 1;
     const n = el.dataset.name; const ini = n.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
     let h = 0; for (const c of n) h = (h * 31 + c.charCodeAt(0)) >>> 0;
     el.textContent = ini; el.style.background = pal[h % pal.length]; el.setAttribute('aria-label', n);
   });
   };
 
+  /* ---- i18n groundwork: shell texts go through t(key). Add ru/en dictionaries later; fallback is uz. ---- */
+  const I18N = {
+    uz: { 'nav.home': 'Bosh sahifa', 'nav.news': 'Yangiliklar', 'nav.staff': 'Xodimlar', 'nav.achievements': 'Yutuqlar', 'nav.certs': 'Sertifikatlar', 'nav.tasks': 'Topshiriqlar', 'nav.docs': 'Hujjatlar', 'nav.media': 'Media', 'nav.org': 'Tashkilot', 'nav.attendance': 'Kirish-chiqish', 'nav.geo': 'Geolokatsiya', 'nav.chat': 'Chat', 'nav.notifs': 'Bildirishnomalar', 'nav.reports': 'Hisobotlar', 'nav.admin': 'Admin panel',
+      'pub.home': 'Bosh sahifa', 'pub.news': 'Yangiliklar', 'pub.schools': 'Ta’lim muassasalari', 'pub.teachers': 'Ustozlar', 'pub.achievements': 'Yutuqlar', 'pub.docs': 'Hujjatlar', 'pub.media': 'Media', 'pub.contact': 'Bog‘lanish', 'pub.login': 'Kirish', 'pub.search': 'Qidirish', 'pub.useful': 'Foydali havolalar', 'pub.contactTitle': 'Aloqa', 'pub.location': 'Joylashuv' },
+    ru: {}, en: {}
+  };
+  const LANG = 'uz';
+  const t = k => (I18N[LANG] && I18N[LANG][k]) || I18N.uz[k] || k;
+  const langSwitch = () => `<div class="lang" role="group" aria-label="Til"><button class="active" aria-pressed="true">UZ</button><button data-toast="Til almashtirish keyinroq qo‘shiladi" aria-pressed="false">RU</button><button data-toast="Til almashtirish keyinroq qo‘shiladi" aria-pressed="false">EN</button></div>`;
+  window.TALIM.t = t;
+
+
+  /* ---- Public shell (header + footer shared by all public pages) ---- */
+  if (body.dataset.shell === 'public') {
+    const nav = body.dataset.nav || '';
+    const items = [['home', 'index.html', 'pub.home'], ['news', 'news.html', 'pub.news'], ['schools', 'tashkilot.html#muassasalar', 'pub.schools'], ['teachers', 'ustozlar.html', 'pub.teachers'], ['achievements', 'ustozlar.html#yutuqlar', 'pub.achievements'], ['docs', 'hujjatlar.html', 'pub.docs'], ['media', 'media.html', 'pub.media'], ['contact', '#boglanish', 'pub.contact']];
+    const hdr = document.createElement('header'); hdr.className = 'pub-header';
+    hdr.innerHTML = `<div class="container"><a class="brand" href="index.html" aria-label="${t('pub.home')}"><span style="display:block;width:44px;height:44px;flex:none">${LOGO}</span><div><b>Xalq ta’limi bo‘limi</b><span>Mirzacho‘l tumani</span></div></a>
+      <nav class="pub-nav" aria-label="Asosiy menyu">${items.map(([id, href, k]) => `<a href="${href}" class="${id === nav ? 'active' : ''}" ${id === nav ? 'aria-current="page"' : ''} data-i18n="${k}">${t(k)}</a>`).join('')}<div class="nav-lang">${langSwitch()}</div></nav>
+      <div class="pub-actions">${langSwitch()}<div class="search"><label class="sr-only" for="ps">${t('pub.search')}</label>${icon('search', 'sm')}<input id="ps" placeholder="${t('pub.search')}"></div><a class="btn btn-primary" href="login.html">${icon('lock', 'sm')}<span data-i18n="pub.login">${t('pub.login')}</span></a></div>
+      <button class="btn btn-secondary btn-icon burger" aria-label="Menyu" aria-expanded="false">${icon('menu')}</button></div>`;
+    const ftr = document.createElement('footer'); ftr.className = 'pub-footer'; ftr.id = 'boglanish';
+    ftr.innerHTML = `<div class="container"><div class="foot-grid"><div><a class="brand" href="index.html"><span style="display:block;width:44px;height:44px;flex:none">${LOGO}</span><div><b>Xalq ta’limi bo‘limi</b><span>Mirzacho‘l tumani</span></div></a><p style="margin-top:14px;font-size:14px">Ta’lim — kelajak poydevori. Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!</p></div>
+      <div><h4>${t('pub.useful')}</h4><a href="news.html">${t('pub.news')}</a><a href="tashkilot.html#muassasalar">${t('pub.schools')}</a><a href="ustozlar.html">${t('pub.teachers')}</a><a href="hujjatlar.html">${t('pub.docs')}</a></div>
+      <div><h4>${t('pub.contactTitle')}</h4><div class="foot-row">${icon('pin', 'sm')}<span>Manzil: tasdiqlangan ma’lumot kiritiladi</span></div><div class="foot-row">${icon('phone', 'sm')}<span>Telefon: tasdiqlangan ma’lumot kiritiladi</span></div><div class="foot-row">${icon('mail', 'sm')}<span>E-pochta: tasdiqlangan ma’lumot kiritiladi</span></div></div>
+      <div><h4>${t('pub.location')}</h4><div class="map-card"><svg viewBox="0 0 300 150" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><rect width="300" height="150" fill="#e4ecfa"/><path d="M-10 100L120 60l100 40 100-30M80-10l40 170M200-10l-30 170" stroke="#fff" stroke-width="10" fill="none"/></svg><span class="pin">${icon('pin', 'lg')}</span></div><p class="xs" style="margin-top:6px">Xarita namunasi — manzil tasdiqlangach almashtiriladi.</p></div></div>
+      <div class="copy"><span>© 2026 Mirzacho‘l tumani Xalq ta’limi bo‘limi</span><span>Dizayn maketi</span></div></div>`;
+    const m = $('main'); m.id = m.id || 'main';
+    m.before(hdr); m.after(ftr);
+  }
+
   /* ---- Workspace shell ---- */
   const NAV = [
-    ['dashboard', 'Bosh sahifa', 'home'], ['yangiliklar', 'Yangiliklar', 'news'], ['xodimlar', 'Xodimlar', 'users'],
-    ['yutuqlar', 'Yutuqlar', 'trophy'], ['sertifikatlar', 'Sertifikatlar', 'award'], ['topshiriqlar', 'Topshiriqlar', 'clipboard'],
-    ['hujjatlar', 'Hujjatlar', 'file'], ['media', 'Media', 'image'], ['tashkilot', 'Tashkilot', 'building'],
-    ['kirish-chiqish', 'Kirish-chiqish', 'login'], ['geolokatsiya', 'Geolokatsiya', 'pin'], ['chat', 'Chat', 'chat'],
-    ['bildirishnomalar', 'Bildirishnomalar', 'bell'], ['hisobotlar', 'Hisobotlar', 'chart'], ['admin', 'Admin panel', 'shield']
+    ['dashboard', 'nav.home', 'home'], ['yangiliklar', 'nav.news', 'news'], ['xodimlar', 'nav.staff', 'users'],
+    ['yutuqlar', 'nav.achievements', 'trophy'], ['sertifikatlar', 'nav.certs', 'award'], ['topshiriqlar', 'nav.tasks', 'clipboard'],
+    ['hujjatlar', 'nav.docs', 'file'], ['media', 'nav.media', 'image'], ['tashkilot', 'nav.org', 'building'],
+    ['kirish-chiqish', 'nav.attendance', 'login'], ['geolokatsiya', 'nav.geo', 'pin'], ['chat', 'nav.chat', 'chat'],
+    ['bildirishnomalar', 'nav.notifs', 'bell'], ['hisobotlar', 'nav.reports', 'chart'], ['admin', 'nav.admin', 'shield']
   ];
-  const body = document.body;
   if (body.dataset.shell === 'app') {
     const page = body.dataset.page, title = body.dataset.title || 'Bosh sahifa';
     const content = $('main'); content.classList.add('content'); content.id = 'content';
@@ -97,14 +129,14 @@
     if (crumb) content.insertAdjacentHTML('afterbegin', crumb);
     const sidebar = document.createElement('aside'); sidebar.className = 'sidebar'; sidebar.setAttribute('aria-label', 'Asosiy navigatsiya');
     sidebar.innerHTML = `<a class="sb-brand" href="dashboard.html" title="${ORG}">${LOGO}<div><b>Xalq ta’limi bo‘limi<br>Mirzacho‘l tumani</b><small>Xodimlar portali</small></div></a>
-      <nav class="sb-nav">${NAV.map(([id, label, ic]) => `<a href="${id === 'dashboard' || ['yangiliklar', 'xodimlar', 'topshiriqlar', 'hujjatlar', 'yutuqlar', 'kirish-chiqish', 'chat', 'hisobotlar', 'admin'].includes(id) ? id + '.html' : (id === 'sertifikatlar' ? 'yutuqlar.html#sertifikatlar' : id === 'geolokatsiya' ? 'kirish-chiqish.html' : id === 'bildirishnomalar' ? 'dashboard.html#bildirishnomalar' : 'dashboard.html')}" class="${id === page ? 'active' : ''}" ${id === page ? 'aria-current="page"' : ''} title="${label}">${icon(ic)}<span>${label}</span></a>`).join('')}</nav>
+      <nav class="sb-nav" aria-label="Bo‘limlar">${NAV.map(([id, key, ic]) => `<a href="${id}.html" class="${id === page ? 'active' : ''}" ${id === page ? 'aria-current="page"' : ''} title="${t(key)}">${icon(ic)}<span data-i18n="${key}">${t(key)}</span></a>`).join('')}</nav>
       <div class="sb-foot">Dizayn maketi · demo ma’lumotlar</div>`;
     const topbar = document.createElement('header'); topbar.className = 'topbar';
     topbar.innerHTML = `<button class="btn btn-secondary btn-icon" id="sbToggle" aria-label="Menyuni ochish yoki yig‘ish">${icon('menu')}</button>
-      <div class="search"><label class="sr-only" for="gs">Qidirish</label>${icon('search', 'sm')}<input id="gs" placeholder="Qidirish…"></div><div class="grow"></div>
+      <div class="search"><label class="sr-only" for="gs">Qidirish</label>${icon('search', 'sm')}<input id="gs" placeholder="Qidirish…"></div><div class="grow"></div>${langSwitch()}
       <div class="dd"><button class="btn btn-secondary btn-icon bell" data-dd aria-label="Bildirishnomalar">${icon('bell')}<i class="dot"></i></button>
         <div class="dd-menu" style="min-width:300px"><div class="small muted" style="padding:6px 10px">Yangi bildirishnomalar</div>
-        <a href="topshiriqlar.html">${icon('clipboard', 'sm')}<span>Hisobot tayyorlash topshirig‘i muddati yaqin</span></a><a href="yangiliklar.html">${icon('news', 'sm')}<span>Yangi e’lon e’lon qilindi</span></a><div class="sep"></div><a href="dashboard.html#bildirishnomalar">Barchasini ko‘rish</a></div></div>
+        <a href="topshiriqlar.html">${icon('clipboard', 'sm')}<span>Hisobot tayyorlash topshirig‘i muddati yaqin</span></a><a href="yangiliklar.html">${icon('news', 'sm')}<span>Yangi e’lon e’lon qilindi</span></a><div class="sep"></div><a href="bildirishnomalar.html">Barchasini ko‘rish</a></div></div>
       <div class="dd"><button class="me" data-dd aria-label="Profil menyusi"><span class="av" data-name="Xasanxon Mirzaxo‘jayev"></span><div><b>Xasanxon</b><small>Administrator</small></div>${icon('down', 'sm')}</button>
         <div class="dd-menu"><a href="xodimlar.html#profil">${icon('user', 'sm')}Mening profilim</a><a href="admin.html">${icon('settings', 'sm')}Sozlamalar</a><div class="sep"></div><a class="danger" href="../login.html">${icon('logout', 'sm')}Tizimdan chiqish</a></div></div>`;
     const wrap = document.createElement('div'); wrap.className = 'app';
@@ -125,7 +157,9 @@
 
   initVisuals();
   /* ---- icons fill ---- */
-  $$('[data-i]').forEach(el => { el.insertAdjacentHTML('afterbegin', icon(el.dataset.i, el.dataset.c || '')); });
+  const fillIcons = () => $$('[data-i]:not([data-d])').forEach(el => { el.dataset.d = 1; el.insertAdjacentHTML('afterbegin', icon(el.dataset.i, el.dataset.c || '')); });
+  fillIcons();
+  window.TALIM.refresh = () => { initVisuals(); fillIcons(); };
   $$('[data-logo]').forEach(el => el.innerHTML = LOGO);
 
   /* ---- toast ---- */
@@ -149,6 +183,7 @@
     }));
   });
 
+  { const h = location.hash.slice(1); if (h) $$('.tab[data-hash]').forEach(b => b.dataset.hash === h && b.click()); }
   /* ---- modals ---- */
   $$('[data-modal]').forEach(b => b.addEventListener('click', () => { const m = $('#' + b.dataset.modal); if (m) { m.classList.add('open'); const f = m.querySelector('input,button,select,textarea'); f && f.focus(); } }));
   $$('.modal-back').forEach(m => m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) m.classList.remove('open'); }));

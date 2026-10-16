@@ -1,12 +1,18 @@
 # Mirzacho‘l tumani Xalq ta’limi bo‘limi — UI/UX dizayn maketi
 
 Statik dizayn maketi (HTML + CSS + JS, build va backend kerak emas). Barcha ma’lumotlar namunaviy.
+Demo: https://xasanxon96.github.io/Project_Talim/
 
-- `index.html` — ommaviy sayt (hero, statistika, yangiliklar, e’lonlar, yutuqlar, galereya + lightbox, video, footer)
-- `login.html` — kirish (xato / yuklanish holatlari)
-- `app/` — xodimlar portali: dashboard, xodimlar, yangiliklar, topshiriqlar, kirish-chiqish, hujjatlar, yutuqlar/sertifikatlar, chat, hisobotlar, admin
+## Ommaviy sayt
+`index.html` · `news.html` · `news-detail.html?id=` · `ustozlar.html` · `ustoz.html?id=` · `media.html` (rasm + video, `#video`) · `tashkilot.html` · `hujjatlar.html` · `login.html`
+
+## Xodimlar portali (`app/`)
+dashboard · yangiliklar · xodimlar · yutuqlar · sertifikatlar · topshiriqlar · hujjatlar · media · tashkilot · kirish-chiqish · geolokatsiya · chat · bildirishnomalar · hisobotlar · admin
+
+## Tuzilma
 - `assets/css/styles.css` — dizayn tokenlari va komponentlar
-- `assets/js/app.js` — ikonkalar, sidebar/topbar, modal, tab, lightbox (faqat vizual)
+- `assets/js/app.js` — ikonkalar, umumiy shell (ommaviy sarlavha/footer, sidebar/topbar), modal, tab, lightbox, **i18n tayyorgarligi** (`I18N`, `t(key)`, `data-i18n`; hozir faqat uz, ru/en keyin to‘ldiriladi)
+- `assets/js/data.js` — namunaviy kontent (yangiliklar, ustozlar, muassasalar, hujjatlar, bildirishnomalar)
+- `assets/js/pages.js` — data.js asosida sahifalarni chizish (qidiruv/filtr bilan)
 
-Ishga tushirish: `index.html` ni brauzerda oching yoki `python3 -m http.server`.
-Tekshirilgan kenglik: 360, 390, 430, 768, 1024, 1280, 1440 px — gorizontal scroll yo‘q.
+Barcha yo‘llar nisbiy — `/Project_Talim/` ostida ishlaydi. Til almashtirish tugmalari (RU/EN) hozircha faqat vizual.

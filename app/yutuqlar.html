@@ -1,28 +1,18 @@
 <!doctype html>
 <html lang="uz">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yutuqlar — Mirzacho‘l tumani Xalq ta’limi bo‘limi</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&subset=latin,latin-ext&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
-<body data-shell="app" data-page="yutuqlar" data-title="Yutuqlar" data-crumb="Yutuqlar va sertifikatlar">
+<body data-shell="app" data-page="yutuqlar" data-title="Yutuqlar" data-crumb="Yutuqlar">
 <main>
-<div class="page-head"><div><h1>Yutuqlar va sertifikatlar</h1><p>Xodimlarning erishgan natijalari</p></div></div>
-<div class="tabs" data-tabs="y"><button class="tab active" data-panel="yy">Yutuqlar</button><button class="tab" data-panel="ss">Sertifikatlar</button></div>
-<div style="margin-top:16px">
-<div id="yy" data-panel-group="y" class="auto-grid">
- <div class="card admin-tile"><span class="ic-chip c-orange" data-i="trophy"></span><div><b>Yilning eng yaxshi ustozi</b><small>Namuna Ustoz · 2026 · Tanlov</small></div></div>
- <div class="card admin-tile"><span class="ic-chip c-violet" data-i="award"></span><div><b>Innovatsion loyihalar</b><small>Namuna Muallim · 2025 · Loyiha</small></div></div>
- <div class="card admin-tile"><span class="ic-chip c-teal" data-i="star"></span><div><b>Metodik ishlanma</b><small>Namuna Metodist · 2024 · Metodika</small></div></div>
-</div>
-<div id="sertifikatlar" data-panel-group="y" hidden><div class="auto-grid">
- <article class="cert"><div class="cert-thumb"><div><b>Sertifikat</b><small>Namuna nomi</small></div></div><div style="padding:12px"><b class="small">Malaka oshirish</b><div class="xs muted">Egasi: Namuna Xodim · Berilgan: namuna sana · Amal qilish: namuna</div><button class="btn btn-secondary btn-sm" style="margin-top:8px" data-modal="mCert">Ko‘rish</button></div></article>
- <article class="cert"><div class="cert-thumb"><div><b>Sertifikat</b><small>Namuna nomi</small></div></div><div style="padding:12px"><b class="small">IT savodxonlik</b><div class="xs muted">Egasi: Namuna Mutaxassis · Berilgan: namuna sana</div><button class="btn btn-secondary btn-sm" style="margin-top:8px" data-modal="mCert">Ko‘rish</button></div></article>
-</div></div></div>
-<script>if(location.hash==='#sertifikatlar')addEventListener('DOMContentLoaded',()=>document.querySelectorAll('.tab')[1].click());</script>
-<div class="modal-back" id="mCert" role="dialog" aria-modal="true" aria-labelledby="mcT"><div class="modal wide"><div class="modal-head"><h3 id="mcT">Sertifikat</h3><button class="btn btn-ghost btn-icon btn-sm" data-close aria-label="Yopish"><span data-i="x"></span></button></div><div class="modal-body"><div class="cert-thumb" style="aspect-ratio:1.414/1;max-width:640px;margin:auto;border-radius:12px;border:1px solid var(--border)"><div><h2>Sertifikat</h2><p class="muted">Namuna maket — Mirzacho‘l tumani Xalq ta’limi bo‘limi</p></div></div></div></div></div>
+<div class="page-head"><div><h1>Yutuqlar</h1><p>Xodimlarning erishgan natijalari</p></div><a class="btn btn-secondary" href="sertifikatlar.html"><span data-i="award" data-c="sm"></span>Sertifikatlar</a></div>
+<div class="toolbar" style="margin-bottom:16px"><div class="search"><span data-i="search" data-c="sm"></span><input placeholder="Yutuq qidirish" aria-label="Yutuq qidirish"></div><select class="select" aria-label="Yil"><option>Yil: Barchasi</option></select></div>
+<div class="auto-grid" data-render="achv"></div>
+</div></div>
 </main>
-<script src="../assets/js/app.js"></script>
+<script src="../assets/js/data.js"></script><script src="../assets/js/pages.js"></script><script src="../assets/js/app.js"></script>
 </body>
 </html>

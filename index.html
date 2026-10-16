@@ -1,30 +1,16 @@
 <!doctype html>
 <html lang="uz">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mirzacho‘l tumani Xalq ta’limi bo‘limi</title>
 <meta name="description" content="Mirzacho‘l tumani Xalq ta’limi bo‘limi rasmiy sayti — dizayn maketi.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&subset=latin,latin-ext&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
-<a class="sr-only" href="#main">Asosiy mazmunga o‘tish</a>
-<header class="pub-header">
-  <div class="container">
-    <a class="brand" href="index.html" aria-label="Bosh sahifa"><span data-logo style="display:block;width:44px;height:44px"></span><div><b>Xalq ta’limi bo‘limi</b><span>Mirzacho‘l tumani</span></div></a>
-    <nav class="pub-nav" aria-label="Asosiy menyu">
-      <a class="active" href="#top" aria-current="page">Bosh sahifa</a><a href="#yangiliklar">Yangiliklar</a><a href="#muassasalar">Ta’lim muassasalari</a><a href="#ustozlar">Ustozlar</a><a href="#yutuqlar">Yutuqlar</a><a href="#hujjatlar">Hujjatlar</a><a href="#media">Media</a><a href="#boglanish">Bog‘lanish</a>
-    </nav>
-    <div class="pub-actions">
-      <div class="search"><label class="sr-only" for="ps">Qidirish</label><span data-i="search" data-c="sm"></span><input id="ps" placeholder="Qidirish"></div>
-      <a class="btn btn-primary" href="login.html"><span data-i="lock" data-c="sm"></span><span>Kirish</span></a>
-    </div>
-    <button class="btn btn-secondary btn-icon burger" aria-label="Menyu" aria-expanded="false"><span data-i="menu"></span></button>
-  </div>
-</header>
+<body data-shell="public" data-nav="home">
 
-<main id="main">
+<main>
 <section class="hero" id="top">
   <div data-ph="building"></div>
   <div class="container">
@@ -32,7 +18,7 @@
       <h1>Mirzacho‘l tumani<br>Xalq ta’limi bo‘limi</h1>
       <p class="sub">Ta’lim — kelajak poydevori</p>
       <p class="lead">Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!</p>
-      <a class="btn btn-primary btn-lg" href="#yangiliklar">Batafsil ma’lumot <span data-i="arrow" data-c="sm"></span></a>
+      <a class="btn btn-primary btn-lg" href="news.html">Batafsil ma’lumot <span data-i="arrow" data-c="sm"></span></a>
     </div>
     <aside class="hero-quote" aria-label="Rag‘batlantiruvchi xabar"><span data-i="quote"></span><p>Yaxshi ustoz — yorqin kelajak yo‘lboshchisi.</p></aside>
   </div>
@@ -50,15 +36,15 @@
 
   <div class="cols-3 sec" id="yangiliklar">
     <section aria-labelledby="h-news">
-      <div class="sec-head"><h2 id="h-news">So‘nggi yangiliklar</h2><a class="more" href="app/yangiliklar.html">Barchasini ko‘rish <span data-i="arrow" data-c="sm"></span></a></div>
+      <div class="sec-head"><h2 id="h-news">So‘nggi yangiliklar</h2><a class="more" href="news.html">Barchasini ko‘rish <span data-i="arrow" data-c="sm"></span></a></div>
       <div class="news-grid">
-        <article class="card news-card"><div class="ratio-16-9" data-ph="ceremony"></div><div class="body"><span class="xs muted">02.10.2026</span><h3 class="clamp3">Mirzacho‘l tumanida Ustozlar kuni munosabati bilan tadbir o‘tkazildi</h3><p class="clamp3">Tuman xalq ta’limi tashabbusi bilan Ustozlar kuni munosabati bilan tantanali tadbir bo‘lib o‘tdi.</p><a class="go" href="#">Batafsil <span data-i="arrow" data-c="sm"></span></a></div></article>
-        <article class="card news-card"><div class="ratio-16-9" data-ph="class"></div><div class="body"><span class="xs muted">28.09.2026</span><h3 class="clamp3">Yangi o‘quv yiliga tayyorgarlik ishlari</h3><p class="clamp3">Maktablarda yangi o‘quv yiliga tayyorgarlik ishlari davom etmoqda.</p><a class="go" href="#">Batafsil <span data-i="arrow" data-c="sm"></span></a></div></article>
-        <article class="card news-card"><div class="ratio-16-9 ph-none">Rasm yo‘q</div><div class="body"><span class="xs muted">25.09.2026</span><h3 class="clamp3">Tuman maktablarida yangi loyihalar ishga tushirildi (rasmsiz va tavsifsiz holat namunasi)</h3><a class="go" href="#">Batafsil <span data-i="arrow" data-c="sm"></span></a></div></article>
+        <article class="card news-card"><div class="ratio-16-9" data-ph="ceremony"></div><div class="body"><span class="xs muted">02.10.2026</span><h3 class="clamp3">Mirzacho‘l tumanida Ustozlar kuni munosabati bilan tadbir o‘tkazildi</h3><p class="clamp3">Tuman xalq ta’limi tashabbusi bilan Ustozlar kuni munosabati bilan tantanali tadbir bo‘lib o‘tdi.</p><a class="go" href="news-detail.html?id=1">Batafsil <span data-i="arrow" data-c="sm"></span></a></div></article>
+        <article class="card news-card"><div class="ratio-16-9" data-ph="class"></div><div class="body"><span class="xs muted">28.09.2026</span><h3 class="clamp3">Yangi o‘quv yiliga tayyorgarlik ishlari</h3><p class="clamp3">Maktablarda yangi o‘quv yiliga tayyorgarlik ishlari davom etmoqda.</p><a class="go" href="news-detail.html?id=2">Batafsil <span data-i="arrow" data-c="sm"></span></a></div></article>
+        <article class="card news-card"><div class="ratio-16-9 ph-none">Rasm yo‘q</div><div class="body"><span class="xs muted">25.09.2026</span><h3 class="clamp3">Tuman maktablarida yangi loyihalar ishga tushirildi (rasmsiz va tavsifsiz holat namunasi)</h3><a class="go" href="news-detail.html?id=3">Batafsil <span data-i="arrow" data-c="sm"></span></a></div></article>
       </div>
     </section>
     <section class="card card-pad" aria-labelledby="h-ann" style="padding:18px 20px">
-      <div class="sec-head" style="margin-bottom:6px"><h2 id="h-ann" style="font-size:20px">E’lonlar</h2><a class="more" href="#">Barchasi</a></div>
+      <div class="sec-head" style="margin-bottom:6px"><h2 id="h-ann" style="font-size:20px">E’lonlar</h2><a class="more" href="news.html">Barchasi</a></div>
       <div class="list-rows">
         <div class="li"><span class="ic-chip c-orange" data-i="users"></span><span class="t1 grow">O‘qituvchilar uchun attestatsiyaga tayyorgarlik seminari</span><span class="date">01.10.2026</span></div>
         <div class="li"><span class="ic-chip c-red" data-i="trophy"></span><span class="t1 grow">Tuman bosqichidagi fan olimpiadasi</span><span class="date">29.09.2026</span></div>
@@ -69,26 +55,26 @@
     </section>
     <section class="links" aria-labelledby="h-links">
       <div class="sec-head"><h2 id="h-links" style="font-size:20px">Muhim havolalar</h2></div>
-      <a class="lk" href="#muassasalar"><span class="ic-chip c-blue" data-i="school"></span>Ta’lim muassasalari ro‘yxati<span data-i="right" data-c="sm"></span></a>
-      <a class="lk" href="#hujjatlar"><span class="ic-chip c-green" data-i="file"></span>Normativ-huquqiy hujjatlar<span data-i="right" data-c="sm"></span></a>
-      <a class="lk" href="#yangiliklar"><span class="ic-chip c-violet" data-i="news"></span>Yangiliklar arxivi<span data-i="right" data-c="sm"></span></a>
-      <a class="lk" href="#yutuqlar"><span class="ic-chip c-orange" data-i="trophy"></span>Ustozlar yutuqlari<span data-i="right" data-c="sm"></span></a>
+      <a class="lk" href="tashkilot.html#muassasalar"><span class="ic-chip c-blue" data-i="school"></span>Ta’lim muassasalari ro‘yxati<span data-i="right" data-c="sm"></span></a>
+      <a class="lk" href="hujjatlar.html"><span class="ic-chip c-green" data-i="file"></span>Normativ-huquqiy hujjatlar<span data-i="right" data-c="sm"></span></a>
+      <a class="lk" href="news.html"><span class="ic-chip c-violet" data-i="news"></span>Yangiliklar arxivi<span data-i="right" data-c="sm"></span></a>
+      <a class="lk" href="ustozlar.html#yutuqlar"><span class="ic-chip c-orange" data-i="trophy"></span>Ustozlar yutuqlari<span data-i="right" data-c="sm"></span></a>
       <a class="lk" href="#boglanish"><span class="ic-chip c-blue" data-i="phone"></span>Bog‘lanish<span data-i="right" data-c="sm"></span></a>
     </section>
   </div>
 
-  <div class="cols-3b sec" id="muassasalar">
-    <section id="ustozlar" aria-labelledby="h-t">
-      <div class="sec-head"><h2 id="h-t">Ustozlar yutuqlari</h2><a class="more" href="app/yutuqlar.html">Barchasi <span data-i="arrow" data-c="sm"></span></a></div>
-      <div class="teachers" id="yutuqlar">
-        <article class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="Namuna Ustoz"></div><b>Namuna Ustoz</b><span class="xs muted">Yilning eng yaxshi ustozi — 2026</span></article>
-        <article class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="Namuna Muallim"></div><b>Namuna Muallim</b><span class="xs muted">Innovatsion loyihalar sovrindori</span></article>
-        <article class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="Namuna Metodist"></div><b>Namuna Metodist</b><span class="xs muted">Metodik ishlanmalar g‘olibi</span></article>
-        <article class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="Namuna IT"></div><b>Namuna IT-mutaxassis</b><span class="xs muted">IT yo‘nalishi bo‘yicha yutuq</span></article>
+  <div class="cols-3b sec">
+    <section aria-labelledby="h-t">
+      <div class="sec-head"><h2 id="h-t">Ustozlar yutuqlari</h2><a class="more" href="ustozlar.html">Barchasi <span data-i="arrow" data-c="sm"></span></a></div>
+      <div class="teachers">
+        <a class="card teacher t-link" href="ustoz.html?id=1" style="text-decoration:none;color:inherit"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="Namuna Ustoz"></div><b>Namuna Ustoz</b><span class="xs muted">Yilning eng yaxshi ustozi — 2026</span></a>
+        <a class="card teacher t-link" href="ustoz.html?id=2" style="text-decoration:none;color:inherit"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="Namuna Muallim"></div><b>Namuna Muallim</b><span class="xs muted">Innovatsion loyihalar sovrindori</span></a>
+        <a class="card teacher t-link" href="ustoz.html?id=3" style="text-decoration:none;color:inherit"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="Namuna Metodist"></div><b>Namuna Metodist</b><span class="xs muted">Metodik ishlanmalar g‘olibi</span></a>
+        <a class="card teacher t-link" href="ustoz.html?id=4" style="text-decoration:none;color:inherit"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="Namuna IT"></div><b>Namuna IT-mutaxassis</b><span class="xs muted">IT yo‘nalishi bo‘yicha yutuq</span></a>
       </div>
     </section>
-    <section id="media" aria-labelledby="h-g">
-      <div class="sec-head"><h2 id="h-g">Fotorasmlar galereyasi</h2><a class="more" href="#">Barchasi <span data-i="arrow" data-c="sm"></span></a></div>
+    <section aria-labelledby="h-g">
+      <div class="sec-head"><h2 id="h-g">Fotorasmlar galereyasi</h2><a class="more" href="media.html">Barchasi <span data-i="arrow" data-c="sm"></span></a></div>
       <div class="gallery">
         <button class="g" data-lb aria-label="Rasmni kattalashtirish"><div class="ph" data-ph="ceremony" style="height:100%"></div></button>
         <button class="g" data-lb aria-label="Rasmni kattalashtirish"><div class="ph" data-ph="hall" style="height:100%"></div></button>
@@ -98,39 +84,24 @@
       </div>
     </section>
     <section aria-labelledby="h-v">
-      <div class="sec-head"><h2 id="h-v">Video va media</h2><a class="more" href="#">Barchasi <span data-i="arrow" data-c="sm"></span></a></div>
+      <div class="sec-head"><h2 id="h-v">Video va media</h2><a class="more" href="media.html#video">Barchasi <span data-i="arrow" data-c="sm"></span></a></div>
       <div class="video"><div class="ratio-16-9" data-ph="ceremony"></div><button class="play" aria-label="Videoni ijro etish"><span data-i="play"></span></button><span class="duration">00:00</span></div>
       <h3 style="font-size:15px;margin-top:10px">Ustozlar kuni munosabati bilan tantanali tadbir</h3>
       <p class="xs muted" style="margin-top:2px">01.10.2026 · <span class="demo-tag">Maket</span> ko‘rishlar va izohlar soni tizim ulanganda ko‘rsatiladi</p>
     </section>
   </div>
 
-  <section class="sec" id="hujjatlar" aria-labelledby="h-d">
-    <div class="sec-head"><h2 id="h-d">Hujjatlar</h2><a class="more" href="app/hujjatlar.html">Barchasi <span data-i="arrow" data-c="sm"></span></a></div>
+  <section class="sec" id="hujjatlar-bolim" aria-labelledby="h-d">
+    <div class="sec-head"><h2 id="h-d">Hujjatlar</h2><a class="more" href="hujjatlar.html">Barchasi <span data-i="arrow" data-c="sm"></span></a></div>
     <div class="auto-grid">
-      <a class="card admin-tile" href="#"><span class="file-ico f-pdf">PDF</span><div><b>Normativ-huquqiy hujjatlar</b><small>Namuna hujjat · PDF</small></div></a>
-      <a class="card admin-tile" href="#"><span class="file-ico f-doc">DOC</span><div><b>Metodik tavsiyalar</b><small>Namuna hujjat · Word</small></div></a>
-      <a class="card admin-tile" href="#"><span class="file-ico f-xls">XLS</span><div><b>Muassasalar ro‘yxati</b><small>Namuna hujjat · Excel</small></div></a>
+      <a class="card admin-tile" href="hujjatlar.html"><span class="file-ico f-pdf">PDF</span><div><b>Normativ-huquqiy hujjatlar</b><small>Namuna hujjat · PDF</small></div></a>
+      <a class="card admin-tile" href="hujjatlar.html"><span class="file-ico f-doc">DOC</span><div><b>Metodik tavsiyalar</b><small>Namuna hujjat · Word</small></div></a>
+      <a class="card admin-tile" href="hujjatlar.html"><span class="file-ico f-xls">XLS</span><div><b>Muassasalar ro‘yxati</b><small>Namuna hujjat · Excel</small></div></a>
     </div>
   </section>
 </div>
 </main>
 
-<footer class="pub-footer" id="boglanish">
-  <div class="container">
-    <div class="foot-grid">
-      <div><a class="brand" href="index.html"><span data-logo style="display:block;width:44px;height:44px"></span><div><b>Xalq ta’limi bo‘limi</b><span>Mirzacho‘l tumani</span></div></a>
-        <p style="margin-top:14px;font-size:14px">Ta’lim — kelajak poydevori. Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!</p></div>
-      <div><h4>Foydali havolalar</h4><a href="#yangiliklar">Yangiliklar</a><a href="#muassasalar">Ta’lim muassasalari</a><a href="#ustozlar">Ustozlar</a><a href="#hujjatlar">Hujjatlar</a></div>
-      <div><h4>Aloqa</h4>
-        <div class="foot-row"><span data-i="pin" data-c="sm"></span><span>Manzil: tasdiqlangan ma’lumot kiritiladi</span></div>
-        <div class="foot-row"><span data-i="phone" data-c="sm"></span><span>Telefon: tasdiqlangan ma’lumot kiritiladi</span></div>
-        <div class="foot-row"><span data-i="mail" data-c="sm"></span><span>E-pochta: tasdiqlangan ma’lumot kiritiladi</span></div></div>
-      <div><h4>Joylashuv</h4><div class="map-card"><svg viewBox="0 0 300 150" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><rect width="300" height="150" fill="#e4ecfa"/><path d="M-10 100L120 60l100 40 100-30M80-10l40 170M200-10l-30 170" stroke="#fff" stroke-width="10" fill="none"/><path d="M0 40l100 20" stroke="#cfdcf3" stroke-width="5"/></svg><span class="pin" data-i="pin" data-c="lg"></span></div><p class="xs" style="margin-top:6px">Xarita namunasi — manzil tasdiqlangach almashtiriladi.</p></div>
-    </div>
-    <div class="copy"><span>© 2026 Mirzacho‘l tumani Xalq ta’limi bo‘limi</span><span>Dizayn maketi</span></div>
-  </div>
-</footer>
-<script src="assets/js/app.js"></script>
+<script src="assets/js/data.js"></script><script src="assets/js/pages.js"></script><script src="assets/js/app.js"></script>
 </body>
 </html>
