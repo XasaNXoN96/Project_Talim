@@ -16,3 +16,6 @@ dashboard · yangiliklar · xodimlar · yutuqlar · sertifikatlar · topshiriqla
 - `assets/js/pages.js` — data.js asosida sahifalarni chizish (qidiruv/filtr bilan)
 
 Barcha yo‘llar nisbiy — `/Project_Talim/` ostida ishlaydi. Til almashtirish tugmalari (RU/EN) hozircha faqat vizual.
+
+## Документация production-версии
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [docs/DATA_MODEL.md](docs/DATA_MODEL.md) · [docs/ROLES_PERMISSIONS.md](docs/ROLES_PERMISSIONS.md) · [docs/ROADMAP.md](docs/ROADMAP.md) — черновик для согласования.
