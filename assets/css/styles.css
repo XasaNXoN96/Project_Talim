@@ -303,3 +303,14 @@ body.collapsed .sb-brand > div, body.collapsed .sb-nav a span, body.collapsed .s
 .pub-page-head { padding-bottom: 36px; } .pub-body { margin-top: 0; padding-top: 28px; }
 .teacher-grid { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
 @media (max-width: 767px) { .teacher-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .teacher-grid .teacher .av { width: 60px; height: 60px; font-size: 18px; } }
+
+/* review fixes: Xodimlar / Chat / Hisobotlar / Admin */
+.field { align-content: start; }
+.t .nw, .cell-user b { white-space: nowrap; } .t td { white-space: normal; }
+.toolbar .select { min-width: 130px; flex: 0 1 auto; } .toolbar .search { flex: 1 1 200px; }
+.bar-h { height: 8px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; overflow: hidden; } .bar-h i { display: block; height: 100%; background: var(--brand-500); border-radius: 999px; } .cards-m .bar-h { margin-top: 2px; }
+/* tables turn into cards earlier so nothing is clipped on tablets */
+@media (max-width: 899px) { .table-wrap.to-cards { display: none; } .cards-m { display: grid; } }
+@media (max-width: 767px) { .admin-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .admin-tile { flex-direction: column; align-items: flex-start; padding: 14px; gap: 10px; } }
+.split.aside { grid-template-columns: minmax(0, 1fr) 320px; } .t.compact th, .t.compact td { padding-inline: 10px; } .t.compact { min-width: 680px; }
+@media (max-width: 1399px) { .split.aside { grid-template-columns: 1fr; } }
