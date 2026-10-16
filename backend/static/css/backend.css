@@ -1,0 +1,7 @@
+/* Adjustments for server-rendered pages. The shared design stylesheet (assets/css/styles.css) is reused unchanged. */
+
+/* Icon inside an input (the static demo positions it with a selector that does not match its own markup). */
+.input-wrap .field-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; display: flex; align-items: center; color: var(--text-3); pointer-events: none; z-index: 1; }
+.input-wrap .btn-eye .ico { width: 18px; height: 18px; }
+.input-wrap { display: block; }
+.input-wrap > .input { padding-left: 38px; }

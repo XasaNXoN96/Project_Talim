@@ -22,3 +22,6 @@ Barcha yo‘llar nisbiy — `/Project_Talim/` ostida ishlaydi. Til almashtirish 
 
 ### Этап 0 (актуальный пакет)
 [docs/STAGE_0_PLAN.md](docs/STAGE_0_PLAN.md) · [docs/STACK_DECISION.md](docs/STACK_DECISION.md) · [docs/FEATURE_ROADMAP.md](docs/FEATURE_ROADMAP.md) · [docs/LEGAL_AND_DATA_CHECKLIST.md](docs/LEGAL_AND_DATA_CHECKLIST.md) · [docs/BUDGET_AND_ESTIMATES.md](docs/BUDGET_AND_ESTIMATES.md)
+
+## Backend (Django)
+Приложение разрабатывается в каталоге [`backend/`](backend/README.md) этого же репозитория. Статический макет (этот корень) остаётся эталоном и публикуется через GitHub Pages. Backend — каркас, не production-ready.

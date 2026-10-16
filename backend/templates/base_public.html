@@ -1,0 +1,46 @@
+{% load static i18n %}<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'css/backend.css' %}">
+</head>
+<body>
+<a class="sr-only" href="#main">{% translate "Asosiy mazmunga o‘tish" %}</a>
+<header class="pub-header">
+  <div class="container">
+    <a class="brand" href="{% url 'content:home' %}"><span data-logo style="display:block;width:44px;height:44px;flex:none"></span><div><b>{{ SITE_SHORT }}</b><span>{{ SITE_DISTRICT }}</span></div></a>
+    <nav class="pub-nav" aria-label="{% translate 'Asosiy menyu' %}">
+      <a href="{% url 'content:home' %}" {% if request.resolver_match.url_name == 'home' %}class="active" aria-current="page"{% endif %}>{% translate "Bosh sahifa" %}</a>
+      <a href="{% url 'content:news_list' %}" {% if request.resolver_match.url_name == 'news_list' or request.resolver_match.url_name == 'news_detail' %}class="active" aria-current="page"{% endif %}>{% translate "Yangiliklar" %}</a>
+    </nav>
+    <div class="pub-actions">
+      {% if user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'portal:dashboard' %}"><span data-i="user" data-c="sm"></span><span>{% translate "Portal" %}</span></a>
+      {% else %}
+        <a class="btn btn-primary" href="{% url 'accounts:login' %}"><span data-i="lock" data-c="sm"></span><span>{% translate "Kirish" %}</span></a>
+      {% endif %}
+    </div>
+    <button class="btn btn-secondary btn-icon burger" aria-label="{% translate 'Menyu' %}" aria-expanded="false"><span data-i="menu"></span></button>
+  </div>
+</header>
+<main id="main">{% block content %}{% endblock %}</main>
+<footer class="pub-footer" id="boglanish">
+  <div class="container">
+    <div class="foot-grid">
+      <div><a class="brand" href="{% url 'content:home' %}"><span data-logo style="display:block;width:44px;height:44px;flex:none"></span><div><b>{{ SITE_SHORT }}</b><span>{{ SITE_DISTRICT }}</span></div></a>
+        <p style="margin-top:14px;font-size:14px">{% translate "Ta’lim — kelajak poydevori. Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!" %}</p></div>
+      <div><h4>{% translate "Foydali havolalar" %}</h4><a href="{% url 'content:news_list' %}">{% translate "Yangiliklar" %}</a><a href="{% url 'accounts:login' %}">{% translate "Kirish" %}</a></div>
+      <div><h4>{% translate "Aloqa" %}</h4>
+        <div class="foot-row"><span data-i="pin" data-c="sm"></span><span>{% translate "Manzil: tasdiqlangan ma’lumot kiritiladi" %}</span></div>
+        <div class="foot-row"><span data-i="phone" data-c="sm"></span><span>{% translate "Telefon: tasdiqlangan ma’lumot kiritiladi" %}</span></div>
+        <div class="foot-row"><span data-i="mail" data-c="sm"></span><span>{% translate "E-pochta: tasdiqlangan ma’lumot kiritiladi" %}</span></div></div>
+    </div>
+    <div class="copy"><span>© {% now "Y" %} {{ SITE_NAME }}</span><span>{% translate "Ishlab chiqish bosqichi" %}</span></div>
+  </div>
+</footer>
+<script src="{% static 'assets/js/app.js' %}"></script>
+</body>
+</html>

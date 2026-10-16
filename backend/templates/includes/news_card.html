@@ -1,0 +1,10 @@
+<article class="card news-card">
+  <div class="ratio-16-9 ph-none">Rasm yo‘q</div>
+  <div class="body">
+    {% if item.category %}<div class="row wrap"><span class="badge plain b-info">{{ item.category.name }}</span></div>{% endif %}
+    <h3 class="clamp3"><a href="{% url 'content:news_detail' item.slug %}" style="color:inherit">{{ item.title }}</a></h3>
+    <span class="xs muted">{{ item.publish_at|date:"d.m.Y" }}</span>
+    {% if item.excerpt %}<p class="clamp3">{{ item.excerpt }}</p>{% endif %}
+    <a class="go" href="{% url 'content:news_detail' item.slug %}">Batafsil</a>
+  </div>
+</article>

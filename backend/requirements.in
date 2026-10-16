@@ -1,0 +1,6 @@
+# Direct dependencies only. Pinned, hash-locked output: requirements.txt
+# Regenerate: uv pip compile requirements.in --python-version 3.12 --generate-hashes -o requirements.txt
+Django>=5.2,<5.3          # 5.2 LTS (security support until April 2028)
+psycopg[binary]>=3.2,<4   # PostgreSQL driver
+argon2-cffi>=23.1         # Argon2 password hasher
+python-dotenv>=1.0        # reads backend/.env in development

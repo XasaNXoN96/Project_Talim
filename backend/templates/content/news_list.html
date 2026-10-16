@@ -1,0 +1,14 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+{% block title %}{% translate "Yangiliklar" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><span>{% translate "Yangiliklar" %}</span></div><h1>{% translate "Yangiliklar" %}</h1></div></section>
+<div class="container pub-body">
+  {% if news_list %}
+    <div class="auto-grid">{% for item in news_list %}{% include "includes/news_card.html" %}{% endfor %}</div>
+    {% include "includes/pagination.html" %}
+  {% else %}
+    <div class="card empty"><div class="ic-chip c-blue" data-i="news"></div><h3>{% translate "Hozircha yangiliklar yo‘q" %}</h3><p>{% translate "Nashr etilgan yangiliklar shu yerda ko‘rinadi." %}</p></div>
+  {% endif %}
+</div>
+{% endblock %}

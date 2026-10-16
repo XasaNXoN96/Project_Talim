@@ -1,0 +1,42 @@
+{% load static i18n %}<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>{% block title %}Portal{% endblock %} — {{ SITE_NAME }}</title>
+<link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'css/backend.css' %}">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" aria-label="{% translate 'Asosiy navigatsiya' %}">
+    <a class="sb-brand" href="{% url 'portal:dashboard' %}" title="{{ SITE_NAME }}"><span data-logo style="display:block;width:40px;height:40px;flex:none"></span><div><b>{{ SITE_SHORT }}<br>{{ SITE_DISTRICT }}</b><small>{% translate "Xodimlar portali" %}</small></div></a>
+    <nav class="sb-nav" aria-label="{% translate 'Bo‘limlar' %}">
+      <a href="{% url 'portal:dashboard' %}" title="{% translate 'Bosh sahifa' %}" {% if request.resolver_match.url_name == 'dashboard' %}class="active" aria-current="page"{% endif %}><i data-i="home" style="display:contents"></i><span>{% translate "Bosh sahifa" %}</span></a>
+      {% if perms.audit.view_auditlog %}
+      <a href="{% url 'portal:audit' %}" title="{% translate 'Audit jurnali' %}" {% if request.resolver_match.url_name == 'audit' %}class="active" aria-current="page"{% endif %}><i data-i="shield" style="display:contents"></i><span>{% translate "Audit jurnali" %}</span></a>
+      {% endif %}
+    </nav>
+    <div class="sb-foot">{% translate "Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘shiladi" %}</div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <button class="btn btn-secondary btn-icon" id="sbToggle" type="button" aria-label="{% translate 'Menyuni ochish yoki yig‘ish' %}"><i data-i="menu" style="display:contents"></i></button>
+      <div class="grow"></div>
+      <a class="btn btn-secondary btn-sm" href="{% url 'content:home' %}">{% translate "Sayt" %}</a>
+      <div class="dd">
+        <button class="me" type="button" data-dd aria-label="{% translate 'Profil menyusi' %}"><span class="av" data-name="{{ user.get_username }}"></span><div><b>{{ user.get_full_name|default:user.get_username }}</b><small>{{ user.email }}</small></div><i data-i="down" data-c="sm" style="display:contents"></i></button>
+        <div class="dd-menu">
+          <form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button type="submit" class="danger"><i data-i="logout" data-c="sm" style="display:contents"></i>{% translate "Tizimdan chiqish" %}</button></form>
+        </div>
+      </div>
+    </header>
+    <main class="content" id="content">{% block content %}{% endblock %}</main>
+    <div class="demo-foot">{{ SITE_NAME }} · {% translate "Ishlab chiqish bosqichi" %}</div>
+  </div>
+</div>
+<div class="scrim"></div>
+<script src="{% static 'assets/js/app.js' %}"></script>
+<script src="{% static 'js/shell.js' %}"></script>
+</body>
+</html>

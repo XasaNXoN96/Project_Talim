@@ -1,0 +1,29 @@
+# Python / Django (backend/)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.sqlite3
+
+# Secrets and local configuration — NEVER commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Generated / runtime
+backend/staticfiles/
+backend/media/
+backend/logs/
+*.log
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store

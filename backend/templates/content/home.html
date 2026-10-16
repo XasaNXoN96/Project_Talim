@@ -1,0 +1,24 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+{% block content %}
+<section class="hero" style="background:linear-gradient(135deg,var(--navy-900),var(--brand-700))">
+  <div class="container">
+    <div>
+      <h1>{{ SITE_DISTRICT }}<br>{{ SITE_SHORT }}</h1>
+      <p class="sub">{% translate "Ta’lim — kelajak poydevori" %}</p>
+      <p class="lead">{% translate "Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!" %}</p>
+      <a class="btn btn-primary btn-lg" href="{% url 'content:news_list' %}">{% translate "Yangiliklar" %}</a>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <section class="sec" aria-labelledby="h-news">
+    <div class="sec-head"><h2 id="h-news">{% translate "So‘nggi yangiliklar" %}</h2><a class="more" href="{% url 'content:news_list' %}">{% translate "Barchasini ko‘rish" %}</a></div>
+    {% if latest_news %}
+      <div class="auto-grid">{% for item in latest_news %}{% include "includes/news_card.html" %}{% endfor %}</div>
+    {% else %}
+      <div class="card empty"><div class="ic-chip c-blue" data-i="news"></div><h3>{% translate "Hozircha yangiliklar yo‘q" %}</h3><p>{% translate "Nashr etilgan yangiliklar shu yerda ko‘rinadi." %}</p></div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

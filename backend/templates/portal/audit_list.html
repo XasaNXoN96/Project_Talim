@@ -1,0 +1,15 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Audit jurnali" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Audit jurnali" %}</h1><p>{% translate "Kirish, chiqish va rollar o‘zgarishi yozuvlari. Yozuvlarni o‘zgartirib yoki o‘chirib bo‘lmaydi." %}</p></div></div>
+{% if entries %}
+<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Vaqt" %}</th><th>{% translate "Foydalanuvchi" %}</th><th>{% translate "Harakat" %}</th><th>{% translate "Obyekt" %}</th><th>IP</th></tr></thead><tbody>
+{% for e in entries %}
+<tr><td class="nw">{{ e.at|date:"d.m.Y H:i:s" }}</td><td>{{ e.user.username|default:"—" }}</td><td>{{ e.get_action_display }}</td><td>{{ e.object_type|default:"—" }}</td><td class="nw">{{ e.ip|default:"—" }}</td></tr>
+{% endfor %}</tbody></table></div>
+{% include "includes/pagination.html" %}
+{% else %}
+<div class="card empty"><div class="ic-chip c-blue" data-i="shield"></div><h3>{% translate "Yozuvlar hozircha yo‘q" %}</h3></div>
+{% endif %}
+{% endblock %}

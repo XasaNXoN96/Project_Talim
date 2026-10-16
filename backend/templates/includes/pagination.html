@@ -1,0 +1,10 @@
+{% if page_obj.has_other_pages %}
+<nav class="pager" aria-label="Sahifalar">
+  <span>{{ page_obj.start_index }}–{{ page_obj.end_index }} / {{ paginator.count }}</span>
+  <div class="pages">
+    {% if page_obj.has_previous %}<a class="btn btn-secondary btn-sm" href="?page={{ page_obj.previous_page_number }}">‹</a>{% endif %}
+    <button class="active" type="button" aria-current="page">{{ page_obj.number }}</button>
+    {% if page_obj.has_next %}<a class="btn btn-secondary btn-sm" href="?page={{ page_obj.next_page_number }}">›</a>{% endif %}
+  </div>
+</nav>
+{% endif %}
