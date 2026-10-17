@@ -10,6 +10,9 @@
 #   HEALTH_URL                            required, e.g. the local gunicorn address /healthz/ (the application answers 200 {"status":"ok"} only if the DB works)
 #   RESTART_CMD                           required, e.g. "sudo systemctl restart talim-gunicorn" (the operator allows exactly this command in sudoers)
 #   PRE_BACKUP_CMD                        required; must exit 0, e.g. "$CURRENT_LINK/deploy/backup/backup.sh" (the CURRENT code, i.e. before the switch). A failed backup stops the release BEFORE anything changes.
+#   HEALTH_HOST                           the host name from DJANGO_ALLOWED_HOSTS, sent as the Host header (required when HEALTH_URL is 127.0.0.1 and the host list does not contain it)
+#                                         The check always sends "X-Forwarded-Proto: https" as nginx does: production redirects plain HTTP, and 127.0.0.1 must be in
+#                                         DJANGO_TRUSTED_PROXIES for the header to count. Without it the redirect (301) would make a healthy release look dead.
 #   HEALTH_WAIT_SECONDS=60  MIGRATE_CMD_PREFIX=""  (e.g. "env DB_USER=<owner role>" so migrations run with the owner role, not the runtime role)
 #   POST_MIGRATE_SQL_CMD                  optional, e.g. a command that applies deploy/postgres/apply_grants.sql after migrate
 # What it does NOT do: it never reverts migrations and never restores the database by itself. If the new release applied migrations and
@@ -28,7 +31,7 @@ switch_to() { ln -sfn "$RELEASES_DIR/$1/backend" "$CURRENT_LINK.new" && mv -T "$
 healthy() {  # 0 when the application answers 200 with status ok before the deadline
   local end=$((SECONDS + WAIT)) body
   while [ $SECONDS -lt $end ]; do
-    body="$(curl -fsS --max-time 5 "$HEALTH_URL" 2>/dev/null)" && case "$body" in *'"status": "ok"'*|*'"status":"ok"'*) return 0;; esac
+    body="$(curl -fsS --max-time 5 -H "X-Forwarded-Proto: https" ${HEALTH_HOST:+-H "Host: $HEALTH_HOST"} "$HEALTH_URL" 2>/dev/null)" && case "$body" in *'"status": "ok"'*|*'"status":"ok"'*) return 0;; esac
     sleep 1
   done
   return 1

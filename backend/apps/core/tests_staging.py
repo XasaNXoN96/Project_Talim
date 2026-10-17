@@ -115,7 +115,7 @@ class StagingFiles(SimpleTestCase):
     def test_release_script_guard_rails_are_present(self):
         text = (STAGING / "release.sh").read_text()
         for needle in ("refusing to run as root", "backup failed - nothing was changed", "NOT reverted", "migrate --plan", "healthy", "RELEASE_FAILED_ROLLED_BACK",
-                       'echo "$prev_before"'):
+                       'echo "$prev_before"', "X-Forwarded-Proto: https", "HEALTH_HOST"):
             self.assertIn(needle, text)
         self.assertNotIn("--no-input", text)
         self.assertIsNone(re.search(r"\bsudo\b(?!.*#)", text.replace("sudo systemctl restart talim-gunicorn", "")), "release.sh must not call sudo itself")

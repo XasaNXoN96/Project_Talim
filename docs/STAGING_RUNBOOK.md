@@ -13,7 +13,7 @@
 | 1 | Пользователь `talim`, каталоги, права — `DEPLOYMENT_READINESS.md` §4.1 | `preflight.py` (права каталогов) | логика проверки — да |
 | 2 | PostgreSQL: роли владельца и приложения — §4.2; после каждой миграции `apply_grants.sql` | `preflight.py`: роль приложения не суперпользователь, не может менять `audit_auditlog` и создавать объекты | да, на тестовом кластере |
 | 3 | `/etc/talim/talim.env` (`root:talim`, `0640`) — заполнить **на сервере** по шаблону `deploy/staging/talim.env.staging.example` | `preflight.py` отвергает заглушки, `DEBUG`, `*` в хостах, `http://` в CSRF, выключенный сканер, report-only CSP, чужие права | да |
-| 4 | Релиз: `release.sh deploy <тег>` (каталог `releases/<тег>` = полный checkout репозитория, venv внутри `backend/`) | вывод `RELEASE_OK`; при сбое автоматический возврат | логика — да (22 проверки); systemd/sudoers — нет |
+| 4 | Релиз: `release.sh deploy <тег>` (каталог `releases/<тег>` = полный checkout репозитория, venv внутри `backend/`) | вывод `RELEASE_OK`; при сбое автоматический возврат | логика — да (23 проверки); systemd/sudoers — нет |
 | 5 | Nginx по `talim-production.conf.template`, сертификат владельца | `nginx -t`; `smoke_remote.py https://<хост> --admin-path <путь>` **без** флага `--insecure-self-signed` | шаблон и сценарий — на стенде с временным сертификатом; настоящая цепочка — нет |
 | 6 | ClamAV (официальная база, `freshclam`), `DOCUMENT_SCAN_MODE=clamav` | `check_scanner` OK; загрузка тестовой строки EICAR отклоняется; документ в карантине при остановленном `clamd` | с локальной сигнатурой EICAR — да; официальная база — нет |
 | 7 | SMTP | одно тестовое письмо на ящик оператора: письмо дошло, сброс пароля открывается | **нет** |
@@ -27,6 +27,7 @@
 /srv/talim/backend/.venv/bin/python /srv/talim/backend/deploy/staging/preflight.py --env-file /etc/talim/talim.env --backend /srv/talim/backend
 # релиз (от talim); значения — из окружения оператора
 export RELEASES_DIR=/srv/talim/releases CURRENT_LINK=/srv/talim/backend HEALTH_URL=http://127.0.0.1:8000/healthz/
+export HEALTH_HOST=<хост из DJANGO_ALLOWED_HOSTS>     # нужен: проверка идёт на 127.0.0.1 с заголовком X-Forwarded-Proto: https (иначе production-настройки отвечают 301)
 export RESTART_CMD='sudo systemctl restart talim-gunicorn'            # sudoers: только эта команда (пример, не проверялся)
 export PRE_BACKUP_CMD='set -a; . /etc/talim/talim.env; . /etc/talim/backup.env; set +a; /srv/talim/backend/deploy/backup/backup.sh'
 export MIGRATE_CMD_PREFIX='env DB_USER=<роль-владелец> DB_PASSWORD=<вводится оператором на время релиза, не сохраняется>'   # миграции — ролью владельца
