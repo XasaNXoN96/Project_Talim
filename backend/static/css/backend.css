@@ -9,3 +9,18 @@
 /* grid children must be allowed to shrink so tables scroll inside their card instead of widening the page */
 .stack > * { min-width: 0; }
 .table-wrap { overflow-x: auto; max-width: 100%; }
+
+/* ---- reports: bars and filters use the shared design tokens; no external chart library, no inline <script> */
+.stat-grid.report-kpis { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.report-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; align-items: end; }
+.rbars { display: grid; gap: 6px; }
+.rbar-row { display: grid; grid-template-columns: 78px minmax(0, 1fr) 70px; gap: 8px; align-items: center; font-size: 12px; }
+.rbar-track { display: grid; gap: 2px; }
+.rbar { height: 7px; border-radius: 4px; min-width: 2px; }
+.rbar.created { background: var(--info); } .rbar.completed { background: var(--ok); }
+.rlegend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--text-2); margin-bottom: 8px; }
+.rlegend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
+.report-table table.t { min-width: 0; } .report-table table.t th, .report-table table.t td { overflow-wrap: anywhere; }
+.report-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 900px) { .report-grid { grid-template-columns: minmax(0, 1fr); } .rbar-row { grid-template-columns: 62px minmax(0, 1fr) 56px; } }
+.report-note { font-size: 12px; color: var(--text-2); margin-top: 6px; }

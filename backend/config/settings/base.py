@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "apps.tasks",
     "apps.documents",
     "apps.notifications",
+    "apps.reports",
     "apps.portal",
 ]
 
@@ -249,3 +250,8 @@ CLAMAV_PORT = int(env("CLAMAV_PORT", "3310"))
 CLAMAV_TIMEOUT = float(env("CLAMAV_TIMEOUT", "20"))  # seconds for the whole scan
 if DOCUMENT_SCAN_MODE not in ("clamav", "disabled"):
     raise ImproperlyConfigured("DOCUMENT_SCAN_MODE must be 'clamav' or 'disabled'.")
+
+# --- Reports: hard limits so one request cannot ask for an unbounded amount of data.
+REPORT_MAX_DAYS = 366          # longest date range
+REPORT_MAX_ROWS = 500          # rows per table on screen and in Excel/PDF (the rest is summarised as "and N more")
+REPORT_PDF_MAX_ROWS = 60       # rows per table in the PDF

@@ -1,0 +1,10 @@
+{% load i18n %}
+{% if t %}
+<section class="card card-pad"><h2 style="font-size:16px;margin-bottom:8px">{{ t.title }}</h2>
+{% if t.rows %}<div class="table-wrap report-table"><table class="t"><thead><tr>{% for c in t.columns %}<th>{{ c }}</th>{% endfor %}</tr></thead><tbody>
+{% for row in t.rows %}<tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>{% endfor %}</tbody></table></div>
+{% if t.truncated %}<p class="report-note">{% blocktranslate with n=t.rows|length total=t.total_rows %}Birinchi {{ n }} ta qator ko‘rsatildi (jami {{ total }}). Filtrlarni toraytiring.{% endblocktranslate %}</p>{% endif %}
+{% else %}<p class="muted">{% translate "Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q." %}</p>{% endif %}
+{% if t.note %}<p class="report-note">{{ t.note }}</p>{% endif %}
+</section>
+{% endif %}

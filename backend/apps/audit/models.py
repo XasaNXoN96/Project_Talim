@@ -69,6 +69,8 @@ class AuditLog(models.Model):
         DOCUMENT_RESTORED = "document_restored", "Hujjat arxivdan qaytarildi"
         DOCUMENT_UPLOAD_REJECTED = "document_upload_rejected", "Hujjat yuklash rad etildi"
         FILE_THREAT_DETECTED = "file_threat_detected", "Yuklangan faylda xavf aniqlandi"
+        REPORT_EXPORTED = "report_exported", "Hisobot yuklab olindi"
+        REPORT_PEOPLE_VIEWED = "report_people_viewed", "Hisobotda ijrochilar kesimi ko‘rildi"
         TASK_ATTACHMENT_ADDED = "task_attachment_added", "Topshiriqqa fayl biriktirildi"
         TASK_ATTACHMENT_DOWNLOADED = "task_attachment_downloaded", "Topshiriq fayli yuklab olindi"
         TASK_ATTACHMENT_REMOVED = "task_attachment_removed", "Topshiriq fayli olib tashlandi"

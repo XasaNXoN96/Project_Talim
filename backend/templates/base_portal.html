@@ -16,6 +16,9 @@
       {% if perms.tasks.view_task %}
       <a href="{% url 'tasks:list' %}" title="{% translate 'Topshiriqlar' %}" {% if request.resolver_match.namespace == 'tasks' %}class="active" aria-current="page"{% endif %}><i data-i="clipboard" style="display:contents"></i><span>{% translate "Topshiriqlar" %}</span></a>
       {% endif %}
+      {% if perms.reports.view_reports %}
+      <a href="{% url 'reports:index' %}" title="{% translate 'Hisobotlar' %}" {% if request.resolver_match.namespace == 'reports' %}class="active" aria-current="page"{% endif %}><i data-i="chart" style="display:contents"></i><span>{% translate "Hisobotlar" %}</span></a>
+      {% endif %}
       {% if perms.documents.view_document %}
       <a href="{% url 'documents:list' %}" title="{% translate 'Hujjatlar' %}" {% if request.resolver_match.namespace == 'documents' %}class="active" aria-current="page"{% endif %}><i data-i="file" style="display:contents"></i><span>{% translate "Hujjatlar" %}</span></a>
       {% endif %}

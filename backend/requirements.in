@@ -8,3 +8,5 @@ pyotp>=2.9,<3             # TOTP (RFC 6238) code generation/verification
 cryptography>=44          # Fernet: TOTP secrets are encrypted at rest
 qrcode>=8,<9              # QR code for authenticator enrolment (SVG output, no Pillow)
 gunicorn>=23,<24          # WSGI server behind Nginx (production)
+openpyxl>=3.1,<4         # Excel (.xlsx) export; pure Python
+reportlab>=4.2,<5        # PDF export (embedded TTF font for Cyrillic/Uzbek)

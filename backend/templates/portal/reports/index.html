@@ -1,0 +1,50 @@
+{% extends "base_portal.html" %}
+{% load i18n static %}
+{% block title %}{% translate "Hisobotlar" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Hisobotlar" %}</h1><p>{% translate "Ma’lumotlar bazasidagi joriy ma’lumotlar. Siz faqat o‘z doirangizdagi ma’lumotlarni ko‘rasiz." %}</p></div>
+{% if can_export and data %}<div class="row wrap">
+  <a class="btn btn-secondary" data-export data-busy="{% translate 'Tayyorlanmoqda…' %}" href="{% url 'reports:export' 'xlsx' %}?{{ query }}">{% translate "Excel" %}</a>
+  <a class="btn btn-secondary" data-export data-busy="{% translate 'Tayyorlanmoqda…' %}" href="{% url 'reports:export' 'pdf' %}?{{ query }}">{% translate "PDF" %}</a></div>{% endif %}</div>
+
+<form method="get" class="card card-pad" style="margin-bottom:16px" novalidate>
+  {% if form.non_field_errors %}<div class="alert err" role="alert" style="margin-bottom:12px"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}
+  <div class="report-filters">
+    {% for field in form %}{% include "includes/field.html" with field=field %}{% endfor %}
+    <div><button class="btn btn-primary" type="submit">{% translate "Qo‘llash" %}</button> <a class="btn btn-ghost" href="{% url 'reports:index' %}">{% translate "Tozalash" %}</a></div>
+  </div>
+</form>
+
+{% if error %}
+<div class="card empty" role="alert"><h3>{% translate "Hisobotni tayyorlab bo‘lmadi" %}</h3><p class="muted">{% translate "Xatolik yuz berdi. Keyinroq qayta urinib ko‘ring; muammo davom etsa, administratorga murojaat qiling." %}</p></div>
+{% elif data %}
+<p class="muted small" style="margin-bottom:12px">{% blocktranslate with a=data.filters.date_from|date:"d.m.Y" b=data.filters.date_to|date:"d.m.Y" scope=data.scope_note %}Davr: {{ a }} – {{ b }} · Doira: {{ scope }}{% endblocktranslate %}</p>
+<div class="stat-grid report-kpis" style="margin-bottom:16px">
+  <div class="card kpi"><div><div class="n">{{ kpis.employees_active }}</div><div class="l">{% translate "Faol xodimlar" %}</div></div></div>
+  <div class="card kpi"><div><div class="n">{{ kpis.tasks_total }}</div><div class="l">{% translate "Davrda yaratilgan topshiriqlar" %}</div></div></div>
+  <div class="card kpi"><div><div class="n">{{ kpis.tasks_done }}</div><div class="l">{% blocktranslate with r=kpis.tasks_done_rate %}Bajarilgan ({{ r }}%){% endblocktranslate %}</div></div></div>
+  <div class="card kpi"><div><div class="n {% if kpis.tasks_overdue_open %}down{% endif %}">{{ kpis.tasks_overdue_open }}</div><div class="l">{% translate "Muddati o‘tgan (ochiq)" %}</div></div></div>
+  <div class="card kpi"><div><div class="n">{{ kpis.tasks_done_late }}</div><div class="l">{% translate "Kechikib bajarilgan" %}</div></div></div>
+  {% if "documents" in data.sections %}<div class="card kpi"><div><div class="n">{{ kpis.documents_total }}</div><div class="l">{% translate "Davrda yuklangan hujjatlar" %}</div></div></div>{% endif %}
+</div>
+
+<section class="card card-pad" style="margin-bottom:16px"><h2 style="font-size:16px;margin-bottom:8px">{% translate "Topshiriqlar dinamikasi" %}</h2>
+  <div class="rlegend"><span><i style="background:var(--info)"></i>{% translate "Yaratilgan" %}</span><span><i style="background:var(--ok)"></i>{% translate "Yakunlangan" %} ({{ kpis.tasks_completed_in_period }})</span></div>
+  {% if kpis.tasks_total or kpis.tasks_completed_in_period %}
+  <div class="rbars" role="img" aria-label="{% translate 'Topshiriqlar dinamikasi' %}">
+    {% for r in chart %}<div class="rbar-row"><span class="muted">{{ r.label }}</span><div class="rbar-track"><div class="rbar created" style="width:{{ r.cw }}%"></div><div class="rbar completed" style="width:{{ r.dw }}%"></div></div><span>{{ r.created }} / {{ r.completed }}</span></div>{% endfor %}
+  </div>
+  {% else %}<p class="muted">{% translate "Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q." %}</p>{% endif %}
+</section>
+
+<div class="report-grid">
+  {% include "portal/reports/_table.html" with t=tables.task_status %}
+  {% include "portal/reports/_table.html" with t=tables.perf_dept %}
+  {% include "portal/reports/_table.html" with t=tables.emp_dept %}
+  {% include "portal/reports/_table.html" with t=tables.emp_pos %}
+  {% if "documents" in data.sections %}{% include "portal/reports/_table.html" with t=tables.doc_cat %}{% include "portal/reports/_table.html" with t=tables.doc_period %}{% endif %}
+</div>
+{% if "people" in data.sections %}<div style="margin-top:16px">{% include "portal/reports/_table.html" with t=tables.perf_user %}</div>{% endif %}
+{% endif %}
+<script src="{% static 'js/reports.js' %}"></script>
+{% endblock %}
