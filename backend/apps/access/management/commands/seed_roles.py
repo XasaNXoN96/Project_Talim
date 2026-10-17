@@ -18,6 +18,10 @@ class Command(BaseCommand):
                 except Permission.DoesNotExist as exc:
                     raise CommandError(f"Unknown permission: {dotted}") from exc
             group, created = Group.objects.get_or_create(name=code)
+            wanted = {p.pk for p in perms}
+            extras = [p for p in group.permissions.select_related("content_type") if p.pk not in wanted]
+            for p in extras:  # roles are defined in code; anything added by hand is removed - but never silently
+                self.stderr.write(f"removed from role {code}: {p.content_type.app_label}.{p.codename} (not part of the role definition; grant such exceptions per user, not per role)")
             group.permissions.set(perms)
             if verbose:
                 self.stdout.write(f"{'created' if created else 'updated'}: {code} ({len(perms)} permissions)")
