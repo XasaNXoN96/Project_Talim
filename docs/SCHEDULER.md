@@ -100,3 +100,6 @@ sudo systemctl start talim-job@job_status.service; echo $?     # 0 = все за
 * Журнал nginx (`talim-production.conf.template`) не содержит query-строк, а токены сброса пароля скрыты — журнал приложения этого не гарантирует.
 * Шаг проверки восстановления теперь включает `verify_restored_two_factor`.
 * Внешняя передача копий задачей **не** сделана (только пример, не проверен).
+
+## 10. День 15
+Таймеры и службы не менялись. Для staging добавлены `preflight.py` (проверка перед запуском и после изменений) и `release.sh` (релиз с возвратом) — см. [STAGING_RUNBOOK.md](STAGING_RUNBOOK.md). Работа таймеров под настоящим systemd на staging **не проверялась**.

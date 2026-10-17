@@ -64,6 +64,19 @@ nginx -c "$WORK/nginx.conf"
 export HTTP_PORT HTTPS_PORT APP_PORT ADMIN_URL WORK ACCESS_LOG="$WORK/logs/talim-access.log"
 start_app DJANGO_HSTS_SECONDS=0
 "$PY" "$HERE/checks_tls.py" hsts_off
+echo "-- operator smoke script against the same stand (rehearsal mode: self-signed certificate not validated)"
+"$PY" "$HERE/../../staging/smoke_remote.py" "https://localhost:$HTTPS_PORT" --admin-path "$ADMIN_URL" --http-port "$HTTP_PORT" --insecure-self-signed
+echo "-- negative control: WITHOUT the rehearsal flag the self-signed certificate must be REJECTED"
+if "$PY" "$HERE/../../staging/smoke_remote.py" "https://localhost:$HTTPS_PORT" --http-port "$HTTP_PORT" >/dev/null 2>&1; then echo "FAIL: untrusted certificate accepted"; exit 1; else echo "  [PASS] untrusted certificate rejected"; fi
 stop_app; start_app DJANGO_HSTS_SECONDS=60
 "$PY" "$HERE/checks_tls.py" hsts_on
+echo "-- negative control: report-only CSP must make the operator smoke script FAIL"
+stop_app; start_app DJANGO_HSTS_SECONDS=0 DJANGO_CSP_REPORT_ONLY=1
+if "$PY" "$HERE/../../staging/smoke_remote.py" "https://localhost:$HTTPS_PORT" --http-port "$HTTP_PORT" --insecure-self-signed >"$WORK/smoke_neg.txt" 2>&1; then echo "FAIL: report-only CSP not detected"; exit 1; else grep -q "FAIL\] CSP is enforcing" "$WORK/smoke_neg.txt" && echo "  [PASS] report-only CSP detected" || { echo "FAIL: smoke failed for another reason"; cat "$WORK/smoke_neg.txt"; exit 1; }; fi
+echo "-- negative control: no HTTP->HTTPS redirect must make the operator smoke script FAIL"
+cp "$WORK/site.conf" "$WORK/site.conf.orig"
+sed -i 's#return 301 https://[^;]*;#return 200 "plain http served";#' "$WORK/site.conf"; grep -q "plain http served" "$WORK/site.conf" || { echo "FAIL: mutation did not apply"; exit 1; }
+nginx -s reload -c "$WORK/nginx.conf"; sleep 1
+if "$PY" "$HERE/../../staging/smoke_remote.py" "https://localhost:$HTTPS_PORT" --http-port "$HTTP_PORT" --insecure-self-signed >"$WORK/smoke_neg2.txt" 2>&1; then echo "FAIL: missing redirect not detected"; exit 1; else grep -q "FAIL\] HTTP redirects" "$WORK/smoke_neg2.txt" && echo "  [PASS] missing redirect detected" || { echo "FAIL: smoke failed for another reason"; cat "$WORK/smoke_neg2.txt"; exit 1; }; fi
+cp "$WORK/site.conf.orig" "$WORK/site.conf"; nginx -s reload -c "$WORK/nginx.conf"
 echo "ALL TLS CHECKS FINISHED (self-signed certificate: chain validation, DNS and the public internet were NOT tested)"
