@@ -1,0 +1,11 @@
+{% extends "accounts/auth_base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Zaxira kodlar" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1>{% translate "Zaxira kodlar" %}</h1>
+<div class="alert warn" role="alert" style="margin:12px 0"><span><b>{% translate "Hozir saqlang." %}</b> {% translate "Bu kodlar faqat bir marta ko‘rsatiladi. Har biri bir marta ishlaydi va telefoningiz yo‘qolganda kirishga yordam beradi. Xavfsiz joyda saqlang." %}</span></div>
+<ul style="list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-family:ui-monospace,monospace;font-size:16px;font-weight:600">
+{% for code in codes %}<li class="card" style="padding:10px;text-align:center;user-select:all">{{ code }}</li>{% endfor %}
+</ul>
+<a class="btn btn-primary btn-lg btn-block" style="margin-top:20px" href="{{ next }}">{% translate "Saqladim, davom etish" %}</a>
+{% endblock %}

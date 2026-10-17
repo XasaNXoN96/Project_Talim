@@ -1,5 +1,39 @@
+import hashlib
+import logging
+
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
+from django.core.exceptions import ValidationError
+
+from apps.audit.models import AuditLog
+from apps.audit.services import client_ip, record
+
+from . import throttle
+from .backends import find_login_user
+
+logger = logging.getLogger(__name__)
+
+# One message for "wrong credentials" AND "temporarily blocked": the response never reveals which, nor whether
+# the login/e-mail exists.
+NEUTRAL_LOGIN_ERROR = "Login yoki parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
+NEUTRAL_CODE_ERROR = "Kod noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
+NEUTRAL_PASSWORD_ERROR = "Joriy parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
+
+
+def short_hash(value: str) -> str:
+    """Audit-safe fingerprint: never the raw identifier (it may be a mistyped password)."""
+    return hashlib.sha256(str(value).strip().lower().encode("utf-8")).hexdigest()[:16]
+
+
+def login_keys(request, identifier, user):
+    keys = [
+        throttle.Key("login:identifier", str(identifier).strip().lower()[:254], "clear"),
+        throttle.Key("login:ip", client_ip(request) or "unknown", "refund"),
+    ]
+    if user is not None:
+        keys.append(throttle.Key("login:user", str(user.pk), "clear"))
+    return keys
 
 
 class LoginForm(AuthenticationForm):
@@ -15,7 +49,101 @@ class LoginForm(AuthenticationForm):
     )
     remember_me = forms.BooleanField(label="Meni eslab qolish", required=False)
 
-    error_messages = {
-        "invalid_login": "Login yoki parol noto‘g‘ri. Qaytadan urinib ko‘ring.",
-        "inactive": "Bu hisob faol emas.",
-    }
+    error_messages = {"invalid_login": NEUTRAL_LOGIN_ERROR, "inactive": NEUTRAL_LOGIN_ERROR}
+
+    def clean(self):
+        username = self.cleaned_data.get("username")
+        password = self.cleaned_data.get("password")
+        if username is None or password is None:
+            return self.cleaned_data
+
+        user = find_login_user(username)
+        keys = login_keys(self.request, username, user)
+        reservation = throttle.reserve(keys)  # counted BEFORE the password is checked (parallel-safe)
+        fingerprint = short_hash(username)
+
+        if not reservation.allowed:
+            get_user_model()().set_password(password)  # same cost as a real check: lock state is not observable by timing
+            if reservation.audit_blocked:
+                record(AuditLog.Action.LOGIN_BLOCKED, request=self.request, user=user,
+                       meta={"kinds": reservation.blocked_kinds, "identifier_sha256_16": fingerprint})
+            raise self.get_invalid_login_error()
+
+        self.user_cache = authenticate(self.request, username=username, password=password)
+        if self.user_cache is None:
+            if reservation.newly_locked:
+                record(AuditLog.Action.LOGIN_LOCKED, request=self.request, user=user,
+                       meta={"kinds": reservation.newly_locked, "identifier_sha256_16": fingerprint})
+            raise self.get_invalid_login_error()
+
+        self.confirm_login_allowed(self.user_cache)
+        throttle.succeed(keys, reservation)
+        return self.cleaned_data
+
+
+class ThrottledPasswordChangeForm(PasswordChangeForm):
+    """Current-password check is rate limited too: a hijacked session must not be able to guess it."""
+
+    request = None
+    error_messages = {**PasswordChangeForm.error_messages, "password_incorrect": NEUTRAL_PASSWORD_ERROR}
+
+    def clean_old_password(self):
+        old_password = self.cleaned_data["old_password"]
+        keys = [throttle.Key("pwchange:user", str(self.user.pk), "clear")]
+        reservation = throttle.reserve(keys)
+        if not reservation.allowed or not self.user.check_password(old_password):
+            if reservation.allowed and reservation.newly_locked:
+                record(AuditLog.Action.LOGIN_LOCKED, request=self.request, user=self.user, meta={"kinds": reservation.newly_locked})
+            raise ValidationError(self.error_messages["password_incorrect"], code="password_incorrect")
+        throttle.succeed(keys, reservation)
+        return old_password
+
+
+class ThrottledPasswordResetForm(PasswordResetForm):
+    """Same visible result whether or not the e-mail exists, and whether or not the request was rate limited."""
+
+    def save(self, request=None, **kwargs):
+        email = self.cleaned_data["email"].strip().lower()
+        keys = [throttle.Key("reset:ip", client_ip(request) or "unknown", "keep"), throttle.Key("reset:email", email, "keep")]
+        reservation = throttle.reserve(keys)
+        fingerprint = short_hash(email)
+        if not reservation.allowed:
+            if reservation.audit_blocked:
+                record(AuditLog.Action.PASSWORD_RESET_THROTTLED, request=request,
+                       meta={"kinds": reservation.blocked_kinds, "email_sha256_16": fingerprint})
+            return
+        record(AuditLog.Action.PASSWORD_RESET_REQUESTED, request=request, meta={"email_sha256_16": fingerprint})
+        super().save(request=request, **kwargs)
+
+    def send_mail(self, *args, **kwargs):
+        try:
+            super().send_mail(*args, **kwargs)
+        except Exception as exc:  # noqa: BLE001
+            # A visible error would reveal that the account exists. Log the type only (messages can contain addresses).
+            logger.error("Password-reset e-mail could not be sent (%s)", type(exc).__name__)
+
+
+class OtpCodeForm(forms.Form):
+    code = forms.CharField(
+        label="Tasdiqlash kodi yoki zaxira kod",
+        max_length=32,
+        strip=True,
+        widget=forms.TextInput(attrs={"autocomplete": "one-time-code", "inputmode": "text", "autofocus": True, "class": "input"}),
+    )
+
+
+class TotpSetupForm(forms.Form):
+    code = forms.CharField(
+        label="Ilovadagi 6 xonali kod",
+        max_length=12,
+        strip=True,
+        widget=forms.TextInput(attrs={"autocomplete": "one-time-code", "inputmode": "numeric", "autofocus": True, "class": "input"}),
+    )
+
+
+class PasswordConfirmForm(forms.Form):
+    password = forms.CharField(
+        label="Joriy parol",
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "current-password", "class": "input"}),
+    )

@@ -4,3 +4,6 @@ Django>=5.2,<5.3          # 5.2 LTS (security support until April 2028)
 psycopg[binary]>=3.2,<4   # PostgreSQL driver
 argon2-cffi>=23.1         # Argon2 password hasher
 python-dotenv>=1.0        # reads backend/.env in development
+pyotp>=2.9,<3             # TOTP (RFC 6238) code generation/verification
+cryptography>=44          # Fernet: TOTP secrets are encrypted at rest
+qrcode>=8,<9              # QR code for authenticator enrolment (SVG output, no Pillow)

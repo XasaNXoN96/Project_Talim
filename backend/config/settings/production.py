@@ -23,3 +23,20 @@ SECURE_HSTS_PRELOAD = False
 if env_bool("DJANGO_BEHIND_TLS_PROXY", False):  # noqa: F405
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")  # noqa: F405
+# __Host- cookies are only accepted over HTTPS, without a Domain, for path "/": prevents subdomain cookie injection.
+SESSION_COOKIE_NAME = "__Host-sessionid"
+CSRF_COOKIE_NAME = "__Host-csrftoken"
+
+# TOTP secrets cannot be stored without an encryption key.
+if not OTP_ENCRYPTION_KEYS:  # noqa: F405
+    raise ImproperlyConfigured("OTP_ENCRYPTION_KEYS must be set in production.")
+
+# Real mail is sent only through an explicitly configured SMTP server.
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = env("EMAIL_HOST", required=True)  # noqa: F405
+EMAIL_PORT = int(env("EMAIL_PORT", "587") or 587)  # noqa: F405
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", "")  # noqa: F405
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")  # noqa: F405
+EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)  # noqa: F405
+if not env("DEFAULT_FROM_EMAIL"):  # noqa: F405
+    raise ImproperlyConfigured("DEFAULT_FROM_EMAIL must be set in production.")

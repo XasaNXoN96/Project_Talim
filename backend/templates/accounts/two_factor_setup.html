@@ -1,0 +1,21 @@
+{% extends "accounts/auth_base.html" %}
+{% load i18n %}
+{% block title %}{% translate "2FA ni sozlash" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1>{% translate "Ikki bosqichli himoyani sozlash" %}</h1>
+{% if required %}<div class="alert info" style="margin:12px 0"><span>{% translate "Sizning rolingiz uchun bu majburiy. Sozlashni tugatmaguncha tizimga kira olmaysiz." %}</span></div>{% endif %}
+<ol class="muted" style="padding-left:18px;display:grid;gap:6px;margin:12px 0">
+  <li>{% translate "Telefoningizda autentifikator ilovasini oching (masalan, Google Authenticator, Microsoft Authenticator, Aegis)." %}</li>
+  <li>{% translate "QR-kodni skanerlang yoki maxfiy kalitni qo‘lda kiriting." %}</li>
+  <li>{% translate "Ilovada ko‘rinadigan 6 xonali kodni pastga kiriting." %}</li>
+</ol>
+<div class="qr" style="max-width:220px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:8px">{{ qr }}</div>
+<p class="small" style="margin-top:10px">{% translate "Qo‘lda kiritish uchun kalit" %}: <code style="user-select:all;font-weight:600">{{ secret }}</code><br><span class="muted">{% translate "Hisob" %}: {{ username }}</span></p>
+<form method="post" style="display:grid;gap:16px;margin-top:16px" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert err" role="alert"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}
+  {% include "includes/field.html" with field=form.code %}
+  <button class="btn btn-primary btn-lg btn-block" type="submit">{% translate "Tasdiqlash va yoqish" %}</button>
+</form>
+<form method="post" style="margin-top:8px">{% csrf_token %}<button class="btn btn-ghost btn-sm" type="submit" name="restart" value="1">{% translate "Yangi kalit yaratish" %}</button></form>
+{% endblock %}

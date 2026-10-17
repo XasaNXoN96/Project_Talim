@@ -1,0 +1,12 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{{ title }}</h1><p>{{ note }}</p></div></div>
+<form method="post" class="card card-pad" style="display:grid;gap:16px;max-width:480px" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert err" role="alert"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}
+  {% include "includes/field.html" with field=form.password %}
+  <div class="row"><button class="btn {% if danger %}btn-danger{% else %}btn-primary{% endif %}" type="submit">{{ button }}</button><a class="btn btn-secondary" href="{% url 'accounts:security' %}">{% translate "Bekor qilish" %}</a></div>
+</form>
+{% endblock %}

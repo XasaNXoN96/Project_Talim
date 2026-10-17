@@ -11,6 +11,7 @@
 <div class="login">
   <main class="login-form">
     <a class="brand" href="{% url 'content:home' %}"><span data-logo style="display:block;width:52px;height:52px;flex:none"></span><div><b>{{ SITE_DISTRICT }}</b><span>{{ SITE_SHORT }}</span></div></a>
+    {% include "includes/messages.html" %}
     <h1>{% translate "Tizimga kirish" %}</h1>
     <p class="muted">{% translate "Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting." %}</p>
     {# NOTE: id is "signin-form" (not "loginForm"): the static demo's app.js hijacks #loginForm with a fake login. #}
@@ -28,7 +29,7 @@
         {% for e in form.password.errors %}<span class="err-text">{{ e }}</span>{% endfor %}</div>
       <label class="check"><input type="checkbox" name="remember_me" id="id_remember_me"> {{ form.remember_me.label }}</label>
       <button class="btn btn-primary btn-lg btn-block" type="submit">{% translate "Kirish" %}</button>
-      <p class="xs muted">{% translate "Parolni tiklash hozircha mavjud emas — administratorga murojaat qiling." %}</p>
+      <a class="small" href="{% url 'accounts:password_reset' %}">{% translate "Parolni unutdingizmi?" %}</a>
     </form>
   </main>
   <aside class="login-art"><div data-ph="building"></div><div><h2>{% translate "Ta’lim — kelajak poydevori" %}</h2><p>{{ SITE_NAME }}</p></div></aside>

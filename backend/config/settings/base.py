@@ -58,11 +58,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "apps.core.middleware.SecurityHeadersMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "apps.accounts.middleware.TwoFactorEnforcementMiddleware",  # needs auth + messages above
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -78,6 +80,7 @@ TEMPLATES = [
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
+                "django.template.context_processors.i18n",  # LANGUAGE_CODE for <html lang>
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.site",
@@ -117,6 +120,37 @@ LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "portal:dashboard"
 LOGOUT_REDIRECT_URL = "content:home"
 
+# Password-reset links live 30 minutes; they are HMAC tokens (nothing stored) and die when the password changes.
+PASSWORD_RESET_TIMEOUT = 60 * 30
+
+# --- Rate limiting (apps.accounts.throttle). max = attempts allowed before the lock; seconds for window/lock.
+# login:identifier and login:user are per account (all IPs); login:ip is higher because many staff may share one
+# office address (NAT). Counting is atomic in PostgreSQL, so it is valid across processes and servers.
+THROTTLE_POLICIES = {
+    "login:identifier": {"max": 5, "window": 900, "lock": 900},
+    "login:user": {"max": 5, "window": 900, "lock": 900},
+    "login:ip": {"max": 20, "window": 900, "lock": 900},
+    "pwchange:user": {"max": 5, "window": 900, "lock": 900},
+    "otp:user": {"max": 5, "window": 900, "lock": 900},
+    "otp:ip": {"max": 20, "window": 900, "lock": 900},
+    "reset:ip": {"max": 5, "window": 3600, "lock": 3600},
+    "reset:email": {"max": 3, "window": 3600, "lock": 3600},
+    "csp:ip": {"max": 60, "window": 3600, "lock": 3600},
+}
+
+# --- Two-factor authentication (TOTP)
+TWO_FACTOR_REQUIRED_ROLES = ["admin", "sysadmin"]  # superusers are always required as well
+TWO_FACTOR_PENDING_SECONDS = 300  # time allowed between the password step and the code step
+TWO_FACTOR_ISSUER = "Mirzacho‘l XTB"
+# Comma-separated Fernet keys (newest first) used to encrypt TOTP secrets at rest. Never commit real keys.
+#   python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+OTP_ENCRYPTION_KEYS = env_list("OTP_ENCRYPTION_KEYS")
+
+# --- E-mail. Default writes messages to files (never to the network); production must configure SMTP explicitly.
+EMAIL_BACKEND = env("EMAIL_BACKEND", "django.core.mail.backends.filebased.EmailBackend")
+EMAIL_FILE_PATH = BASE_DIR / ".dev_mail"
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "no-reply@localhost")
+
 # --- Sessions / cookies / browser protections -----------------------------
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 14  # applies only when "Meni eslab qolish" is ticked
 SESSION_COOKIE_HTTPONLY = True
@@ -126,6 +160,28 @@ CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
 X_FRAME_OPTIONS = "DENY"
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "same-origin"
+
+# --- Content-Security-Policy (REPORT-ONLY at first: violations are reported to /csp-report/, nothing is blocked).
+# No 'unsafe-eval' and no 'unsafe-inline' for scripts or stylesheets. style-src-attr allows inline style="..."
+# attributes only, because the shared design system uses them; plan: remove them, then drop this exception.
+CSP_REPORT_ONLY = env_bool("DJANGO_CSP_REPORT_ONLY", True)
+CSP_DIRECTIVES = {
+    "default-src": ["'self'"],
+    "script-src": ["'self'"],
+    "style-src": ["'self'"],
+    "style-src-attr": ["'unsafe-inline'"],
+    "img-src": ["'self'", "data:"],
+    "font-src": ["'self'"],
+    "connect-src": ["'self'"],
+    "object-src": ["'none'"],
+    "base-uri": ["'self'"],
+    "form-action": ["'self'"],
+    "frame-ancestors": ["'none'"],
+    "report-uri": ["/csp-report/"],
+}
+CSP_POLICY = "; ".join(f"{name} {' '.join(values)}" for name, values in CSP_DIRECTIVES.items())
+# geolocation stays disabled until the attendance/geolocation stage is approved by the legal checklist.
+PERMISSIONS_POLICY = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
 
 # --- Internationalisation (uz first; ru/en translations come later) -------
 LANGUAGE_CODE = "uz"
@@ -147,8 +203,9 @@ LOG_LEVEL = (env("DJANGO_LOG_LEVEL", "INFO") or "INFO").upper()
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+    "filters": {"redact": {"()": "apps.core.logging.RedactSecretsFilter"}},
     "formatters": {"plain": {"format": "%(asctime)s %(levelname)s %(name)s: %(message)s"}},
-    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "plain"}},
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "plain", "filters": ["redact"]}},
     "loggers": {
         "django": {"handlers": ["console"], "level": LOG_LEVEL, "propagate": False},
         "django.security": {"handlers": ["console"], "level": "WARNING", "propagate": False},

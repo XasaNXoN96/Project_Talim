@@ -1,0 +1,26 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Xavfsizlik" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Xavfsizlik" %}</h1><p>{% translate "Parol va ikki bosqichli himoya" %}</p></div></div>
+<div class="stack" style="max-width:720px">
+  <section class="card card-pad">
+    <h2 style="font-size:17px;margin-bottom:8px">{% translate "Parol" %}</h2>
+    <p class="muted small" style="margin-bottom:12px">{% translate "Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi." %}</p>
+    <a class="btn btn-secondary" href="{% url 'accounts:password_change' %}">{% translate "Parolni almashtirish" %}</a>
+  </section>
+  <section class="card card-pad">
+    <h2 style="font-size:17px;margin-bottom:8px">{% translate "Ikki bosqichli himoya (2FA)" %}</h2>
+    {% if has_device %}
+      <p><span class="badge b-ok">{% translate "Yoqilgan" %}</span> <span class="muted small">{% blocktranslate with n=remaining %}Qolgan zaxira kodlar: {{ n }}{% endblocktranslate %}</span></p>
+      <div class="row wrap" style="margin-top:12px">
+        <a class="btn btn-secondary" href="{% url 'accounts:backup_codes_regenerate' %}">{% translate "Zaxira kodlarni yangilash" %}</a>
+        {% if required %}<span class="muted small">{% translate "Sizning rolingiz uchun 2FA majburiy." %}</span>{% else %}<a class="btn btn-ghost" href="{% url 'accounts:two_factor_disable' %}">{% translate "O‘chirish" %}</a>{% endif %}
+      </div>
+    {% else %}
+      <p><span class="badge b-warn">{% translate "Yoqilmagan" %}</span></p>
+      <a class="btn btn-primary" style="margin-top:12px" href="{% url 'accounts:two_factor_setup' %}">{% translate "2FA ni yoqish" %}</a>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

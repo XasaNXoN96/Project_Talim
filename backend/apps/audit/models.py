@@ -32,6 +32,21 @@ class AuditLog(models.Model):
         LOGOUT = "logout", "Chiqish"
         ROLE_ASSIGNED = "role_assigned", "Rol biriktirildi"
         ROLE_REVOKED = "role_revoked", "Rol olib tashlandi"
+        LOGIN_LOCKED = "login_locked", "Kirish vaqtincha bloklandi"
+        LOGIN_BLOCKED = "login_blocked", "Bloklangan paytda kirishga urinish"
+        PASSWORD_CHANGED = "password_changed", "Parol almashtirildi"
+        PASSWORD_RESET_REQUESTED = "password_reset_requested", "Parolni tiklash so‘raldi"
+        PASSWORD_RESET_THROTTLED = "password_reset_throttled", "Parolni tiklash so‘rovlari cheklandi"
+        PASSWORD_RESET_COMPLETED = "password_reset_completed", "Parol tiklandi"
+        TWO_FACTOR_ENABLED = "two_factor_enabled", "2FA yoqildi"
+        TWO_FACTOR_DISABLED = "two_factor_disabled", "2FA o‘chirildi"
+        TWO_FACTOR_FAILED = "two_factor_failed", "2FA kodi noto‘g‘ri"
+        TWO_FACTOR_LOCKED = "two_factor_locked", "2FA tekshiruvi vaqtincha bloklandi"
+        TWO_FACTOR_BLOCKED = "two_factor_blocked", "Bloklangan paytda 2FA urinishi"
+        TWO_FACTOR_BACKUP_USED = "two_factor_backup_used", "Zaxira kod ishlatildi"
+        TWO_FACTOR_BACKUP_REGENERATED = "two_factor_backup_regenerated", "Zaxira kodlar yangilandi"
+        TWO_FACTOR_RESET = "two_factor_reset", "2FA administrator tomonidan tiklandi"
+        TWO_FACTOR_REQUIRED_LOGOUT = "two_factor_required_logout", "2FA talab qilingani uchun sessiya yopildi"
 
     at = models.DateTimeField(default=timezone.now, db_index=True, editable=False)
     user = models.ForeignKey(

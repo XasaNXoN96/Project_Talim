@@ -27,11 +27,13 @@
       <div class="dd">
         <button class="me" type="button" data-dd aria-label="{% translate 'Profil menyusi' %}"><span class="av" data-name="{{ user.get_username }}"></span><div><b>{{ user.get_full_name|default:user.get_username }}</b><small>{{ user.email }}</small></div><i data-i="down" data-c="sm" style="display:contents"></i></button>
         <div class="dd-menu">
+          <a href="{% url 'accounts:security' %}"><i data-i="shield" data-c="sm" style="display:contents"></i>{% translate "Xavfsizlik" %}</a>
+          <div class="sep"></div>
           <form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button type="submit" class="danger"><i data-i="logout" data-c="sm" style="display:contents"></i>{% translate "Tizimdan chiqish" %}</button></form>
         </div>
       </div>
     </header>
-    <main class="content" id="content">{% block content %}{% endblock %}</main>
+    <main class="content" id="content">{% include "includes/messages.html" %}{% block content %}{% endblock %}</main>
     <div class="demo-foot">{{ SITE_NAME }} · {% translate "Ishlab chiqish bosqichi" %}</div>
   </div>
 </div>

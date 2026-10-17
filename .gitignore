@@ -16,6 +16,7 @@ venv/
 backend/staticfiles/
 backend/media/
 backend/logs/
+backend/.dev_mail/
 *.log
 .coverage
 htmlcov/

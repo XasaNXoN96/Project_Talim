@@ -1,0 +1,14 @@
+{% extends "accounts/auth_base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Ikki bosqichli tasdiqlash" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1>{% translate "Ikki bosqichli tasdiqlash" %}</h1>
+<p class="muted">{% blocktranslate %}Autentifikator ilovasidagi 6 xonali kodni kiriting. Qurilmangiz yo‘q bo‘lsa, zaxira kodlardan birini kiriting.{% endblocktranslate %}</p>
+<form method="post" style="display:grid;gap:16px;margin-top:24px" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert err" role="alert"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}
+  {% include "includes/field.html" with field=form.code %}
+  <button class="btn btn-primary btn-lg btn-block" type="submit">{% translate "Tasdiqlash" %}</button>
+  <a class="small" href="{% url 'accounts:login' %}">{% translate "Boshiga qaytish" %}</a>
+</form>
+{% endblock %}

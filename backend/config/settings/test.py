@@ -11,6 +11,8 @@ DEBUG = False
 PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]
 EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 ALLOWED_HOSTS = ["testserver", "localhost"]
+# Test-only Fernet key: protects nothing.
+OTP_ENCRYPTION_KEYS = ["Vd89ffgaIBKyfs3cTdxx0oY3ExI6vPux7GHTCBdWaTE="]
 LOGGING["loggers"]["django"]["level"] = "ERROR"  # noqa: F405
 LOGGING["loggers"]["django.request"] = {"handlers": [], "level": "CRITICAL", "propagate": False}  # noqa: F405
 LOGGING["loggers"]["apps"]["level"] = "CRITICAL"  # noqa: F405

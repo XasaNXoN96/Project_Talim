@@ -5,6 +5,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from apps.access.models import RoleAssignment
+from apps.accounts.testing import login_with_two_factor
 from apps.audit.models import AuditLog, ImmutableAuditError
 
 User = get_user_model()
@@ -71,12 +72,13 @@ class AuditPageAuthorizationTests(TestCase):
 
     def test_admin_and_sysadmin_roles_can_view(self):
         for name, role in (("jack", "admin"), ("kate", "sysadmin")):
-            self.client.force_login(user_with_role(name, role))
+            login_with_two_factor(self.client, user_with_role(name, role))
             self.assertEqual(self.client.get(self.url).status_code, 200, msg=role)
 
     def test_page_lists_real_entries(self):
         admin = user_with_role("leo", "admin")
-        self.client.post(reverse("accounts:login"), {"username": "leo", "password": PASSWORD})
+        AuditLog.objects.create(action=AuditLog.Action.LOGIN, user=admin, object_type="User")
+        login_with_two_factor(self.client, admin)
         response = self.client.get(self.url)
         self.assertContains(response, "Tizimga kirish")
         self.assertContains(response, "leo")
@@ -84,18 +86,18 @@ class AuditPageAuthorizationTests(TestCase):
     def test_menu_link_hidden_without_permission(self):
         self.client.force_login(user_with_role("mia", "employee"))
         self.assertNotContains(self.client.get(reverse("portal:dashboard")), self.url)
-        self.client.force_login(user_with_role("ned", "admin"))
+        login_with_two_factor(self.client, user_with_role("ned", "admin"))
         self.assertContains(self.client.get(reverse("portal:dashboard")), self.url)
 
     def test_revoked_role_loses_access_immediately(self):
         user = user_with_role("oli", "admin")
-        self.client.force_login(user)
+        login_with_two_factor(self.client, user)
         self.assertEqual(self.client.get(self.url).status_code, 200)
         RoleAssignment.objects.get(user=user).delete()
         self.assertEqual(self.client.get(self.url).status_code, 403)
 
     def test_audit_page_cannot_modify_data(self):
-        self.client.force_login(user_with_role("pat", "admin"))
+        login_with_two_factor(self.client, user_with_role("pat", "admin"))
         self.assertEqual(self.client.post(self.url).status_code, 405)
 
 
