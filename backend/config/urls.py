@@ -11,6 +11,7 @@ urlpatterns = [
     path("accounts/", include("apps.accounts.urls")),
     path("portal/users/", include("apps.accounts.manage_urls")),
     path("portal/employees/", include("apps.organization.urls")),
+    path("portal/tasks/", include("apps.tasks.urls")),
     path("portal/", include("apps.portal.urls")),
     path("", include("apps.content.urls")),
 ]

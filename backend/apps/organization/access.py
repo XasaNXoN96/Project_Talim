@@ -33,11 +33,16 @@ def descendant_ids(department_id):
 
 def covered_departments(user, tier):
     """None = every department; otherwise the set of department ids the user's roles cover for this tier."""
+    return covered_departments_for(user, PERMISSION[tier])
+
+
+def covered_departments_for(user, permission):
+    """Same, for any permission ("app.codename"): the scope of the role assignments whose role carries it."""
     if not getattr(user, "is_authenticated", False) or not user.is_active:
         return set()
     if user.is_superuser:
         return None
-    app, codename = PERMISSION[tier].split(".")
+    app, codename = permission.split(".")
     covered = set()
     assignments = RoleAssignment.objects.filter(
         user=user, role__permissions__content_type__app_label=app, role__permissions__codename=codename

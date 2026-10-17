@@ -13,6 +13,9 @@
     <a class="sb-brand" href="{% url 'portal:dashboard' %}" title="{{ SITE_NAME }}"><span data-logo style="display:block;width:40px;height:40px;flex:none"></span><div><b>{{ SITE_SHORT }}<br>{{ SITE_DISTRICT }}</b><small>{% translate "Xodimlar portali" %}</small></div></a>
     <nav class="sb-nav" aria-label="{% translate 'Bo‘limlar' %}">
       <a href="{% url 'portal:dashboard' %}" title="{% translate 'Bosh sahifa' %}" {% if request.resolver_match.url_name == 'dashboard' %}class="active" aria-current="page"{% endif %}><i data-i="home" style="display:contents"></i><span>{% translate "Bosh sahifa" %}</span></a>
+      {% if perms.tasks.view_task %}
+      <a href="{% url 'tasks:list' %}" title="{% translate 'Topshiriqlar' %}" {% if request.resolver_match.namespace == 'tasks' %}class="active" aria-current="page"{% endif %}><i data-i="clipboard" style="display:contents"></i><span>{% translate "Topshiriqlar" %}</span></a>
+      {% endif %}
       {% if perms.organization.view_employee_directory %}
       <a href="{% url 'employees:list' %}" title="{% translate 'Xodimlar' %}" {% if request.resolver_match.namespace == 'employees' %}class="active" aria-current="page"{% endif %}><i data-i="users" style="display:contents"></i><span>{% translate "Xodimlar" %}</span></a>
       {% endif %}

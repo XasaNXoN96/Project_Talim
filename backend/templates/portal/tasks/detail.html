@@ -1,0 +1,25 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{{ task.title }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{{ task.title }}</h1><p>{% blocktranslate with who=task.created_by.get_full_name|default:task.created_by.get_username %}Bergan: {{ who }}{% endblocktranslate %} · {{ task.created_at|date:"d.m.Y H:i" }}</p></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% url 'tasks:list' %}">{% translate "Ro‘yxat" %}</a>{% if can_edit %}<a class="btn btn-secondary" href="{% url 'tasks:edit' task.pk %}">{% translate "Tahrirlash" %}</a>{% endif %}</div></div>
+<div class="stack" style="max-width:820px">
+  <section class="card card-pad">
+    <p class="row wrap"><span class="badge {% if task.status == 'done' %}b-ok{% elif task.status == 'cancelled' %}b-err{% elif task.status == 'review' %}b-warn{% else %}b-info{% endif %}">{{ task.get_status_display }}</span>
+      <span class="badge plain">{{ task.get_priority_display }}</span>
+      {% if task.due_date %}<span class="muted small">{% translate "Muddat" %}: {{ task.due_date|date:"d.m.Y" }}{% if task.due_date < today and task.status != "done" and task.status != "cancelled" %} — <b>{% translate "muddati o‘tgan" %}</b>{% endif %}</span>{% endif %}</p>
+    <p class="muted small">{% translate "Ijrochilar" %}: {% for u in assignees %}{{ u.get_full_name|default:u.get_username }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    {% if task.description %}<div style="white-space:pre-wrap;margin-top:12px">{{ task.description }}</div>{% endif %}
+    {% if transitions %}<div class="row wrap" style="margin-top:16px">{% for code, label in transitions %}
+      <form method="post" action="{% url 'tasks:transition' task.pk code %}">{% csrf_token %}<button class="btn {% if code == 'cancelled' %}btn-danger{% else %}btn-primary{% endif %} btn-sm" type="submit">{{ label }}</button></form>{% endfor %}</div>{% endif %}
+  </section>
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Izohlar" %}</h2>
+    {% for c in comments %}<div style="margin-bottom:12px"><b>{{ c.author.get_full_name|default:c.author.get_username }}</b> <span class="muted small">{{ c.created_at|date:"d.m.Y H:i" }}</span><div style="white-space:pre-wrap">{{ c.body }}</div></div>{% empty %}<p class="muted">{% translate "Izohlar yo‘q." %}</p>{% endfor %}
+    {% if perms.tasks.add_taskcomment %}<form method="post" action="{% url 'tasks:comment' task.pk %}" style="display:grid;gap:8px;margin-top:12px">{% csrf_token %}{% include "includes/field.html" with field=form.body %}<div><button class="btn btn-secondary" type="submit">{% translate "Yuborish" %}</button></div></form>{% endif %}
+  </section>
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Tarix" %}</h2>
+    <ul class="small" style="padding-left:18px">{% for e in events %}<li>{{ e.at|date:"d.m.Y H:i" }} — {{ e.actor.get_full_name|default:e.actor.get_username|default:"—" }}: {{ e.get_kind_display }}{% if e.kind == "status" %} ({{ e.meta.old }} → {{ e.meta.new }}){% endif %}</li>{% endfor %}</ul>
+  </section>
+</div>
+{% endblock %}

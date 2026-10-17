@@ -49,9 +49,9 @@ class SeedRolesTests(TestCase):
         self.assertNotIn("accounts.change_user", admin_perms)
         self.assertNotIn("accounts.add_user", admin_perms)
 
-    def test_employee_role_can_only_read_the_directory_and_structure(self):
+    def test_employee_role_can_only_read_the_directory_structure_and_work_on_own_tasks(self):
         perms = {f"{p.content_type.app_label}.{p.codename}" for p in Group.objects.get(name="employee").permissions.select_related("content_type")}
-        self.assertEqual(perms, {"organization.view_employee_directory", "organization.view_department", "organization.view_position"})
+        self.assertEqual(perms, {"organization.view_employee_directory", "organization.view_department", "organization.view_position", "tasks.view_task", "tasks.add_taskcomment"})
         for forbidden in ("view_employee_contacts", "view_employee_private", "add_employee", "change_employee"):
             self.assertNotIn("organization." + forbidden, perms)
 

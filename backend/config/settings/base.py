@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "apps.access",
     "apps.content",
     "apps.audit",
+    "apps.tasks",
     "apps.portal",
 ]
 

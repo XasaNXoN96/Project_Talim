@@ -5,3 +5,7 @@
 .input-wrap .btn-eye .ico { width: 18px; height: 18px; }
 .input-wrap { display: block; }
 .input-wrap > .input { padding-left: 38px; }
+
+/* grid children must be allowed to shrink so tables scroll inside their card instead of widening the page */
+.stack > * { min-width: 0; }
+.table-wrap { overflow-x: auto; max-width: 100%; }

@@ -31,15 +31,17 @@ _ORG_WRITE = [
     "organization.add_employee", "organization.change_employee",
     "organization.view_institution", "organization.add_institution", "organization.change_institution",
 ]
+_TASKS_BASIC = ["tasks.view_task", "tasks.add_taskcomment"]
+_TASKS_MANAGE = ["tasks.add_task", "tasks.change_task", "tasks.view_department_tasks"]
 _USER_ADMIN = ["accounts.view_user", "accounts.manage_users", "accounts.assign_roles", "accounts.unlock_accounts"]
 
 ROLE_PERMISSIONS: dict[str, list[str]] = {
     # Contacts/private data are further limited by SCOPE (own / department / all) in apps.organization.access.
-    RoleCode.EMPLOYEE: _DIRECTORY + _ORG_VIEW,
-    RoleCode.DEPARTMENT_HEAD: _DIRECTORY + _CONTACTS + _ORG_VIEW,
-    RoleCode.CONTENT_MANAGER: _CONTENT + ["organization.view_institution"],
-    RoleCode.HR: _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + ["accounts.view_user"],
-    RoleCode.ADMIN: _CONTENT + _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + _USER_ADMIN + ["audit.view_auditlog"],
+    RoleCode.EMPLOYEE: _DIRECTORY + _ORG_VIEW + _TASKS_BASIC,
+    RoleCode.DEPARTMENT_HEAD: _DIRECTORY + _CONTACTS + _ORG_VIEW + _TASKS_BASIC + _TASKS_MANAGE,
+    RoleCode.CONTENT_MANAGER: _CONTENT + ["organization.view_institution"] + _TASKS_BASIC,
+    RoleCode.HR: _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + ["accounts.view_user"] + _TASKS_BASIC + ["tasks.add_task"],
+    RoleCode.ADMIN: _CONTENT + _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + _USER_ADMIN + ["audit.view_auditlog"] + _TASKS_BASIC + _TASKS_MANAGE,
     RoleCode.SYSADMIN: ["audit.view_auditlog"],
 }
 
