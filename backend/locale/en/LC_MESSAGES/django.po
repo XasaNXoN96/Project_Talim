@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 23:08+0500\n"
+"POT-Creation-Date: 2026-10-18 00:06+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -584,6 +584,18 @@ msgstr "News item returned for changes"
 
 msgid "Yangilik ma’qullandi"
 msgstr "News item approved"
+
+msgid "Django admin: yozuv yaratildi"
+msgstr "Django admin: record created"
+
+msgid "Django admin: yozuv o‘zgartirildi"
+msgstr "Django admin: record changed"
+
+msgid "Django admin: yozuv o‘chirildi"
+msgstr "Django admin: record deleted"
+
+msgid "Django admin: amal taqiqlandi"
+msgstr "Django admin: action refused"
 
 msgid "Yangilik kategoriyasi o‘zgartirildi"
 msgstr "News category changed"

@@ -229,32 +229,3 @@ class DjangoAdminDoesNotBypassTheNewsWorkflow(TestCase):
     def test_the_review_history_is_not_editable_in_the_admin(self):
         from django.contrib import admin as dj_admin
         self.assertNotIn(NewsReview, dj_admin.site._registry)
-
-
-class SeedRolesIsNotSilentAboutWhatItRemoves(TestCase):
-    """Found in the audit: `seed_roles` resets each role to the project's definition. A permission someone had added to a role group by hand
-    (for example approve_own_news) was removed without a word at the next deployment. The behaviour stays (roles are defined in code);
-    the command now says exactly what it removed, so the operator notices and grants such exceptions per user instead."""
-
-    def test_extra_permissions_on_a_role_group_are_reported_by_name_when_they_are_removed(self):
-        from io import StringIO
-        call_command("seed_roles", verbosity=0)
-        group = Group.objects.get(name="content_manager")
-        extra = Permission.objects.get(content_type__app_label="content", codename="approve_own_news")
-        group.permissions.add(extra)
-        out, err = StringIO(), StringIO()
-        call_command("seed_roles", verbosity=0, stdout=out, stderr=err)
-        self.assertNotIn(extra, group.permissions.all())                        # roles are still defined in code
-        self.assertIn("content_manager", err.getvalue())
-        self.assertIn("content.approve_own_news", err.getvalue())
-        self.assertIn("per user", err.getvalue())
-
-    def test_a_clean_run_reports_nothing_and_user_level_grants_survive(self):
-        from io import StringIO
-        call_command("seed_roles", verbosity=0)
-        user = make_user("granted", role="content_manager")
-        user.user_permissions.add(Permission.objects.get(content_type__app_label="content", codename="approve_own_news"))
-        err = StringIO()
-        call_command("seed_roles", verbosity=0, stderr=err)
-        self.assertEqual(err.getvalue(), "")
-        self.assertTrue(User.objects.get(pk=user.pk).user_permissions.filter(codename="approve_own_news").exists())

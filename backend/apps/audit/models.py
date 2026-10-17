@@ -92,6 +92,10 @@ class AuditLog(models.Model):
         NEWS_WITHDRAWN = "news_withdrawn", _("Yangilik tekshiruvdan qaytarib olindi")
         NEWS_CHANGES_REQUESTED = "news_changes_requested", _("Yangilik tuzatishga qaytarildi")
         NEWS_APPROVED = "news_approved", _("Yangilik ma’qullandi")
+        ADMIN_CREATED = "admin_created", _("Django admin: yozuv yaratildi")
+        ADMIN_CHANGED = "admin_changed", _("Django admin: yozuv o‘zgartirildi")
+        ADMIN_DELETED = "admin_deleted", _("Django admin: yozuv o‘chirildi")
+        ADMIN_BLOCKED = "admin_blocked", _("Django admin: amal taqiqlandi")
         NEWS_CATEGORY_CHANGED = "news_category_changed", _("Yangilik kategoriyasi o‘zgartirildi")
 
     at = models.DateTimeField(default=timezone.now, db_index=True, editable=False)

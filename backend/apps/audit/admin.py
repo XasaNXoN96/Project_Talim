@@ -18,4 +18,4 @@ class AuditLogAdmin(admin.ModelAdmin):
         return False
 
     def has_delete_permission(self, request, obj=None):
-        return False
+        return False  # no bulk delete either: the action disappears with the permission

@@ -57,6 +57,7 @@
    ```bash
    DB_USER=talim_owner DB_PASSWORD=<…> DJANGO_SETTINGS_MODULE=config.settings.production <остальные переменные из talim.env> .venv/bin/python manage.py migrate
    PGPASSWORD=<…> psql -h 127.0.0.1 -U talim_owner -d talim -v app=talim_app -v db=talim -f deploy/postgres/apply_grants.sql
+   .venv/bin/python manage.py seed_roles --dry-run    # прочитать план; нестандартные права (=) остаются, удаляет только --prune
    .venv/bin/python manage.py seed_roles && .venv/bin/python manage.py collectstatic --noinput
    ```
 6. **Предпроверка** (от `talim`; **остановиться, если есть FAIL**):
@@ -76,7 +77,7 @@
     systemctl list-timers 'talim-*'
     ```
     (Каталоги drop-in и их установку сверить с `SCHEDULER.md` §8 — в проверке файлов `verify_deploy_files.sh` они учтены, на сервере установка **[не проверено]**.)
-11. **Последующие релизы**: `backend/deploy/staging/release.sh deploy <тег>` с переменными из STAGING_RUNBOOK §1 (`RELEASES_DIR`, `CURRENT_LINK`, `HEALTH_URL`, `HEALTH_HOST`, `RESTART_CMD`, `PRE_BACKUP_CMD`, `MIGRATE_CMD_PREFIX`, `POST_MIGRATE_SQL_CMD`). Нужен `curl`. Вывод `RELEASE_OK`. `release.sh` **не** запускает `seed_roles`: после релиза, добавившего роли или права (например, роли редакции), выполнить `sudo -u talim … manage.py seed_roles` (идемпотентно, существующие назначения не меняет) — **[не проверено на сервере]**.
+11. **Последующие релизы**: `backend/deploy/staging/release.sh deploy <тег>` с переменными из STAGING_RUNBOOK §1 (`RELEASES_DIR`, `CURRENT_LINK`, `HEALTH_URL`, `HEALTH_HOST`, `RESTART_CMD`, `PRE_BACKUP_CMD`, `MIGRATE_CMD_PREFIX`, `POST_MIGRATE_SQL_CMD`). Нужен `curl`. Вывод `RELEASE_OK`. `release.sh` **не** запускает `seed_roles`: после релиза, добавившего роли или права (например, роли редакции), выполнить `sudo -u talim … manage.py seed_roles` (идемпотентно; сначала `--dry-run`; ничего не удаляет без `--prune`; нестандартные права выводятся в stderr — прочитать; назначения и личные разрешения не меняет) — **[не проверено на сервере]**.
 12. **HSTS не включать** (`DJANGO_HSTS_SECONDS=0`), пока §6 не пройден целиком и вручную не проверен настоящий HTTPS (DEPLOYMENT_READINESS §4.12).
 
 ## 6. Проверки после развёртывания
@@ -150,3 +151,7 @@ sudo systemctl start talim-job@run_restore_check.service           # восст�
 
 ## 13. Что остаётся непроверенным даже после прохождения этого списка
 Нагрузка; независимая проверка безопасности; юридические требования к персональным данным; внешняя копия и RTO/RPO; проверка переводов носителями языка; мониторинг сверх минимума. Production этим списком **не** допускается.
+
+
+### Дополнение (День 21): если замечено неожиданное изменение разрешений
+Вывод `seed_roles` (`= … kept`) или запись аудита `admin_changed` по `Group`/`User` с `permissions_added`/`user_permissions_added`, которую никто не ожидал: (1) не запускать `--prune` сразу; (2) найти автора и время на странице аудита портала; (3) решить, нужно ли право; если нет — снять его (личное — в админке, у группы роли — `seed_roles --dry-run --prune`, затем `--prune`); (4) записать в журнал инцидентов ([INCIDENT_RESPONSE.md](INCIDENT_RESPONSE.md)); (5) если право выдано неизвестным лицом — считать учётную запись суперпользователя скомпрометированной. Доступ к Django admin — только по закрытому адресу, с 2FA, минимум людей. **Не проверено на сервере.**

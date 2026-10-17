@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 23:08+0500\n"
+"POT-Creation-Date: 2026-10-18 00:06+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -584,6 +584,18 @@ msgstr "Новость возвращена на доработку"
 
 msgid "Yangilik ma’qullandi"
 msgstr "Новость одобрена"
+
+msgid "Django admin: yozuv yaratildi"
+msgstr "Django admin: запись создана"
+
+msgid "Django admin: yozuv o‘zgartirildi"
+msgstr "Django admin: запись изменена"
+
+msgid "Django admin: yozuv o‘chirildi"
+msgstr "Django admin: запись удалена"
+
+msgid "Django admin: amal taqiqlandi"
+msgstr "Django admin: действие запрещено"
 
 msgid "Yangilik kategoriyasi o‘zgartirildi"
 msgstr "Категория новостей изменена"
