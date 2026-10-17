@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 22:35+0500\n"
+"POT-Creation-Date: 2026-10-17 23:08+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -48,8 +48,29 @@ msgstr "HR department"
 msgid "Administrator"
 msgstr "Administrator"
 
+msgid "Yangilik muallifi"
+msgstr "News author"
+
+msgid "Yangilik muharriri"
+msgstr "News editor"
+
+msgid "Yangilik nashr etuvchisi"
+msgstr "News publisher"
+
 msgid "Tizim administratori"
 msgstr "System administrator"
+
+msgid "Yangilik yozadi va o‘z qoralamalarini tahrirlaydi, tekshiruvga yuboradi, o‘z yangiliklari bo‘yicha qarorlar va izohlarni ko‘radi. Ma’qullay yoki nashr eta olmaydi."
+msgstr "Writes news and edits their own drafts, submits them for review, sees the decisions and comments on their own items. Cannot approve or publish."
+
+msgid "Tekshiruvdagi yangiliklarni ko‘radi, ma’qullaydi yoki majburiy izoh bilan qaytaradi. Yozmaydi va nashr etmaydi; o‘z yangiligini ma’qullay olmaydi."
+msgstr "Sees items under review and approves them or returns them with a mandatory comment. Does not write or publish; cannot approve their own item."
+
+msgid "Faqat ma’qullangan yangilikni nashr etadi va nashrdan oladi. Qoralamani to‘g‘ridan-to‘g‘ri nashr eta olmaydi."
+msgstr "Publishes only approved news and takes it down. Cannot publish a draft directly."
+
+msgid "Yangilikni yozadi, tekshiradi va nashr etadi (o‘zinikini ma’qullay olmaydi)."
+msgstr "Writes, reviews and publishes news (cannot approve their own)."
 
 #, python-format
 msgid "Qo‘shish: %(model)s"
@@ -1031,6 +1052,9 @@ msgstr ""
 "%(kind)s: %(title)s\n"
 "\n"
 "See the staff portal for details."
+
+msgid "Bu yangilikni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
+msgstr "You have no access to this news item, or it was deleted."
 
 msgid "Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
 msgstr "You do not have access to this task, or it was deleted."
@@ -2298,8 +2322,20 @@ msgstr "No categories"
 msgid "Kategoriyani tahrirlash"
 msgstr "Edit category"
 
+msgid "Muallif uchun izoh"
+msgstr "Comment for the author"
+
 msgid "ixtiyoriy"
 msgstr "optional"
+
+msgid "Muallif buni ko‘radi."
+msgstr "The author will see this."
+
+msgid "Ichki qayd"
+msgstr "Internal note"
+
+msgid "Faqat tahririyat xodimlari ko‘radi; muallif ko‘rmaydi."
+msgstr "Visible to editorial staff only; the author will not see it."
 
 msgid "Ha, tasdiqlayman"
 msgstr "Yes, confirm"
@@ -2340,12 +2376,6 @@ msgstr "No news found"
 msgid "Birinchi qoralamani yarating."
 msgstr "Create the first draft."
 
-msgid "Tekshiruv tarixi"
-msgstr "Review history"
-
-msgid "Kim"
-msgstr "Who"
-
 msgid "Oldindan ko‘rish"
 msgstr "Preview"
 
@@ -2378,6 +2408,12 @@ msgstr "not visible on the public site"
 
 msgid "Tekshiruvchi izohi"
 msgstr "Reviewer's comment"
+
+msgid "Tekshiruv tarixi"
+msgstr "Review history"
+
+msgid "Kim"
+msgstr "Who"
 
 msgid "Topshiriqlar va yangiliklarni tekshirish bo‘yicha xabarlar."
 msgstr "Messages about tasks and news review."
@@ -2572,6 +2608,9 @@ msgstr "No role assigned: the user cannot access anything."
 
 msgid "Rol biriktirish"
 msgstr "Assign a role"
+
+msgid "Yangilik rollari nimaga ruxsat beradi"
+msgstr "What the news roles allow"
 
 msgid "Yangi foydalanuvchi"
 msgstr "New user"

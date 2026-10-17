@@ -15,6 +15,9 @@ class RoleCode(models.TextChoices):
     CONTENT_MANAGER = "content_manager", _("Kontent-menejer")
     HR = "hr", _("Kadrlar bo‘limi")
     ADMIN = "admin", _("Administrator")
+    NEWS_AUTHOR = "news_author", _("Yangilik muallifi")
+    NEWS_EDITOR = "news_editor", _("Yangilik muharriri")
+    NEWS_PUBLISHER = "news_publisher", _("Yangilik nashr etuvchisi")
     SYSADMIN = "sysadmin", _("Tizim administratori")
 
 
@@ -23,6 +26,13 @@ _CONTENT = [
     "content.view_news", "content.add_news", "content.change_news", "content.publish_news", "content.review_news",
     # "content.approve_own_news" is deliberately in NO role: nobody approves their own item (docs/NEWS_WORKFLOW.md)
 ]
+# Notifications have their own (Django default) permission: it no longer rides on tasks.view_task. Every role that could open the
+# notifications page before (those with tasks.view_task) keeps it; the news roles get it because their notices are about news.
+_NOTIFY = ["notifications.view_notification"]
+# Editorial roles (day 19). They only REUSE the news permissions; an item is also limited to what the role may see (apps.content.workflow.visible_news).
+_NEWS_AUTHOR = ["content.view_news", "content.add_news", "content.change_news"]
+_NEWS_EDITOR = ["content.view_news", "content.review_news"]
+_NEWS_PUBLISHER = ["content.view_news", "content.publish_news"]
 _ORG_VIEW = ["organization.view_department", "organization.view_position"]
 _DIRECTORY = ["organization.view_employee_directory"]
 _CONTACTS = ["organization.view_employee_contacts"]
@@ -44,11 +54,14 @@ _USER_ADMIN = ["accounts.view_user", "accounts.manage_users", "accounts.assign_r
 
 ROLE_PERMISSIONS: dict[str, list[str]] = {
     # Contacts/private data are further limited by SCOPE (own / department / all) in apps.organization.access.
-    RoleCode.EMPLOYEE: _DIRECTORY + _ORG_VIEW + _TASKS_BASIC + _DOCS_VIEW,
-    RoleCode.DEPARTMENT_HEAD: _DIRECTORY + _CONTACTS + _ORG_VIEW + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _REPORTS + _REPORTS_PEOPLE,
-    RoleCode.CONTENT_MANAGER: _CONTENT + ["organization.view_institution"] + _TASKS_BASIC + _DOCS_VIEW,
-    RoleCode.HR: _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + ["accounts.view_user"] + _TASKS_BASIC + ["tasks.add_task"] + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS,
-    RoleCode.ADMIN: _CONTENT + _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + _USER_ADMIN + ["audit.view_auditlog"] + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _REPORTS_PEOPLE,
+    RoleCode.EMPLOYEE: _DIRECTORY + _ORG_VIEW + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    RoleCode.DEPARTMENT_HEAD: _DIRECTORY + _CONTACTS + _ORG_VIEW + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
+    RoleCode.CONTENT_MANAGER: _CONTENT + ["organization.view_institution"] + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    RoleCode.HR: _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + ["accounts.view_user"] + _TASKS_BASIC + ["tasks.add_task"] + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _NOTIFY,
+    RoleCode.ADMIN: _CONTENT + _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + _USER_ADMIN + ["audit.view_auditlog"] + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
+    RoleCode.NEWS_AUTHOR: _NEWS_AUTHOR + _NOTIFY,
+    RoleCode.NEWS_EDITOR: _NEWS_EDITOR + _NOTIFY,
+    RoleCode.NEWS_PUBLISHER: _NEWS_PUBLISHER + _NOTIFY,
     RoleCode.SYSADMIN: ["audit.view_auditlog"],
 }
 
@@ -60,6 +73,18 @@ ROLE_SCOPE = {
     RoleCode.CONTENT_MANAGER: "all",
     RoleCode.HR: "all",
     RoleCode.ADMIN: "all",
+    RoleCode.NEWS_AUTHOR: "all",
+    RoleCode.NEWS_EDITOR: "all",
+    RoleCode.NEWS_PUBLISHER: "all",
     RoleCode.SYSADMIN: "all",
 }
 PRIVILEGED_ROLES = {RoleCode.ADMIN, RoleCode.SYSADMIN}  # only an administrator may hand these out
+
+
+# One line per role for the role-assignment screen (what the role allows, in the interface language).
+ROLE_HINTS = {
+    RoleCode.NEWS_AUTHOR: _("Yangilik yozadi va o‘z qoralamalarini tahrirlaydi, tekshiruvga yuboradi, o‘z yangiliklari bo‘yicha qarorlar va izohlarni ko‘radi. Ma’qullay yoki nashr eta olmaydi."),
+    RoleCode.NEWS_EDITOR: _("Tekshiruvdagi yangiliklarni ko‘radi, ma’qullaydi yoki majburiy izoh bilan qaytaradi. Yozmaydi va nashr etmaydi; o‘z yangiligini ma’qullay olmaydi."),
+    RoleCode.NEWS_PUBLISHER: _("Faqat ma’qullangan yangilikni nashr etadi va nashrdan oladi. Qoralamani to‘g‘ridan-to‘g‘ri nashr eta olmaydi."),
+    RoleCode.CONTENT_MANAGER: _("Yangilikni yozadi, tekshiradi va nashr etadi (o‘zinikini ma’qullay olmaydi)."),
+}

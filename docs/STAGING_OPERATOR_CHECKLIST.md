@@ -76,7 +76,7 @@
     systemctl list-timers 'talim-*'
     ```
     (Каталоги drop-in и их установку сверить с `SCHEDULER.md` §8 — в проверке файлов `verify_deploy_files.sh` они учтены, на сервере установка **[не проверено]**.)
-11. **Последующие релизы**: `backend/deploy/staging/release.sh deploy <тег>` с переменными из STAGING_RUNBOOK §1 (`RELEASES_DIR`, `CURRENT_LINK`, `HEALTH_URL`, `HEALTH_HOST`, `RESTART_CMD`, `PRE_BACKUP_CMD`, `MIGRATE_CMD_PREFIX`, `POST_MIGRATE_SQL_CMD`). Нужен `curl`. Вывод `RELEASE_OK`.
+11. **Последующие релизы**: `backend/deploy/staging/release.sh deploy <тег>` с переменными из STAGING_RUNBOOK §1 (`RELEASES_DIR`, `CURRENT_LINK`, `HEALTH_URL`, `HEALTH_HOST`, `RESTART_CMD`, `PRE_BACKUP_CMD`, `MIGRATE_CMD_PREFIX`, `POST_MIGRATE_SQL_CMD`). Нужен `curl`. Вывод `RELEASE_OK`. `release.sh` **не** запускает `seed_roles`: после релиза, добавившего роли или права (например, роли редакции), выполнить `sudo -u talim … manage.py seed_roles` (идемпотентно, существующие назначения не меняет) — **[не проверено на сервере]**.
 12. **HSTS не включать** (`DJANGO_HSTS_SECONDS=0`), пока §6 не пройден целиком и вручную не проверен настоящий HTTPS (DEPLOYMENT_READINESS §4.12).
 
 ## 6. Проверки после развёртывания

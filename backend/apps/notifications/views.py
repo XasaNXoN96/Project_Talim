@@ -5,6 +5,7 @@ from django.views import View
 from django.views.generic import ListView
 from django.utils.translation import gettext_lazy as _
 
+from apps.content import workflow as news_workflow
 from apps.core.mixins import PortalPermissionMixin
 from apps.tasks import access as task_access
 
@@ -13,7 +14,7 @@ from .services import mark_all_read
 
 
 class NotificationListView(PortalPermissionMixin, ListView):
-    permission_required = "tasks.view_task"
+    permission_required = "notifications.view_notification"
     template_name = "portal/notifications/list.html"
     paginate_by = 30
     context_object_name = "notifications"
@@ -29,8 +30,10 @@ class NotificationListView(PortalPermissionMixin, ListView):
         user = self.request.user
         visible = set(task_access.visible_tasks(user).filter(pk__in=[n.task_id for n in ctx["notifications"] if n.task_id]).values_list("pk", flat=True))
         can_news = user.has_perm("content.view_news")
+        news_ids = {n.news_id for n in ctx["notifications"] if n.news_id}
+        visible_news = set(news_workflow.visible_news(user).filter(pk__in=news_ids).values_list("pk", flat=True)) if can_news and news_ids else set()
         for n in ctx["notifications"]:
-            n.target_visible = (can_news if n.news_id else n.task_id in visible)  # the link is offered only if the task can still be opened
+            n.target_visible = (n.news_id in visible_news if n.news_id else n.task_id in visible)  # the link is offered only if the task can still be opened
         ctx["only_unread"] = self.request.GET.get("unread") == "1"
         return ctx
 
@@ -39,15 +42,18 @@ class NotificationOpenView(PortalPermissionMixin, View):
     """Marks one notification (own only) as read and goes to its task, if the user may still see it."""
 
     http_method_names = ["post"]
-    permission_required = "tasks.view_task"
+    permission_required = "notifications.view_notification"
 
     def post(self, request, pk):
         n = get_object_or_404(Notification, pk=pk, user=request.user)  # someone else's id -> 404
         if n.read_at is None:
             n.read_at = timezone.now()
             n.save(update_fields=["read_at"])
-        if n.news_id and request.user.has_perm("content.view_news"):
-            return redirect("news_admin:preview", pk=n.news_id)
+        if n.news_id:
+            if request.user.has_perm("content.view_news") and news_workflow.visible_news(request.user).filter(pk=n.news_id).exists():
+                return redirect("news_admin:preview", pk=n.news_id)
+            messages.info(request, _("Bu yangilikni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."))
+            return redirect("notifications:list")
         if n.task_id and task_access.visible_tasks(request.user).filter(pk=n.task_id).exists():
             return redirect("tasks:detail", pk=n.task_id)
         messages.info(request, _("Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."))
@@ -56,7 +62,7 @@ class NotificationOpenView(PortalPermissionMixin, View):
 
 class NotificationReadView(PortalPermissionMixin, View):
     http_method_names = ["post"]
-    permission_required = "tasks.view_task"
+    permission_required = "notifications.view_notification"
 
     def post(self, request, pk):
         n = get_object_or_404(Notification, pk=pk, user=request.user)
@@ -68,7 +74,7 @@ class NotificationReadView(PortalPermissionMixin, View):
 
 class NotificationReadAllView(PortalPermissionMixin, View):
     http_method_names = ["post"]
-    permission_required = "tasks.view_task"
+    permission_required = "notifications.view_notification"
 
     def post(self, request):
         mark_all_read(request.user)

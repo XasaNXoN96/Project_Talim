@@ -46,7 +46,7 @@ class NewsListView(PortalPermissionMixin, ListView):
     context_object_name = "items"
 
     def get_queryset(self):
-        qs = News.objects.select_related("category", "author")
+        qs = workflow.visible_news(self.request.user).select_related("category", "author")
         g = self.request.GET
         q = (g.get("q") or "").strip()[:100]
         if q:
@@ -67,7 +67,7 @@ class NewsListView(PortalPermissionMixin, ListView):
         ctx.update(q=g.get("q", ""), status=g.get("status", ""), category=g.get("category", ""), statuses=S.choices,
                    categories=NewsCategory.objects.all(), can_add=u.has_perm("content.add_news"), can_publish=u.has_perm("content.publish_news"),
                    can_categories=u.has_perm("content.view_newscategory"), now=timezone.now(),
-                   review_count=News.objects.filter(status=S.REVIEW).count() if u.has_perm("content.review_news") else None)
+                   review_count=workflow.visible_news(u).filter(status=S.REVIEW).count() if u.has_perm("content.review_news") else None)
         return ctx
 
 
@@ -95,14 +95,14 @@ class _NewsBase(PortalPermissionMixin, View):
     permission_required = "content.view_news"
 
     def get_news(self, pk):
-        return get_object_or_404(News.objects.select_related("category", "author"), pk=pk)
+        return get_object_or_404(workflow.visible_news(self.request.user).select_related("category", "author"), pk=pk)  # not visible to this person = 404
 
 
 class NewsEditView(_NewsBase):
     permission_required = "content.change_news"
 
     def _news(self, pk, user, lock=False):
-        qs = News.objects.select_related("category", "author")
+        qs = workflow.visible_news(user).select_related("category", "author")
         news = get_object_or_404(qs.select_for_update(of=("self",)) if lock else qs, pk=pk)
         if not workflow.can_edit(news, user):
             raise PermissionDenied
@@ -139,7 +139,7 @@ class NewsPreviewView(_NewsBase):
         u = request.user
         return render(request, "portal/news/preview.html", {
             "news": news, "live": is_live(news), "can_edit": workflow.can_edit(news, u), "steps": workflow.allowed_steps(news, u),
-            "reviews": news.reviews.select_related("actor"), "last_return": news.reviews.filter(action="request_changes").last() if news.status == S.CHANGES_REQUESTED else None,
+            "reviews": workflow.history_for(news, u), "show_notes": workflow.can_see_internal(u, news), "last_return": news.reviews.filter(action="request_changes").last() if news.status == S.CHANGES_REQUESTED else None,
         })
 
 
@@ -170,9 +170,12 @@ class NewsStatusView(_NewsBase):
 
     def post(self, request, pk, action):
         self._step(action)
-        get_object_or_404(News, pk=pk)
+        get_object_or_404(workflow.visible_news(request.user), pk=pk)
         try:
-            news = workflow.perform(action, pk, request.user, request=request, comment=request.POST.get("comment", ""), version=request.POST.get("version") or None)
+            news = workflow.perform(action, pk, request.user, request=request, comment=request.POST.get("comment", ""), version=request.POST.get("version") or None,
+                                    note=request.POST.get("internal_note", ""))
+        except News.DoesNotExist:
+            raise Http404 from None
         except workflow.WorkflowError as exc:
             messages.error(request, str(exc))
             return redirect("news_admin:preview", pk=pk)

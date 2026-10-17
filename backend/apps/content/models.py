@@ -91,7 +91,11 @@ class NewsReview(TimeStampedModel):
     action = models.CharField(max_length=24, choices=Action.choices)
     from_status = models.CharField(max_length=24)
     to_status = models.CharField(max_length=24)
+    # comment: written FOR the author (shown to everyone who may see the item, including the author).
+    # internal_note: editorial staff only; never shown to the author or to people who merely hold view_news (added on day 19;
+    # every older row keeps its text in `comment`, where it was always visible to the author, and has an empty internal_note).
     comment = models.TextField(blank=True, max_length=2000)
+    internal_note = models.TextField(blank=True, max_length=2000)
 
     class Meta:
         ordering = ["created_at"]

@@ -8,7 +8,8 @@
   <p><b>{{ news.title }}</b></p>
   <p>{{ question }}</p>
   {% if step.decision %}<input type="hidden" name="version" value="{{ version }}">
-  <div class="field"><label for="id_comment">{% translate "Izoh" %}{% if step.needs_comment %} *{% else %} ({% translate "ixtiyoriy" %}){% endif %}</label><textarea class="input" id="id_comment" name="comment" rows="4" maxlength="2000" {% if step.needs_comment %}required{% endif %}></textarea></div>{% endif %}
+  <div class="field"><label for="id_comment">{% translate "Muallif uchun izoh" %}{% if step.needs_comment %} *{% else %} ({% translate "ixtiyoriy" %}){% endif %}</label><span class="hint">{% translate "Muallif buni ko‘radi." %}</span><textarea class="input" id="id_comment" name="comment" rows="4" maxlength="2000" {% if step.needs_comment %}required{% endif %}></textarea></div>
+  <div class="field"><label for="id_internal_note">{% translate "Ichki qayd" %} ({% translate "ixtiyoriy" %})</label><span class="hint">{% translate "Faqat tahririyat xodimlari ko‘radi; muallif ko‘rmaydi." %}</span><textarea class="input" id="id_internal_note" name="internal_note" rows="3" maxlength="2000"></textarea></div>{% endif %}
   <div class="row wrap"><button class="btn {% if action == 'publish' or action == 'approve' or action == 'submit' %}btn-primary{% elif action == 'restore' or action == 'withdraw' or action == 'request_changes' %}btn-secondary{% else %}btn-danger{% endif %}" type="submit">{% translate "Ha, tasdiqlayman" %}</button><a class="btn btn-secondary" href="{% url 'news_admin:preview' news.pk %}">{% translate "Bekor qilish" %}</a></div>
 </form>
 {% endblock %}

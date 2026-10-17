@@ -94,6 +94,36 @@ def is_staff_for_news(user):
     return user.has_perm("content.review_news") or user.has_perm("content.publish_news")
 
 
+def visible_news(user):
+    """The items this person may see in the portal at all (list, preview, history, steps). Everything else is a 404, not a 403.
+    Own items always; a reviewer also what has been submitted (not other people's drafts); a publisher what is approved or already out;
+    people who write AND review/publish (content manager, administrator) see all. Rights themselves are checked separately."""
+    qs = News.objects.all()
+    if user.has_perm("content.change_news") and is_staff_for_news(user):
+        return qs
+    q = Q(author_id=user.pk)
+    if user.has_perm("content.review_news"):
+        q |= Q(status__in=[S.REVIEW, S.CHANGES_REQUESTED, S.APPROVED, S.PUBLISHED, S.ARCHIVED])
+    if user.has_perm("content.publish_news"):
+        q |= Q(status__in=[S.APPROVED, S.PUBLISHED, S.ARCHIVED])
+    return qs.filter(q)
+
+
+def can_see_internal(user, news):
+    """Internal editorial notes: editorial staff only, and never the author of that very item (nor anyone who merely holds view_news)."""
+    return is_staff_for_news(user) and not is_author(news, user)
+
+
+def history_for(news, user):
+    """The review history as this person may see it: author-facing comments for everyone who can see the item, internal notes only for staff."""
+    show = can_see_internal(user, news)
+    rows = list(news.reviews.select_related("actor"))
+    for r in rows:
+        if not show:
+            r.internal_note = ""  # never rely on the template to hide it
+    return rows
+
+
 def can_edit(news, user):
     """Writers edit their own drafts (anyone's, if they also review or publish). Public or archived content needs the publishing right.
     An item under review is frozen: its reviewer must see the text that was submitted."""
@@ -141,17 +171,18 @@ def _reviewers(news):
 
 
 @transaction.atomic
-def perform(step_name, news_pk, user, request=None, comment="", version=None):
+def perform(step_name, news_pk, user, request=None, comment="", version=None, note=""):
     """Do one step or raise WorkflowError. Returns the news."""
     step = STEPS[step_name]
     comment = (comment or "").strip()
-    news = News.objects.select_for_update().get(pk=news_pk)
+    note = (note or "").strip() if step.decision else ""
+    news = visible_news(user).select_for_update().get(pk=news_pk)  # DoesNotExist for an item this person may not see: the view answers 404
     if news.status not in step.sources:
         raise WorkflowError(_("Bu amalni hozirgi holatda bajarib bo‘lmaydi."))  # also: a double click / the other editor was faster
     check_actor(step_name, news, user)
     if step.needs_comment and not comment:
         raise WorkflowError(_("Qaytarish uchun izoh yozing."))
-    if len(comment) > COMMENT_MAX:
+    if len(comment) > COMMENT_MAX or len(note) > COMMENT_MAX:
         raise WorkflowError(_("Izoh juda uzun."))
     if step.decision and version != version_token(news):  # a missing version is refused too: a crafted request cannot skip the check
         raise WorkflowError(_("Yangilik siz ko‘rganingizdan keyin o‘zgargan. Sahifani yangilab, qayta ko‘rib chiqing."))
@@ -163,15 +194,17 @@ def perform(step_name, news_pk, user, request=None, comment="", version=None):
             news.publish_at = timezone.now()  # a future date is a schedule and stays
         fields.append("publish_at")
     news.save(update_fields=fields)
-    finish(news, step, user, request, before, comment)
+    finish(news, step, user, request, before, comment, note)
     return news
 
 
-def finish(news, step, user, request, before, comment):
-    NewsReview.objects.create(news=news, actor=user, action=step.review_action, from_status=before, to_status=news.status, comment=comment)
+def finish(news, step, user, request, before, comment, note=""):
+    NewsReview.objects.create(news=news, actor=user, action=step.review_action, from_status=before, to_status=news.status, comment=comment, internal_note=note)
     meta = {"from": before, "to": news.status}
     if comment:
         meta["comment_length"] = len(comment)  # the text itself lives in NewsReview, not in the audit log
+    if note:
+        meta["note_length"] = len(note)
     record(step.audit_action, request=request, user=user, object_type="News", object_id=news.pk, meta=meta)
     if step.review_action == A.SUBMIT:
         for reviewer in _reviewers(news):

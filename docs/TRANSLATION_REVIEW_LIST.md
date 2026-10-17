@@ -12,7 +12,7 @@
 5. Узбекская латиница: апострофы `‘ ’` и термины источника.
 6. Длинные подписи в RU на узких экранах (проверено визуально на 390 px: горизонтальной прокрутки нет, но читаемость оценивает дизайнер).
 
-Всего строк в каталогах: 831.
+Всего строк в каталогах: 844.
 
 
 ## A. E-mail texts (sent to real people; tone and formality matter) — 47
@@ -174,7 +174,7 @@
 | 101 | Parolni ko‘rsatish | Показать пароль | Show password |
 | 102 | Parolni unutdingizmi? | Забыли пароль? | Forgot your password? |
 
-## C. Personal-data, privacy and access wording (legal weight) — 51
+## C. Personal-data, privacy and access wording (legal weight) — 53
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -193,44 +193,46 @@
 | 13 | Barcha (maxfiy bo‘lmagan) hujjatlarni, jumladan bo‘limlarnikini ko‘rish | Просмотр всех неконфиденциальных документов, включая документы подразделений | View all non-confidential documents, including department documents |
 | 14 | Maxfiy hujjatlarni ko‘rish | Просмотр конфиденциальных документов | View confidential documents |
 | 15 | Bu fayl turi ruxsat etilmagan. Ruxsat etilgan: %(types)s. | Этот тип файла не разрешён. Разрешены: %(types)s. | This file type is not allowed. Allowed: %(types)s. |
-| 16 | Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan. | У вас нет доступа к этому заданию, либо оно удалено. | You do not have access to this task, or it was deleted. |
-| 17 | Import bekor qilindi. Yuklangan ma’lumotlar o‘chirildi. | Импорт отменён. Загруженные данные удалены. | Import cancelled. The uploaded data was deleted. |
-| 18 | Qiymatda ruxsat etilmagan belgilar bor. | В значении есть недопустимые символы. | The value contains characters that are not allowed. |
-| 19 | Noma’lum holat: “%(value)s”. Ruxsat etilgan: %(allowed)s. | Неизвестный статус: «%(value)s». Допустимо: %(allowed)s. | Unknown status: “%(value)s”. Allowed: %(allowed)s. |
-| 20 | Telefon raqami noto‘g‘ri formatda. | Неверный формат телефона. | The phone number has an invalid format. |
-| 21 | Sana ruxsat etilgan oraliqdan tashqarida. | Дата вне допустимого диапазона. | The date is outside the allowed range. |
-| 22 | Faylda ma’lumotli varaq yo‘q. | В файле нет листа с данными. | The file has no sheet with data. |
-| 23 | ish telefoni | рабочий телефон | work phone |
-| 24 | shaxsiy telefon | личный телефон | personal phone |
-| 25 | tug‘ilgan sana | дата рождения | date of birth |
-| 26 | Xodimlarning aloqa ma’lumotlarini ko‘rish | Просмотр контактных данных сотрудников | View employees’ contact details |
-| 27 | Xodimlarning shaxsiy ma’lumotlarini ko‘rish | Просмотр личных данных сотрудников | View employees’ personal data |
-| 28 | Ma’lumot yo‘q. | Нет данных. | No data. |
-| 29 | Hisobotda ijrochilar kesimini ko‘rish (shaxsiy natijalar) | Просмотр отчёта в разрезе исполнителей (личные результаты) | View the report broken down by assignee (personal results) |
-| 30 | Shaxsiy natijalar: faqat ruxsati bor foydalanuvchilarga ko‘rinadi. | Личные результаты: видны только пользователям с соответствующим правом. | Personal results: visible only to users with the corresponding permission. |
-| 31 | Faqat siz ko‘rishga ruxsat etilgan, faol hujjatlar hisoblanadi. | Учитываются только активные документы, которые вам разрешено просматривать. | Only active documents you are allowed to view are counted. |
-| 32 | Manzil: tasdiqlangan ma’lumot kiritiladi | Адрес: будут указаны подтверждённые данные | Address: verified information will be added |
-| 33 | Telefon: tasdiqlangan ma’lumot kiritiladi | Телефон: будут указаны подтверждённые данные | Phone: verified information will be added |
-| 34 | E-pochta: tasdiqlangan ma’lumot kiritiladi | Эл. почта: будут указаны подтверждённые данные | E-mail: verified information will be added |
-| 35 | Ruxsat yo‘q | Доступ запрещён | Access denied |
-| 36 | Ruxsat etilgan: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Makroli va faol tarkibli fayllar qabul qilinmaydi. Yuklangan fayl antivirus bilan tekshiriladi; tekshiruv bajarilmasa, fayl qabul qilinmaydi. | Разрешены: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Файлы с макросами и активным содержимым не принимаются. Загружаемый файл проверяется антивирусом; если проверку выполнить не удалось, файл не принимается. | Allowed: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Files with macros or active content are not accepted. Uploaded files are scanned by an antivirus; if the scan cannot be completed, the file is not accepted. |
-| 37 | Fayllar xavfsiz saqlanadi va faqat huquqingiz bo‘lsa yuklab olinadi. | Файлы хранятся в защищённом хранилище и скачиваются только при наличии прав. | Files are stored securely and can be downloaded only if you have permission. |
-| 38 | Ish telefoni | Рабочий телефон | Work phone |
-| 39 | Shaxsiy ma’lumotlar | Личные данные | Personal data |
-| 40 | Bu ma’lumotlarni ko‘rish jurnalga yoziladi. | Просмотр этих данных фиксируется в журнале. | Viewing this data is recorded in the log. |
-| 41 | Tug‘ilgan sana | Дата рождения | Date of birth |
-| 42 | Shaxsiy telefon | Личный телефон | Personal phone |
-| 43 | Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak. | Перед внесением реальных личных данных должна быть завершена юридическая проверка. | A legal review must be completed before real personal data is entered. |
-| 44 | Bekor qilish va ma’lumotlarni o‘chirish | Отменить и удалить данные | Cancel and delete the data |
-| 45 | Yuklangan fayl va qatorlar saqlanmagan. Bu hisobotda shaxsiy ma’lumotlar yo‘q — faqat qator raqamlari. | Загруженный файл и строки не сохранены. В этом отчёте нет персональных данных — только номера строк. | The uploaded file and rows are not stored. This report contains no personal data — only row numbers. |
-| 46 | Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi. | Имя, подразделение, должность и статус. Контактные данные — на карточке сотрудника, если у вас есть право. | Name, department, position and status. Contact details are on the employee card, if you have permission. |
-| 47 | Obyekt mavjud emas yoki ruxsat yo‘q | Объект не существует или нет доступа | The item does not exist or you have no access |
-| 48 | Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q. | Нет данных за выбранный период и по выбранным фильтрам. | No data for the selected period and filters. |
-| 49 | Ma’lumotlar bazasidagi joriy ma’lumotlar. Siz faqat o‘z doirangizdagi ma’lumotlarni ko‘rasiz. | Актуальные данные из базы данных. Вы видите только данные в пределах своей области. | Current data from the database. You only see data within your own scope. |
-| 50 | Xodimlar, bo‘limlar, topshiriqlar, hujjatlar va yangiliklar nomlari bo‘yicha qidiradi. Faqat sizga ochiq ma’lumotlar ko‘rsatiladi. Bu to‘liq matnli qidiruv emas: faqat nom va tavsif maydonlaridagi so‘zlar. | Ищет по названиям сотрудников, подразделений, заданий, документов и новостей. Показываются только доступные вам данные. Это не полнотекстовый поиск: учитываются только слова в полях названия и описания. | Searches the names of employees, departments, tasks, documents and news. Only data you may access is shown. This is not full-text search: only words in name and description fields are matched. |
-| 51 | Sizga berilgan, siz bergan va ko‘rishga ruxsat etilgan topshiriqlar. | Задания, назначенные вам, поручённые вами и те, которые вам разрешено просматривать. | Tasks assigned to you, assigned by you, and those you are allowed to view. |
+| 16 | Bu yangilikni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan. | У вас нет доступа к этой новости, или она удалена. | You have no access to this news item, or it was deleted. |
+| 17 | Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan. | У вас нет доступа к этому заданию, либо оно удалено. | You do not have access to this task, or it was deleted. |
+| 18 | Import bekor qilindi. Yuklangan ma’lumotlar o‘chirildi. | Импорт отменён. Загруженные данные удалены. | Import cancelled. The uploaded data was deleted. |
+| 19 | Qiymatda ruxsat etilmagan belgilar bor. | В значении есть недопустимые символы. | The value contains characters that are not allowed. |
+| 20 | Noma’lum holat: “%(value)s”. Ruxsat etilgan: %(allowed)s. | Неизвестный статус: «%(value)s». Допустимо: %(allowed)s. | Unknown status: “%(value)s”. Allowed: %(allowed)s. |
+| 21 | Telefon raqami noto‘g‘ri formatda. | Неверный формат телефона. | The phone number has an invalid format. |
+| 22 | Sana ruxsat etilgan oraliqdan tashqarida. | Дата вне допустимого диапазона. | The date is outside the allowed range. |
+| 23 | Faylda ma’lumotli varaq yo‘q. | В файле нет листа с данными. | The file has no sheet with data. |
+| 24 | ish telefoni | рабочий телефон | work phone |
+| 25 | shaxsiy telefon | личный телефон | personal phone |
+| 26 | tug‘ilgan sana | дата рождения | date of birth |
+| 27 | Xodimlarning aloqa ma’lumotlarini ko‘rish | Просмотр контактных данных сотрудников | View employees’ contact details |
+| 28 | Xodimlarning shaxsiy ma’lumotlarini ko‘rish | Просмотр личных данных сотрудников | View employees’ personal data |
+| 29 | Ma’lumot yo‘q. | Нет данных. | No data. |
+| 30 | Hisobotda ijrochilar kesimini ko‘rish (shaxsiy natijalar) | Просмотр отчёта в разрезе исполнителей (личные результаты) | View the report broken down by assignee (personal results) |
+| 31 | Shaxsiy natijalar: faqat ruxsati bor foydalanuvchilarga ko‘rinadi. | Личные результаты: видны только пользователям с соответствующим правом. | Personal results: visible only to users with the corresponding permission. |
+| 32 | Faqat siz ko‘rishga ruxsat etilgan, faol hujjatlar hisoblanadi. | Учитываются только активные документы, которые вам разрешено просматривать. | Only active documents you are allowed to view are counted. |
+| 33 | Manzil: tasdiqlangan ma’lumot kiritiladi | Адрес: будут указаны подтверждённые данные | Address: verified information will be added |
+| 34 | Telefon: tasdiqlangan ma’lumot kiritiladi | Телефон: будут указаны подтверждённые данные | Phone: verified information will be added |
+| 35 | E-pochta: tasdiqlangan ma’lumot kiritiladi | Эл. почта: будут указаны подтверждённые данные | E-mail: verified information will be added |
+| 36 | Ruxsat yo‘q | Доступ запрещён | Access denied |
+| 37 | Ruxsat etilgan: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Makroli va faol tarkibli fayllar qabul qilinmaydi. Yuklangan fayl antivirus bilan tekshiriladi; tekshiruv bajarilmasa, fayl qabul qilinmaydi. | Разрешены: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Файлы с макросами и активным содержимым не принимаются. Загружаемый файл проверяется антивирусом; если проверку выполнить не удалось, файл не принимается. | Allowed: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Files with macros or active content are not accepted. Uploaded files are scanned by an antivirus; if the scan cannot be completed, the file is not accepted. |
+| 38 | Fayllar xavfsiz saqlanadi va faqat huquqingiz bo‘lsa yuklab olinadi. | Файлы хранятся в защищённом хранилище и скачиваются только при наличии прав. | Files are stored securely and can be downloaded only if you have permission. |
+| 39 | Ish telefoni | Рабочий телефон | Work phone |
+| 40 | Shaxsiy ma’lumotlar | Личные данные | Personal data |
+| 41 | Bu ma’lumotlarni ko‘rish jurnalga yoziladi. | Просмотр этих данных фиксируется в журнале. | Viewing this data is recorded in the log. |
+| 42 | Tug‘ilgan sana | Дата рождения | Date of birth |
+| 43 | Shaxsiy telefon | Личный телефон | Personal phone |
+| 44 | Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak. | Перед внесением реальных личных данных должна быть завершена юридическая проверка. | A legal review must be completed before real personal data is entered. |
+| 45 | Bekor qilish va ma’lumotlarni o‘chirish | Отменить и удалить данные | Cancel and delete the data |
+| 46 | Yuklangan fayl va qatorlar saqlanmagan. Bu hisobotda shaxsiy ma’lumotlar yo‘q — faqat qator raqamlari. | Загруженный файл и строки не сохранены. В этом отчёте нет персональных данных — только номера строк. | The uploaded file and rows are not stored. This report contains no personal data — only row numbers. |
+| 47 | Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi. | Имя, подразделение, должность и статус. Контактные данные — на карточке сотрудника, если у вас есть право. | Name, department, position and status. Contact details are on the employee card, if you have permission. |
+| 48 | Obyekt mavjud emas yoki ruxsat yo‘q | Объект не существует или нет доступа | The item does not exist or you have no access |
+| 49 | Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q. | Нет данных за выбранный период и по выбранным фильтрам. | No data for the selected period and filters. |
+| 50 | Ma’lumotlar bazasidagi joriy ma’lumotlar. Siz faqat o‘z doirangizdagi ma’lumotlarni ko‘rasiz. | Актуальные данные из базы данных. Вы видите только данные в пределах своей области. | Current data from the database. You only see data within your own scope. |
+| 51 | Xodimlar, bo‘limlar, topshiriqlar, hujjatlar va yangiliklar nomlari bo‘yicha qidiradi. Faqat sizga ochiq ma’lumotlar ko‘rsatiladi. Bu to‘liq matnli qidiruv emas: faqat nom va tavsif maydonlaridagi so‘zlar. | Ищет по названиям сотрудников, подразделений, заданий, документов и новостей. Показываются только доступные вам данные. Это не полнотекстовый поиск: учитываются только слова в полях названия и описания. | Searches the names of employees, departments, tasks, documents and news. Only data you may access is shown. This is not full-text search: only words in name and description fields are matched. |
+| 52 | Sizga berilgan, siz bergan va ko‘rishga ruxsat etilgan topshiriqlar. | Задания, назначенные вам, поручённые вами и те, которые вам разрешено просматривать. | Tasks assigned to you, assigned by you, and those you are allowed to view. |
+| 53 | Yangilik rollari nimaga ruxsat beradi | Что разрешают роли для новостей | What the news roles allow |
 
-## D. Statuses, roles and organisational terms (official terminology) — 112
+## D. Statuses, roles and organisational terms (official terminology) — 113
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -335,17 +337,18 @@
 | 99 | department — bo‘lim nomi; nom takrorlansa to‘liq yo‘l: “Yuqori / Quyi”. Bo‘lim va lavozim oldindan yaratilgan bo‘lishi kerak. | department — название подразделения; если названия повторяются — полный путь: «Верхнее / Нижнее». Подразделения и должности должны быть созданы заранее. | department — the department name; if names repeat, the full path: “Parent / Child”. Departments and positions must be created beforehand. |
 | 100 | F.I.Sh. yoki ish e-pochtasi mavjud xodim bilan mos kelsa — qator “mumkin bo‘lgan dublikat” deb belgilanadi va sukut bo‘yicha o‘tkazib yuboriladi. | Если ФИО или рабочая почта совпадают с существующим сотрудником, строка помечается как «возможный дубликат» и по умолчанию пропускается. | If the full name or work e-mail matches an existing employee, the row is flagged as a “possible duplicate” and skipped by default. |
 | 101 | Qidirish: ism, lavozim | Поиск: имя, должность | Search: name, position |
-| 102 | Xatolik yuz berdi. Keyinroq qayta urinib ko‘ring; muammo davom etsa, administratorga murojaat qiling. | Произошла ошибка. Повторите попытку позже; если проблема сохраняется, обратитесь к администратору. | An error occurred. Try again later; if the problem persists, contact an administrator. |
-| 103 | Tashkiliy tuzilma | Организационная структура | Organization structure |
-| 104 | Bo‘limlar daraxti va lavozimlar. Bo‘limlar o‘chirilmaydi, faqat faol emas qilinadi. | Дерево подразделений и должности. Подразделения не удаляются, а только отключаются. | Department tree and positions. Departments are never deleted, only deactivated. |
-| 105 | Bo‘lim qo‘shish | Добавить подразделение | Add a department |
-| 106 | Lavozim qo‘shish | Добавить должность | Add a position |
-| 107 | Bo‘limlar hali kiritilmagan. | Подразделения ещё не внесены. | No departments have been entered yet. |
-| 108 | Lavozimlar | Должности | Positions |
-| 109 | Lavozimlar hali kiritilmagan. | Должности ещё не внесены. | No positions have been entered yet. |
-| 110 | Rol biriktirilmagan: foydalanuvchi hech narsaga kira olmaydi. | Роль не назначена: пользователь ни к чему не имеет доступа. | No role assigned: the user cannot access anything. |
-| 111 | Rol biriktirish | Назначить роль | Assign a role |
-| 112 | Barcha rollar | Все роли | All roles |
+| 102 | Faqat tahririyat xodimlari ko‘radi; muallif ko‘rmaydi. | Видна только сотрудникам редакции; автор её не увидит. | Visible to editorial staff only; the author will not see it. |
+| 103 | Xatolik yuz berdi. Keyinroq qayta urinib ko‘ring; muammo davom etsa, administratorga murojaat qiling. | Произошла ошибка. Повторите попытку позже; если проблема сохраняется, обратитесь к администратору. | An error occurred. Try again later; if the problem persists, contact an administrator. |
+| 104 | Tashkiliy tuzilma | Организационная структура | Organization structure |
+| 105 | Bo‘limlar daraxti va lavozimlar. Bo‘limlar o‘chirilmaydi, faqat faol emas qilinadi. | Дерево подразделений и должности. Подразделения не удаляются, а только отключаются. | Department tree and positions. Departments are never deleted, only deactivated. |
+| 106 | Bo‘lim qo‘shish | Добавить подразделение | Add a department |
+| 107 | Lavozim qo‘shish | Добавить должность | Add a position |
+| 108 | Bo‘limlar hali kiritilmagan. | Подразделения ещё не внесены. | No departments have been entered yet. |
+| 109 | Lavozimlar | Должности | Positions |
+| 110 | Lavozimlar hali kiritilmagan. | Должности ещё не внесены. | No positions have been entered yet. |
+| 111 | Rol biriktirilmagan: foydalanuvchi hech narsaga kira olmaydi. | Роль не назначена: пользователь ни к чему не имеет доступа. | No role assigned: the user cannot access anything. |
+| 112 | Rol biriktirish | Назначить роль | Assign a role |
+| 113 | Barcha rollar | Все роли | All roles |
 
 ## E. Task and document workflow wording — 71
 
@@ -423,7 +426,7 @@
 | 70 | Yangi topshiriq | Новое задание | New task |
 | 71 | Topshiriqlar yo‘q | Заданий нет | No tasks |
 
-## F. Остальные строки — 448
+## F. Остальные строки — 458
 
 Интерфейсные подписи общего назначения (кнопки, заголовки, подсказки). Проверяются выборочно при общей вычитке; полный список — в файлах `.po`.
 

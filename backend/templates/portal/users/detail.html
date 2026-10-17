@@ -43,6 +43,8 @@
       {% include "includes/field.html" with field=assign_form.department %}
       <button class="btn btn-primary" type="submit">{% translate "Rol biriktirish" %}</button>
     </form>
+    {% if role_hints %}<details style="margin-top:12px"><summary>{% translate "Yangilik rollari nimaga ruxsat beradi" %}</summary>
+      <ul class="stack" style="margin:8px 0 0;padding-left:18px">{% for label, hint in role_hints %}<li><b>{{ label }}</b> — {{ hint }}</li>{% endfor %}</ul></details>{% endif %}
     {% endif %}
   </section>
 </div>

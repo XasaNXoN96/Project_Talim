@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 22:35+0500\n"
+"POT-Creation-Date: 2026-10-17 23:08+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -48,8 +48,29 @@ msgstr "Отдел кадров"
 msgid "Administrator"
 msgstr "Администратор"
 
+msgid "Yangilik muallifi"
+msgstr "Автор новостей"
+
+msgid "Yangilik muharriri"
+msgstr "Редактор новостей"
+
+msgid "Yangilik nashr etuvchisi"
+msgstr "Публикатор новостей"
+
 msgid "Tizim administratori"
 msgstr "Системный администратор"
+
+msgid "Yangilik yozadi va o‘z qoralamalarini tahrirlaydi, tekshiruvga yuboradi, o‘z yangiliklari bo‘yicha qarorlar va izohlarni ko‘radi. Ma’qullay yoki nashr eta olmaydi."
+msgstr "Пишет новости и редактирует собственные черновики, отправляет их на проверку, видит решения и комментарии по своим новостям. Не может одобрять и публиковать."
+
+msgid "Tekshiruvdagi yangiliklarni ko‘radi, ma’qullaydi yoki majburiy izoh bilan qaytaradi. Yozmaydi va nashr etmaydi; o‘z yangiligini ma’qullay olmaydi."
+msgstr "Видит новости на проверке, одобряет их или возвращает с обязательным комментарием. Не пишет и не публикует; не может одобрить собственную новость."
+
+msgid "Faqat ma’qullangan yangilikni nashr etadi va nashrdan oladi. Qoralamani to‘g‘ridan-to‘g‘ri nashr eta olmaydi."
+msgstr "Публикует только одобренные новости и снимает их с публикации. Не может публиковать черновик напрямую."
+
+msgid "Yangilikni yozadi, tekshiradi va nashr etadi (o‘zinikini ma’qullay olmaydi)."
+msgstr "Пишет, проверяет и публикует новости (собственную одобрить не может)."
 
 #, python-format
 msgid "Qo‘shish: %(model)s"
@@ -1031,6 +1052,9 @@ msgstr ""
 "%(kind)s: %(title)s\n"
 "\n"
 "Подробности — на портале сотрудников."
+
+msgid "Bu yangilikni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
+msgstr "У вас нет доступа к этой новости, или она удалена."
 
 msgid "Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
 msgstr "У вас нет доступа к этому заданию, либо оно удалено."
@@ -2298,8 +2322,20 @@ msgstr "Категорий нет"
 msgid "Kategoriyani tahrirlash"
 msgstr "Редактирование категории"
 
+msgid "Muallif uchun izoh"
+msgstr "Комментарий для автора"
+
 msgid "ixtiyoriy"
 msgstr "необязательно"
+
+msgid "Muallif buni ko‘radi."
+msgstr "Автор увидит это."
+
+msgid "Ichki qayd"
+msgstr "Внутренняя заметка"
+
+msgid "Faqat tahririyat xodimlari ko‘radi; muallif ko‘rmaydi."
+msgstr "Видна только сотрудникам редакции; автор её не увидит."
 
 msgid "Ha, tasdiqlayman"
 msgstr "Да, подтверждаю"
@@ -2340,12 +2376,6 @@ msgstr "Новости не найдены"
 msgid "Birinchi qoralamani yarating."
 msgstr "Создайте первый черновик."
 
-msgid "Tekshiruv tarixi"
-msgstr "История проверки"
-
-msgid "Kim"
-msgstr "Кто"
-
 msgid "Oldindan ko‘rish"
 msgstr "Предварительный просмотр"
 
@@ -2378,6 +2408,12 @@ msgstr "не отображается на открытом сайте"
 
 msgid "Tekshiruvchi izohi"
 msgstr "Комментарий проверяющего"
+
+msgid "Tekshiruv tarixi"
+msgstr "История проверки"
+
+msgid "Kim"
+msgstr "Кто"
 
 msgid "Topshiriqlar va yangiliklarni tekshirish bo‘yicha xabarlar."
 msgstr "Сообщения о заданиях и проверке новостей."
@@ -2572,6 +2608,9 @@ msgstr "Роль не назначена: пользователь ни к че�
 
 msgid "Rol biriktirish"
 msgstr "Назначить роль"
+
+msgid "Yangilik rollari nimaga ruxsat beradi"
+msgstr "Что разрешают роли для новостей"
 
 msgid "Yangi foydalanuvchi"
 msgstr "Новый пользователь"

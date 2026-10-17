@@ -227,8 +227,9 @@ class Permissions(Base):
         self.assertEqual(c.post(url("edit", d.pk), self.body | {"title": "Qoralama 2"}).status_code, 302)
         self.assertEqual(c.get(url("status", d.pk, "publish")).status_code, 403)
         self.assertEqual(c.post(url("status", d.pk, "publish")).status_code, 403)
-        self.assertEqual(c.get(url("edit", self.pub.pk)).status_code, 403)  # a live item changes the public site
-        self.assertEqual(c.post(url("edit", self.pub.pk), self.body | {"title": "Buzildi"}).status_code, 403)
+        # someone else's published item: a writer-only person does not even see it (404), and nothing changes
+        self.assertEqual(c.get(url("edit", self.pub.pk)).status_code, 404)
+        self.assertEqual(c.post(url("edit", self.pub.pk), self.body | {"title": "Buzildi"}).status_code, 404)
         d.refresh_from_db()
         self.pub.refresh_from_db()
         self.assertEqual((d.status, self.pub.title), ("draft", "Ochiq yangilik"))

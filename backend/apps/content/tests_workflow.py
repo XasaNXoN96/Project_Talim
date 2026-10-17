@@ -249,9 +249,9 @@ class Rights(Base):
 
     def test_only_the_author_or_staff_may_submit_someone_elses_draft(self):
         n = self.news(author=self.author)
-        self.assertEqual(self.wr.post(url("status", n.pk, "submit")).status_code, 302)   # writer is not the author and not staff -> refused with a message
+        self.assertEqual(self.wr.post(url("status", n.pk, "submit")).status_code, 404)   # someone else's draft is invisible to a writer
         self.assertEqual(self.status_of(n), "draft")
-        self.assertEqual(self.wr.get(url("edit", n.pk)).status_code, 403)
+        self.assertEqual(self.wr.get(url("edit", n.pk)).status_code, 404)
         self.do(self.ad, n, "submit")                                                    # staff may
         self.assertEqual(n.status, "review")
 
@@ -347,7 +347,7 @@ class Editing(Base):
     def test_a_writer_edits_only_their_own_drafts(self):
         mine, theirs = self.news(author=self.writer, slug="m"), self.news(author=self.author, slug="t")
         self.assertEqual(self.wr.post(url("edit", mine.pk), self.body()).status_code, 302)
-        self.assertEqual(self.wr.post(url("edit", theirs.pk), self.body()).status_code, 403)
+        self.assertEqual(self.wr.post(url("edit", theirs.pk), self.body()).status_code, 404)   # not even visible to a writer-only person
         self.assertEqual(News.objects.get(pk=theirs.pk).title, "Yangilik")
 
     def test_published_content_is_edited_only_with_the_publishing_right_and_stays_published(self):

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 22:35+0500\n"
+"POT-Creation-Date: 2026-10-17 23:08+0500\n"
 "Language: uz\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -48,8 +48,29 @@ msgstr "Kadrlar bo‘limi"
 msgid "Administrator"
 msgstr "Administrator"
 
+msgid "Yangilik muallifi"
+msgstr "Yangilik muallifi"
+
+msgid "Yangilik muharriri"
+msgstr "Yangilik muharriri"
+
+msgid "Yangilik nashr etuvchisi"
+msgstr "Yangilik nashr etuvchisi"
+
 msgid "Tizim administratori"
 msgstr "Tizim administratori"
+
+msgid "Yangilik yozadi va o‘z qoralamalarini tahrirlaydi, tekshiruvga yuboradi, o‘z yangiliklari bo‘yicha qarorlar va izohlarni ko‘radi. Ma’qullay yoki nashr eta olmaydi."
+msgstr "Yangilik yozadi va o‘z qoralamalarini tahrirlaydi, tekshiruvga yuboradi, o‘z yangiliklari bo‘yicha qarorlar va izohlarni ko‘radi. Ma’qullay yoki nashr eta olmaydi."
+
+msgid "Tekshiruvdagi yangiliklarni ko‘radi, ma’qullaydi yoki majburiy izoh bilan qaytaradi. Yozmaydi va nashr etmaydi; o‘z yangiligini ma’qullay olmaydi."
+msgstr "Tekshiruvdagi yangiliklarni ko‘radi, ma’qullaydi yoki majburiy izoh bilan qaytaradi. Yozmaydi va nashr etmaydi; o‘z yangiligini ma’qullay olmaydi."
+
+msgid "Faqat ma’qullangan yangilikni nashr etadi va nashrdan oladi. Qoralamani to‘g‘ridan-to‘g‘ri nashr eta olmaydi."
+msgstr "Faqat ma’qullangan yangilikni nashr etadi va nashrdan oladi. Qoralamani to‘g‘ridan-to‘g‘ri nashr eta olmaydi."
+
+msgid "Yangilikni yozadi, tekshiradi va nashr etadi (o‘zinikini ma’qullay olmaydi)."
+msgstr "Yangilikni yozadi, tekshiradi va nashr etadi (o‘zinikini ma’qullay olmaydi)."
 
 #, python-format
 msgid "Qo‘shish: %(model)s"
@@ -1031,6 +1052,9 @@ msgstr ""
 "%(kind)s: %(title)s\n"
 "\n"
 "Batafsil ma’lumot uchun xodimlar portaliga kiring."
+
+msgid "Bu yangilikni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
+msgstr "Bu yangilikni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
 
 msgid "Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
 msgstr "Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
@@ -2298,8 +2322,20 @@ msgstr "Kategoriyalar yo‘q"
 msgid "Kategoriyani tahrirlash"
 msgstr "Kategoriyani tahrirlash"
 
+msgid "Muallif uchun izoh"
+msgstr "Muallif uchun izoh"
+
 msgid "ixtiyoriy"
 msgstr "ixtiyoriy"
+
+msgid "Muallif buni ko‘radi."
+msgstr "Muallif buni ko‘radi."
+
+msgid "Ichki qayd"
+msgstr "Ichki qayd"
+
+msgid "Faqat tahririyat xodimlari ko‘radi; muallif ko‘rmaydi."
+msgstr "Faqat tahririyat xodimlari ko‘radi; muallif ko‘rmaydi."
 
 msgid "Ha, tasdiqlayman"
 msgstr "Ha, tasdiqlayman"
@@ -2340,12 +2376,6 @@ msgstr "Yangiliklar topilmadi"
 msgid "Birinchi qoralamani yarating."
 msgstr "Birinchi qoralamani yarating."
 
-msgid "Tekshiruv tarixi"
-msgstr "Tekshiruv tarixi"
-
-msgid "Kim"
-msgstr "Kim"
-
 msgid "Oldindan ko‘rish"
 msgstr "Oldindan ko‘rish"
 
@@ -2378,6 +2408,12 @@ msgstr "ochiq saytda ko‘rinmaydi"
 
 msgid "Tekshiruvchi izohi"
 msgstr "Tekshiruvchi izohi"
+
+msgid "Tekshiruv tarixi"
+msgstr "Tekshiruv tarixi"
+
+msgid "Kim"
+msgstr "Kim"
 
 msgid "Topshiriqlar va yangiliklarni tekshirish bo‘yicha xabarlar."
 msgstr "Topshiriqlar va yangiliklarni tekshirish bo‘yicha xabarlar."
@@ -2572,6 +2608,9 @@ msgstr "Rol biriktirilmagan: foydalanuvchi hech narsaga kira olmaydi."
 
 msgid "Rol biriktirish"
 msgstr "Rol biriktirish"
+
+msgid "Yangilik rollari nimaga ruxsat beradi"
+msgstr "Yangilik rollari nimaga ruxsat beradi"
 
 msgid "Yangi foydalanuvchi"
 msgstr "Yangi foydalanuvchi"

@@ -10,7 +10,7 @@ from django.views.generic import ListView
 from django.utils.translation import gettext_lazy as _
 
 from apps.access.models import RoleAssignment
-from apps.access.roles import PRIVILEGED_ROLES, RoleCode
+from apps.access.roles import PRIVILEGED_ROLES, ROLE_HINTS, RoleCode
 from apps.access.services import has_role
 from apps.core.mixins import PortalPermissionMixin
 
@@ -93,6 +93,7 @@ class UserDetailView(PortalPermissionMixin, View):
             "can_assign": actor.has_perm("accounts.assign_roles"),
             "can_unlock": actor.has_perm("accounts.unlock_accounts"),
             "assign_form": RoleAssignForm(allowed_roles=_allowed_roles(actor)),
+            "role_hints": [(RoleCode(c).label, ROLE_HINTS[c]) for c in _allowed_roles(actor) if c in ROLE_HINTS],
             "is_self": target.pk == actor.pk,
         }
         return render(request, "portal/users/detail.html", ctx)

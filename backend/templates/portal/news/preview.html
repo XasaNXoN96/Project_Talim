@@ -16,8 +16,8 @@
 </article>
 {% if reviews %}
 <section class="card card-pad" style="max-width:820px;margin-top:16px" aria-label="{% translate 'Tekshiruv tarixi' %}"><h3>{% translate "Tekshiruv tarixi" %}</h3>
-<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Vaqt" %}</th><th>{% translate "Kim" %}</th><th>{% translate "Natija" %}</th><th>{% translate "Izoh" %}</th></tr></thead><tbody>
-{% for r in reviews %}<tr><td class="nw">{{ r.created_at|date:"d.m.Y H:i" }}</td><td>{{ r.actor.get_full_name|default:r.actor.username|default:"—" }}</td><td>{{ r.get_action_display }}</td><td>{{ r.comment|linebreaksbr|default:"—" }}</td></tr>{% endfor %}
+<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Vaqt" %}</th><th>{% translate "Kim" %}</th><th>{% translate "Natija" %}</th><th>{% translate "Izoh" %}</th>{% if show_notes %}<th>{% translate "Ichki qayd" %}</th>{% endif %}</tr></thead><tbody>
+{% for r in reviews %}<tr><td class="nw">{{ r.created_at|date:"d.m.Y H:i" }}</td><td>{{ r.actor.get_full_name|default:r.actor.username|default:"—" }}</td><td>{{ r.get_action_display }}</td><td>{{ r.comment|linebreaksbr|default:"—" }}</td>{% if show_notes %}<td>{{ r.internal_note|linebreaksbr|default:"—" }}</td>{% endif %}</tr>{% endfor %}
 </tbody></table></div></section>
 {% endif %}
 {% endblock %}
