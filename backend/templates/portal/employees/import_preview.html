@@ -1,0 +1,24 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Importni ko‘rib chiqish" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Importni ko‘rib chiqish" %}</h1><p>{% blocktranslate %}Hali hech narsa saqlanmadi. Tasdiqlash {{ minutes }} daqiqa ichida bajarilishi kerak, aks holda yuklangan qatorlar o‘chiriladi.{% endblocktranslate %}</p></div></div>
+<div class="row wrap" style="margin-bottom:12px">
+  <span class="badge b-ok plain">{% translate "Qo‘shiladi" %}: {{ tally.ok }}</span>
+  <span class="badge b-warn plain">{% translate "Mumkin bo‘lgan dublikat" %}: {{ tally.duplicate }}</span>
+  <span class="badge b-err plain">{% translate "Xato" %}: {{ tally.error }}</span>
+  <span class="muted small">{% translate "Jami qatorlar" %}: {{ tally.total }}</span>
+</div>
+<form method="post" action="{% url 'employees:import_confirm' imp.pk %}" class="card card-pad" style="display:grid;gap:12px;max-width:760px;margin-bottom:16px">{% csrf_token %}
+  <p>{% blocktranslate with ok=tally.ok skipped=tally.error %}{{ ok }} ta yangi xodim qo‘shiladi. Xatoli qatorlar ({{ skipped }}) o‘tkazib yuboriladi. Mavjud xodimlar o‘zgartirilmaydi.{% endblocktranslate %}</p>
+  {% if tally.duplicate %}<label class="row" style="gap:8px;align-items:flex-start"><input type="checkbox" name="include_duplicates" value="1"><span>{% blocktranslate with n=tally.duplicate %}Mumkin bo‘lgan dublikatlarni ({{ n }}) ham YANGI yozuv sifatida qo‘shish. Hech narsa birlashtirilmaydi; keyin ularni qo‘lda tekshirish kerak bo‘ladi.{% endblocktranslate %}</span></label>{% endif %}
+  <div class="row wrap"><button class="btn btn-primary" type="submit" {% if not tally.ok and not tally.duplicate %}disabled{% endif %}>{% translate "Importni tasdiqlash" %}</button>
+  <button class="btn btn-secondary" type="submit" formaction="{% url 'employees:import_cancel' imp.pk %}">{% translate "Bekor qilish va ma’lumotlarni o‘chirish" %}</button></div>
+</form>
+<div class="row wrap" style="margin-bottom:8px">{% if only_problems %}<a href="?">{% translate "Barcha qatorlar" %}</a>{% else %}<a href="?only=problems">{% translate "Faqat muammoli qatorlar" %}</a>{% endif %}</div>
+<div class="table-wrap"><table class="t"><thead><tr><th>№</th><th>{% translate "F.I.Sh." %}</th><th>{% translate "Bo‘lim" %}</th><th>{% translate "Lavozim" %}</th><th>{% translate "Natija" %}</th></tr></thead><tbody>
+{% for r in rows %}<tr><td class="nw">{{ r.n }}</td><td>{{ r.cleaned.last_name }} {{ r.cleaned.first_name }} {{ r.cleaned.middle_name }}</td><td>{{ r.department|default:"—" }}</td><td>{{ r.position|default:"—" }}</td>
+<td>{% if r.state == 'ok' %}<span class="badge b-ok plain">{% translate "Qo‘shiladi" %}</span>{% elif r.state == 'duplicate' %}<span class="badge b-warn plain">{% translate "Dublikat?" %}</span>{% else %}<span class="badge b-err plain">{% translate "Xato" %}</span>{% endif %}
+{% for m in r.messages %}<div class="small muted">{{ m }}</div>{% endfor %}</td></tr>{% empty %}<tr><td colspan="5" class="muted">{% translate "Muammoli qatorlar yo‘q." %}</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

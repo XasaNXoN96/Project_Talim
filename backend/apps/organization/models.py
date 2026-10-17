@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from apps.core.models import TimeStampedModel
+from apps.core.models import TimeStampedModel, UUIDModel
 
 
 class Department(TimeStampedModel):
@@ -94,3 +94,28 @@ class Institution(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+
+class EmployeeImport(UUIDModel):
+    """One Excel import: the parsed rows wait here between the preview and the confirmation, then are wiped.
+
+    `rows` holds personal data (it is the uploaded sheet, cleaned). It exists only while `status` is "previewed" and the
+    record is younger than EMPLOYEE_IMPORT_TTL_MINUTES; completing, cancelling or expiring it empties `rows`. The uploaded
+    file itself is never stored. `summary` keeps counts and row numbers only."""
+
+    class Status(models.TextChoices):
+        PREVIEWED = "previewed", _("Ko‘rib chiqish")
+        COMPLETED = "completed", _("Bajarildi")
+        CANCELLED = "cancelled", _("Bekor qilindi")
+        EXPIRED = "expired", _("Muddati o‘tdi")
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+")
+    created_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+    status = models.CharField(max_length=12, choices=Status.choices, default=Status.PREVIEWED)
+    file_sha256 = models.CharField(max_length=64)
+    rows = models.JSONField(default=list, blank=True)
+    summary = models.JSONField(default=dict, blank=True)
+
+    class Meta:
+        ordering = ["-created_at"]

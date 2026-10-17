@@ -1,0 +1,24 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Xodimlarni import qilish" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Xodimlarni Excel’dan import qilish" %}</h1><p>{% translate "Import faqat yangi xodimlar qo‘shadi. Mavjud xodimlar o‘zgartirilmaydi va birlashtirilmaydi. Avval ko‘rib chiqasiz, so‘ng tasdiqlaysiz." %}</p></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% url 'employees:list' %}">{% translate "Xodimlar ro‘yxati" %}</a><a class="btn btn-secondary" href="{% url 'employees:import_template' %}">{% translate "Namuna shablonni yuklab olish" %}</a></div></div>
+{% if error %}<div class="alert err" role="alert"><span>{{ error }}</span></div>{% endif %}
+<div class="stack" style="max-width:760px">
+<form method="post" enctype="multipart/form-data" class="card card-pad" style="display:grid;gap:16px">{% csrf_token %}
+  <div class="field"><label for="id_file">{% translate "Fayl (.xlsx)" %}</label><input class="input" type="file" name="file" id="id_file" accept=".xlsx" required></div>
+  <p class="muted small">{% blocktranslate %}Ko‘pi bilan {{ max_rows }} qator va {{ max_mb }} MB. Fayl faqat tekshirish uchun o‘qiladi va saqlanmaydi; o‘qilgan qatorlar tasdiqlashgacha vaqtincha saqlanadi, so‘ng o‘chiriladi.{% endblocktranslate %}</p>
+  <div><button class="btn btn-primary" type="submit">{% translate "Yuklash va tekshirish" %}</button></div>
+</form>
+<section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Ustunlar" %}</h2>
+  <p class="muted small">{% translate "Birinchi qatorda quyidagi ustun nomlari bo‘lishi kerak (shablonda tayyor)." %}</p>
+  <p style="word-break:break-word">{% for c in columns %}<code>{{ c }}</code>{% if c in required %}<b>*</b>{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  <ul class="small" style="margin:8px 0 0 18px">
+    <li>{% translate "department — bo‘lim nomi; nom takrorlansa to‘liq yo‘l: “Yuqori / Quyi”. Bo‘lim va lavozim oldindan yaratilgan bo‘lishi kerak." %}</li>
+    <li>{% translate "status — new (bo‘sh bo‘lsa ham), active, on_leave." %}</li>
+    <li>{% translate "Sanalar: YYYY-MM-DD yoki DD.MM.YYYY. Formulalar, makroslar va havolalar qabul qilinmaydi." %}</li>
+    <li>{% translate "F.I.Sh. yoki ish e-pochtasi mavjud xodim bilan mos kelsa — qator “mumkin bo‘lgan dublikat” deb belgilanadi va sukut bo‘yicha o‘tkazib yuboriladi." %}</li>
+  </ul></section>
+</div>
+{% endblock %}

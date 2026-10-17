@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 12:54+0500\n"
+"POT-Creation-Date: 2026-10-17 13:40+0500\n"
 "Language: uz\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -498,6 +498,21 @@ msgstr "Topshiriq fayli yuklab olindi"
 msgid "Topshiriq fayli olib tashlandi"
 msgstr "Topshiriq fayli olib tashlandi"
 
+msgid "Xodimlar importi: ko‘rib chiqish"
+msgstr "Xodimlar importi: ko‘rib chiqish"
+
+msgid "Xodimlar importi: fayl rad etildi"
+msgstr "Xodimlar importi: fayl rad etildi"
+
+msgid "Xodimlar importi bajarildi"
+msgstr "Xodimlar importi bajarildi"
+
+msgid "Xodimlar importi bekor qilindi"
+msgstr "Xodimlar importi bekor qilindi"
+
+msgid "Xodimlar importi xatolik bilan to‘xtadi"
+msgstr "Xodimlar importi xatolik bilan to‘xtadi"
+
 msgid "Yangilik yaratildi"
 msgstr "Yangilik yaratildi"
 
@@ -894,6 +909,109 @@ msgstr "Bu nomdagi bo‘lim shu joyda allaqachon bor."
 msgid "Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo‘lmaydi."
 msgstr "Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo‘lmaydi."
 
+msgid "Fayl tanlanmagan."
+msgstr "Fayl tanlanmagan."
+
+msgid "Bu import allaqachon bajarilgan, bekor qilingan yoki muddati o‘tgan."
+msgstr "Bu import allaqachon bajarilgan, bekor qilingan yoki muddati o‘tgan."
+
+msgid "Import xatolik bilan to‘xtadi. Hech narsa saqlanmadi; qayta urinib ko‘ring."
+msgstr "Import xatolik bilan to‘xtadi. Hech narsa saqlanmadi; qayta urinib ko‘ring."
+
+msgid "Import bajarildi."
+msgstr "Import bajarildi."
+
+msgid "Import bekor qilindi. Yuklangan ma’lumotlar o‘chirildi."
+msgstr "Import bekor qilindi. Yuklangan ma’lumotlar o‘chirildi."
+
+msgid "Majburiy maydon bo‘sh."
+msgstr "Majburiy maydon bo‘sh."
+
+msgid "Qiymat juda uzun (ko‘pi bilan %(max)d belgi)."
+msgstr "Qiymat juda uzun (ko‘pi bilan %(max)d belgi)."
+
+msgid "Qiymatda ruxsat etilmagan belgilar bor."
+msgstr "Qiymatda ruxsat etilmagan belgilar bor."
+
+msgid "Formula yoki “=”, “@” bilan boshlanadigan qiymat qabul qilinmaydi."
+msgstr "Formula yoki “=”, “@” bilan boshlanadigan qiymat qabul qilinmaydi."
+
+msgid "Ism-familiya faqat harflar, bo‘sh joy, defis va apostrofdan iborat bo‘lishi kerak."
+msgstr "Ism-familiya faqat harflar, bo‘sh joy, defis va apostrofdan iborat bo‘lishi kerak."
+
+#, python-format
+msgid "Bunday faol bo‘lim topilmadi: “%(value)s”. Import yangi bo‘lim yaratmaydi."
+msgstr "Bunday faol bo‘lim topilmadi: “%(value)s”. Import yangi bo‘lim yaratmaydi."
+
+#, python-format
+msgid "Bo‘lim nomi bir necha joyda uchraydi: “%(value)s”. To‘liq yo‘lni yozing (masalan, “Yuqori bo‘lim / Quyi bo‘lim”)."
+msgstr "Bo‘lim nomi bir necha joyda uchraydi: “%(value)s”. To‘liq yo‘lni yozing (masalan, “Yuqori bo‘lim / Quyi bo‘lim”)."
+
+#, python-format
+msgid "Bunday lavozim topilmadi: “%(value)s”. Import yangi lavozim yaratmaydi."
+msgstr "Bunday lavozim topilmadi: “%(value)s”. Import yangi lavozim yaratmaydi."
+
+#, python-format
+msgid "Noma’lum holat: “%(value)s”. Ruxsat etilgan: %(allowed)s."
+msgstr "Noma’lum holat: “%(value)s”. Ruxsat etilgan: %(allowed)s."
+
+msgid "Telefon raqami noto‘g‘ri formatda."
+msgstr "Telefon raqami noto‘g‘ri formatda."
+
+msgid "E-pochta manzili noto‘g‘ri."
+msgstr "E-pochta manzili noto‘g‘ri."
+
+msgid "Sana noto‘g‘ri. Format: YYYY-MM-DD yoki DD.MM.YYYY."
+msgstr "Sana noto‘g‘ri. Format: YYYY-MM-DD yoki DD.MM.YYYY."
+
+msgid "Sana ruxsat etilgan oraliqdan tashqarida."
+msgstr "Sana ruxsat etilgan oraliqdan tashqarida."
+
+msgid "Bunday F.I.Sh. bilan xodim allaqachon mavjud (mumkin bo‘lgan dublikat). Mavjud xodim o‘zgartirilmaydi."
+msgstr "Bunday F.I.Sh. bilan xodim allaqachon mavjud (mumkin bo‘lgan dublikat). Mavjud xodim o‘zgartirilmaydi."
+
+msgid "Bu ish e-pochtasi boshqa xodimda bor (mumkin bo‘lgan dublikat)."
+msgstr "Bu ish e-pochtasi boshqa xodimda bor (mumkin bo‘lgan dublikat)."
+
+msgid "Faylda xuddi shunday F.I.Sh. avval ham uchragan (mumkin bo‘lgan dublikat)."
+msgstr "Faylda xuddi shunday F.I.Sh. avval ham uchragan (mumkin bo‘lgan dublikat)."
+
+msgid "Bu .xlsx fayli emas yoki u buzilgan."
+msgstr "Bu .xlsx fayli emas yoki u buzilgan."
+
+msgid "Fayl tarkibi xavfli (DTD yoki entity)."
+msgstr "Fayl tarkibi xavfli (DTD yoki entity)."
+
+msgid "Fayl tarkibi juda katta."
+msgstr "Fayl tarkibi juda katta."
+
+msgid "Faylda ma’lumotli varaq yo‘q."
+msgstr "Faylda ma’lumotli varaq yo‘q."
+
+msgid "Birinchi qatorda ustun nomlari bo‘lishi kerak."
+msgstr "Birinchi qatorda ustun nomlari bo‘lishi kerak."
+
+#, python-format
+msgid "Majburiy ustunlar yo‘q: %(columns)s."
+msgstr "Majburiy ustunlar yo‘q: %(columns)s."
+
+#, python-format
+msgid "Noma’lum ustunlar: %(columns)s. Shablondagi ustunlardan foydalaning."
+msgstr "Noma’lum ustunlar: %(columns)s. Shablondagi ustunlardan foydalaning."
+
+#, python-format
+msgid "Ustun nomi takrorlangan: %(columns)s."
+msgstr "Ustun nomi takrorlangan: %(columns)s."
+
+msgid "Qatorlar soni %(max)d dan oshmasligi kerak."
+msgstr "Qatorlar soni %(max)d dan oshmasligi kerak."
+
+msgid "Faylda import qilinadigan qatorlar yo‘q."
+msgstr "Faylda import qilinadigan qatorlar yo‘q."
+
+msgid "(sarlavhasiz ustun)"
+msgstr "(sarlavhasiz ustun)"
+
 msgid "bo‘limlar"
 msgstr "bo‘limlar"
 
@@ -977,6 +1095,18 @@ msgstr "ta’lim muassasasi"
 
 msgid "ta’lim muassasalari"
 msgstr "ta’lim muassasalari"
+
+msgid "Ko‘rib chiqish"
+msgstr "Ko‘rib chiqish"
+
+msgid "Bajarildi"
+msgstr "Bajarildi"
+
+msgid "Bekor qilindi"
+msgstr "Bekor qilindi"
+
+msgid "Muddati o‘tdi"
+msgstr "Muddati o‘tdi"
 
 msgid "Sizning hisobingizga xodim kartasi biriktirilmagan."
 msgstr "Sizning hisobingizga xodim kartasi biriktirilmagan."
@@ -1239,12 +1369,6 @@ msgstr "Yangi"
 
 msgid "Jarayonda"
 msgstr "Jarayonda"
-
-msgid "Bajarildi"
-msgstr "Bajarildi"
-
-msgid "Bekor qilindi"
-msgstr "Bekor qilindi"
 
 msgid "Past"
 msgstr "Past"
@@ -1758,20 +1882,147 @@ msgstr "Xodim qo‘shish"
 msgid "Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak."
 msgstr "Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak."
 
+msgid "Importni ko‘rib chiqish"
+msgstr "Importni ko‘rib chiqish"
+
+#, python-format
+msgid "Hali hech narsa saqlanmadi. Tasdiqlash %(minutes)s daqiqa ichida bajarilishi kerak, aks holda yuklangan qatorlar o‘chiriladi."
+msgstr "Hali hech narsa saqlanmadi. Tasdiqlash %(minutes)s daqiqa ichida bajarilishi kerak, aks holda yuklangan qatorlar o‘chiriladi."
+
+msgid "Qo‘shiladi"
+msgstr "Qo‘shiladi"
+
+msgid "Mumkin bo‘lgan dublikat"
+msgstr "Mumkin bo‘lgan dublikat"
+
+msgid "Xato"
+msgstr "Xato"
+
+msgid "Jami qatorlar"
+msgstr "Jami qatorlar"
+
+#, python-format
+msgid "%(ok)s ta yangi xodim qo‘shiladi. Xatoli qatorlar (%(skipped)s) o‘tkazib yuboriladi. Mavjud xodimlar o‘zgartirilmaydi."
+msgstr "%(ok)s ta yangi xodim qo‘shiladi. Xatoli qatorlar (%(skipped)s) o‘tkazib yuboriladi. Mavjud xodimlar o‘zgartirilmaydi."
+
+#, python-format
+msgid "Mumkin bo‘lgan dublikatlarni (%(n)s) ham YANGI yozuv sifatida qo‘shish. Hech narsa birlashtirilmaydi; keyin ularni qo‘lda tekshirish kerak bo‘ladi."
+msgstr "Mumkin bo‘lgan dublikatlarni (%(n)s) ham YANGI yozuv sifatida qo‘shish. Hech narsa birlashtirilmaydi; keyin ularni qo‘lda tekshirish kerak bo‘ladi."
+
+msgid "Importni tasdiqlash"
+msgstr "Importni tasdiqlash"
+
+msgid "Bekor qilish va ma’lumotlarni o‘chirish"
+msgstr "Bekor qilish va ma’lumotlarni o‘chirish"
+
+msgid "Barcha qatorlar"
+msgstr "Barcha qatorlar"
+
+msgid "Faqat muammoli qatorlar"
+msgstr "Faqat muammoli qatorlar"
+
+msgid "F.I.Sh."
+msgstr "F.I.Sh."
+
+msgid "Natija"
+msgstr "Natija"
+
+msgid "Dublikat?"
+msgstr "Dublikat?"
+
+msgid "Muammoli qatorlar yo‘q."
+msgstr "Muammoli qatorlar yo‘q."
+
+msgid "Import natijasi"
+msgstr "Import natijasi"
+
+msgid "Xodimlar ro‘yxati"
+msgstr "Xodimlar ro‘yxati"
+
+msgid "Yangi import"
+msgstr "Yangi import"
+
+msgid "Ko‘rib chiqish muddati o‘tdi, yuklangan qatorlar o‘chirildi. Faylni qayta yuklang."
+msgstr "Ko‘rib chiqish muddati o‘tdi, yuklangan qatorlar o‘chirildi. Faylni qayta yuklang."
+
+msgid "Import bekor qilindi. Hech narsa saqlanmadi, yuklangan qatorlar o‘chirildi."
+msgstr "Import bekor qilindi. Hech narsa saqlanmadi, yuklangan qatorlar o‘chirildi."
+
+msgid "Qo‘shildi"
+msgstr "Qo‘shildi"
+
+msgid "Dublikat sifatida o‘tkazib yuborildi"
+msgstr "Dublikat sifatida o‘tkazib yuborildi"
+
+msgid "Xato (o‘tkazib yuborildi)"
+msgstr "Xato (o‘tkazib yuborildi)"
+
+msgid "Dublikat sifatida belgilangan, ammo yangi yozuv sifatida qo‘shilgan qatorlar"
+msgstr "Dublikat sifatida belgilangan, ammo yangi yozuv sifatida qo‘shilgan qatorlar"
+
+msgid "Dublikat qatorlar (Excel qator raqami)"
+msgstr "Dublikat qatorlar (Excel qator raqami)"
+
+msgid "Sabab"
+msgstr "Sabab"
+
+msgid "Yuklangan fayl va qatorlar saqlanmagan. Bu hisobotda shaxsiy ma’lumotlar yo‘q — faqat qator raqamlari."
+msgstr "Yuklangan fayl va qatorlar saqlanmagan. Bu hisobotda shaxsiy ma’lumotlar yo‘q — faqat qator raqamlari."
+
+msgid "Xodimlarni import qilish"
+msgstr "Xodimlarni import qilish"
+
+msgid "Xodimlarni Excel’dan import qilish"
+msgstr "Xodimlarni Excel’dan import qilish"
+
+msgid "Import faqat yangi xodimlar qo‘shadi. Mavjud xodimlar o‘zgartirilmaydi va birlashtirilmaydi. Avval ko‘rib chiqasiz, so‘ng tasdiqlaysiz."
+msgstr "Import faqat yangi xodimlar qo‘shadi. Mavjud xodimlar o‘zgartirilmaydi va birlashtirilmaydi. Avval ko‘rib chiqasiz, so‘ng tasdiqlaysiz."
+
+msgid "Namuna shablonni yuklab olish"
+msgstr "Namuna shablonni yuklab olish"
+
+msgid "Fayl (.xlsx)"
+msgstr "Fayl (.xlsx)"
+
+#, python-format
+msgid "Ko‘pi bilan %(max_rows)s qator va %(max_mb)s MB. Fayl faqat tekshirish uchun o‘qiladi va saqlanmaydi; o‘qilgan qatorlar tasdiqlashgacha vaqtincha saqlanadi, so‘ng o‘chiriladi."
+msgstr "Ko‘pi bilan %(max_rows)s qator va %(max_mb)s MB. Fayl faqat tekshirish uchun o‘qiladi va saqlanmaydi; o‘qilgan qatorlar tasdiqlashgacha vaqtincha saqlanadi, so‘ng o‘chiriladi."
+
+msgid "Yuklash va tekshirish"
+msgstr "Yuklash va tekshirish"
+
+msgid "Ustunlar"
+msgstr "Ustunlar"
+
+msgid "Birinchi qatorda quyidagi ustun nomlari bo‘lishi kerak (shablonda tayyor)."
+msgstr "Birinchi qatorda quyidagi ustun nomlari bo‘lishi kerak (shablonda tayyor)."
+
+msgid "department — bo‘lim nomi; nom takrorlansa to‘liq yo‘l: “Yuqori / Quyi”. Bo‘lim va lavozim oldindan yaratilgan bo‘lishi kerak."
+msgstr "department — bo‘lim nomi; nom takrorlansa to‘liq yo‘l: “Yuqori / Quyi”. Bo‘lim va lavozim oldindan yaratilgan bo‘lishi kerak."
+
+msgid "status — new (bo‘sh bo‘lsa ham), active, on_leave."
+msgstr "status — new (bo‘sh bo‘lsa ham), active, on_leave."
+
+msgid "Sanalar: YYYY-MM-DD yoki DD.MM.YYYY. Formulalar, makroslar va havolalar qabul qilinmaydi."
+msgstr "Sanalar: YYYY-MM-DD yoki DD.MM.YYYY. Formulalar, makroslar va havolalar qabul qilinmaydi."
+
+msgid "F.I.Sh. yoki ish e-pochtasi mavjud xodim bilan mos kelsa — qator “mumkin bo‘lgan dublikat” deb belgilanadi va sukut bo‘yicha o‘tkazib yuboriladi."
+msgstr "F.I.Sh. yoki ish e-pochtasi mavjud xodim bilan mos kelsa — qator “mumkin bo‘lgan dublikat” deb belgilanadi va sukut bo‘yicha o‘tkazib yuboriladi."
+
 msgid "Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi."
 msgstr "Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi."
 
 msgid "Mening kartam"
 msgstr "Mening kartam"
 
+msgid "Excel’dan import"
+msgstr "Excel’dan import"
+
 msgid "Qidirish: ism, lavozim"
 msgstr "Qidirish: ism, lavozim"
 
 msgid "Barcha holatlar"
 msgstr "Barcha holatlar"
-
-msgid "F.I.Sh."
-msgstr "F.I.Sh."
 
 msgid "Hech narsa topilmadi"
 msgstr "Hech narsa topilmadi"

@@ -1,0 +1,17 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Import natijasi" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Import natijasi" %}</h1></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% url 'employees:list' %}">{% translate "Xodimlar ro‘yxati" %}</a><a class="btn btn-primary" href="{% url 'employees:import' %}">{% translate "Yangi import" %}</a></div></div>
+{% if expired %}<div class="alert warn" role="status"><span>{% translate "Ko‘rib chiqish muddati o‘tdi, yuklangan qatorlar o‘chirildi. Faylni qayta yuklang." %}</span></div>
+{% elif imp.status == 'cancelled' %}<div class="alert warn" role="status"><span>{% translate "Import bekor qilindi. Hech narsa saqlanmadi, yuklangan qatorlar o‘chirildi." %}</span></div>
+{% elif imp.status == 'expired' %}<div class="alert warn" role="status"><span>{% translate "Ko‘rib chiqish muddati o‘tdi, yuklangan qatorlar o‘chirildi. Faylni qayta yuklang." %}</span></div>
+{% else %}
+<div class="row wrap" style="margin-bottom:12px"><span class="badge b-ok plain">{% translate "Qo‘shildi" %}: {{ imp.summary.added }}</span><span class="badge b-warn plain">{% translate "Dublikat sifatida o‘tkazib yuborildi" %}: {{ imp.summary.duplicates_skipped|length }}</span><span class="badge b-err plain">{% translate "Xato (o‘tkazib yuborildi)" %}: {{ errors|length }}</span><span class="muted small">{% translate "Jami qatorlar" %}: {{ imp.summary.total }}</span></div>
+{% if imp.summary.duplicates_imported %}<p class="small">{% translate "Dublikat sifatida belgilangan, ammo yangi yozuv sifatida qo‘shilgan qatorlar" %}: {{ imp.summary.duplicates_imported|join:", " }}</p>{% endif %}
+{% if imp.summary.duplicates_skipped %}<p class="small">{% translate "Dublikat qatorlar (Excel qator raqami)" %}: {{ imp.summary.duplicates_skipped|join:", " }}</p>{% endif %}
+{% if errors %}<div class="table-wrap"><table class="t"><thead><tr><th>№</th><th>{% translate "Sabab" %}</th></tr></thead><tbody>{% for e in errors %}<tr><td class="nw">{{ e.n }}</td><td>{% for m in e.messages %}<div>{{ m }}</div>{% endfor %}</td></tr>{% endfor %}</tbody></table></div>{% endif %}
+<p class="muted small" style="margin-top:12px">{% translate "Yuklangan fayl va qatorlar saqlanmagan. Bu hisobotda shaxsiy ma’lumotlar yo‘q — faqat qator raqamlari." %}</p>
+{% endif %}
+{% endblock %}

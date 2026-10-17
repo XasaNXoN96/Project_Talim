@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 12:54+0500\n"
+"POT-Creation-Date: 2026-10-17 13:40+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -498,6 +498,21 @@ msgstr "Task file downloaded"
 msgid "Topshiriq fayli olib tashlandi"
 msgstr "Task file removed"
 
+msgid "Xodimlar importi: ko‘rib chiqish"
+msgstr "Employee import: preview"
+
+msgid "Xodimlar importi: fayl rad etildi"
+msgstr "Employee import: file rejected"
+
+msgid "Xodimlar importi bajarildi"
+msgstr "Employee import completed"
+
+msgid "Xodimlar importi bekor qilindi"
+msgstr "Employee import cancelled"
+
+msgid "Xodimlar importi xatolik bilan to‘xtadi"
+msgstr "Employee import stopped by an error"
+
 msgid "Yangilik yaratildi"
 msgstr "News item created"
 
@@ -894,6 +909,109 @@ msgstr "A department with this name already exists here."
 msgid "Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo‘lmaydi."
 msgstr "A department with active employees or active sub-departments cannot be deactivated."
 
+msgid "Fayl tanlanmagan."
+msgstr "No file selected."
+
+msgid "Bu import allaqachon bajarilgan, bekor qilingan yoki muddati o‘tgan."
+msgstr "This import has already been completed, cancelled or has expired."
+
+msgid "Import xatolik bilan to‘xtadi. Hech narsa saqlanmadi; qayta urinib ko‘ring."
+msgstr "The import stopped because of an error. Nothing was saved; please try again."
+
+msgid "Import bajarildi."
+msgstr "Import completed."
+
+msgid "Import bekor qilindi. Yuklangan ma’lumotlar o‘chirildi."
+msgstr "Import cancelled. The uploaded data was deleted."
+
+msgid "Majburiy maydon bo‘sh."
+msgstr "Required field is empty."
+
+msgid "Qiymat juda uzun (ko‘pi bilan %(max)d belgi)."
+msgstr "The value is too long (at most %(max)d characters)."
+
+msgid "Qiymatda ruxsat etilmagan belgilar bor."
+msgstr "The value contains characters that are not allowed."
+
+msgid "Formula yoki “=”, “@” bilan boshlanadigan qiymat qabul qilinmaydi."
+msgstr "Formulas and values starting with “=” or “@” are not accepted."
+
+msgid "Ism-familiya faqat harflar, bo‘sh joy, defis va apostrofdan iborat bo‘lishi kerak."
+msgstr "Names may contain only letters, spaces, hyphens and apostrophes."
+
+#, python-format
+msgid "Bunday faol bo‘lim topilmadi: “%(value)s”. Import yangi bo‘lim yaratmaydi."
+msgstr "No active department found: “%(value)s”. The import does not create new departments."
+
+#, python-format
+msgid "Bo‘lim nomi bir necha joyda uchraydi: “%(value)s”. To‘liq yo‘lni yozing (masalan, “Yuqori bo‘lim / Quyi bo‘lim”)."
+msgstr "The department name appears in several places: “%(value)s”. Write the full path (for example “Parent / Child”)."
+
+#, python-format
+msgid "Bunday lavozim topilmadi: “%(value)s”. Import yangi lavozim yaratmaydi."
+msgstr "Position not found: “%(value)s”. The import does not create new positions."
+
+#, python-format
+msgid "Noma’lum holat: “%(value)s”. Ruxsat etilgan: %(allowed)s."
+msgstr "Unknown status: “%(value)s”. Allowed: %(allowed)s."
+
+msgid "Telefon raqami noto‘g‘ri formatda."
+msgstr "The phone number has an invalid format."
+
+msgid "E-pochta manzili noto‘g‘ri."
+msgstr "The e-mail address is not valid."
+
+msgid "Sana noto‘g‘ri. Format: YYYY-MM-DD yoki DD.MM.YYYY."
+msgstr "The date is not valid. Format: YYYY-MM-DD or DD.MM.YYYY."
+
+msgid "Sana ruxsat etilgan oraliqdan tashqarida."
+msgstr "The date is outside the allowed range."
+
+msgid "Bunday F.I.Sh. bilan xodim allaqachon mavjud (mumkin bo‘lgan dublikat). Mavjud xodim o‘zgartirilmaydi."
+msgstr "An employee with this full name already exists (possible duplicate). The existing employee is not changed."
+
+msgid "Bu ish e-pochtasi boshqa xodimda bor (mumkin bo‘lgan dublikat)."
+msgstr "This work e-mail already belongs to another employee (possible duplicate)."
+
+msgid "Faylda xuddi shunday F.I.Sh. avval ham uchragan (mumkin bo‘lgan dublikat)."
+msgstr "The same full name appears earlier in the file (possible duplicate)."
+
+msgid "Bu .xlsx fayli emas yoki u buzilgan."
+msgstr "This is not an .xlsx file or it is damaged."
+
+msgid "Fayl tarkibi xavfli (DTD yoki entity)."
+msgstr "The file content is unsafe (DTD or entities)."
+
+msgid "Fayl tarkibi juda katta."
+msgstr "The file content is too large."
+
+msgid "Faylda ma’lumotli varaq yo‘q."
+msgstr "The file has no sheet with data."
+
+msgid "Birinchi qatorda ustun nomlari bo‘lishi kerak."
+msgstr "The first row must contain the column names."
+
+#, python-format
+msgid "Majburiy ustunlar yo‘q: %(columns)s."
+msgstr "Required columns are missing: %(columns)s."
+
+#, python-format
+msgid "Noma’lum ustunlar: %(columns)s. Shablondagi ustunlardan foydalaning."
+msgstr "Unknown columns: %(columns)s. Use the columns of the template."
+
+#, python-format
+msgid "Ustun nomi takrorlangan: %(columns)s."
+msgstr "Duplicate column name: %(columns)s."
+
+msgid "Qatorlar soni %(max)d dan oshmasligi kerak."
+msgstr "The number of rows must not exceed %(max)d."
+
+msgid "Faylda import qilinadigan qatorlar yo‘q."
+msgstr "The file has no rows to import."
+
+msgid "(sarlavhasiz ustun)"
+msgstr "(column without a header)"
+
 msgid "bo‘limlar"
 msgstr "departments"
 
@@ -977,6 +1095,18 @@ msgstr "educational institution"
 
 msgid "ta’lim muassasalari"
 msgstr "educational institutions"
+
+msgid "Ko‘rib chiqish"
+msgstr "Preview"
+
+msgid "Bajarildi"
+msgstr "Done"
+
+msgid "Bekor qilindi"
+msgstr "Cancelled"
+
+msgid "Muddati o‘tdi"
+msgstr "Expired"
 
 msgid "Sizning hisobingizga xodim kartasi biriktirilmagan."
 msgstr "No employee card is linked to your account."
@@ -1239,12 +1369,6 @@ msgstr "New"
 
 msgid "Jarayonda"
 msgstr "In progress"
-
-msgid "Bajarildi"
-msgstr "Done"
-
-msgid "Bekor qilindi"
-msgstr "Cancelled"
 
 msgid "Past"
 msgstr "Low"
@@ -1758,20 +1882,147 @@ msgstr "Add an employee"
 msgid "Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak."
 msgstr "A legal review must be completed before real personal data is entered."
 
+msgid "Importni ko‘rib chiqish"
+msgstr "Review the import"
+
+#, python-format
+msgid "Hali hech narsa saqlanmadi. Tasdiqlash %(minutes)s daqiqa ichida bajarilishi kerak, aks holda yuklangan qatorlar o‘chiriladi."
+msgstr "Nothing has been saved yet. Confirm within %(minutes)s minutes, otherwise the uploaded rows are deleted."
+
+msgid "Qo‘shiladi"
+msgstr "Will be added"
+
+msgid "Mumkin bo‘lgan dublikat"
+msgstr "Possible duplicate"
+
+msgid "Xato"
+msgstr "Error"
+
+msgid "Jami qatorlar"
+msgstr "Total rows"
+
+#, python-format
+msgid "%(ok)s ta yangi xodim qo‘shiladi. Xatoli qatorlar (%(skipped)s) o‘tkazib yuboriladi. Mavjud xodimlar o‘zgartirilmaydi."
+msgstr "New employees to be added: %(ok)s. Rows with errors (%(skipped)s) will be skipped. Existing employees are not changed."
+
+#, python-format
+msgid "Mumkin bo‘lgan dublikatlarni (%(n)s) ham YANGI yozuv sifatida qo‘shish. Hech narsa birlashtirilmaydi; keyin ularni qo‘lda tekshirish kerak bo‘ladi."
+msgstr "Also add the possible duplicates (%(n)s) as NEW records. Nothing is merged; you will have to review them by hand afterwards."
+
+msgid "Importni tasdiqlash"
+msgstr "Confirm the import"
+
+msgid "Bekor qilish va ma’lumotlarni o‘chirish"
+msgstr "Cancel and delete the data"
+
+msgid "Barcha qatorlar"
+msgstr "All rows"
+
+msgid "Faqat muammoli qatorlar"
+msgstr "Problem rows only"
+
+msgid "F.I.Sh."
+msgstr "Full name"
+
+msgid "Natija"
+msgstr "Result"
+
+msgid "Dublikat?"
+msgstr "Duplicate?"
+
+msgid "Muammoli qatorlar yo‘q."
+msgstr "No problem rows."
+
+msgid "Import natijasi"
+msgstr "Import result"
+
+msgid "Xodimlar ro‘yxati"
+msgstr "Employee list"
+
+msgid "Yangi import"
+msgstr "New import"
+
+msgid "Ko‘rib chiqish muddati o‘tdi, yuklangan qatorlar o‘chirildi. Faylni qayta yuklang."
+msgstr "The review period has expired and the uploaded rows were deleted. Upload the file again."
+
+msgid "Import bekor qilindi. Hech narsa saqlanmadi, yuklangan qatorlar o‘chirildi."
+msgstr "Import cancelled. Nothing was saved and the uploaded rows were deleted."
+
+msgid "Qo‘shildi"
+msgstr "Added"
+
+msgid "Dublikat sifatida o‘tkazib yuborildi"
+msgstr "Skipped as duplicates"
+
+msgid "Xato (o‘tkazib yuborildi)"
+msgstr "Errors (skipped)"
+
+msgid "Dublikat sifatida belgilangan, ammo yangi yozuv sifatida qo‘shilgan qatorlar"
+msgstr "Rows flagged as duplicates but added as new records"
+
+msgid "Dublikat qatorlar (Excel qator raqami)"
+msgstr "Duplicate rows (Excel row number)"
+
+msgid "Sabab"
+msgstr "Reason"
+
+msgid "Yuklangan fayl va qatorlar saqlanmagan. Bu hisobotda shaxsiy ma’lumotlar yo‘q — faqat qator raqamlari."
+msgstr "The uploaded file and rows are not stored. This report contains no personal data — only row numbers."
+
+msgid "Xodimlarni import qilish"
+msgstr "Import employees"
+
+msgid "Xodimlarni Excel’dan import qilish"
+msgstr "Import employees from Excel"
+
+msgid "Import faqat yangi xodimlar qo‘shadi. Mavjud xodimlar o‘zgartirilmaydi va birlashtirilmaydi. Avval ko‘rib chiqasiz, so‘ng tasdiqlaysiz."
+msgstr "The import only adds new employees. Existing ones are neither changed nor merged. You review first, then confirm."
+
+msgid "Namuna shablonni yuklab olish"
+msgstr "Download the sample template"
+
+msgid "Fayl (.xlsx)"
+msgstr "File (.xlsx)"
+
+#, python-format
+msgid "Ko‘pi bilan %(max_rows)s qator va %(max_mb)s MB. Fayl faqat tekshirish uchun o‘qiladi va saqlanmaydi; o‘qilgan qatorlar tasdiqlashgacha vaqtincha saqlanadi, so‘ng o‘chiriladi."
+msgstr "At most %(max_rows)s rows and %(max_mb)s MB. The file is only read for checking and is not stored; the rows read are kept temporarily until you confirm, then deleted."
+
+msgid "Yuklash va tekshirish"
+msgstr "Upload and check"
+
+msgid "Ustunlar"
+msgstr "Columns"
+
+msgid "Birinchi qatorda quyidagi ustun nomlari bo‘lishi kerak (shablonda tayyor)."
+msgstr "The first row must contain these column names (they are ready in the template)."
+
+msgid "department — bo‘lim nomi; nom takrorlansa to‘liq yo‘l: “Yuqori / Quyi”. Bo‘lim va lavozim oldindan yaratilgan bo‘lishi kerak."
+msgstr "department — the department name; if names repeat, the full path: “Parent / Child”. Departments and positions must be created beforehand."
+
+msgid "status — new (bo‘sh bo‘lsa ham), active, on_leave."
+msgstr "status — new (also when empty), active, on_leave."
+
+msgid "Sanalar: YYYY-MM-DD yoki DD.MM.YYYY. Formulalar, makroslar va havolalar qabul qilinmaydi."
+msgstr "Dates: YYYY-MM-DD or DD.MM.YYYY. Formulas, macros and links are not accepted."
+
+msgid "F.I.Sh. yoki ish e-pochtasi mavjud xodim bilan mos kelsa — qator “mumkin bo‘lgan dublikat” deb belgilanadi va sukut bo‘yicha o‘tkazib yuboriladi."
+msgstr "If the full name or work e-mail matches an existing employee, the row is flagged as a “possible duplicate” and skipped by default."
+
 msgid "Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi."
 msgstr "Name, department, position and status. Contact details are on the employee card, if you have permission."
 
 msgid "Mening kartam"
 msgstr "My card"
 
+msgid "Excel’dan import"
+msgstr "Import from Excel"
+
 msgid "Qidirish: ism, lavozim"
 msgstr "Search: name, position"
 
 msgid "Barcha holatlar"
 msgstr "All statuses"
-
-msgid "F.I.Sh."
-msgstr "Full name"
 
 msgid "Hech narsa topilmadi"
 msgstr "Nothing found"

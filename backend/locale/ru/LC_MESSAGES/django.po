@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 12:54+0500\n"
+"POT-Creation-Date: 2026-10-17 13:40+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -498,6 +498,21 @@ msgstr "Файл задания скачан"
 msgid "Topshiriq fayli olib tashlandi"
 msgstr "Файл задания откреплён"
 
+msgid "Xodimlar importi: ko‘rib chiqish"
+msgstr "Импорт сотрудников: предварительный просмотр"
+
+msgid "Xodimlar importi: fayl rad etildi"
+msgstr "Импорт сотрудников: файл отклонён"
+
+msgid "Xodimlar importi bajarildi"
+msgstr "Импорт сотрудников выполнен"
+
+msgid "Xodimlar importi bekor qilindi"
+msgstr "Импорт сотрудников отменён"
+
+msgid "Xodimlar importi xatolik bilan to‘xtadi"
+msgstr "Импорт сотрудников остановлен из-за ошибки"
+
 msgid "Yangilik yaratildi"
 msgstr "Новость создана"
 
@@ -894,6 +909,109 @@ msgstr "Подразделение с таким названием здесь �
 msgid "Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo‘lmaydi."
 msgstr "Нельзя отключить подразделение, в котором есть активные сотрудники или активные дочерние подразделения."
 
+msgid "Fayl tanlanmagan."
+msgstr "Файл не выбран."
+
+msgid "Bu import allaqachon bajarilgan, bekor qilingan yoki muddati o‘tgan."
+msgstr "Этот импорт уже выполнен, отменён или просрочен."
+
+msgid "Import xatolik bilan to‘xtadi. Hech narsa saqlanmadi; qayta urinib ko‘ring."
+msgstr "Импорт остановлен из-за ошибки. Ничего не сохранено; попробуйте ещё раз."
+
+msgid "Import bajarildi."
+msgstr "Импорт выполнен."
+
+msgid "Import bekor qilindi. Yuklangan ma’lumotlar o‘chirildi."
+msgstr "Импорт отменён. Загруженные данные удалены."
+
+msgid "Majburiy maydon bo‘sh."
+msgstr "Обязательное поле не заполнено."
+
+msgid "Qiymat juda uzun (ko‘pi bilan %(max)d belgi)."
+msgstr "Значение слишком длинное (не более %(max)d символов)."
+
+msgid "Qiymatda ruxsat etilmagan belgilar bor."
+msgstr "В значении есть недопустимые символы."
+
+msgid "Formula yoki “=”, “@” bilan boshlanadigan qiymat qabul qilinmaydi."
+msgstr "Формулы и значения, начинающиеся с «=» или «@», не принимаются."
+
+msgid "Ism-familiya faqat harflar, bo‘sh joy, defis va apostrofdan iborat bo‘lishi kerak."
+msgstr "Фамилия, имя и отчество могут содержать только буквы, пробел, дефис и апостроф."
+
+#, python-format
+msgid "Bunday faol bo‘lim topilmadi: “%(value)s”. Import yangi bo‘lim yaratmaydi."
+msgstr "Активное подразделение не найдено: «%(value)s». Импорт не создаёт новые подразделения."
+
+#, python-format
+msgid "Bo‘lim nomi bir necha joyda uchraydi: “%(value)s”. To‘liq yo‘lni yozing (masalan, “Yuqori bo‘lim / Quyi bo‘lim”)."
+msgstr "Название подразделения встречается в нескольких местах: «%(value)s». Укажите полный путь (например, «Верхнее / Нижнее»)."
+
+#, python-format
+msgid "Bunday lavozim topilmadi: “%(value)s”. Import yangi lavozim yaratmaydi."
+msgstr "Должность не найдена: «%(value)s». Импорт не создаёт новые должности."
+
+#, python-format
+msgid "Noma’lum holat: “%(value)s”. Ruxsat etilgan: %(allowed)s."
+msgstr "Неизвестный статус: «%(value)s». Допустимо: %(allowed)s."
+
+msgid "Telefon raqami noto‘g‘ri formatda."
+msgstr "Неверный формат телефона."
+
+msgid "E-pochta manzili noto‘g‘ri."
+msgstr "Неверный адрес электронной почты."
+
+msgid "Sana noto‘g‘ri. Format: YYYY-MM-DD yoki DD.MM.YYYY."
+msgstr "Неверная дата. Формат: YYYY-MM-DD или DD.MM.YYYY."
+
+msgid "Sana ruxsat etilgan oraliqdan tashqarida."
+msgstr "Дата вне допустимого диапазона."
+
+msgid "Bunday F.I.Sh. bilan xodim allaqachon mavjud (mumkin bo‘lgan dublikat). Mavjud xodim o‘zgartirilmaydi."
+msgstr "Сотрудник с таким ФИО уже есть (возможный дубликат). Существующий сотрудник не изменяется."
+
+msgid "Bu ish e-pochtasi boshqa xodimda bor (mumkin bo‘lgan dublikat)."
+msgstr "Эта рабочая почта уже есть у другого сотрудника (возможный дубликат)."
+
+msgid "Faylda xuddi shunday F.I.Sh. avval ham uchragan (mumkin bo‘lgan dublikat)."
+msgstr "В файле такое ФИО уже встречалось выше (возможный дубликат)."
+
+msgid "Bu .xlsx fayli emas yoki u buzilgan."
+msgstr "Это не файл .xlsx или он повреждён."
+
+msgid "Fayl tarkibi xavfli (DTD yoki entity)."
+msgstr "Содержимое файла небезопасно (DTD или сущности)."
+
+msgid "Fayl tarkibi juda katta."
+msgstr "Содержимое файла слишком велико."
+
+msgid "Faylda ma’lumotli varaq yo‘q."
+msgstr "В файле нет листа с данными."
+
+msgid "Birinchi qatorda ustun nomlari bo‘lishi kerak."
+msgstr "В первой строке должны быть названия столбцов."
+
+#, python-format
+msgid "Majburiy ustunlar yo‘q: %(columns)s."
+msgstr "Отсутствуют обязательные столбцы: %(columns)s."
+
+#, python-format
+msgid "Noma’lum ustunlar: %(columns)s. Shablondagi ustunlardan foydalaning."
+msgstr "Неизвестные столбцы: %(columns)s. Используйте столбцы из шаблона."
+
+#, python-format
+msgid "Ustun nomi takrorlangan: %(columns)s."
+msgstr "Название столбца повторяется: %(columns)s."
+
+msgid "Qatorlar soni %(max)d dan oshmasligi kerak."
+msgstr "Число строк не должно превышать %(max)d."
+
+msgid "Faylda import qilinadigan qatorlar yo‘q."
+msgstr "В файле нет строк для импорта."
+
+msgid "(sarlavhasiz ustun)"
+msgstr "(столбец без заголовка)"
+
 msgid "bo‘limlar"
 msgstr "подразделения"
 
@@ -977,6 +1095,18 @@ msgstr "образовательное учреждение"
 
 msgid "ta’lim muassasalari"
 msgstr "образовательные учреждения"
+
+msgid "Ko‘rib chiqish"
+msgstr "Предварительный просмотр"
+
+msgid "Bajarildi"
+msgstr "Выполнено"
+
+msgid "Bekor qilindi"
+msgstr "Отменено"
+
+msgid "Muddati o‘tdi"
+msgstr "Срок истёк"
 
 msgid "Sizning hisobingizga xodim kartasi biriktirilmagan."
 msgstr "К вашей учётной записи не привязана карточка сотрудника."
@@ -1239,12 +1369,6 @@ msgstr "Новое"
 
 msgid "Jarayonda"
 msgstr "В работе"
-
-msgid "Bajarildi"
-msgstr "Выполнено"
-
-msgid "Bekor qilindi"
-msgstr "Отменено"
 
 msgid "Past"
 msgstr "Низкий"
@@ -1758,20 +1882,147 @@ msgstr "Добавить сотрудника"
 msgid "Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak."
 msgstr "Перед внесением реальных личных данных должна быть завершена юридическая проверка."
 
+msgid "Importni ko‘rib chiqish"
+msgstr "Проверка импорта"
+
+#, python-format
+msgid "Hali hech narsa saqlanmadi. Tasdiqlash %(minutes)s daqiqa ichida bajarilishi kerak, aks holda yuklangan qatorlar o‘chiriladi."
+msgstr "Пока ничего не сохранено. Подтвердите в течение %(minutes)s мин., иначе загруженные строки будут удалены."
+
+msgid "Qo‘shiladi"
+msgstr "Будет добавлен"
+
+msgid "Mumkin bo‘lgan dublikat"
+msgstr "Возможный дубликат"
+
+msgid "Xato"
+msgstr "Ошибка"
+
+msgid "Jami qatorlar"
+msgstr "Всего строк"
+
+#, python-format
+msgid "%(ok)s ta yangi xodim qo‘shiladi. Xatoli qatorlar (%(skipped)s) o‘tkazib yuboriladi. Mavjud xodimlar o‘zgartirilmaydi."
+msgstr "Будет добавлено новых сотрудников: %(ok)s. Строки с ошибками (%(skipped)s) будут пропущены. Существующие сотрудники не изменяются."
+
+#, python-format
+msgid "Mumkin bo‘lgan dublikatlarni (%(n)s) ham YANGI yozuv sifatida qo‘shish. Hech narsa birlashtirilmaydi; keyin ularni qo‘lda tekshirish kerak bo‘ladi."
+msgstr "Добавить и возможные дубликаты (%(n)s) как НОВЫЕ записи. Ничего не объединяется; потом их придётся проверить вручную."
+
+msgid "Importni tasdiqlash"
+msgstr "Подтвердить импорт"
+
+msgid "Bekor qilish va ma’lumotlarni o‘chirish"
+msgstr "Отменить и удалить данные"
+
+msgid "Barcha qatorlar"
+msgstr "Все строки"
+
+msgid "Faqat muammoli qatorlar"
+msgstr "Только проблемные строки"
+
+msgid "F.I.Sh."
+msgstr "Ф.И.О."
+
+msgid "Natija"
+msgstr "Результат"
+
+msgid "Dublikat?"
+msgstr "Дубликат?"
+
+msgid "Muammoli qatorlar yo‘q."
+msgstr "Проблемных строк нет."
+
+msgid "Import natijasi"
+msgstr "Результат импорта"
+
+msgid "Xodimlar ro‘yxati"
+msgstr "Список сотрудников"
+
+msgid "Yangi import"
+msgstr "Новый импорт"
+
+msgid "Ko‘rib chiqish muddati o‘tdi, yuklangan qatorlar o‘chirildi. Faylni qayta yuklang."
+msgstr "Срок проверки истёк, загруженные строки удалены. Загрузите файл заново."
+
+msgid "Import bekor qilindi. Hech narsa saqlanmadi, yuklangan qatorlar o‘chirildi."
+msgstr "Импорт отменён. Ничего не сохранено, загруженные строки удалены."
+
+msgid "Qo‘shildi"
+msgstr "Добавлено"
+
+msgid "Dublikat sifatida o‘tkazib yuborildi"
+msgstr "Пропущено как дубликаты"
+
+msgid "Xato (o‘tkazib yuborildi)"
+msgstr "Ошибки (пропущены)"
+
+msgid "Dublikat sifatida belgilangan, ammo yangi yozuv sifatida qo‘shilgan qatorlar"
+msgstr "Строки, помеченные как дубликаты, но добавленные как новые записи"
+
+msgid "Dublikat qatorlar (Excel qator raqami)"
+msgstr "Строки-дубликаты (номер строки в Excel)"
+
+msgid "Sabab"
+msgstr "Причина"
+
+msgid "Yuklangan fayl va qatorlar saqlanmagan. Bu hisobotda shaxsiy ma’lumotlar yo‘q — faqat qator raqamlari."
+msgstr "Загруженный файл и строки не сохранены. В этом отчёте нет персональных данных — только номера строк."
+
+msgid "Xodimlarni import qilish"
+msgstr "Импорт сотрудников"
+
+msgid "Xodimlarni Excel’dan import qilish"
+msgstr "Импорт сотрудников из Excel"
+
+msgid "Import faqat yangi xodimlar qo‘shadi. Mavjud xodimlar o‘zgartirilmaydi va birlashtirilmaydi. Avval ko‘rib chiqasiz, so‘ng tasdiqlaysiz."
+msgstr "Импорт только добавляет новых сотрудников. Существующие не изменяются и не объединяются. Сначала вы просматриваете результат, затем подтверждаете."
+
+msgid "Namuna shablonni yuklab olish"
+msgstr "Скачать образец шаблона"
+
+msgid "Fayl (.xlsx)"
+msgstr "Файл (.xlsx)"
+
+#, python-format
+msgid "Ko‘pi bilan %(max_rows)s qator va %(max_mb)s MB. Fayl faqat tekshirish uchun o‘qiladi va saqlanmaydi; o‘qilgan qatorlar tasdiqlashgacha vaqtincha saqlanadi, so‘ng o‘chiriladi."
+msgstr "Не более %(max_rows)s строк и %(max_mb)s МБ. Файл читается только для проверки и не сохраняется; прочитанные строки временно хранятся до подтверждения, затем удаляются."
+
+msgid "Yuklash va tekshirish"
+msgstr "Загрузить и проверить"
+
+msgid "Ustunlar"
+msgstr "Столбцы"
+
+msgid "Birinchi qatorda quyidagi ustun nomlari bo‘lishi kerak (shablonda tayyor)."
+msgstr "В первой строке должны быть следующие названия столбцов (в шаблоне они уже есть)."
+
+msgid "department — bo‘lim nomi; nom takrorlansa to‘liq yo‘l: “Yuqori / Quyi”. Bo‘lim va lavozim oldindan yaratilgan bo‘lishi kerak."
+msgstr "department — название подразделения; если названия повторяются — полный путь: «Верхнее / Нижнее». Подразделения и должности должны быть созданы заранее."
+
+msgid "status — new (bo‘sh bo‘lsa ham), active, on_leave."
+msgstr "status — new (также если пусто), active, on_leave."
+
+msgid "Sanalar: YYYY-MM-DD yoki DD.MM.YYYY. Formulalar, makroslar va havolalar qabul qilinmaydi."
+msgstr "Даты: YYYY-MM-DD или DD.MM.YYYY. Формулы, макросы и ссылки не принимаются."
+
+msgid "F.I.Sh. yoki ish e-pochtasi mavjud xodim bilan mos kelsa — qator “mumkin bo‘lgan dublikat” deb belgilanadi va sukut bo‘yicha o‘tkazib yuboriladi."
+msgstr "Если ФИО или рабочая почта совпадают с существующим сотрудником, строка помечается как «возможный дубликат» и по умолчанию пропускается."
+
 msgid "Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi."
 msgstr "Имя, подразделение, должность и статус. Контактные данные — на карточке сотрудника, если у вас есть право."
 
 msgid "Mening kartam"
 msgstr "Моя карточка"
 
+msgid "Excel’dan import"
+msgstr "Импорт из Excel"
+
 msgid "Qidirish: ism, lavozim"
 msgstr "Поиск: имя, должность"
 
 msgid "Barcha holatlar"
 msgstr "Все статусы"
-
-msgid "F.I.Sh."
-msgstr "Ф.И.О."
 
 msgid "Hech narsa topilmadi"
 msgstr "Ничего не найдено"

@@ -16,7 +16,7 @@ from django.urls import reverse
 from apps.content.models import News, NewsCategory
 from apps.documents.models import Document
 from apps.notifications.models import Notification
-from apps.organization.models import Department, Employee, Position
+from apps.organization.models import Department, Employee, EmployeeImport, Position
 from apps.tasks.models import Task, TaskAttachment
 
 from .acceptance import ACTORS, World, app_routes, required_permissions
@@ -38,6 +38,7 @@ def snapshot():
         "users": list(U.objects.order_by("pk").values_list("pk", "is_active", "must_change_password", "email")),
         "notes": list(Notification.objects.order_by("pk").values_list("pk", "read_at")),
         "emps": list(Employee.objects.order_by("pk").values_list("pk", "status", "last_name")),
+        "imports": list(EmployeeImport.objects.order_by("pk").values_list("pk", "status")),
         "news": list(News.objects.order_by("pk").values_list("pk", "status", "title", "publish_at")),
         "newscat": list(NewsCategory.objects.order_by("pk").values_list("pk", "name")),
         "att": list(TaskAttachment.objects.order_by("pk").values_list("pk", "removed_at")),

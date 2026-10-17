@@ -261,6 +261,10 @@ if DOCUMENT_SCAN_MODE not in ("clamav", "disabled"):
     raise ImproperlyConfigured("DOCUMENT_SCAN_MODE must be 'clamav' or 'disabled'.")
 
 # --- Reports: hard limits so one request cannot ask for an unbounded amount of data.
+# Employee import from Excel (apps.organization.importer)
+EMPLOYEE_IMPORT_MAX_BYTES = 2 * 1024 * 1024
+EMPLOYEE_IMPORT_MAX_ROWS = 500
+EMPLOYEE_IMPORT_TTL_MINUTES = 60   # how long parsed rows (personal data) wait for the confirmation
 REPORT_MAX_DAYS = 366          # longest date range
 REPORT_MAX_ROWS = 500          # rows per table on screen and in Excel/PDF (the rest is summarised as "and N more")
 REPORT_PDF_MAX_ROWS = 60       # rows per table in the PDF
