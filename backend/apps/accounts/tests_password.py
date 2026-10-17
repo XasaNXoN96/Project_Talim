@@ -170,9 +170,15 @@ class PasswordResetRequestTests(TestCase):
             self.assertEqual(len(mail.outbox), 4)
 
     def test_mail_failure_does_not_reveal_the_account(self):
-        with mock.patch("django.core.mail.EmailMultiAlternatives.send", side_effect=OSError("smtp down")):
-            response = self.request("alice@example.test")
+        failure = OSError("550 rejected alice@example.test")  # real SMTP errors can carry the address
+        with mock.patch("django.core.mail.EmailMultiAlternatives.send", side_effect=failure):
+            with self.assertLogs("apps.accounts.forms", level="ERROR") as logs, self.assertNoLogs("django.contrib.auth", level="DEBUG"):
+                response = self.request("alice@example.test")
         self.assertEqual(response.status_code, 302)  # same as for an unknown address
+        text = "\n".join(logs.output)
+        self.assertIn("OSError", text)  # the error type is logged...
+        self.assertNotIn("alice@example.test", text)  # ...never the address,
+        self.assertNotIn("Traceback", text)  # ...and no traceback
 
     def test_invalid_e_mail_is_a_form_error_not_a_crash(self):
         self.assertEqual(self.client.post(RESET, {"email": "not-an-email"}).status_code, 200)

@@ -5,6 +5,8 @@ from django import forms
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
 from django.core.exceptions import ValidationError
+from django.core.mail import EmailMultiAlternatives
+from django.template import loader
 
 from apps.audit.models import AuditLog
 from apps.audit.services import client_ip, record
@@ -115,11 +117,20 @@ class ThrottledPasswordResetForm(PasswordResetForm):
         record(AuditLog.Action.PASSWORD_RESET_REQUESTED, request=request, meta={"email_sha256_16": fingerprint})
         super().save(request=request, **kwargs)
 
-    def send_mail(self, *args, **kwargs):
+    def send_mail(self, subject_template_name, email_template_name, context, from_email, to_email, html_email_template_name=None):
+        """Same as Django's, but a delivery failure is logged as a bare error TYPE.
+
+        Django's own version logs a full traceback, and SMTP exceptions can contain the recipient's address.
+        The visible answer is the same either way, so a failure never reveals that the account exists.
+        """
+        subject = "".join(loader.render_to_string(subject_template_name, context).splitlines())
+        body = loader.render_to_string(email_template_name, context)
+        message = EmailMultiAlternatives(subject, body, from_email, [to_email])
+        if html_email_template_name is not None:
+            message.attach_alternative(loader.render_to_string(html_email_template_name, context), "text/html")
         try:
-            super().send_mail(*args, **kwargs)
+            message.send()
         except Exception as exc:  # noqa: BLE001
-            # A visible error would reveal that the account exists. Log the type only (messages can contain addresses).
             logger.error("Password-reset e-mail could not be sent (%s)", type(exc).__name__)
 
 
