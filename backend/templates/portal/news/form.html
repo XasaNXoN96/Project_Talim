@@ -1,0 +1,12 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% if creating %}{% translate "Yangi yangilik" %}{% else %}{% translate "Tahrirlash" %}{% endif %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% if creating %}{% translate "Yangi yangilik" %}{% else %}{% translate "Tahrirlash" %}{% endif %}</h1><p>{% translate "Saqlash yangilikni qoralama sifatida saqlaydi; nashr etish alohida, tasdiqlash bilan bajariladi." %}</p></div></div>
+<form method="post" class="card card-pad" style="display:grid;gap:16px;max-width:820px" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert err" role="alert"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}
+  {% for field in form %}{% include "includes/field.html" with field=field %}{% endfor %}
+  <div class="row wrap"><button class="btn btn-primary" type="submit">{% translate "Saqlash" %}</button><a class="btn btn-secondary" href="{% if creating %}{% url 'news_admin:list' %}{% else %}{% url 'news_admin:preview' news.pk %}{% endif %}">{% translate "Bekor qilish" %}</a></div>
+</form>
+{% endblock %}

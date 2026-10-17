@@ -258,6 +258,10 @@ class DataFixtureMixin:
         self.doc = Document.objects.create(title="Nizom", category=self.category, created_by=self.hr)
         add_version(self.doc, validate_upload(upload("a.pdf")), actor=self.hr)
         self.attachment = None
+        from apps.content.models import News, NewsCategory
+
+        self.news_cat = NewsCategory.objects.create(name="Maktab", slug="maktab")
+        self.news = News.objects.create(title="Maktab xabari", slug="maktab-xabari", body="Matn", category=self.news_cat, status="draft")
         Notification.objects.create(user=self.emp, kind="task_assigned", task=self.task, title="Hisobot")
 
     def client_for(self, user, lang):
@@ -290,6 +294,9 @@ class EveryPageInEveryLanguage(DataFixtureMixin, TestCase):
             ("admin", "documents:list", ()), ("admin", "documents:detail", (d,)), ("admin", "documents:create", ()), ("admin", "documents:edit", (d,)),
             ("emp", "notifications:list", ()), ("emp", "tasks:detail", (t,)), ("emp", "portal:dashboard", ()),
             ("admin", "reports:index", ()),
+            ("admin", "documents:preview", (d,)), ("admin", "news_admin:list", ()), ("admin", "news_admin:create", ()), ("admin", "news_admin:preview", (self.news.pk,)),
+            ("admin", "news_admin:edit", (self.news.pk,)), ("admin", "news_admin:categories", ()), ("admin", "news_admin:category_create", ()),
+            ("admin", "news_admin:category_edit", (self.news_cat.pk,)), ("admin", "news_admin:status", (self.news.pk, "publish")),
         ]
 
     def test_pages_render_in_each_language_with_the_right_script(self):
@@ -322,7 +329,7 @@ class EveryPageInEveryLanguage(DataFixtureMixin, TestCase):
                 body = visible_text(c.get(reverse(name, args=args)).content.decode())
                 # fixture data (names typed by users, e.g. the task called "Hisobot") is allowed; interface words are not
                 for w in uz_words:
-                    self.assertNotIn(w, re.sub(r"Hisobot|Nizom|Metodika|Maktabgacha|Aliyev|Metodist|Vali", "", body), (lang, name, w))
+                    self.assertNotIn(w, re.sub(r"Hisobot|Nizom|Maktab xabari|Maktab|Metodika|Maktabgacha|Aliyev|Metodist|Vali", "", body), (lang, name, w))
 
     def test_error_pages_are_translated(self):
         for lang, expected in (("uz", "Sahifa topilmadi"), ("ru", "Страница не найдена"), ("en", "Page not found")):

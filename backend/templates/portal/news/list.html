@@ -1,0 +1,21 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Yangiliklar" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Yangiliklarni boshqarish" %}</h1><p>{% translate "Qoralama yarating, ko‘rib chiqing va nashr eting. Faqat nashr etilgan yangiliklar ochiq saytda ko‘rinadi." %}</p></div>
+<div class="row wrap">{% if can_categories %}<a class="btn btn-secondary" href="{% url 'news_admin:categories' %}">{% translate "Kategoriyalar" %}</a>{% endif %}{% if can_add %}<a class="btn btn-primary" href="{% url 'news_admin:create' %}">{% translate "Yangi yangilik" %}</a>{% endif %}</div></div>
+<form method="get" class="row wrap" style="margin-bottom:16px">
+  <input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Qidirish: sarlavha, tavsif' %}" style="max-width:240px" maxlength="100">
+  <select class="input" name="status" style="max-width:180px" aria-label="{% translate 'Holat' %}"><option value="">{% translate "Barcha holatlar" %}</option>{% for code, label in statuses %}<option value="{{ code }}" {% if status == code %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+  <select class="input" name="category" style="max-width:200px" aria-label="{% translate 'Kategoriya' %}"><option value="">{% translate "Barcha kategoriyalar" %}</option>{% for c in categories %}<option value="{{ c.pk }}" {% if category == c.pk|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select>
+  <button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button>
+</form>
+{% if items %}
+<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Sarlavha" %}</th><th>{% translate "Kategoriya" %}</th><th>{% translate "Holat" %}</th><th>{% translate "Nashr sanasi" %}</th><th>{% translate "O‘zgartirilgan" %}</th></tr></thead><tbody>
+{% for n in items %}<tr><td><a href="{% url 'news_admin:preview' n.pk %}">{{ n.title }}</a></td><td>{{ n.category.name|default:"—" }}</td>
+<td><span class="badge {% if n.status == 'published' %}b-ok{% elif n.status == 'archived' %}b-err{% else %}b-warn{% endif %} plain">{{ n.get_status_display }}</span>{% if n.status == 'published' and n.publish_at > now %}<div class="muted small">{% translate "Rejalashtirilgan" %}</div>{% endif %}</td>
+<td class="nw">{{ n.publish_at|date:"d.m.Y H:i"|default:"—" }}</td><td class="nw">{{ n.updated_at|date:"d.m.Y H:i" }}</td></tr>{% endfor %}
+</tbody></table></div>
+{% include "includes/pagination.html" %}
+{% else %}<div class="card empty"><h3>{% translate "Yangiliklar topilmadi" %}</h3>{% if can_add %}<p>{% translate "Birinchi qoralamani yarating." %}</p>{% endif %}</div>{% endif %}
+{% endblock %}

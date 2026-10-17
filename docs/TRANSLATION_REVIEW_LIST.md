@@ -12,10 +12,10 @@
 5. Узбекская латиница: апострофы `‘ ’` и термины источника.
 6. Длинные подписи в RU на узких экранах (проверено визуально на 390 px: горизонтальной прокрутки нет, но читаемость оценивает дизайнер).
 
-Всего строк в каталогах: 588.
+Всего строк в каталогах: 650.
 
 
-## A. E-mail texts (sent to real people; tone and formality matter) — 36
+## A. E-mail texts (sent to real people; tone and formality matter) — 37
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -32,31 +32,32 @@
 | 11 | Parolni tiklash so‘raldi | Запрошено восстановление пароля | Password reset requested |
 | 12 | Parolni tiklash so‘rovlari cheklandi | Запросы на восстановление пароля ограничены | Password reset requests throttled |
 | 13 | Taklifnoma yuborildi | Приглашение отправлено | Invitation sent |
-| 14 | Topshiriq muddati yaqin | Срок задания близко | A task is due soon |
-| 15 | Topshiriq muddati o‘tdi | Срок задания истёк | A task is overdue |
-| 16 | %(kind)s: %(title)s ⏎  ⏎ Batafsil ma’lumot uchun xodimlar portaliga kiring. | %(kind)s: %(title)s ⏎  ⏎ Подробности — на портале сотрудников. | %(kind)s: %(title)s ⏎  ⏎ See the staff portal for details. |
-| 17 | Muddati o‘tgan (ochiq) | Просрочено (открытые) | Overdue (open) |
-| 18 | Havola yaroqsiz | Ссылка недействительна | The link is not valid |
-| 19 | Havola muddati tugagan, allaqachon ishlatilgan yoki noto‘g‘ri. Yangi havola so‘rang. | Срок действия ссылки истёк, она уже использована или неверна. Запросите новую ссылку. | The link has expired, was already used, or is incorrect. Request a new link. |
-| 20 | Yangi havola so‘rash | Запросить новую ссылку | Request a new link |
-| 21 | Havola yuborildi | Ссылка отправлена | Link sent |
-| 22 | Agar kiritilgan e-pochta tizimda mavjud bo‘lsa, parolni tiklash havolasi yuborildi. Havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi. | Если указанный адрес есть в системе, на него отправлена ссылка для восстановления пароля. Ссылка действует 30 минут и работает только один раз. | If the address you entered exists in the system, a password-reset link was sent to it. The link is valid for 30 minutes and works only once. |
-| 23 | %(site_name)s xodimlar portalida parolni tiklash so‘raldi. | На портале сотрудников «%(site_name)s» запрошено восстановление пароля. | A password reset was requested on the “%(site_name)s” staff portal. |
-| 24 | Yangi parol o‘rnatish uchun havolaga o‘ting (havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi): | Чтобы задать новый пароль, перейдите по ссылке (действует 30 минут и работает только один раз): | To set a new password, open this link (valid for 30 minutes and works only once): |
-| 25 | Parolni tiklash | Восстановление пароля | Password reset |
-| 26 | Hisobingizga biriktirilgan e-pochta manzilini kiriting. Agar u tizimda bo‘lsa, parolni tiklash havolasi yuboriladi. | Введите адрес электронной почты вашей учётной записи. Если он есть в системе, мы отправим ссылку для восстановления пароля. | Enter the e-mail address of your account. If it exists in the system, we will send a password-reset link. |
-| 27 | Havola yuborish | Отправить ссылку | Send link |
-| 28 | %(site_name)s: parolni tiklash | %(site_name)s: восстановление пароля | %(site_name)s: password reset |
-| 29 | Xodimlar portali | Портал сотрудников | Staff portal |
-| 30 | Foydali havolalar | Полезные ссылки | Useful links |
-| 31 | Bu sahifani ko‘rish uchun huquqingiz yetarli emas. | У вас недостаточно прав для просмотра этой страницы. | You do not have permission to view this page. |
-| 32 | muddati o‘tgan | просрочено | overdue |
-| 33 | Muddati o‘tgan | Просрочено | Overdue |
-| 34 | Taklifnoma yuborish | Отправить приглашение | Send an invitation |
-| 35 | Parol kiritilmaydi: foydalanuvchi o‘z parolini taklifnoma havolasi orqali o‘rnatadi. | Пароль не вводится: пользователь задаёт пароль сам по ссылке из приглашения. | No password is entered: the user sets their own password using the link in the invitation. |
-| 36 | Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting. | Введите свои данные для входа на портал сотрудников. | Enter your details to sign in to the staff portal. |
+| 14 | Oddiy matn. Bo‘sh qator — yangi abzats. HTML va havolalar matn sifatida ko‘rinadi. | Простой текст. Пустая строка — новый абзац. HTML и ссылки отображаются как обычный текст. | Plain text. A blank line starts a new paragraph. HTML and links are shown as plain text. |
+| 15 | Topshiriq muddati yaqin | Срок задания близко | A task is due soon |
+| 16 | Topshiriq muddati o‘tdi | Срок задания истёк | A task is overdue |
+| 17 | %(kind)s: %(title)s ⏎  ⏎ Batafsil ma’lumot uchun xodimlar portaliga kiring. | %(kind)s: %(title)s ⏎  ⏎ Подробности — на портале сотрудников. | %(kind)s: %(title)s ⏎  ⏎ See the staff portal for details. |
+| 18 | Muddati o‘tgan (ochiq) | Просрочено (открытые) | Overdue (open) |
+| 19 | Havola yaroqsiz | Ссылка недействительна | The link is not valid |
+| 20 | Havola muddati tugagan, allaqachon ishlatilgan yoki noto‘g‘ri. Yangi havola so‘rang. | Срок действия ссылки истёк, она уже использована или неверна. Запросите новую ссылку. | The link has expired, was already used, or is incorrect. Request a new link. |
+| 21 | Yangi havola so‘rash | Запросить новую ссылку | Request a new link |
+| 22 | Havola yuborildi | Ссылка отправлена | Link sent |
+| 23 | Agar kiritilgan e-pochta tizimda mavjud bo‘lsa, parolni tiklash havolasi yuborildi. Havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi. | Если указанный адрес есть в системе, на него отправлена ссылка для восстановления пароля. Ссылка действует 30 минут и работает только один раз. | If the address you entered exists in the system, a password-reset link was sent to it. The link is valid for 30 minutes and works only once. |
+| 24 | %(site_name)s xodimlar portalida parolni tiklash so‘raldi. | На портале сотрудников «%(site_name)s» запрошено восстановление пароля. | A password reset was requested on the “%(site_name)s” staff portal. |
+| 25 | Yangi parol o‘rnatish uchun havolaga o‘ting (havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi): | Чтобы задать новый пароль, перейдите по ссылке (действует 30 минут и работает только один раз): | To set a new password, open this link (valid for 30 minutes and works only once): |
+| 26 | Parolni tiklash | Восстановление пароля | Password reset |
+| 27 | Hisobingizga biriktirilgan e-pochta manzilini kiriting. Agar u tizimda bo‘lsa, parolni tiklash havolasi yuboriladi. | Введите адрес электронной почты вашей учётной записи. Если он есть в системе, мы отправим ссылку для восстановления пароля. | Enter the e-mail address of your account. If it exists in the system, we will send a password-reset link. |
+| 28 | Havola yuborish | Отправить ссылку | Send link |
+| 29 | %(site_name)s: parolni tiklash | %(site_name)s: восстановление пароля | %(site_name)s: password reset |
+| 30 | Xodimlar portali | Портал сотрудников | Staff portal |
+| 31 | Foydali havolalar | Полезные ссылки | Useful links |
+| 32 | Bu sahifani ko‘rish uchun huquqingiz yetarli emas. | У вас недостаточно прав для просмотра этой страницы. | You do not have permission to view this page. |
+| 33 | muddati o‘tgan | просрочено | overdue |
+| 34 | Muddati o‘tgan | Просрочено | Overdue |
+| 35 | Taklifnoma yuborish | Отправить приглашение | Send an invitation |
+| 36 | Parol kiritilmaydi: foydalanuvchi o‘z parolini taklifnoma havolasi orqali o‘rnatadi. | Пароль не вводится: пользователь задаёт пароль сам по ссылке из приглашения. | No password is entered: the user sets their own password using the link in the invitation. |
+| 37 | Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting. | Введите свои данные для входа на портал сотрудников. | Enter your details to sign in to the staff portal. |
 
-## B. Security, login and 2FA messages (must be unambiguous) — 81
+## B. Security, login and 2FA messages (must be unambiguous) — 82
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -133,16 +134,17 @@
 | 71 | Xavfsizlik tekshiruvi muvaffaqiyatsiz tugadi. Sahifani yangilab, qayta urinib ko‘ring. | Проверка безопасности не пройдена. Обновите страницу и повторите попытку. | The security check failed. Refresh the page and try again. |
 | 72 | Kirish, chiqish va rollar o‘zgarishi yozuvlari. Yozuvlarni o‘zgartirib yoki o‘chirib bo‘lmaydi. | Записи о входах, выходах и изменении ролей. Записи нельзя изменять или удалять. | Records of sign-ins, sign-outs and role changes. Records cannot be changed or deleted. |
 | 73 | Bu portalning asosiy skeleti: kirish, rollar va audit ishlaydi. Xodimlar, topshiriqlar, hujjatlar va boshqa bo‘limlar keyingi bosqichlarda qo‘shiladi. | Это основа портала: работают вход, роли и аудит. Сотрудники, задания, документы и другие разделы будут добавлены на следующих этапах. | This is the portal’s foundation: sign-in, roles and audit work. Employees, tasks, documents and other sections will be added in later stages. |
-| 74 | Vaqtincha bloklangan | Временно заблокирована | Temporarily locked |
-| 75 | Parolni almashtirishi shart | Обязана сменить пароль | Must change password |
-| 76 | 2FA majburiy, hali yoqilmagan | 2FA обязательна, ещё не включена | 2FA is mandatory, not yet enabled |
-| 77 | 2FA yoqilmagan | 2FA не включена | 2FA is not enabled |
-| 78 | Parolni almashtirishni talab qilish | Потребовать смену пароля | Require a password change |
-| 79 | Hisoblar va rollar. Parollar bu yerda ko‘rinmaydi. | Учётные записи и роли. Пароли здесь не отображаются. | Accounts and roles. Passwords are never shown here. |
-| 80 | Parolni ko‘rsatish | Показать пароль | Show password |
-| 81 | Parolni unutdingizmi? | Забыли пароль? | Forgot your password? |
+| 74 | Xavfsizlik uchun faqat PDF, rasm va oddiy matn ko‘rsatiladi. Faylni yuklab olib oching. | В целях безопасности в портале показываются только PDF, изображения и простой текст. Скачайте файл и откройте его на своём устройстве. | For security, the portal shows only PDF, images and plain text. Download the file and open it on your device. |
+| 75 | Vaqtincha bloklangan | Временно заблокирована | Temporarily locked |
+| 76 | Parolni almashtirishi shart | Обязана сменить пароль | Must change password |
+| 77 | 2FA majburiy, hali yoqilmagan | 2FA обязательна, ещё не включена | 2FA is mandatory, not yet enabled |
+| 78 | 2FA yoqilmagan | 2FA не включена | 2FA is not enabled |
+| 79 | Parolni almashtirishni talab qilish | Потребовать смену пароля | Require a password change |
+| 80 | Hisoblar va rollar. Parollar bu yerda ko‘rinmaydi. | Учётные записи и роли. Пароли здесь не отображаются. | Accounts and roles. Passwords are never shown here. |
+| 81 | Parolni ko‘rsatish | Показать пароль | Show password |
+| 82 | Parolni unutdingizmi? | Забыли пароль? | Forgot your password? |
 
-## C. Personal-data, privacy and access wording (legal weight) — 40
+## C. Personal-data, privacy and access wording (legal weight) — 41
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -155,37 +157,38 @@
 | 7 | Hujjat ma’lumotlari o‘zgartirildi | Данные документа изменены | Document details changed |
 | 8 | audit yozuvi | запись аудита | audit entry |
 | 9 | audit yozuvlari | записи аудита | audit entries |
-| 10 | Maxfiy (muallif va kadrlar/administrator) | Конфиденциально (автор, кадры и администратор) | Confidential (author, HR and administrator) |
-| 11 | Barcha (maxfiy bo‘lmagan) hujjatlarni, jumladan bo‘limlarnikini ko‘rish | Просмотр всех неконфиденциальных документов, включая документы подразделений | View all non-confidential documents, including department documents |
-| 12 | Maxfiy hujjatlarni ko‘rish | Просмотр конфиденциальных документов | View confidential documents |
-| 13 | Bu fayl turi ruxsat etilmagan. Ruxsat etilgan: %(types)s. | Этот тип файла не разрешён. Разрешены: %(types)s. | This file type is not allowed. Allowed: %(types)s. |
-| 14 | Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan. | У вас нет доступа к этому заданию, либо оно удалено. | You do not have access to this task, or it was deleted. |
-| 15 | ish telefoni | рабочий телефон | work phone |
-| 16 | shaxsiy telefon | личный телефон | personal phone |
-| 17 | tug‘ilgan sana | дата рождения | date of birth |
-| 18 | Xodimlarning aloqa ma’lumotlarini ko‘rish | Просмотр контактных данных сотрудников | View employees’ contact details |
-| 19 | Xodimlarning shaxsiy ma’lumotlarini ko‘rish | Просмотр личных данных сотрудников | View employees’ personal data |
-| 20 | Ma’lumot yo‘q. | Нет данных. | No data. |
-| 21 | Hisobotda ijrochilar kesimini ko‘rish (shaxsiy natijalar) | Просмотр отчёта в разрезе исполнителей (личные результаты) | View the report broken down by assignee (personal results) |
-| 22 | Shaxsiy natijalar: faqat ruxsati bor foydalanuvchilarga ko‘rinadi. | Личные результаты: видны только пользователям с соответствующим правом. | Personal results: visible only to users with the corresponding permission. |
-| 23 | Faqat siz ko‘rishga ruxsat etilgan, faol hujjatlar hisoblanadi. | Учитываются только активные документы, которые вам разрешено просматривать. | Only active documents you are allowed to view are counted. |
-| 24 | Manzil: tasdiqlangan ma’lumot kiritiladi | Адрес: будут указаны подтверждённые данные | Address: verified information will be added |
-| 25 | Telefon: tasdiqlangan ma’lumot kiritiladi | Телефон: будут указаны подтверждённые данные | Phone: verified information will be added |
-| 26 | E-pochta: tasdiqlangan ma’lumot kiritiladi | Эл. почта: будут указаны подтверждённые данные | E-mail: verified information will be added |
-| 27 | Ruxsat yo‘q | Доступ запрещён | Access denied |
-| 28 | Ruxsat etilgan: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Makroli va faol tarkibli fayllar qabul qilinmaydi. Yuklangan fayl antivirus bilan tekshiriladi; tekshiruv bajarilmasa, fayl qabul qilinmaydi. | Разрешены: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Файлы с макросами и активным содержимым не принимаются. Загружаемый файл проверяется антивирусом; если проверку выполнить не удалось, файл не принимается. | Allowed: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Files with macros or active content are not accepted. Uploaded files are scanned by an antivirus; if the scan cannot be completed, the file is not accepted. |
-| 29 | Fayllar xavfsiz saqlanadi va faqat huquqingiz bo‘lsa yuklab olinadi. | Файлы хранятся в защищённом хранилище и скачиваются только при наличии прав. | Files are stored securely and can be downloaded only if you have permission. |
-| 30 | Ish telefoni | Рабочий телефон | Work phone |
-| 31 | Shaxsiy ma’lumotlar | Личные данные | Personal data |
-| 32 | Bu ma’lumotlarni ko‘rish jurnalga yoziladi. | Просмотр этих данных фиксируется в журнале. | Viewing this data is recorded in the log. |
-| 33 | Tug‘ilgan sana | Дата рождения | Date of birth |
-| 34 | Shaxsiy telefon | Личный телефон | Personal phone |
-| 35 | Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak. | Перед внесением реальных личных данных должна быть завершена юридическая проверка. | A legal review must be completed before real personal data is entered. |
-| 36 | Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi. | Имя, подразделение, должность и статус. Контактные данные — на карточке сотрудника, если у вас есть право. | Name, department, position and status. Contact details are on the employee card, if you have permission. |
-| 37 | Topshiriq mavjud emas yoki ruxsat yo‘q | Задание не существует или нет доступа | The task does not exist or you have no access |
-| 38 | Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q. | Нет данных за выбранный период и по выбранным фильтрам. | No data for the selected period and filters. |
-| 39 | Ma’lumotlar bazasidagi joriy ma’lumotlar. Siz faqat o‘z doirangizdagi ma’lumotlarni ko‘rasiz. | Актуальные данные из базы данных. Вы видите только данные в пределах своей области. | Current data from the database. You only see data within your own scope. |
-| 40 | Sizga berilgan, siz bergan va ko‘rishga ruxsat etilgan topshiriqlar. | Задания, назначенные вам, поручённые вами и те, которые вам разрешено просматривать. | Tasks assigned to you, assigned by you, and those you are allowed to view. |
+| 10 | Formada xatolar bor. Kiritilgan ma’lumotlar saqlanib turibdi. | В форме есть ошибки. Введённые данные сохранены в полях. | The form has errors. What you entered is still in the fields. |
+| 11 | Maxfiy (muallif va kadrlar/administrator) | Конфиденциально (автор, кадры и администратор) | Confidential (author, HR and administrator) |
+| 12 | Barcha (maxfiy bo‘lmagan) hujjatlarni, jumladan bo‘limlarnikini ko‘rish | Просмотр всех неконфиденциальных документов, включая документы подразделений | View all non-confidential documents, including department documents |
+| 13 | Maxfiy hujjatlarni ko‘rish | Просмотр конфиденциальных документов | View confidential documents |
+| 14 | Bu fayl turi ruxsat etilmagan. Ruxsat etilgan: %(types)s. | Этот тип файла не разрешён. Разрешены: %(types)s. | This file type is not allowed. Allowed: %(types)s. |
+| 15 | Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan. | У вас нет доступа к этому заданию, либо оно удалено. | You do not have access to this task, or it was deleted. |
+| 16 | ish telefoni | рабочий телефон | work phone |
+| 17 | shaxsiy telefon | личный телефон | personal phone |
+| 18 | tug‘ilgan sana | дата рождения | date of birth |
+| 19 | Xodimlarning aloqa ma’lumotlarini ko‘rish | Просмотр контактных данных сотрудников | View employees’ contact details |
+| 20 | Xodimlarning shaxsiy ma’lumotlarini ko‘rish | Просмотр личных данных сотрудников | View employees’ personal data |
+| 21 | Ma’lumot yo‘q. | Нет данных. | No data. |
+| 22 | Hisobotda ijrochilar kesimini ko‘rish (shaxsiy natijalar) | Просмотр отчёта в разрезе исполнителей (личные результаты) | View the report broken down by assignee (personal results) |
+| 23 | Shaxsiy natijalar: faqat ruxsati bor foydalanuvchilarga ko‘rinadi. | Личные результаты: видны только пользователям с соответствующим правом. | Personal results: visible only to users with the corresponding permission. |
+| 24 | Faqat siz ko‘rishga ruxsat etilgan, faol hujjatlar hisoblanadi. | Учитываются только активные документы, которые вам разрешено просматривать. | Only active documents you are allowed to view are counted. |
+| 25 | Manzil: tasdiqlangan ma’lumot kiritiladi | Адрес: будут указаны подтверждённые данные | Address: verified information will be added |
+| 26 | Telefon: tasdiqlangan ma’lumot kiritiladi | Телефон: будут указаны подтверждённые данные | Phone: verified information will be added |
+| 27 | E-pochta: tasdiqlangan ma’lumot kiritiladi | Эл. почта: будут указаны подтверждённые данные | E-mail: verified information will be added |
+| 28 | Ruxsat yo‘q | Доступ запрещён | Access denied |
+| 29 | Ruxsat etilgan: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Makroli va faol tarkibli fayllar qabul qilinmaydi. Yuklangan fayl antivirus bilan tekshiriladi; tekshiruv bajarilmasa, fayl qabul qilinmaydi. | Разрешены: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Файлы с макросами и активным содержимым не принимаются. Загружаемый файл проверяется антивирусом; если проверку выполнить не удалось, файл не принимается. | Allowed: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Files with macros or active content are not accepted. Uploaded files are scanned by an antivirus; if the scan cannot be completed, the file is not accepted. |
+| 30 | Fayllar xavfsiz saqlanadi va faqat huquqingiz bo‘lsa yuklab olinadi. | Файлы хранятся в защищённом хранилище и скачиваются только при наличии прав. | Files are stored securely and can be downloaded only if you have permission. |
+| 31 | Ish telefoni | Рабочий телефон | Work phone |
+| 32 | Shaxsiy ma’lumotlar | Личные данные | Personal data |
+| 33 | Bu ma’lumotlarni ko‘rish jurnalga yoziladi. | Просмотр этих данных фиксируется в журнале. | Viewing this data is recorded in the log. |
+| 34 | Tug‘ilgan sana | Дата рождения | Date of birth |
+| 35 | Shaxsiy telefon | Личный телефон | Personal phone |
+| 36 | Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak. | Перед внесением реальных личных данных должна быть завершена юридическая проверка. | A legal review must be completed before real personal data is entered. |
+| 37 | Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi. | Имя, подразделение, должность и статус. Контактные данные — на карточке сотрудника, если у вас есть право. | Name, department, position and status. Contact details are on the employee card, if you have permission. |
+| 38 | Topshiriq mavjud emas yoki ruxsat yo‘q | Задание не существует или нет доступа | The task does not exist or you have no access |
+| 39 | Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q. | Нет данных за выбранный период и по выбранным фильтрам. | No data for the selected period and filters. |
+| 40 | Ma’lumotlar bazasidagi joriy ma’lumotlar. Siz faqat o‘z doirangizdagi ma’lumotlarni ko‘rasiz. | Актуальные данные из базы данных. Вы видите только данные в пределах своей области. | Current data from the database. You only see data within your own scope. |
+| 41 | Sizga berilgan, siz bergan va ko‘rishga ruxsat etilgan topshiriqlar. | Задания, назначенные вам, поручённые вами и те, которые вам разрешено просматривать. | Tasks assigned to you, assigned by you, and those you are allowed to view. |
 
 ## D. Statuses, roles and organisational terms (official terminology) — 94
 
@@ -286,7 +289,7 @@
 | 93 | Rol biriktirish | Назначить роль | Assign a role |
 | 94 | Barcha rollar | Все роли | All roles |
 
-## E. Task and document workflow wording — 67
+## E. Task and document workflow wording — 69
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -352,13 +355,15 @@
 | 60 | Yangi versiya yuklash | Загрузить новую версию | Upload a new version |
 | 61 | Hujjat yuklash | Загрузка документа | Upload a document |
 | 62 | Hujjatlar topilmadi | Документы не найдены | No documents found |
-| 63 | Topshiriqlar bo‘yicha yangiliklar. | Новости по заданиям. | News about tasks. |
-| 64 | Bildirishnomalar yo‘q | Уведомлений нет | No notifications |
-| 65 | Hisobotni tayyorlab bo‘lmadi | Не удалось подготовить отчёт | The report could not be prepared |
-| 66 | Yangi topshiriq | Новое задание | New task |
-| 67 | Topshiriqlar yo‘q | Заданий нет | No tasks |
+| 63 | Hujjat sahifasi | Страница документа | Document page |
+| 64 | Hujjat arxivda. | Документ находится в архиве. | The document is archived. |
+| 65 | Topshiriqlar bo‘yicha yangiliklar. | Новости по заданиям. | News about tasks. |
+| 66 | Bildirishnomalar yo‘q | Уведомлений нет | No notifications |
+| 67 | Hisobotni tayyorlab bo‘lmadi | Не удалось подготовить отчёт | The report could not be prepared |
+| 68 | Yangi topshiriq | Новое задание | New task |
+| 69 | Topshiriqlar yo‘q | Заданий нет | No tasks |
 
-## F. Остальные строки — 270
+## F. Остальные строки — 327
 
 Интерфейсные подписи общего назначения (кнопки, заголовки, подсказки). Проверяются выборочно при общей вычитке; полный список — в файлах `.po`.
 

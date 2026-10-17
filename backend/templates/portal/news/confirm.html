@@ -1,0 +1,12 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Tasdiqlash" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Tasdiqlash" %}</h1></div></div>
+<form method="post" action="{% url 'news_admin:status' news.pk action %}" class="card card-pad" style="display:grid;gap:16px;max-width:620px">
+  {% csrf_token %}
+  <p><b>{{ news.title }}</b></p>
+  <p>{{ question }}</p>
+  <div class="row wrap"><button class="btn {% if action == 'publish' %}btn-primary{% elif action == 'restore' %}btn-secondary{% else %}btn-danger{% endif %}" type="submit">{% translate "Ha, tasdiqlayman" %}</button><a class="btn btn-secondary" href="{% url 'news_admin:preview' news.pk %}">{% translate "Bekor qilish" %}</a></div>
+</form>
+{% endblock %}

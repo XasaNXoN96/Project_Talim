@@ -4,7 +4,8 @@
 {% block content %}
 <div class="page-head"><div><h1>{{ d.title }}</h1><p>{{ d.category }}{% if d.number %} · № {{ d.number }}{% endif %}{% if d.doc_date %} · {{ d.doc_date|date:"d.m.Y" }}{% endif %}</p></div>
 <div class="row wrap"><a class="btn btn-secondary" href="{% url 'documents:list' %}">{% translate "Ro‘yxat" %}</a>
-{% if d.versions.exists %}<a class="btn btn-primary" href="{% url 'documents:download' d.pk %}">{% translate "Yuklab olish" %}</a>{% endif %}
+{% if d.versions.exists %}<a class="btn btn-secondary" href="{% url 'documents:preview' d.pk %}">{% translate "Ko‘rish" %}</a>
+<a class="btn btn-primary" href="{% url 'documents:download' d.pk %}">{% translate "Yuklab olish" %}</a>{% endif %}
 {% if can_edit %}<a class="btn btn-secondary" href="{% url 'documents:edit' d.pk %}">{% translate "Tahrirlash" %}</a>
 {% if d.status == 'archived' %}<form method="post" action="{% url 'documents:restore' d.pk %}">{% csrf_token %}<button class="btn btn-secondary" type="submit">{% translate "Arxivdan qaytarish" %}</button></form>
 {% else %}<form method="post" action="{% url 'documents:archive' d.pk %}">{% csrf_token %}<button class="btn btn-danger" type="submit">{% translate "Arxivlash" %}</button></form>{% endif %}{% endif %}</div></div>
@@ -17,7 +18,7 @@
   </section>
   <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Versiyalar" %}</h2>
     <div class="table-wrap"><table class="t"><thead><tr><th>№</th><th>{% translate "Fayl" %}</th><th>{% translate "Hajmi" %}</th><th>{% translate "Yuklagan" %}</th><th></th></tr></thead><tbody>
-    {% for v in versions %}<tr><td>v{{ v.number }}</td><td>{{ v.original_name }}{% if v.comment %}<div class="muted small">{{ v.comment }}</div>{% endif %}</td><td class="nw">{{ v.size|filesizeformat }}<div><span class="badge {% if v.scan_status == 'clean' %}b-ok{% elif v.scan_status == 'infected' %}b-err{% else %}b-warn{% endif %} plain">{{ v.get_scan_status_display }}</span></div></td><td>{{ v.uploaded_by.get_username }}<div class="muted small">{{ v.uploaded_at|date:"d.m.Y H:i" }}</div></td><td>{% if v.scan_status != "infected" %}<a class="btn btn-ghost btn-sm" href="{% url 'documents:download_version' d.pk v.number %}">{% translate "Yuklab olish" %}</a>{% endif %}</td></tr>{% endfor %}
+    {% for v in versions %}<tr><td>v{{ v.number }}</td><td>{{ v.original_name }}{% if v.comment %}<div class="muted small">{{ v.comment }}</div>{% endif %}</td><td class="nw">{{ v.size|filesizeformat }}<div><span class="badge {% if v.scan_status == 'clean' %}b-ok{% elif v.scan_status == 'infected' %}b-err{% else %}b-warn{% endif %} plain">{{ v.get_scan_status_display }}</span></div></td><td>{{ v.uploaded_by.get_username }}<div class="muted small">{{ v.uploaded_at|date:"d.m.Y H:i" }}</div></td><td>{% if v.scan_status != "infected" %}<a class="btn btn-ghost btn-sm" href="{% url 'documents:preview_version' d.pk v.number %}">{% translate "Ko‘rish" %}</a> <a class="btn btn-ghost btn-sm" href="{% url 'documents:download_version' d.pk v.number %}">{% translate "Yuklab olish" %}</a>{% endif %}</td></tr>{% endfor %}
     </tbody></table></div>
     {% if can_edit and d.status == 'active' %}
     <form method="post" action="{% url 'documents:version_add' d.pk %}" enctype="multipart/form-data" style="display:grid;gap:12px;margin-top:16px;max-width:520px">{% csrf_token %}

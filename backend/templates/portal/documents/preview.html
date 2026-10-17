@@ -1,0 +1,23 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{{ d.title }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{{ d.title }}</h1><p>v{{ version.number }} · {{ version.original_name }} · {{ version.size|filesizeformat }}</p></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% url 'documents:detail' d.pk %}">{% translate "Hujjat sahifasi" %}</a>
+<a class="btn btn-primary" href="{% url 'documents:download_version' d.pk version.number %}">{% translate "Yuklab olish" %}</a></div></div>
+{% if d.status == 'archived' %}<div class="alert warn" role="status"><span>{% translate "Hujjat arxivda." %}</span></div>{% endif %}
+{% if versions.count > 1 %}<div class="row wrap" style="margin:8px 0 16px" aria-label="{% translate 'Versiyalar' %}"><span class="muted small">{% translate "Versiyalar" %}:</span>{% for v in versions %}<a class="btn btn-sm {% if v.number == version.number %}btn-primary{% else %}btn-secondary{% endif %}" href="{% url 'documents:preview_version' d.pk v.number %}" {% if v.number == version.number %}aria-current="page"{% endif %}>v{{ v.number }}</a>{% endfor %}</div>{% endif %}
+<section class="card card-pad viewer">
+{% if kind == 'image' %}
+  <img src="{% url 'documents:inline_version' d.pk version.number %}" alt="{{ d.title }}" style="max-width:100%;height:auto;display:block;margin:0 auto">
+{% elif kind == 'pdf' %}
+  <iframe src="{% url 'documents:inline_version' d.pk version.number %}" title="{{ d.title }}" style="width:100%;height:75vh;min-height:360px;border:0"></iframe>
+  <p class="muted small" style="margin-top:8px">{% translate "PDF ko‘rinmasa, uni yangi oynada oching yoki yuklab oling." %} <a href="{% url 'documents:inline_version' d.pk version.number %}" target="_blank" rel="noopener">{% translate "Yangi oynada ochish" %}</a></p>
+{% elif kind == 'text' %}
+  <pre style="white-space:pre-wrap;word-break:break-word;margin:0;font:inherit">{{ text }}</pre>
+  {% if truncated %}<p class="muted small" style="margin-top:8px">{% translate "Matnning faqat boshi ko‘rsatilgan. To‘liq faylni yuklab oling." %}</p>{% endif %}
+{% else %}
+  <div class="empty"><h3>{% translate "Bu fayl turini portalda ko‘rsatib bo‘lmaydi" %}</h3><p>{% translate "Xavfsizlik uchun faqat PDF, rasm va oddiy matn ko‘rsatiladi. Faylni yuklab olib oching." %}</p></div>
+{% endif %}
+</section>
+{% endblock %}

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 11:38+0500\n"
+"POT-Creation-Date: 2026-10-17 12:54+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -178,11 +178,9 @@ msgstr "language"
 msgid "parolni almashtirish shart"
 msgstr "password change required"
 
-#| msgid "Foydalanuvchi"
 msgid "foydalanuvchi"
 msgstr "user"
 
-#| msgid "Foydalanuvchilar"
 msgid "foydalanuvchilar"
 msgstr "users"
 
@@ -500,6 +498,27 @@ msgstr "Task file downloaded"
 msgid "Topshiriq fayli olib tashlandi"
 msgstr "Task file removed"
 
+msgid "Yangilik yaratildi"
+msgstr "News item created"
+
+msgid "Yangilik o‘zgartirildi"
+msgstr "News item changed"
+
+msgid "Yangilik nashr etildi"
+msgstr "News item published"
+
+msgid "Yangilik nashrdan olindi"
+msgstr "News item unpublished"
+
+msgid "Yangilik arxivlandi"
+msgstr "News item archived"
+
+msgid "Yangilik arxivdan qaytarildi"
+msgstr "News item restored from the archive"
+
+msgid "Yangilik kategoriyasi o‘zgartirildi"
+msgstr "News category changed"
+
 msgid "audit yozuvi"
 msgstr "audit entry"
 
@@ -508,6 +527,89 @@ msgstr "audit entries"
 
 msgid "Kontent"
 msgstr "Content"
+
+msgid "Nashr sanasi (ixtiyoriy)"
+msgstr "Publication date (optional)"
+
+msgid "Kelajakdagi sana bersangiz, yangilik shu vaqtdan boshlab ko‘rinadi. Bo‘sh qoldirsangiz, nashr qilingan zahoti ko‘rinadi."
+msgstr "If you set a future date, the news appears on the site from that moment. If left empty, it appears as soon as it is published."
+
+msgid "Sarlavha"
+msgstr "Title"
+
+msgid "Qisqa tavsif"
+msgstr "Summary"
+
+msgid "Matn"
+msgstr "Text"
+
+msgid "Oddiy matn. Bo‘sh qator — yangi abzats. HTML va havolalar matn sifatida ko‘rinadi."
+msgstr "Plain text. A blank line starts a new paragraph. HTML and links are shown as plain text."
+
+msgid "Kategoriya"
+msgstr "Category"
+
+msgid "— kategoriyasiz —"
+msgstr "— no category —"
+
+msgid "Sarlavha bo‘sh bo‘lmasligi kerak."
+msgstr "The title must not be empty."
+
+msgid "Matn bo‘sh bo‘lmasligi kerak."
+msgstr "The text must not be empty."
+
+#, python-format
+msgid "Matn juda uzun (ko‘pi bilan %(n)d belgi)."
+msgstr "The text is too long (at most %(n)d characters)."
+
+#, python-format
+msgid "Qisqa tavsif juda uzun (ko‘pi bilan %(n)d belgi)."
+msgstr "The summary is too long (at most %(n)d characters)."
+
+msgid "Nomi"
+msgstr "Name"
+
+msgid "Nomi bo‘sh bo‘lmasligi kerak."
+msgstr "The name must not be empty."
+
+msgid "Bunday kategoriya allaqachon bor."
+msgstr "This category already exists."
+
+msgid "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
+msgstr "Publish this news item? It will be visible to everyone on the public site."
+
+msgid "Yangilik nashr etildi."
+msgstr "News item published."
+
+msgid "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
+msgstr "Unpublish this news item? It will disappear from the public site and return to drafts."
+
+msgid "Yangilik nashrdan olindi."
+msgstr "News item unpublished."
+
+msgid "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
+msgstr "Archive this news item? It will disappear from the public site."
+
+msgid "Yangilik arxivlandi."
+msgstr "News item archived."
+
+msgid "Yangilikni arxivdan qoralamaga qaytarasizmi?"
+msgstr "Move this news item from the archive back to drafts?"
+
+msgid "Yangilik arxivdan qoralamaga qaytarildi."
+msgstr "News item moved from the archive back to drafts."
+
+msgid "Qoralama saqlandi. Nashr etishdan oldin ko‘rib chiqing."
+msgstr "Draft saved. Review it before publishing."
+
+msgid "Formada xatolar bor. Kiritilgan ma’lumotlar saqlanib turibdi."
+msgstr "The form has errors. What you entered is still in the fields."
+
+msgid "Saqlandi."
+msgstr "Saved."
+
+msgid "Bu amalni hozirgi holatda bajarib bo‘lmaydi."
+msgstr "This action is not available in the current state."
 
 msgid "nomi"
 msgstr "name"
@@ -545,11 +647,9 @@ msgstr "status"
 msgid "nashr sanasi"
 msgstr "publication date"
 
-#| msgid "Yangiliklar"
 msgid "yangilik"
 msgstr "news item"
 
-#| msgid "Yangiliklar"
 msgid "yangiliklar"
 msgstr "news"
 
@@ -652,11 +752,9 @@ msgstr "access level"
 msgid "bo‘lim"
 msgstr "department"
 
-#| msgid "Hujjatlar"
 msgid "hujjat"
 msgstr "document"
 
-#| msgid "Hujjatlar"
 msgid "hujjatlar"
 msgstr "documents"
 
@@ -731,9 +829,6 @@ msgstr "A text file must be UTF-8 encoded."
 msgid "Hujjat yuklandi."
 msgstr "The document was uploaded."
 
-msgid "Saqlandi."
-msgstr "Saved."
-
 #, python-format
 msgid "Yangi versiya (v%(n)d) yuklandi."
 msgstr "A new version (v%(n)d) was uploaded."
@@ -802,11 +897,9 @@ msgstr "A department with active employees or active sub-departments cannot be d
 msgid "bo‘limlar"
 msgstr "departments"
 
-#| msgid "Lavozim"
 msgid "lavozim"
 msgstr "position"
 
-#| msgid "Lavozimlar"
 msgid "lavozimlar"
 msgstr "positions"
 
@@ -840,11 +933,9 @@ msgstr "personal phone"
 msgid "tug‘ilgan sana"
 msgstr "date of birth"
 
-#| msgid "Xodim"
 msgid "xodim"
 msgstr "employee"
 
-#| msgid "Xodimlar"
 msgid "xodimlar"
 msgstr "employees"
 
@@ -1170,18 +1261,15 @@ msgstr "priority"
 msgid "muddat"
 msgstr "due date"
 
-#| msgid "Topshiriqlar"
 msgid "topshiriq"
 msgstr "task"
 
-#| msgid "Topshiriqlar"
 msgid "topshiriqlar"
 msgstr "tasks"
 
 msgid "Bo‘lim (yoki butun tashkilot) topshiriqlarini ko‘rish"
 msgstr "View tasks of a department (or the whole organization)"
 
-#| msgid "Izohlar"
 msgid "izohlar"
 msgstr "comments"
 
@@ -1411,6 +1499,9 @@ msgstr "Sections"
 msgid "Bosh sahifa"
 msgstr "Home"
 
+msgid "Yangiliklar"
+msgstr "News"
+
 msgid "Tuzilma"
 msgstr "Structure"
 
@@ -1437,9 +1528,6 @@ msgstr "Skip to main content"
 
 msgid "Asosiy menyu"
 msgstr "Main menu"
-
-msgid "Yangiliklar"
-msgstr "News"
 
 msgid "Menyu"
 msgstr "Menu"
@@ -1556,6 +1644,9 @@ msgstr "no role assigned"
 msgid "Ro‘yxat"
 msgstr "Back to the list"
 
+msgid "Ko‘rish"
+msgstr "View"
+
 msgid "Yuklab olish"
 msgstr "Download"
 
@@ -1604,9 +1695,6 @@ msgstr "All levels"
 msgid "Qidirish"
 msgstr "Search"
 
-msgid "Sarlavha"
-msgstr "Title"
-
 msgid "Raqam"
 msgstr "Number"
 
@@ -1618,6 +1706,27 @@ msgstr "Level"
 
 msgid "Hujjatlar topilmadi"
 msgstr "No documents found"
+
+msgid "Hujjat sahifasi"
+msgstr "Document page"
+
+msgid "Hujjat arxivda."
+msgstr "The document is archived."
+
+msgid "PDF ko‘rinmasa, uni yangi oynada oching yoki yuklab oling."
+msgstr "If the PDF does not show, open it in a new window or download it."
+
+msgid "Yangi oynada ochish"
+msgstr "Open in a new window"
+
+msgid "Matnning faqat boshi ko‘rsatilgan. To‘liq faylni yuklab oling."
+msgstr "Only the beginning of the text is shown. Download the whole file."
+
+msgid "Bu fayl turini portalda ko‘rsatib bo‘lmaydi"
+msgstr "This file type cannot be shown in the portal"
+
+msgid "Xavfsizlik uchun faqat PDF, rasm va oddiy matn ko‘rsatiladi. Faylni yuklab olib oching."
+msgstr "For security, the portal shows only PDF, images and plain text. Download the file and open it on your device."
 
 msgid "Asosiy"
 msgstr "Main"
@@ -1666,6 +1775,75 @@ msgstr "Full name"
 
 msgid "Hech narsa topilmadi"
 msgstr "Nothing found"
+
+msgid "Kategoriyalar"
+msgstr "Categories"
+
+msgid "Yangilik kategoriyalari"
+msgstr "News categories"
+
+msgid "Kategoriya qo‘shish"
+msgstr "Add category"
+
+msgid "Kategoriyalar yo‘q"
+msgstr "No categories"
+
+msgid "Kategoriyani tahrirlash"
+msgstr "Edit category"
+
+msgid "Ha, tasdiqlayman"
+msgstr "Yes, confirm"
+
+msgid "Yangi yangilik"
+msgstr "New news item"
+
+msgid "Saqlash yangilikni qoralama sifatida saqlaydi; nashr etish alohida, tasdiqlash bilan bajariladi."
+msgstr "Saving keeps the news as a draft; publishing is a separate step with a confirmation."
+
+msgid "Yangiliklarni boshqarish"
+msgstr "News management"
+
+msgid "Qoralama yarating, ko‘rib chiqing va nashr eting. Faqat nashr etilgan yangiliklar ochiq saytda ko‘rinadi."
+msgstr "Create drafts, review and publish them. Only published news appears on the public site."
+
+msgid "Qidirish: sarlavha, tavsif"
+msgstr "Search: title, summary"
+
+msgid "Barcha kategoriyalar"
+msgstr "All categories"
+
+msgid "Nashr sanasi"
+msgstr "Publication date"
+
+msgid "O‘zgartirilgan"
+msgstr "Changed"
+
+msgid "Rejalashtirilgan"
+msgstr "Scheduled"
+
+msgid "Yangiliklar topilmadi"
+msgstr "No news found"
+
+msgid "Birinchi qoralamani yarating."
+msgstr "Create the first draft."
+
+msgid "Oldindan ko‘rish"
+msgstr "Preview"
+
+msgid "Ochiq saytda yangilik shunday ko‘rinadi."
+msgstr "This is how the news item looks on the public site."
+
+msgid "Nashr etish"
+msgstr "Publish"
+
+msgid "Nashrdan olish"
+msgstr "Unpublish"
+
+msgid "ochiq saytda ko‘rinadi"
+msgstr "visible on the public site"
+
+msgid "ochiq saytda ko‘rinmaydi"
+msgstr "not visible on the public site"
 
 msgid "Topshiriqlar bo‘yicha yangiliklar."
 msgstr "News about tasks."
@@ -1738,9 +1916,6 @@ msgstr "Add a department"
 
 msgid "Lavozim qo‘shish"
 msgstr "Add a position"
-
-msgid "Nomi"
-msgstr "Name"
 
 msgid "Faol emas"
 msgstr "Inactive"

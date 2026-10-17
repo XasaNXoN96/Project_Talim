@@ -77,3 +77,52 @@ def download_response(field_file, *, filename: str):
 def safe_download_name(title: str, suffix: str) -> str:
     base = "".join(c for c in title if c.isalnum() or c in " ._-")[:60].strip() or "fayl"
     return f"{base}{suffix}"
+
+
+# What the portal may show inside the page. Fixed by the extension that validation already matched to the real content;
+# the type sent to the browser comes from THIS table, never from the upload. Everything else is download-only.
+INLINE_IMAGE = {"png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg"}
+INLINE_PDF = {"pdf": "application/pdf"}
+INLINE_TEXT = ("txt",)
+TEXT_PREVIEW_BYTES = 100_000
+
+
+def preview_kind(extension: str):
+    ext = (extension or "").lower()
+    if ext in INLINE_IMAGE:
+        return "image"
+    if ext in INLINE_PDF:
+        return "pdf"
+    if ext in INLINE_TEXT:
+        return "text"
+    return None
+
+
+def inline_response(field_file, *, extension: str):
+    """Image/PDF shown in the portal. Call it AFTER the permission check. Only the fixed types above are ever sent inline;
+    the page that embeds it is same-origin, and the file itself may do nothing (no scripts, no framing by other sites)."""
+    ext = extension.lower()
+    content_type = INLINE_IMAGE.get(ext) or INLINE_PDF.get(ext)
+    if content_type is None:
+        raise Http404
+    try:
+        handle = field_file.storage.open(field_file.name, "rb")
+    except (FileNotFoundError, ValueError, OSError) as exc:
+        raise Http404 from exc
+    response = FileResponse(handle, as_attachment=False, content_type=content_type)
+    response["Content-Disposition"] = "inline"
+    response["X-Content-Type-Options"] = "nosniff"
+    response["Cache-Control"] = "private, no-store"
+    response["X-Frame-Options"] = "SAMEORIGIN"  # the portal page embeds it; foreign sites may not
+    response["Content-Security-Policy"] = "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; frame-ancestors 'self'"
+    return response
+
+
+def read_text_preview(field_file):
+    """(text, truncated) of a plain-text file, decoded leniently; the template escapes it."""
+    try:
+        with field_file.storage.open(field_file.name, "rb") as handle:
+            raw = handle.read(TEXT_PREVIEW_BYTES + 1)
+    except (FileNotFoundError, ValueError, OSError) as exc:
+        raise Http404 from exc
+    return raw[:TEXT_PREVIEW_BYTES].decode("utf-8", errors="replace"), len(raw) > TEXT_PREVIEW_BYTES

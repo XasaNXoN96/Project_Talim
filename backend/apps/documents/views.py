@@ -159,13 +159,48 @@ class DocumentDownloadView(_DocBase):
     def get(self, request, pk, number=None):
         d = self.get_document(request, pk)  # permission is decided BEFORE any file is opened
         versions = d.versions
-        version = versions.filter(number=number).first() if number else versions.order_by("-number").first()
+        version = versions.filter(number=number).first() if number is not None else versions.order_by("-number").first()
         if version is None:
             raise Http404
         if version.scan_status == "infected":
             raise Http404  # quarantined by a later scan: never served
         response = files.download_response(version.file, filename=files.safe_download_name(d.title, f"_v{version.number}.{version.extension}"))
         _audit(AuditLog.Action.DOCUMENT_DOWNLOADED, request, d, version=version.number)
+        return response
+
+
+def _pick_version(document, number):
+    versions = document.versions
+    version = versions.filter(number=number).first() if number is not None else versions.order_by("-number").first()
+    if version is None or version.scan_status == "infected":
+        raise Http404  # no such version of THIS document, or quarantined: never shown
+    return version
+
+
+class DocumentPreviewView(_DocBase):
+    """The viewer page: metadata + the file shown inline when the type is safe to show, else a notice and the download."""
+
+    def get(self, request, pk, number=None):
+        d = self.get_document(request, pk)
+        version = _pick_version(d, number)
+        kind = files.preview_kind(version.extension)
+        ctx = {"d": d, "version": version, "kind": kind, "versions": d.versions.exclude(scan_status="infected"), "can_edit": access.can_edit(request.user, d)}
+        if kind == "text":
+            ctx["text"], ctx["truncated"] = files.read_text_preview(version.file)
+            if d.access_level == Document.Access.CONFIDENTIAL:
+                _audit(AuditLog.Action.DOCUMENT_VIEWED, request, d, version=version.number, how="preview")
+        return render(request, "portal/documents/preview.html", ctx)
+
+
+class DocumentInlineView(_DocBase):
+    """The raw bytes for the viewer's <img>/<iframe>. Same access check as everything else, then a fixed content type."""
+
+    def get(self, request, pk, number=None):
+        d = self.get_document(request, pk)
+        version = _pick_version(d, number)
+        response = files.inline_response(version.file, extension=version.extension)
+        if d.access_level == Document.Access.CONFIDENTIAL:
+            _audit(AuditLog.Action.DOCUMENT_VIEWED, request, d, version=version.number, how="preview")
         return response
 
 

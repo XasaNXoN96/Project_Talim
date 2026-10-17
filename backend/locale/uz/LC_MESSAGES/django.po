@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 11:38+0500\n"
+"POT-Creation-Date: 2026-10-17 12:54+0500\n"
 "Language: uz\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -178,11 +178,9 @@ msgstr "til"
 msgid "parolni almashtirish shart"
 msgstr "parolni almashtirish shart"
 
-#| msgid "Foydalanuvchi"
 msgid "foydalanuvchi"
 msgstr "foydalanuvchi"
 
-#| msgid "Foydalanuvchilar"
 msgid "foydalanuvchilar"
 msgstr "foydalanuvchilar"
 
@@ -500,6 +498,27 @@ msgstr "Topshiriq fayli yuklab olindi"
 msgid "Topshiriq fayli olib tashlandi"
 msgstr "Topshiriq fayli olib tashlandi"
 
+msgid "Yangilik yaratildi"
+msgstr "Yangilik yaratildi"
+
+msgid "Yangilik o‘zgartirildi"
+msgstr "Yangilik o‘zgartirildi"
+
+msgid "Yangilik nashr etildi"
+msgstr "Yangilik nashr etildi"
+
+msgid "Yangilik nashrdan olindi"
+msgstr "Yangilik nashrdan olindi"
+
+msgid "Yangilik arxivlandi"
+msgstr "Yangilik arxivlandi"
+
+msgid "Yangilik arxivdan qaytarildi"
+msgstr "Yangilik arxivdan qaytarildi"
+
+msgid "Yangilik kategoriyasi o‘zgartirildi"
+msgstr "Yangilik kategoriyasi o‘zgartirildi"
+
 msgid "audit yozuvi"
 msgstr "audit yozuvi"
 
@@ -508,6 +527,89 @@ msgstr "audit yozuvlari"
 
 msgid "Kontent"
 msgstr "Kontent"
+
+msgid "Nashr sanasi (ixtiyoriy)"
+msgstr "Nashr sanasi (ixtiyoriy)"
+
+msgid "Kelajakdagi sana bersangiz, yangilik shu vaqtdan boshlab ko‘rinadi. Bo‘sh qoldirsangiz, nashr qilingan zahoti ko‘rinadi."
+msgstr "Kelajakdagi sana bersangiz, yangilik shu vaqtdan boshlab ko‘rinadi. Bo‘sh qoldirsangiz, nashr qilingan zahoti ko‘rinadi."
+
+msgid "Sarlavha"
+msgstr "Sarlavha"
+
+msgid "Qisqa tavsif"
+msgstr "Qisqa tavsif"
+
+msgid "Matn"
+msgstr "Matn"
+
+msgid "Oddiy matn. Bo‘sh qator — yangi abzats. HTML va havolalar matn sifatida ko‘rinadi."
+msgstr "Oddiy matn. Bo‘sh qator — yangi abzats. HTML va havolalar matn sifatida ko‘rinadi."
+
+msgid "Kategoriya"
+msgstr "Kategoriya"
+
+msgid "— kategoriyasiz —"
+msgstr "— kategoriyasiz —"
+
+msgid "Sarlavha bo‘sh bo‘lmasligi kerak."
+msgstr "Sarlavha bo‘sh bo‘lmasligi kerak."
+
+msgid "Matn bo‘sh bo‘lmasligi kerak."
+msgstr "Matn bo‘sh bo‘lmasligi kerak."
+
+#, python-format
+msgid "Matn juda uzun (ko‘pi bilan %(n)d belgi)."
+msgstr "Matn juda uzun (ko‘pi bilan %(n)d belgi)."
+
+#, python-format
+msgid "Qisqa tavsif juda uzun (ko‘pi bilan %(n)d belgi)."
+msgstr "Qisqa tavsif juda uzun (ko‘pi bilan %(n)d belgi)."
+
+msgid "Nomi"
+msgstr "Nomi"
+
+msgid "Nomi bo‘sh bo‘lmasligi kerak."
+msgstr "Nomi bo‘sh bo‘lmasligi kerak."
+
+msgid "Bunday kategoriya allaqachon bor."
+msgstr "Bunday kategoriya allaqachon bor."
+
+msgid "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
+msgstr "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
+
+msgid "Yangilik nashr etildi."
+msgstr "Yangilik nashr etildi."
+
+msgid "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
+msgstr "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
+
+msgid "Yangilik nashrdan olindi."
+msgstr "Yangilik nashrdan olindi."
+
+msgid "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
+msgstr "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
+
+msgid "Yangilik arxivlandi."
+msgstr "Yangilik arxivlandi."
+
+msgid "Yangilikni arxivdan qoralamaga qaytarasizmi?"
+msgstr "Yangilikni arxivdan qoralamaga qaytarasizmi?"
+
+msgid "Yangilik arxivdan qoralamaga qaytarildi."
+msgstr "Yangilik arxivdan qoralamaga qaytarildi."
+
+msgid "Qoralama saqlandi. Nashr etishdan oldin ko‘rib chiqing."
+msgstr "Qoralama saqlandi. Nashr etishdan oldin ko‘rib chiqing."
+
+msgid "Formada xatolar bor. Kiritilgan ma’lumotlar saqlanib turibdi."
+msgstr "Formada xatolar bor. Kiritilgan ma’lumotlar saqlanib turibdi."
+
+msgid "Saqlandi."
+msgstr "Saqlandi."
+
+msgid "Bu amalni hozirgi holatda bajarib bo‘lmaydi."
+msgstr "Bu amalni hozirgi holatda bajarib bo‘lmaydi."
 
 msgid "nomi"
 msgstr "nomi"
@@ -545,11 +647,9 @@ msgstr "holat"
 msgid "nashr sanasi"
 msgstr "nashr sanasi"
 
-#| msgid "Yangiliklar"
 msgid "yangilik"
 msgstr "yangilik"
 
-#| msgid "Yangiliklar"
 msgid "yangiliklar"
 msgstr "yangiliklar"
 
@@ -652,11 +752,9 @@ msgstr "kirish darajasi"
 msgid "bo‘lim"
 msgstr "bo‘lim"
 
-#| msgid "Hujjatlar"
 msgid "hujjat"
 msgstr "hujjat"
 
-#| msgid "Hujjatlar"
 msgid "hujjatlar"
 msgstr "hujjatlar"
 
@@ -731,9 +829,6 @@ msgstr "Matn fayli UTF-8 bo‘lishi kerak."
 msgid "Hujjat yuklandi."
 msgstr "Hujjat yuklandi."
 
-msgid "Saqlandi."
-msgstr "Saqlandi."
-
 #, python-format
 msgid "Yangi versiya (v%(n)d) yuklandi."
 msgstr "Yangi versiya (v%(n)d) yuklandi."
@@ -802,11 +897,9 @@ msgstr "Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo�
 msgid "bo‘limlar"
 msgstr "bo‘limlar"
 
-#| msgid "Lavozim"
 msgid "lavozim"
 msgstr "lavozim"
 
-#| msgid "Lavozimlar"
 msgid "lavozimlar"
 msgstr "lavozimlar"
 
@@ -840,11 +933,9 @@ msgstr "shaxsiy telefon"
 msgid "tug‘ilgan sana"
 msgstr "tug‘ilgan sana"
 
-#| msgid "Xodim"
 msgid "xodim"
 msgstr "xodim"
 
-#| msgid "Xodimlar"
 msgid "xodimlar"
 msgstr "xodimlar"
 
@@ -1170,18 +1261,15 @@ msgstr "muhimlik"
 msgid "muddat"
 msgstr "muddat"
 
-#| msgid "Topshiriqlar"
 msgid "topshiriq"
 msgstr "topshiriq"
 
-#| msgid "Topshiriqlar"
 msgid "topshiriqlar"
 msgstr "topshiriqlar"
 
 msgid "Bo‘lim (yoki butun tashkilot) topshiriqlarini ko‘rish"
 msgstr "Bo‘lim (yoki butun tashkilot) topshiriqlarini ko‘rish"
 
-#| msgid "Izohlar"
 msgid "izohlar"
 msgstr "izohlar"
 
@@ -1411,6 +1499,9 @@ msgstr "Bo‘limlar"
 msgid "Bosh sahifa"
 msgstr "Bosh sahifa"
 
+msgid "Yangiliklar"
+msgstr "Yangiliklar"
+
 msgid "Tuzilma"
 msgstr "Tuzilma"
 
@@ -1437,9 +1528,6 @@ msgstr "Asosiy mazmunga o‘tish"
 
 msgid "Asosiy menyu"
 msgstr "Asosiy menyu"
-
-msgid "Yangiliklar"
-msgstr "Yangiliklar"
 
 msgid "Menyu"
 msgstr "Menyu"
@@ -1556,6 +1644,9 @@ msgstr "rol biriktirilmagan"
 msgid "Ro‘yxat"
 msgstr "Ro‘yxat"
 
+msgid "Ko‘rish"
+msgstr "Ko‘rish"
+
 msgid "Yuklab olish"
 msgstr "Yuklab olish"
 
@@ -1604,9 +1695,6 @@ msgstr "Barcha darajalar"
 msgid "Qidirish"
 msgstr "Qidirish"
 
-msgid "Sarlavha"
-msgstr "Sarlavha"
-
 msgid "Raqam"
 msgstr "Raqam"
 
@@ -1618,6 +1706,27 @@ msgstr "Daraja"
 
 msgid "Hujjatlar topilmadi"
 msgstr "Hujjatlar topilmadi"
+
+msgid "Hujjat sahifasi"
+msgstr "Hujjat sahifasi"
+
+msgid "Hujjat arxivda."
+msgstr "Hujjat arxivda."
+
+msgid "PDF ko‘rinmasa, uni yangi oynada oching yoki yuklab oling."
+msgstr "PDF ko‘rinmasa, uni yangi oynada oching yoki yuklab oling."
+
+msgid "Yangi oynada ochish"
+msgstr "Yangi oynada ochish"
+
+msgid "Matnning faqat boshi ko‘rsatilgan. To‘liq faylni yuklab oling."
+msgstr "Matnning faqat boshi ko‘rsatilgan. To‘liq faylni yuklab oling."
+
+msgid "Bu fayl turini portalda ko‘rsatib bo‘lmaydi"
+msgstr "Bu fayl turini portalda ko‘rsatib bo‘lmaydi"
+
+msgid "Xavfsizlik uchun faqat PDF, rasm va oddiy matn ko‘rsatiladi. Faylni yuklab olib oching."
+msgstr "Xavfsizlik uchun faqat PDF, rasm va oddiy matn ko‘rsatiladi. Faylni yuklab olib oching."
 
 msgid "Asosiy"
 msgstr "Asosiy"
@@ -1666,6 +1775,75 @@ msgstr "F.I.Sh."
 
 msgid "Hech narsa topilmadi"
 msgstr "Hech narsa topilmadi"
+
+msgid "Kategoriyalar"
+msgstr "Kategoriyalar"
+
+msgid "Yangilik kategoriyalari"
+msgstr "Yangilik kategoriyalari"
+
+msgid "Kategoriya qo‘shish"
+msgstr "Kategoriya qo‘shish"
+
+msgid "Kategoriyalar yo‘q"
+msgstr "Kategoriyalar yo‘q"
+
+msgid "Kategoriyani tahrirlash"
+msgstr "Kategoriyani tahrirlash"
+
+msgid "Ha, tasdiqlayman"
+msgstr "Ha, tasdiqlayman"
+
+msgid "Yangi yangilik"
+msgstr "Yangi yangilik"
+
+msgid "Saqlash yangilikni qoralama sifatida saqlaydi; nashr etish alohida, tasdiqlash bilan bajariladi."
+msgstr "Saqlash yangilikni qoralama sifatida saqlaydi; nashr etish alohida, tasdiqlash bilan bajariladi."
+
+msgid "Yangiliklarni boshqarish"
+msgstr "Yangiliklarni boshqarish"
+
+msgid "Qoralama yarating, ko‘rib chiqing va nashr eting. Faqat nashr etilgan yangiliklar ochiq saytda ko‘rinadi."
+msgstr "Qoralama yarating, ko‘rib chiqing va nashr eting. Faqat nashr etilgan yangiliklar ochiq saytda ko‘rinadi."
+
+msgid "Qidirish: sarlavha, tavsif"
+msgstr "Qidirish: sarlavha, tavsif"
+
+msgid "Barcha kategoriyalar"
+msgstr "Barcha kategoriyalar"
+
+msgid "Nashr sanasi"
+msgstr "Nashr sanasi"
+
+msgid "O‘zgartirilgan"
+msgstr "O‘zgartirilgan"
+
+msgid "Rejalashtirilgan"
+msgstr "Rejalashtirilgan"
+
+msgid "Yangiliklar topilmadi"
+msgstr "Yangiliklar topilmadi"
+
+msgid "Birinchi qoralamani yarating."
+msgstr "Birinchi qoralamani yarating."
+
+msgid "Oldindan ko‘rish"
+msgstr "Oldindan ko‘rish"
+
+msgid "Ochiq saytda yangilik shunday ko‘rinadi."
+msgstr "Ochiq saytda yangilik shunday ko‘rinadi."
+
+msgid "Nashr etish"
+msgstr "Nashr etish"
+
+msgid "Nashrdan olish"
+msgstr "Nashrdan olish"
+
+msgid "ochiq saytda ko‘rinadi"
+msgstr "ochiq saytda ko‘rinadi"
+
+msgid "ochiq saytda ko‘rinmaydi"
+msgstr "ochiq saytda ko‘rinmaydi"
 
 msgid "Topshiriqlar bo‘yicha yangiliklar."
 msgstr "Topshiriqlar bo‘yicha yangiliklar."
@@ -1738,9 +1916,6 @@ msgstr "Bo‘lim qo‘shish"
 
 msgid "Lavozim qo‘shish"
 msgstr "Lavozim qo‘shish"
-
-msgid "Nomi"
-msgstr "Nomi"
 
 msgid "Faol emas"
 msgstr "Faol emas"

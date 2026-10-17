@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 11:38+0500\n"
+"POT-Creation-Date: 2026-10-17 12:54+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -178,11 +178,9 @@ msgstr "язык"
 msgid "parolni almashtirish shart"
 msgstr "обязательная смена пароля"
 
-#| msgid "Foydalanuvchi"
 msgid "foydalanuvchi"
 msgstr "пользователь"
 
-#| msgid "Foydalanuvchilar"
 msgid "foydalanuvchilar"
 msgstr "пользователи"
 
@@ -500,6 +498,27 @@ msgstr "Файл задания скачан"
 msgid "Topshiriq fayli olib tashlandi"
 msgstr "Файл задания откреплён"
 
+msgid "Yangilik yaratildi"
+msgstr "Новость создана"
+
+msgid "Yangilik o‘zgartirildi"
+msgstr "Новость изменена"
+
+msgid "Yangilik nashr etildi"
+msgstr "Новость опубликована"
+
+msgid "Yangilik nashrdan olindi"
+msgstr "Новость снята с публикации"
+
+msgid "Yangilik arxivlandi"
+msgstr "Новость отправлена в архив"
+
+msgid "Yangilik arxivdan qaytarildi"
+msgstr "Новость возвращена из архива"
+
+msgid "Yangilik kategoriyasi o‘zgartirildi"
+msgstr "Категория новостей изменена"
+
 msgid "audit yozuvi"
 msgstr "запись аудита"
 
@@ -508,6 +527,89 @@ msgstr "записи аудита"
 
 msgid "Kontent"
 msgstr "Контент"
+
+msgid "Nashr sanasi (ixtiyoriy)"
+msgstr "Дата публикации (необязательно)"
+
+msgid "Kelajakdagi sana bersangiz, yangilik shu vaqtdan boshlab ko‘rinadi. Bo‘sh qoldirsangiz, nashr qilingan zahoti ko‘rinadi."
+msgstr "Если указать дату в будущем, новость появится на сайте с этого момента. Если оставить пустым — сразу после публикации."
+
+msgid "Sarlavha"
+msgstr "Название"
+
+msgid "Qisqa tavsif"
+msgstr "Краткое описание"
+
+msgid "Matn"
+msgstr "Текст"
+
+msgid "Oddiy matn. Bo‘sh qator — yangi abzats. HTML va havolalar matn sifatida ko‘rinadi."
+msgstr "Простой текст. Пустая строка — новый абзац. HTML и ссылки отображаются как обычный текст."
+
+msgid "Kategoriya"
+msgstr "Категория"
+
+msgid "— kategoriyasiz —"
+msgstr "— без категории —"
+
+msgid "Sarlavha bo‘sh bo‘lmasligi kerak."
+msgstr "Заголовок не должен быть пустым."
+
+msgid "Matn bo‘sh bo‘lmasligi kerak."
+msgstr "Текст не должен быть пустым."
+
+#, python-format
+msgid "Matn juda uzun (ko‘pi bilan %(n)d belgi)."
+msgstr "Текст слишком длинный (не более %(n)d символов)."
+
+#, python-format
+msgid "Qisqa tavsif juda uzun (ko‘pi bilan %(n)d belgi)."
+msgstr "Краткое описание слишком длинное (не более %(n)d символов)."
+
+msgid "Nomi"
+msgstr "Название"
+
+msgid "Nomi bo‘sh bo‘lmasligi kerak."
+msgstr "Название не должно быть пустым."
+
+msgid "Bunday kategoriya allaqachon bor."
+msgstr "Такая категория уже существует."
+
+msgid "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
+msgstr "Опубликовать новость? Она станет видна всем на открытом сайте."
+
+msgid "Yangilik nashr etildi."
+msgstr "Новость опубликована."
+
+msgid "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
+msgstr "Снять новость с публикации? Она исчезнет с открытого сайта и вернётся в черновики."
+
+msgid "Yangilik nashrdan olindi."
+msgstr "Новость снята с публикации."
+
+msgid "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
+msgstr "Отправить новость в архив? Она исчезнет с открытого сайта."
+
+msgid "Yangilik arxivlandi."
+msgstr "Новость отправлена в архив."
+
+msgid "Yangilikni arxivdan qoralamaga qaytarasizmi?"
+msgstr "Вернуть новость из архива в черновики?"
+
+msgid "Yangilik arxivdan qoralamaga qaytarildi."
+msgstr "Новость возвращена из архива в черновики."
+
+msgid "Qoralama saqlandi. Nashr etishdan oldin ko‘rib chiqing."
+msgstr "Черновик сохранён. Просмотрите его перед публикацией."
+
+msgid "Formada xatolar bor. Kiritilgan ma’lumotlar saqlanib turibdi."
+msgstr "В форме есть ошибки. Введённые данные сохранены в полях."
+
+msgid "Saqlandi."
+msgstr "Сохранено."
+
+msgid "Bu amalni hozirgi holatda bajarib bo‘lmaydi."
+msgstr "Это действие недоступно в текущем состоянии."
 
 msgid "nomi"
 msgstr "название"
@@ -545,11 +647,9 @@ msgstr "статус"
 msgid "nashr sanasi"
 msgstr "дата публикации"
 
-#| msgid "Yangiliklar"
 msgid "yangilik"
 msgstr "новость"
 
-#| msgid "Yangiliklar"
 msgid "yangiliklar"
 msgstr "новости"
 
@@ -652,11 +752,9 @@ msgstr "уровень доступа"
 msgid "bo‘lim"
 msgstr "подразделение"
 
-#| msgid "Hujjatlar"
 msgid "hujjat"
 msgstr "документ"
 
-#| msgid "Hujjatlar"
 msgid "hujjatlar"
 msgstr "документы"
 
@@ -731,9 +829,6 @@ msgstr "Текстовый файл должен быть в кодировке 
 msgid "Hujjat yuklandi."
 msgstr "Документ загружен."
 
-msgid "Saqlandi."
-msgstr "Сохранено."
-
 #, python-format
 msgid "Yangi versiya (v%(n)d) yuklandi."
 msgstr "Загружена новая версия (v%(n)d)."
@@ -802,11 +897,9 @@ msgstr "Нельзя отключить подразделение, в кото�
 msgid "bo‘limlar"
 msgstr "подразделения"
 
-#| msgid "Lavozim"
 msgid "lavozim"
 msgstr "должность"
 
-#| msgid "Lavozimlar"
 msgid "lavozimlar"
 msgstr "должности"
 
@@ -840,11 +933,9 @@ msgstr "личный телефон"
 msgid "tug‘ilgan sana"
 msgstr "дата рождения"
 
-#| msgid "Xodim"
 msgid "xodim"
 msgstr "сотрудник"
 
-#| msgid "Xodimlar"
 msgid "xodimlar"
 msgstr "сотрудники"
 
@@ -1170,18 +1261,15 @@ msgstr "приоритет"
 msgid "muddat"
 msgstr "срок"
 
-#| msgid "Topshiriqlar"
 msgid "topshiriq"
 msgstr "задание"
 
-#| msgid "Topshiriqlar"
 msgid "topshiriqlar"
 msgstr "задания"
 
 msgid "Bo‘lim (yoki butun tashkilot) topshiriqlarini ko‘rish"
 msgstr "Просмотр заданий подразделения (или всей организации)"
 
-#| msgid "Izohlar"
 msgid "izohlar"
 msgstr "комментарии"
 
@@ -1411,6 +1499,9 @@ msgstr "Разделы"
 msgid "Bosh sahifa"
 msgstr "Главная"
 
+msgid "Yangiliklar"
+msgstr "Новости"
+
 msgid "Tuzilma"
 msgstr "Структура"
 
@@ -1437,9 +1528,6 @@ msgstr "Перейти к основному содержимому"
 
 msgid "Asosiy menyu"
 msgstr "Главное меню"
-
-msgid "Yangiliklar"
-msgstr "Новости"
 
 msgid "Menyu"
 msgstr "Меню"
@@ -1556,6 +1644,9 @@ msgstr "роль не назначена"
 msgid "Ro‘yxat"
 msgstr "К списку"
 
+msgid "Ko‘rish"
+msgstr "Просмотр"
+
 msgid "Yuklab olish"
 msgstr "Скачать"
 
@@ -1604,9 +1695,6 @@ msgstr "Все уровни"
 msgid "Qidirish"
 msgstr "Найти"
 
-msgid "Sarlavha"
-msgstr "Название"
-
 msgid "Raqam"
 msgstr "Номер"
 
@@ -1618,6 +1706,27 @@ msgstr "Уровень"
 
 msgid "Hujjatlar topilmadi"
 msgstr "Документы не найдены"
+
+msgid "Hujjat sahifasi"
+msgstr "Страница документа"
+
+msgid "Hujjat arxivda."
+msgstr "Документ находится в архиве."
+
+msgid "PDF ko‘rinmasa, uni yangi oynada oching yoki yuklab oling."
+msgstr "Если PDF не отображается, откройте его в новом окне или скачайте."
+
+msgid "Yangi oynada ochish"
+msgstr "Открыть в новом окне"
+
+msgid "Matnning faqat boshi ko‘rsatilgan. To‘liq faylni yuklab oling."
+msgstr "Показано только начало текста. Скачайте файл целиком."
+
+msgid "Bu fayl turini portalda ko‘rsatib bo‘lmaydi"
+msgstr "Этот тип файла нельзя показать в портале"
+
+msgid "Xavfsizlik uchun faqat PDF, rasm va oddiy matn ko‘rsatiladi. Faylni yuklab olib oching."
+msgstr "В целях безопасности в портале показываются только PDF, изображения и простой текст. Скачайте файл и откройте его на своём устройстве."
 
 msgid "Asosiy"
 msgstr "Основное"
@@ -1666,6 +1775,75 @@ msgstr "Ф.И.О."
 
 msgid "Hech narsa topilmadi"
 msgstr "Ничего не найдено"
+
+msgid "Kategoriyalar"
+msgstr "Категории"
+
+msgid "Yangilik kategoriyalari"
+msgstr "Категории новостей"
+
+msgid "Kategoriya qo‘shish"
+msgstr "Добавить категорию"
+
+msgid "Kategoriyalar yo‘q"
+msgstr "Категорий нет"
+
+msgid "Kategoriyani tahrirlash"
+msgstr "Редактирование категории"
+
+msgid "Ha, tasdiqlayman"
+msgstr "Да, подтверждаю"
+
+msgid "Yangi yangilik"
+msgstr "Новая новость"
+
+msgid "Saqlash yangilikni qoralama sifatida saqlaydi; nashr etish alohida, tasdiqlash bilan bajariladi."
+msgstr "Сохранение оставляет новость черновиком; публикация выполняется отдельно, с подтверждением."
+
+msgid "Yangiliklarni boshqarish"
+msgstr "Управление новостями"
+
+msgid "Qoralama yarating, ko‘rib chiqing va nashr eting. Faqat nashr etilgan yangiliklar ochiq saytda ko‘rinadi."
+msgstr "Создавайте черновики, просматривайте и публикуйте. На открытом сайте видны только опубликованные новости."
+
+msgid "Qidirish: sarlavha, tavsif"
+msgstr "Поиск: заголовок, описание"
+
+msgid "Barcha kategoriyalar"
+msgstr "Все категории"
+
+msgid "Nashr sanasi"
+msgstr "Дата публикации"
+
+msgid "O‘zgartirilgan"
+msgstr "Изменено"
+
+msgid "Rejalashtirilgan"
+msgstr "Запланировано"
+
+msgid "Yangiliklar topilmadi"
+msgstr "Новости не найдены"
+
+msgid "Birinchi qoralamani yarating."
+msgstr "Создайте первый черновик."
+
+msgid "Oldindan ko‘rish"
+msgstr "Предварительный просмотр"
+
+msgid "Ochiq saytda yangilik shunday ko‘rinadi."
+msgstr "Так новость выглядит на открытом сайте."
+
+msgid "Nashr etish"
+msgstr "Опубликовать"
+
+msgid "Nashrdan olish"
+msgstr "Снять с публикации"
+
+msgid "ochiq saytda ko‘rinadi"
+msgstr "отображается на открытом сайте"
+
+msgid "ochiq saytda ko‘rinmaydi"
+msgstr "не отображается на открытом сайте"
 
 msgid "Topshiriqlar bo‘yicha yangiliklar."
 msgstr "Новости по заданиям."
@@ -1738,9 +1916,6 @@ msgstr "Добавить подразделение"
 
 msgid "Lavozim qo‘shish"
 msgstr "Добавить должность"
-
-msgid "Nomi"
-msgstr "Название"
 
 msgid "Faol emas"
 msgstr "Не активно"

@@ -75,6 +75,13 @@ class AuditLog(models.Model):
         TASK_ATTACHMENT_ADDED = "task_attachment_added", _("Topshiriqqa fayl biriktirildi")
         TASK_ATTACHMENT_DOWNLOADED = "task_attachment_downloaded", _("Topshiriq fayli yuklab olindi")
         TASK_ATTACHMENT_REMOVED = "task_attachment_removed", _("Topshiriq fayli olib tashlandi")
+        NEWS_CREATED = "news_created", _("Yangilik yaratildi")
+        NEWS_UPDATED = "news_updated", _("Yangilik o‘zgartirildi")
+        NEWS_PUBLISHED = "news_published", _("Yangilik nashr etildi")
+        NEWS_UNPUBLISHED = "news_unpublished", _("Yangilik nashrdan olindi")
+        NEWS_ARCHIVED = "news_archived", _("Yangilik arxivlandi")
+        NEWS_RESTORED = "news_restored", _("Yangilik arxivdan qaytarildi")
+        NEWS_CATEGORY_CHANGED = "news_category_changed", _("Yangilik kategoriyasi o‘zgartirildi")
 
     at = models.DateTimeField(default=timezone.now, db_index=True, editable=False)
     user = models.ForeignKey(

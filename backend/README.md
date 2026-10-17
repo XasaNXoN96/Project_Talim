@@ -112,6 +112,8 @@ python manage.py test --settings=config.settings.test --noinput
 * `objects` — точная таблица «кто какой объект видит»; `security` — XSS, открытые перенаправления, прямые ссылки на файлы, утечки личных данных;
 * `journeys` — сквозные сценарии (задание, вложения, документ, онбординг, блокировка, смена языка).
 
+Портал новостей — `/portal/news/` (роли «контент-менеджер» и «администратор»; право `content.publish_news` нужно для публикации, снятия, архива и правки опубликованного). Просмотр документов — `/portal/documents/<id>/view/`. Эти разделы не дают доступа к Django Admin: он остаётся только у superuser.
+
 `AllowedMethodsMiddleware` (`apps/core/middleware.py`) пропускает только GET/HEAD/OPTIONS/POST: приложению не нужны PUT/PATCH/DELETE, а часть представлений Django иначе отвечала бы на них как на POST.
 Новый маршрут автоматически попадает в матрицу; тест `test_the_inventory_is_not_empty_and_every_route_is_classified` упадёт, пока вы не укажете его класс доступа.
 

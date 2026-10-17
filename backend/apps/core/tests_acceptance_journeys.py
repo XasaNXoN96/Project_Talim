@@ -242,3 +242,60 @@ class LanguageJourney(TestCase):
             subjects[lang] = mail.outbox[0].subject
         self.assertEqual(len(set(subjects.values())), 3, subjects)
         self.assertRegex(subjects["ru"], r"[А-Яа-я]")
+
+
+class ContentManagerDay(TestCase):
+    """Day 9 journey across modules: roles, news, public site, audit, documents viewer."""
+
+    def setUp(self):
+        self.w = World()
+        self.cm, self.emp, self.admin = self.w.client("content"), self.w.client("emp"), self.w.client("admin")
+        self.anon = Client()
+
+    def test_from_draft_to_public_page_and_back_with_audit_and_without_extra_rights(self):
+        from apps.content.models import News
+
+        n_url = lambda name, *a: reverse(f"news_admin:{name}", args=a)  # noqa: E731
+        # validation error: nothing saved, what was typed is still in the form
+        bad = self.cm.post(n_url("create"), {"title": "Kunlik xabar", "excerpt": "z" * 600, "body": "Matn", "category": ""})
+        self.assertEqual(bad.status_code, 200)
+        self.assertEqual(News.objects.filter(title="Kunlik xabar").count(), 0)
+        self.assertContains(bad, "Kunlik xabar")
+        # draft saved, invisible to the public and to ordinary staff
+        self.cm.post(n_url("create"), {"title": "Kunlik xabar", "excerpt": "Q", "body": "Matn", "category": ""})
+        n = News.objects.get(title="Kunlik xabar")
+        self.assertEqual(self.anon.get(reverse("content:news_detail", args=[n.slug])).status_code, 404)
+        self.assertEqual(self.emp.get(reverse("content:news_detail", args=[n.slug])).status_code, 404)
+        self.assertEqual(self.emp.get(n_url("preview", n.pk)).status_code, 403)
+        self.assertEqual(self.emp.post(n_url("status", n.pk, "publish")).status_code, 403)
+        n.refresh_from_db()
+        self.assertEqual(n.status, "draft")
+        # publish: ordinary user reads it, still cannot manage it
+        self.cm.post(n_url("status", n.pk, "publish"))
+        self.assertContains(self.emp.get(reverse("content:news_detail", args=[n.slug])), "Kunlik xabar")
+        self.assertContains(self.anon.get(reverse("content:news_list")), "Kunlik xabar")
+        self.assertEqual(self.emp.get(n_url("list")).status_code, 403)
+        self.assertEqual(self.emp.post(n_url("edit", n.pk), {"title": "Buzildi", "body": "x"}).status_code, 403)
+        n.refresh_from_db()
+        self.assertEqual(n.title, "Kunlik xabar")
+        # the administrator sees the whole trail in the audit log, with names of actions only
+        page = self.admin.get(reverse("portal:audit")).content.decode()
+        for label in ("Yangilik yaratildi", "Yangilik nashr etildi"):
+            self.assertIn(label, page)
+        self.assertNotIn("Kunlik xabar", page)
+        # archive: gone from the public site and from the home page
+        self.cm.post(n_url("status", n.pk, "archive"))
+        self.assertEqual(self.anon.get(reverse("content:news_detail", args=[n.slug])).status_code, 404)
+        self.assertNotContains(self.anon.get(reverse("content:home")), "Kunlik xabar")
+        self.assertIn("Yangilik arxivlandi", self.admin.get(reverse("portal:audit")).content.decode())
+        # the content manager never gained the Django admin
+        self.assertEqual(self.cm.get("/admin/").status_code, 302)
+        self.w.users["content"].refresh_from_db()
+        self.assertFalse(self.w.users["content"].is_staff)
+
+    def test_content_manager_opens_allowed_documents_and_is_stopped_at_closed_ones(self):
+        gen = reverse("documents:preview", args=[self.w.doc.pk])
+        self.assertEqual(self.cm.get(gen).status_code, 200)
+        self.assertEqual(self.cm.get(reverse("documents:inline", args=[self.w.doc.pk])).status_code, 200)
+        for name in ("preview", "inline", "download"):
+            self.assertEqual(self.cm.get(reverse(f"documents:{name}", args=[self.w.secret_doc.pk])).status_code, 403, name)

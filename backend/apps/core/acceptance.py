@@ -13,7 +13,7 @@ from django.utils.http import urlsafe_base64_encode
 
 from apps.access.models import RoleAssignment
 from apps.accounts.testing import login_with_two_factor, make_user
-from apps.content.models import News
+from apps.content.models import News, NewsCategory
 from apps.documents.models import Document, DocumentCategory
 from apps.documents.services import add_version
 from apps.documents.testing import upload
@@ -61,7 +61,8 @@ class World:
         self.secret_doc = Document.objects.create(title="Maxfiy", category=cat, created_by=self.users["hr"], access_level="confidential")
         add_version(self.secret_doc, validate_upload(upload("s.pdf")), actor=self.users["hr"])
         self.notification = Notification.objects.create(user=self.users["emp"], kind="task_assigned", task=self.task, title="Hisobot")
-        self.news = News.objects.create(title="Yangilik", slug="yangilik", body="Matn", excerpt="Q", status="published", publish_at=timezone.now())
+        self.news_category = NewsCategory.objects.create(name="Umumiy", slug="umumiy")
+        self.news = News.objects.create(title="Yangilik", slug="yangilik", body="Matn", excerpt="Q", status="published", publish_at=timezone.now(), category=self.news_category)
         self.assignment = RoleAssignment.objects.get(user=self.users["emp"])
         self.uid = urlsafe_base64_encode(force_bytes(self.users["emp"].pk))
         self.token = default_token_generator.make_token(self.users["emp"])
@@ -83,8 +84,11 @@ class World:
             "tasks:attachment_download": {"pk": t, "attachment_id": self.attachment.pk}, "tasks:attachment_remove": {"pk": t, "attachment_id": self.attachment.pk},
             "tasks:transition": {"pk": t, "status": "done"},
             "documents:detail": {"pk": d}, "documents:edit": {"pk": d}, "documents:version_add": {"pk": d}, "documents:download": {"pk": d},
-            "documents:download_version": {"pk": d, "number": 1}, "documents:archive": {"pk": d}, "documents:restore": {"pk": d},
+            "documents:download_version": {"pk": d, "number": 1}, "documents:preview": {"pk": d}, "documents:preview_version": {"pk": d, "number": 1},
+            "documents:inline": {"pk": d}, "documents:inline_version": {"pk": d, "number": 1}, "documents:archive": {"pk": d}, "documents:restore": {"pk": d},
             "notifications:open": {"pk": self.notification.pk}, "notifications:read": {"pk": self.notification.pk},
+            "news_admin:preview": {"pk": self.news.pk}, "news_admin:edit": {"pk": self.news.pk}, "news_admin:status": {"pk": self.news.pk, "action": "archive"},
+            "news_admin:category_edit": {"pk": self.news_category.pk},
             "reports:export": {"fmt": "xlsx"}, "content:news_detail": {"slug": self.news.slug},
             "accounts:password_reset_confirm": {"uidb64": self.uid, "token": self.token},
         }

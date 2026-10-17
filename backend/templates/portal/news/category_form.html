@@ -1,0 +1,11 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Kategoriya" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% if category %}{% translate "Kategoriyani tahrirlash" %}{% else %}{% translate "Kategoriya qo‘shish" %}{% endif %}</h1></div></div>
+<form method="post" class="card card-pad" style="display:grid;gap:16px;max-width:520px" novalidate>
+  {% csrf_token %}
+  {% for field in form %}{% include "includes/field.html" with field=field %}{% endfor %}
+  <div class="row wrap"><button class="btn btn-primary" type="submit">{% translate "Saqlash" %}</button><a class="btn btn-secondary" href="{% url 'news_admin:categories' %}">{% translate "Bekor qilish" %}</a></div>
+</form>
+{% endblock %}
