@@ -19,7 +19,7 @@ class NotificationListView(PortalPermissionMixin, ListView):
     context_object_name = "notifications"
 
     def get_queryset(self):
-        qs = Notification.objects.filter(user=self.request.user).select_related("task")
+        qs = Notification.objects.filter(user=self.request.user).select_related("task", "news")
         if self.request.GET.get("unread") == "1":
             qs = qs.filter(read_at__isnull=True)
         return qs
@@ -28,8 +28,9 @@ class NotificationListView(PortalPermissionMixin, ListView):
         ctx = super().get_context_data(**kwargs)
         user = self.request.user
         visible = set(task_access.visible_tasks(user).filter(pk__in=[n.task_id for n in ctx["notifications"] if n.task_id]).values_list("pk", flat=True))
+        can_news = user.has_perm("content.view_news")
         for n in ctx["notifications"]:
-            n.target_visible = n.task_id in visible  # the link is offered only if the task can still be opened
+            n.target_visible = (can_news if n.news_id else n.task_id in visible)  # the link is offered only if the task can still be opened
         ctx["only_unread"] = self.request.GET.get("unread") == "1"
         return ctx
 
@@ -45,6 +46,8 @@ class NotificationOpenView(PortalPermissionMixin, View):
         if n.read_at is None:
             n.read_at = timezone.now()
             n.save(update_fields=["read_at"])
+        if n.news_id and request.user.has_perm("content.view_news"):
+            return redirect("news_admin:preview", pk=n.news_id)
         if n.task_id and task_access.visible_tasks(request.user).filter(pk=n.task_id).exists():
             return redirect("tasks:detail", pk=n.task_id)
         messages.info(request, _("Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."))

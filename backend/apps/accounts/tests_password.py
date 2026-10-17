@@ -240,9 +240,10 @@ class PasswordResetConfirmTests(TestCase):
 
     def test_tampered_token_is_rejected(self):
         uid, token = re.search(r"/accounts/reset/([^/]+)/([^/]+)/", self.link).groups()
-        bad = f"/accounts/reset/{uid}/{token[:-3]}aaa/"
+        bad = f"/accounts/reset/{uid}/{token[:-3]}{'bbb' if token.endswith('aaa') else 'aaa'}/"
         self.assertFalse(Client().get(bad, follow=True).context["validlink"])
-        self.assertFalse(Client().get(f"/accounts/reset/{uid[:-1]}x/{token}/", follow=True).context["validlink"])
+        other = "y" if uid[-1] == "x" else "x"   # a different last character, whatever the id ends with (a fixed "x" made this test fail now and then)
+        self.assertFalse(Client().get(f"/accounts/reset/{uid[:-1]}{other}/{token}/", follow=True).context["validlink"])
 
     def test_link_dies_after_the_user_signs_in(self):
         login(Client())

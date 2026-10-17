@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:32+0500\n"
+"POT-Creation-Date: 2026-10-17 22:35+0500\n"
 "Language: uz\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -552,6 +552,18 @@ msgstr "Yangilik arxivlandi"
 msgid "Yangilik arxivdan qaytarildi"
 msgstr "Yangilik arxivdan qaytarildi"
 
+msgid "Yangilik tekshiruvga yuborildi"
+msgstr "Yangilik tekshiruvga yuborildi"
+
+msgid "Yangilik tekshiruvdan qaytarib olindi"
+msgstr "Yangilik tekshiruvdan qaytarib olindi"
+
+msgid "Yangilik tuzatishga qaytarildi"
+msgstr "Yangilik tuzatishga qaytarildi"
+
+msgid "Yangilik ma’qullandi"
+msgstr "Yangilik ma’qullandi"
+
 msgid "Yangilik kategoriyasi o‘zgartirildi"
 msgstr "Yangilik kategoriyasi o‘zgartirildi"
 
@@ -611,30 +623,6 @@ msgstr "Nomi bo‘sh bo‘lmasligi kerak."
 msgid "Bunday kategoriya allaqachon bor."
 msgstr "Bunday kategoriya allaqachon bor."
 
-msgid "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
-msgstr "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
-
-msgid "Yangilik nashr etildi."
-msgstr "Yangilik nashr etildi."
-
-msgid "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
-msgstr "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
-
-msgid "Yangilik nashrdan olindi."
-msgstr "Yangilik nashrdan olindi."
-
-msgid "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
-msgstr "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
-
-msgid "Yangilik arxivlandi."
-msgstr "Yangilik arxivlandi."
-
-msgid "Yangilikni arxivdan qoralamaga qaytarasizmi?"
-msgstr "Yangilikni arxivdan qoralamaga qaytarasizmi?"
-
-msgid "Yangilik arxivdan qoralamaga qaytarildi."
-msgstr "Yangilik arxivdan qoralamaga qaytarildi."
-
 msgid "Qoralama saqlandi. Nashr etishdan oldin ko‘rib chiqing."
 msgstr "Qoralama saqlandi. Nashr etishdan oldin ko‘rib chiqing."
 
@@ -643,6 +631,9 @@ msgstr "Formada xatolar bor. Kiritilgan ma’lumotlar saqlanib turibdi."
 
 msgid "Saqlandi."
 msgstr "Saqlandi."
+
+msgid "Saqlandi. Yangilik ma’qullangandan keyin o‘zgartirildi, shuning uchun qayta tekshiruv kerak."
+msgstr "Saqlandi. Yangilik ma’qullangandan keyin o‘zgartirildi, shuning uchun qayta tekshiruv kerak."
 
 msgid "Bu amalni hozirgi holatda bajarib bo‘lmaydi."
 msgstr "Bu amalni hozirgi holatda bajarib bo‘lmaydi."
@@ -661,6 +652,12 @@ msgstr "Qoralama"
 
 msgid "Tekshiruvda"
 msgstr "Tekshiruvda"
+
+msgid "Tuzatish talab etiladi"
+msgstr "Tuzatish talab etiladi"
+
+msgid "Ma’qullangan"
+msgstr "Ma’qullangan"
 
 msgid "Nashr etilgan"
 msgstr "Nashr etilgan"
@@ -691,6 +688,102 @@ msgstr "yangiliklar"
 
 msgid "Yangilikni nashr etish"
 msgstr "Yangilikni nashr etish"
+
+msgid "Yangilikni tekshirish: ma’qullash yoki tuzatishga qaytarish"
+msgstr "Yangilikni tekshirish: ma’qullash yoki tuzatishga qaytarish"
+
+msgid "O‘z yangiligini ma’qullash (istisno)"
+msgstr "O‘z yangiligini ma’qullash (istisno)"
+
+msgid "Tekshiruvga yuborildi"
+msgstr "Tekshiruvga yuborildi"
+
+msgid "Tekshiruvdan qaytarib olindi"
+msgstr "Tekshiruvdan qaytarib olindi"
+
+msgid "Tuzatishga qaytarildi"
+msgstr "Tuzatishga qaytarildi"
+
+msgid "Ma’qullandi"
+msgstr "Ma’qullandi"
+
+msgid "Nashr etildi"
+msgstr "Nashr etildi"
+
+msgid "Nashrdan olindi"
+msgstr "Nashrdan olindi"
+
+msgid "Arxivlandi"
+msgstr "Arxivlandi"
+
+msgid "Arxivdan qaytarildi"
+msgstr "Arxivdan qaytarildi"
+
+msgid "Ma’qullangandan keyin o‘zgartirildi: qayta tekshiruv kerak"
+msgstr "Ma’qullangandan keyin o‘zgartirildi: qayta tekshiruv kerak"
+
+msgid "Yangilikni tekshiruvga yuborasizmi? Tekshiruv tugaguncha uni tahrirlab bo‘lmaydi."
+msgstr "Yangilikni tekshiruvga yuborasizmi? Tekshiruv tugaguncha uni tahrirlab bo‘lmaydi."
+
+msgid "Yangilik tekshiruvga yuborildi."
+msgstr "Yangilik tekshiruvga yuborildi."
+
+msgid "Yangilikni tekshiruvdan qaytarib olasizmi? U qoralamaga qaytadi."
+msgstr "Yangilikni tekshiruvdan qaytarib olasizmi? U qoralamaga qaytadi."
+
+msgid "Yangilik qoralamaga qaytarildi."
+msgstr "Yangilik qoralamaga qaytarildi."
+
+msgid "Yangilikni tuzatishga qaytarasizmi? Muallif sizning izohingizni ko‘radi."
+msgstr "Yangilikni tuzatishga qaytarasizmi? Muallif sizning izohingizni ko‘radi."
+
+msgid "Yangilik tuzatishga qaytarildi."
+msgstr "Yangilik tuzatishga qaytarildi."
+
+msgid "Yangilikni ma’qullaysizmi? Shundan keyin vakolatli xodim uni nashr eta oladi."
+msgstr "Yangilikni ma’qullaysizmi? Shundan keyin vakolatli xodim uni nashr eta oladi."
+
+msgid "Yangilik ma’qullandi."
+msgstr "Yangilik ma’qullandi."
+
+msgid "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
+msgstr "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
+
+msgid "Yangilik nashr etildi."
+msgstr "Yangilik nashr etildi."
+
+msgid "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
+msgstr "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
+
+msgid "Yangilik nashrdan olindi."
+msgstr "Yangilik nashrdan olindi."
+
+msgid "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
+msgstr "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
+
+msgid "Yangilik arxivlandi."
+msgstr "Yangilik arxivlandi."
+
+msgid "Yangilikni arxivdan qoralamaga qaytarasizmi?"
+msgstr "Yangilikni arxivdan qoralamaga qaytarasizmi?"
+
+msgid "Yangilik arxivdan qoralamaga qaytarildi."
+msgstr "Yangilik arxivdan qoralamaga qaytarildi."
+
+msgid "Bu amal uchun ruxsatingiz yo‘q."
+msgstr "Bu amal uchun ruxsatingiz yo‘q."
+
+msgid "O‘z yangiligingizni ma’qullay yoki qaytara olmaysiz: uni boshqa tekshiruvchi ko‘rishi kerak."
+msgstr "O‘z yangiligingizni ma’qullay yoki qaytara olmaysiz: uni boshqa tekshiruvchi ko‘rishi kerak."
+
+msgid "Qaytarish uchun izoh yozing."
+msgstr "Qaytarish uchun izoh yozing."
+
+msgid "Izoh juda uzun."
+msgstr "Izoh juda uzun."
+
+msgid "Yangilik siz ko‘rganingizdan keyin o‘zgargan. Sahifani yangilab, qayta ko‘rib chiqing."
+msgstr "Yangilik siz ko‘rganingizdan keyin o‘zgargan. Sahifani yangilab, qayta ko‘rib chiqing."
 
 msgid "Umumiy"
 msgstr "Umumiy"
@@ -2205,6 +2298,9 @@ msgstr "Kategoriyalar yo‘q"
 msgid "Kategoriyani tahrirlash"
 msgstr "Kategoriyani tahrirlash"
 
+msgid "ixtiyoriy"
+msgstr "ixtiyoriy"
+
 msgid "Ha, tasdiqlayman"
 msgstr "Ha, tasdiqlayman"
 
@@ -2219,6 +2315,9 @@ msgstr "Yangiliklarni boshqarish"
 
 msgid "Qoralama yarating, ko‘rib chiqing va nashr eting. Faqat nashr etilgan yangiliklar ochiq saytda ko‘rinadi."
 msgstr "Qoralama yarating, ko‘rib chiqing va nashr eting. Faqat nashr etilgan yangiliklar ochiq saytda ko‘rinadi."
+
+msgid "Tekshiruvni kutmoqda"
+msgstr "Tekshiruvni kutmoqda"
 
 msgid "Qidirish: sarlavha, tavsif"
 msgstr "Qidirish: sarlavha, tavsif"
@@ -2241,11 +2340,29 @@ msgstr "Yangiliklar topilmadi"
 msgid "Birinchi qoralamani yarating."
 msgstr "Birinchi qoralamani yarating."
 
+msgid "Tekshiruv tarixi"
+msgstr "Tekshiruv tarixi"
+
+msgid "Kim"
+msgstr "Kim"
+
 msgid "Oldindan ko‘rish"
 msgstr "Oldindan ko‘rish"
 
 msgid "Ochiq saytda yangilik shunday ko‘rinadi."
 msgstr "Ochiq saytda yangilik shunday ko‘rinadi."
+
+msgid "Tekshiruvga yuborish"
+msgstr "Tekshiruvga yuborish"
+
+msgid "Tekshiruvdan qaytarib olish"
+msgstr "Tekshiruvdan qaytarib olish"
+
+msgid "Ma’qullash"
+msgstr "Ma’qullash"
+
+msgid "Tuzatishga qaytarish"
+msgstr "Tuzatishga qaytarish"
 
 msgid "Nashr etish"
 msgstr "Nashr etish"
@@ -2259,8 +2376,11 @@ msgstr "ochiq saytda ko‘rinadi"
 msgid "ochiq saytda ko‘rinmaydi"
 msgstr "ochiq saytda ko‘rinmaydi"
 
-msgid "Topshiriqlar bo‘yicha yangiliklar."
-msgstr "Topshiriqlar bo‘yicha yangiliklar."
+msgid "Tekshiruvchi izohi"
+msgstr "Tekshiruvchi izohi"
+
+msgid "Topshiriqlar va yangiliklarni tekshirish bo‘yicha xabarlar."
+msgstr "Topshiriqlar va yangiliklarni tekshirish bo‘yicha xabarlar."
 
 msgid "Faqat o‘qilmaganlar"
 msgstr "Faqat o‘qilmaganlar"
@@ -2268,8 +2388,8 @@ msgstr "Faqat o‘qilmaganlar"
 msgid "Barchasini o‘qilgan deb belgilash"
 msgstr "Barchasini o‘qilgan deb belgilash"
 
-msgid "Topshiriq mavjud emas yoki ruxsat yo‘q"
-msgstr "Topshiriq mavjud emas yoki ruxsat yo‘q"
+msgid "Obyekt mavjud emas yoki ruxsat yo‘q"
+msgstr "Obyekt mavjud emas yoki ruxsat yo‘q"
 
 msgid "Ochish"
 msgstr "Ochish"
@@ -2476,3 +2596,6 @@ msgstr "Parolni ko‘rsatish"
 
 msgid "Parolni unutdingizmi?"
 msgstr "Parolni unutdingizmi?"
+
+#~ msgid "Topshiriqlar bo‘yicha yangiliklar."
+#~ msgstr "Topshiriqlar bo‘yicha yangiliklar."

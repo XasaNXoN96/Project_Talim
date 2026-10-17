@@ -9,6 +9,7 @@ from apps.access.models import RoleAssignment
 from apps.audit.models import AuditLog
 from apps.core.acceptance import World
 
+from . import workflow
 from .models import News, NewsCategory
 
 XSS = '<script>alert(1)</script><img src=x onerror=alert(2)>"\'&'
@@ -33,7 +34,18 @@ class Base(TestCase):
         self.assertEqual(r.status_code, 302, getattr(r, "context", None) and r.context["form"].errors)
         return News.objects.filter(title=(over.get("title") or self.body["title"]).strip()).latest("created_at")
 
+    def approve(self, news, author_client=None):
+        """The real path: the author submits, a DIFFERENT person (the administrator) approves."""
+        (author_client or self.cm).post(url("status", news.pk, "submit"))
+        news.refresh_from_db()
+        self.w.client("admin").post(url("status", news.pk, "approve"), {"version": workflow.version_token(news)})
+        news.refresh_from_db()
+        self.assertEqual(news.status, "approved")
+        return news
+
     def publish(self, news):
+        if news.status in ("draft", "changes_requested"):
+            self.approve(news)
         self.assertEqual(self.cm.post(url("status", news.pk, "publish")).status_code, 302)
         news.refresh_from_db()
         return news
@@ -56,11 +68,12 @@ class ContentManagerJourney(Base):
         page = self.cm.get(url("preview", n.pk))
         self.assertContains(page, n.title)
         self.assertContains(page, "Ikkinchi abzats.")
-        # asking to publish only shows the question: nothing changes yet
-        ask = self.cm.get(url("status", n.pk, "publish"))
+        # asking only shows the question: nothing changes yet (a draft cannot be published directly any more: it must be approved first)
+        ask = self.cm.get(url("status", n.pk, "submit"))
         self.assertContains(ask, n.title)
         n.refresh_from_db()
         self.assertEqual(n.status, "draft")
+        self.assertEqual(self.cm.get(url("status", n.pk, "publish")).status_code, 302)  # refused: not approved
         # confirming publishes with a date
         self.publish(n)
         self.assertEqual(n.status, "published")
@@ -83,7 +96,7 @@ class ContentManagerJourney(Base):
         self.cm.post(url("status", n.pk, "restore"))
         n.refresh_from_db()
         self.assertEqual((n.status, self.public_status(n)), ("draft", 404))
-        self.assertEqual(sorted(actions()), sorted(["news_created", "news_published", "news_unpublished", "news_published", "news_archived", "news_restored"]))
+        self.assertEqual(sorted(actions()), sorted(["news_created", "news_submitted", "news_approved", "news_published", "news_unpublished", "news_submitted", "news_approved", "news_published", "news_archived", "news_restored"]))
 
     def test_edit_a_published_news_changes_the_public_page_and_is_audited_without_content(self):
         n = self.publish(self.create())
@@ -243,7 +256,7 @@ class Permissions(Base):
 
     def test_only_get_head_options_post_are_accepted_and_get_never_changes_state(self):
         before = list(News.objects.order_by("pk").values_list("pk", "status", "title"))
-        for u in (url("list"), url("preview", self.n.pk), url("status", self.n.pk, "publish"), url("edit", self.n.pk)):
+        for u in (url("list"), url("preview", self.n.pk), url("status", self.n.pk, "submit"), url("edit", self.n.pk)):
             for m in ("put", "patch", "delete"):
                 self.assertEqual(getattr(self.cm, m)(u).status_code, 405, (m, u))
             self.assertEqual(self.cm.head(u).status_code, 200)
@@ -342,6 +355,7 @@ class Languages(Base):
             c.post(url("create"), {**self.body, "title": title})
             n = News.objects.get(title=title)
             self.assertContains(c.get(url("preview", n.pk)), status)
+            self.approve(n, author_client=c)
             self.assertContains(c.get(url("status", n.pk, "publish")), ask)
             done = c.post(url("status", n.pk, "publish"), follow=True)
             self.assertContains(done, ok)

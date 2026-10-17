@@ -262,6 +262,7 @@ class DataFixtureMixin:
 
         self.news_cat = NewsCategory.objects.create(name="Maktab", slug="maktab")
         self.news = News.objects.create(title="Maktab xabari", slug="maktab-xabari", body="Matn", category=self.news_cat, status="draft")
+        self.news_review = News.objects.create(title="Tekshiruvdagi xabar", slug="tekshiruvda", body="Matn", category=self.news_cat, status="review")
         Notification.objects.create(user=self.emp, kind="task_assigned", task=self.task, title="Hisobot")
 
     def client_for(self, user, lang):
@@ -296,7 +297,8 @@ class EveryPageInEveryLanguage(DataFixtureMixin, TestCase):
             ("admin", "reports:index", ()),
             ("admin", "documents:preview", (d,)), ("admin", "news_admin:list", ()), ("admin", "news_admin:create", ()), ("admin", "news_admin:preview", (self.news.pk,)),
             ("admin", "news_admin:edit", (self.news.pk,)), ("admin", "news_admin:categories", ()), ("admin", "news_admin:category_create", ()),
-            ("admin", "news_admin:category_edit", (self.news_cat.pk,)), ("admin", "news_admin:status", (self.news.pk, "publish")),
+            ("admin", "news_admin:category_edit", (self.news_cat.pk,)), ("admin", "news_admin:status", (self.news.pk, "submit")),
+            ("admin", "news_admin:status", (self.news_review.pk, "approve")), ("admin", "news_admin:status", (self.news_review.pk, "request_changes")), ("admin", "news_admin:preview", (self.news_review.pk,)),
             ("admin", "employees:import", ()), ("admin", "portal:search", ()), ("emp", "portal:search", ()),
             ("admin", "portal:jobs", ()), ("admin", "accounts:sessions", ()), ("admin", "accounts:sessions_end_others", ()), ("emp", "accounts:sessions", ()),
         ]

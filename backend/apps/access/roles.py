@@ -20,7 +20,8 @@ class RoleCode(models.TextChoices):
 
 _CONTENT = [
     "content.view_newscategory", "content.add_newscategory", "content.change_newscategory",
-    "content.view_news", "content.add_news", "content.change_news", "content.publish_news",
+    "content.view_news", "content.add_news", "content.change_news", "content.publish_news", "content.review_news",
+    # "content.approve_own_news" is deliberately in NO role: nobody approves their own item (docs/NEWS_WORKFLOW.md)
 ]
 _ORG_VIEW = ["organization.view_department", "organization.view_position"]
 _DIRECTORY = ["organization.view_employee_directory"]

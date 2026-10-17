@@ -34,6 +34,24 @@ def notify(user, kind, task, *, actor=None, dedupe_key=""):
     return obj
 
 
+def notify_news(user, kind, news, *, actor=None, dedupe_key=""):
+    """Same rules as notify(), for a news item: not the actor, not an inactive user, optional idempotency key. The e-mail copy (if enabled) carries only the event and the title."""
+    if not user.is_active or (actor is not None and user.pk == actor.pk):
+        return None
+    try:
+        with transaction.atomic():
+            if dedupe_key:
+                obj, created = Notification.objects.get_or_create(user=user, dedupe_key=dedupe_key[:120], defaults={"kind": kind, "news": news, "title": news.title[:200]})
+                if not created:
+                    return None
+            else:
+                obj = Notification.objects.create(user=user, kind=kind, news=news, title=news.title[:200])
+    except IntegrityError:
+        return None
+    transaction.on_commit(lambda: send_email_copy(obj))
+    return obj
+
+
 def send_email_copy(notification):
     """Separate, optional layer. OFF by default; needs NOTIFICATION_EMAILS_ENABLED and a configured e-mail backend.
     The message has no link and no description: just the event and the task title."""

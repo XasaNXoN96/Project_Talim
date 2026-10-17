@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:32+0500\n"
+"POT-Creation-Date: 2026-10-17 22:35+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -552,6 +552,18 @@ msgstr "Новость отправлена в архив"
 msgid "Yangilik arxivdan qaytarildi"
 msgstr "Новость возвращена из архива"
 
+msgid "Yangilik tekshiruvga yuborildi"
+msgstr "Новость отправлена на проверку"
+
+msgid "Yangilik tekshiruvdan qaytarib olindi"
+msgstr "Новость отозвана с проверки"
+
+msgid "Yangilik tuzatishga qaytarildi"
+msgstr "Новость возвращена на доработку"
+
+msgid "Yangilik ma’qullandi"
+msgstr "Новость одобрена"
+
 msgid "Yangilik kategoriyasi o‘zgartirildi"
 msgstr "Категория новостей изменена"
 
@@ -611,30 +623,6 @@ msgstr "Название не должно быть пустым."
 msgid "Bunday kategoriya allaqachon bor."
 msgstr "Такая категория уже существует."
 
-msgid "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
-msgstr "Опубликовать новость? Она станет видна всем на открытом сайте."
-
-msgid "Yangilik nashr etildi."
-msgstr "Новость опубликована."
-
-msgid "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
-msgstr "Снять новость с публикации? Она исчезнет с открытого сайта и вернётся в черновики."
-
-msgid "Yangilik nashrdan olindi."
-msgstr "Новость снята с публикации."
-
-msgid "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
-msgstr "Отправить новость в архив? Она исчезнет с открытого сайта."
-
-msgid "Yangilik arxivlandi."
-msgstr "Новость отправлена в архив."
-
-msgid "Yangilikni arxivdan qoralamaga qaytarasizmi?"
-msgstr "Вернуть новость из архива в черновики?"
-
-msgid "Yangilik arxivdan qoralamaga qaytarildi."
-msgstr "Новость возвращена из архива в черновики."
-
 msgid "Qoralama saqlandi. Nashr etishdan oldin ko‘rib chiqing."
 msgstr "Черновик сохранён. Просмотрите его перед публикацией."
 
@@ -643,6 +631,9 @@ msgstr "В форме есть ошибки. Введённые данные с�
 
 msgid "Saqlandi."
 msgstr "Сохранено."
+
+msgid "Saqlandi. Yangilik ma’qullangandan keyin o‘zgartirildi, shuning uchun qayta tekshiruv kerak."
+msgstr "Сохранено. Новость изменена после одобрения, поэтому нужна повторная проверка."
 
 msgid "Bu amalni hozirgi holatda bajarib bo‘lmaydi."
 msgstr "Это действие недоступно в текущем состоянии."
@@ -661,6 +652,12 @@ msgstr "Черновик"
 
 msgid "Tekshiruvda"
 msgstr "На проверке"
+
+msgid "Tuzatish talab etiladi"
+msgstr "Требуется доработка"
+
+msgid "Ma’qullangan"
+msgstr "Одобрено"
 
 msgid "Nashr etilgan"
 msgstr "Опубликовано"
@@ -691,6 +688,102 @@ msgstr "новости"
 
 msgid "Yangilikni nashr etish"
 msgstr "Публикация новостей"
+
+msgid "Yangilikni tekshirish: ma’qullash yoki tuzatishga qaytarish"
+msgstr "Проверка новостей: одобрение или возврат на доработку"
+
+msgid "O‘z yangiligini ma’qullash (istisno)"
+msgstr "Одобрение собственной новости (исключение)"
+
+msgid "Tekshiruvga yuborildi"
+msgstr "Отправлено на проверку"
+
+msgid "Tekshiruvdan qaytarib olindi"
+msgstr "Отозвано с проверки"
+
+msgid "Tuzatishga qaytarildi"
+msgstr "Возвращено на доработку"
+
+msgid "Ma’qullandi"
+msgstr "Одобрено"
+
+msgid "Nashr etildi"
+msgstr "Опубликовано"
+
+msgid "Nashrdan olindi"
+msgstr "Снято с публикации"
+
+msgid "Arxivlandi"
+msgstr "Отправлено в архив"
+
+msgid "Arxivdan qaytarildi"
+msgstr "Возвращено из архива"
+
+msgid "Ma’qullangandan keyin o‘zgartirildi: qayta tekshiruv kerak"
+msgstr "Изменено после одобрения: нужна повторная проверка"
+
+msgid "Yangilikni tekshiruvga yuborasizmi? Tekshiruv tugaguncha uni tahrirlab bo‘lmaydi."
+msgstr "Отправить новость на проверку? Пока проверка не завершена, редактировать её нельзя."
+
+msgid "Yangilik tekshiruvga yuborildi."
+msgstr "Новость отправлена на проверку."
+
+msgid "Yangilikni tekshiruvdan qaytarib olasizmi? U qoralamaga qaytadi."
+msgstr "Отозвать новость с проверки? Она вернётся в черновики."
+
+msgid "Yangilik qoralamaga qaytarildi."
+msgstr "Новость возвращена в черновики."
+
+msgid "Yangilikni tuzatishga qaytarasizmi? Muallif sizning izohingizni ko‘radi."
+msgstr "Вернуть новость на доработку? Автор увидит ваш комментарий."
+
+msgid "Yangilik tuzatishga qaytarildi."
+msgstr "Новость возвращена на доработку."
+
+msgid "Yangilikni ma’qullaysizmi? Shundan keyin vakolatli xodim uni nashr eta oladi."
+msgstr "Одобрить новость? После этого уполномоченный сотрудник сможет её опубликовать."
+
+msgid "Yangilik ma’qullandi."
+msgstr "Новость одобрена."
+
+msgid "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
+msgstr "Опубликовать новость? Она станет видна всем на открытом сайте."
+
+msgid "Yangilik nashr etildi."
+msgstr "Новость опубликована."
+
+msgid "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
+msgstr "Снять новость с публикации? Она исчезнет с открытого сайта и вернётся в черновики."
+
+msgid "Yangilik nashrdan olindi."
+msgstr "Новость снята с публикации."
+
+msgid "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
+msgstr "Отправить новость в архив? Она исчезнет с открытого сайта."
+
+msgid "Yangilik arxivlandi."
+msgstr "Новость отправлена в архив."
+
+msgid "Yangilikni arxivdan qoralamaga qaytarasizmi?"
+msgstr "Вернуть новость из архива в черновики?"
+
+msgid "Yangilik arxivdan qoralamaga qaytarildi."
+msgstr "Новость возвращена из архива в черновики."
+
+msgid "Bu amal uchun ruxsatingiz yo‘q."
+msgstr "У вас нет прав на это действие."
+
+msgid "O‘z yangiligingizni ma’qullay yoki qaytara olmaysiz: uni boshqa tekshiruvchi ko‘rishi kerak."
+msgstr "Нельзя одобрить или вернуть собственную новость: её должен проверить другой проверяющий."
+
+msgid "Qaytarish uchun izoh yozing."
+msgstr "Для возврата напишите комментарий."
+
+msgid "Izoh juda uzun."
+msgstr "Комментарий слишком длинный."
+
+msgid "Yangilik siz ko‘rganingizdan keyin o‘zgargan. Sahifani yangilab, qayta ko‘rib chiqing."
+msgstr "Новость изменилась после того, как вы её открыли. Обновите страницу и проверьте заново."
 
 msgid "Umumiy"
 msgstr "Общее"
@@ -2205,6 +2298,9 @@ msgstr "Категорий нет"
 msgid "Kategoriyani tahrirlash"
 msgstr "Редактирование категории"
 
+msgid "ixtiyoriy"
+msgstr "необязательно"
+
 msgid "Ha, tasdiqlayman"
 msgstr "Да, подтверждаю"
 
@@ -2219,6 +2315,9 @@ msgstr "Управление новостями"
 
 msgid "Qoralama yarating, ko‘rib chiqing va nashr eting. Faqat nashr etilgan yangiliklar ochiq saytda ko‘rinadi."
 msgstr "Создавайте черновики, просматривайте и публикуйте. На открытом сайте видны только опубликованные новости."
+
+msgid "Tekshiruvni kutmoqda"
+msgstr "Ожидают проверки"
 
 msgid "Qidirish: sarlavha, tavsif"
 msgstr "Поиск: заголовок, описание"
@@ -2241,11 +2340,29 @@ msgstr "Новости не найдены"
 msgid "Birinchi qoralamani yarating."
 msgstr "Создайте первый черновик."
 
+msgid "Tekshiruv tarixi"
+msgstr "История проверки"
+
+msgid "Kim"
+msgstr "Кто"
+
 msgid "Oldindan ko‘rish"
 msgstr "Предварительный просмотр"
 
 msgid "Ochiq saytda yangilik shunday ko‘rinadi."
 msgstr "Так новость выглядит на открытом сайте."
+
+msgid "Tekshiruvga yuborish"
+msgstr "Отправить на проверку"
+
+msgid "Tekshiruvdan qaytarib olish"
+msgstr "Отозвать с проверки"
+
+msgid "Ma’qullash"
+msgstr "Одобрить"
+
+msgid "Tuzatishga qaytarish"
+msgstr "Вернуть на доработку"
 
 msgid "Nashr etish"
 msgstr "Опубликовать"
@@ -2259,8 +2376,11 @@ msgstr "отображается на открытом сайте"
 msgid "ochiq saytda ko‘rinmaydi"
 msgstr "не отображается на открытом сайте"
 
-msgid "Topshiriqlar bo‘yicha yangiliklar."
-msgstr "Новости по заданиям."
+msgid "Tekshiruvchi izohi"
+msgstr "Комментарий проверяющего"
+
+msgid "Topshiriqlar va yangiliklarni tekshirish bo‘yicha xabarlar."
+msgstr "Сообщения о заданиях и проверке новостей."
 
 msgid "Faqat o‘qilmaganlar"
 msgstr "Только непрочитанные"
@@ -2268,8 +2388,8 @@ msgstr "Только непрочитанные"
 msgid "Barchasini o‘qilgan deb belgilash"
 msgstr "Отметить все как прочитанные"
 
-msgid "Topshiriq mavjud emas yoki ruxsat yo‘q"
-msgstr "Задание не существует или нет доступа"
+msgid "Obyekt mavjud emas yoki ruxsat yo‘q"
+msgstr "Объект не существует или нет доступа"
 
 msgid "Ochish"
 msgstr "Открыть"
@@ -2476,3 +2596,6 @@ msgstr "Показать пароль"
 
 msgid "Parolni unutdingizmi?"
 msgstr "Забыли пароль?"
+
+#~ msgid "Topshiriqlar bo‘yicha yangiliklar."
+#~ msgstr "Новости по заданиям."

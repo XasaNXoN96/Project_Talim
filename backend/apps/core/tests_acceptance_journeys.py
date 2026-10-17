@@ -270,6 +270,15 @@ class ContentManagerDay(TestCase):
         self.assertEqual(self.emp.post(n_url("status", n.pk, "publish")).status_code, 403)
         n.refresh_from_db()
         self.assertEqual(n.status, "draft")
+        # publishing now needs approval by a DIFFERENT person: submit, the administrator approves, then publish
+        from apps.content import workflow
+
+        self.assertEqual(self.emp.post(n_url("status", n.pk, "submit")).status_code, 403)
+        self.cm.post(n_url("status", n.pk, "submit"))
+        n.refresh_from_db()
+        self.cm.post(n_url("status", n.pk, "publish"))                   # not approved yet: refused, still not public
+        self.assertEqual(self.anon.get(reverse("content:news_detail", args=[n.slug])).status_code, 404)
+        self.admin.post(n_url("status", n.pk, "approve"), {"version": workflow.version_token(n)})
         # publish: ordinary user reads it, still cannot manage it
         self.cm.post(n_url("status", n.pk, "publish"))
         self.assertContains(self.emp.get(reverse("content:news_detail", args=[n.slug])), "Kunlik xabar")
@@ -280,7 +289,7 @@ class ContentManagerDay(TestCase):
         self.assertEqual(n.title, "Kunlik xabar")
         # the administrator sees the whole trail in the audit log, with names of actions only
         page = self.admin.get(reverse("portal:audit")).content.decode()
-        for label in ("Yangilik yaratildi", "Yangilik nashr etildi"):
+        for label in ("Yangilik yaratildi", "Yangilik tekshiruvga yuborildi", "Yangilik ma’qullandi", "Yangilik nashr etildi"):
             self.assertIn(label, page)
         self.assertNotIn("Kunlik xabar", page)
         # archive: gone from the public site and from the home page

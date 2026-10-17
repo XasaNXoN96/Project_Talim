@@ -30,6 +30,8 @@ class News(TimeStampedModel):
     class Status(models.TextChoices):
         DRAFT = "draft", _("Qoralama")
         REVIEW = "review", _("Tekshiruvda")
+        CHANGES_REQUESTED = "changes_requested", _("Tuzatish talab etiladi")
+        APPROVED = "approved", _("Ma’qullangan")
         PUBLISHED = "published", _("Nashr etilgan")
         ARCHIVED = "archived", _("Arxiv")
 
@@ -39,7 +41,7 @@ class News(TimeStampedModel):
     # Plain text only on Day 1: rendered escaped. Rich text arrives together with an HTML sanitiser.
     body = models.TextField(_("matn"))
     category = models.ForeignKey(NewsCategory, null=True, blank=True, on_delete=models.PROTECT, related_name="news")
-    status = models.CharField(_("holat"), max_length=16, choices=Status.choices, default=Status.DRAFT)
+    status = models.CharField(_("holat"), max_length=24, choices=Status.choices, default=Status.DRAFT)
     publish_at = models.DateTimeField(_("nashr sanasi"), null=True, blank=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
@@ -51,7 +53,12 @@ class News(TimeStampedModel):
         verbose_name = _("yangilik")
         verbose_name_plural = _("yangiliklar")
         ordering = ["-publish_at", "-created_at"]
-        permissions = [("publish_news", _("Yangilikni nashr etish"))]
+        permissions = [
+            ("publish_news", _("Yangilikni nashr etish")),
+            ("review_news", _("Yangilikni tekshirish: ma’qullash yoki tuzatishga qaytarish")),
+            # Deliberately granted to NO default role: whoever wrote a news item cannot be the one who approves it.
+            ("approve_own_news", _("O‘z yangiligini ma’qullash (istisno)")),
+        ]
         indexes = [models.Index(fields=["status", "-publish_at"])]
         constraints = [
             models.CheckConstraint(
@@ -62,3 +69,30 @@ class News(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+
+class NewsReview(TimeStampedModel):
+    """Append-only history of the approval workflow: who did what to which news, when, with which comment.
+    Rows are written by apps.content.workflow only; there is no view or form that edits or deletes them."""
+
+    class Action(models.TextChoices):
+        SUBMIT = "submit", _("Tekshiruvga yuborildi")
+        WITHDRAW = "withdraw", _("Tekshiruvdan qaytarib olindi")
+        REQUEST_CHANGES = "request_changes", _("Tuzatishga qaytarildi")
+        APPROVE = "approve", _("Ma’qullandi")
+        PUBLISH = "publish", _("Nashr etildi")
+        UNPUBLISH = "unpublish", _("Nashrdan olindi")
+        ARCHIVE = "archive", _("Arxivlandi")
+        RESTORE = "restore", _("Arxivdan qaytarildi")
+        EDIT_RESET = "edit_reset", _("Ma’qullangandan keyin o‘zgartirildi: qayta tekshiruv kerak")
+
+    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name="reviews")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+")
+    action = models.CharField(max_length=24, choices=Action.choices)
+    from_status = models.CharField(max_length=24)
+    to_status = models.CharField(max_length=24)
+    comment = models.TextField(blank=True, max_length=2000)
+
+    class Meta:
+        ordering = ["created_at"]
+        indexes = [models.Index(fields=["news", "created_at"])]

@@ -1,10 +1,11 @@
-"""Portal for the content manager: list, write, preview, publish and archive news.
+"""Portal for the content team: list, write, preview, submit for review, approve, publish and archive news.
 
-Rules (checked on the server for every request, the menu only mirrors them):
-  * view_news            list and preview (any status)
+Rules (checked on the server for every request, the menu only mirrors them; the status rules live in apps.content.workflow):
+  * view_news            list, preview and the review history (any status)
   * add_news             create
-  * change_news          edit drafts
-  * publish_news         publish, unpublish, archive, restore, and edit anything that is or was public
+  * change_news          edit and submit/withdraw one's own items (anyone's, together with review_news or publish_news)
+  * review_news          approve or return for changes (never one's own item, unless approve_own_news)
+  * publish_news         publish an APPROVED item, unpublish, archive, restore, and edit what is public
 Nothing here grants access to the Django admin."""
 import uuid
 
@@ -24,21 +25,10 @@ from apps.audit.services import record
 from apps.core.mixins import PortalPermissionMixin
 
 from .manage_forms import NewsCategoryForm, NewsForm
+from . import workflow
 from .models import News, NewsCategory
 
 S = News.Status
-
-# action -> (statuses it may start from, resulting status, audit action, confirmation question, success message)
-ACTIONS = {
-    "publish": ({S.DRAFT, S.REVIEW}, S.PUBLISHED, AuditLog.Action.NEWS_PUBLISHED,
-                _("Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."), _("Yangilik nashr etildi.")),
-    "unpublish": ({S.PUBLISHED}, S.DRAFT, AuditLog.Action.NEWS_UNPUBLISHED,
-                  _("Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."), _("Yangilik nashrdan olindi.")),
-    "archive": ({S.DRAFT, S.REVIEW, S.PUBLISHED}, S.ARCHIVED, AuditLog.Action.NEWS_ARCHIVED,
-                _("Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."), _("Yangilik arxivlandi.")),
-    "restore": ({S.ARCHIVED}, S.DRAFT, AuditLog.Action.NEWS_RESTORED,
-                _("Yangilikni arxivdan qoralamaga qaytarasizmi?"), _("Yangilik arxivdan qoralamaga qaytarildi.")),
-}
 
 
 def _audit(action, request, news, **meta):
@@ -76,7 +66,8 @@ class NewsListView(PortalPermissionMixin, ListView):
         u = self.request.user
         ctx.update(q=g.get("q", ""), status=g.get("status", ""), category=g.get("category", ""), statuses=S.choices,
                    categories=NewsCategory.objects.all(), can_add=u.has_perm("content.add_news"), can_publish=u.has_perm("content.publish_news"),
-                   can_categories=u.has_perm("content.view_newscategory"), now=timezone.now())
+                   can_categories=u.has_perm("content.view_newscategory"), now=timezone.now(),
+                   review_count=News.objects.filter(status=S.REVIEW).count() if u.has_perm("content.review_news") else None)
         return ctx
 
 
@@ -110,10 +101,10 @@ class _NewsBase(PortalPermissionMixin, View):
 class NewsEditView(_NewsBase):
     permission_required = "content.change_news"
 
-    def _news(self, pk, user):
-        news = self.get_news(pk)
-        # content that is or was public changes the public site: that needs the publishing right
-        if news.status != S.DRAFT and news.status != S.REVIEW and not user.has_perm("content.publish_news"):
+    def _news(self, pk, user, lock=False):
+        qs = News.objects.select_related("category", "author")
+        news = get_object_or_404(qs.select_for_update(of=("self",)) if lock else qs, pk=pk)
+        if not workflow.can_edit(news, user):
             raise PermissionDenied
         return news
 
@@ -122,20 +113,22 @@ class NewsEditView(_NewsBase):
         return render(request, "portal/news/form.html", {"form": NewsForm(instance=news), "news": news})
 
     def post(self, request, pk):
-        news = self._news(pk, request.user)
-        old_date = news.publish_at
-        form = NewsForm(request.POST, instance=news)
-        if form.is_valid():
-            changed = sorted(f for f in form.changed_data if f != "publish_at")
-            new_date = form.cleaned_data["publish_at"]
-            if new_date != old_date and (old_date is None or new_date is None or abs(new_date - old_date).total_seconds() >= 60):
-                changed.append("publish_at")  # the form only knows minutes: a re-submitted value is not a change
-                changed.sort()
-            form.save()
-            if changed:
-                _audit(AuditLog.Action.NEWS_UPDATED, request, news, fields=changed)
-            messages.success(request, _("Saqlandi."))
-            return redirect("news_admin:preview", pk=news.pk)
+        with transaction.atomic():
+            news = self._news(pk, request.user, lock=True)  # the row is locked: a parallel submit/approve waits, then sees the new status
+            old_date = news.publish_at
+            form = NewsForm(request.POST, instance=news)
+            if form.is_valid():
+                changed = sorted(f for f in form.changed_data if f != "publish_at")
+                new_date = form.cleaned_data["publish_at"]
+                if new_date != old_date and (old_date is None or new_date is None or abs(new_date - old_date).total_seconds() >= 60):
+                    changed.append("publish_at")  # the form only knows minutes: a re-submitted value is not a change
+                    changed.sort()
+                form.save()
+                reset = workflow.reset_after_edit(news, request.user, request, changed)
+                if changed:
+                    _audit(AuditLog.Action.NEWS_UPDATED, request, news, fields=changed, **({"approval_reset": True} if reset else {}))
+                messages.success(request, _("Saqlandi.") if not reset else _("Saqlandi. Yangilik ma’qullangandan keyin o‘zgartirildi, shuning uchun qayta tekshiruv kerak."))
+                return redirect("news_admin:preview", pk=news.pk)
         messages.error(request, _("Formada xatolar bor. Kiritilgan ma’lumotlar saqlanib turibdi."))
         return render(request, "portal/news/form.html", {"form": form, "news": news})
 
@@ -145,46 +138,45 @@ class NewsPreviewView(_NewsBase):
         news = self.get_news(pk)
         u = request.user
         return render(request, "portal/news/preview.html", {
-            "news": news, "live": is_live(news), "can_edit": u.has_perm("content.change_news") and (news.status in (S.DRAFT, S.REVIEW) or u.has_perm("content.publish_news")),
-            "can_publish": u.has_perm("content.publish_news"), "actions": [a for a, (src, *_rest) in ACTIONS.items() if news.status in src],
+            "news": news, "live": is_live(news), "can_edit": workflow.can_edit(news, u), "steps": workflow.allowed_steps(news, u),
+            "reviews": news.reviews.select_related("actor"), "last_return": news.reviews.filter(action="request_changes").last() if news.status == S.CHANGES_REQUESTED else None,
         })
 
 
 class NewsStatusView(_NewsBase):
-    """GET asks for confirmation, POST does it. Both need the publishing right."""
+    """GET asks for confirmation (and a comment where one is needed), POST does it. The permission depends on the step; the rest is in workflow.perform."""
 
-    permission_required = "content.publish_news"
+    def get_permission_required(self):
+        step = workflow.STEPS.get(self.kwargs.get("action"))
+        return (step.permission,) if step else ("content.view_news",)
 
-    def _action(self, action):
-        if action not in ACTIONS:
+    def _step(self, action):
+        if action not in workflow.STEPS:
             raise Http404
-        return ACTIONS[action]
+        return workflow.STEPS[action]
 
     def get(self, request, pk, action):
-        src, _to, _audit_action, question, _ok = self._action(action)
+        step = self._step(action)
         news = self.get_news(pk)
-        if news.status not in src:
+        if news.status not in step.sources:
             messages.error(request, _("Bu amalni hozirgi holatda bajarib bo‘lmaydi."))
             return redirect("news_admin:preview", pk=news.pk)
-        return render(request, "portal/news/confirm.html", {"news": news, "action": action, "question": question})
+        try:
+            workflow.check_actor(action, news, request.user)
+        except workflow.WorkflowError as exc:
+            messages.error(request, str(exc))
+            return redirect("news_admin:preview", pk=news.pk)
+        return render(request, "portal/news/confirm.html", {"news": news, "action": action, "question": step.question, "step": step, "version": workflow.version_token(news)})
 
     def post(self, request, pk, action):
-        src, to, audit_action, _question, ok = self._action(action)
-        with transaction.atomic():
-            news = get_object_or_404(News.objects.select_for_update(), pk=pk)
-            if news.status not in src:
-                messages.error(request, _("Bu amalni hozirgi holatda bajarib bo‘lmaydi."))
-                return redirect("news_admin:preview", pk=news.pk)
-            before = news.status
-            news.status = to
-            fields = ["status", "updated_at"]
-            if to == S.PUBLISHED:
-                if news.publish_at is None or news.publish_at <= timezone.now():
-                    news.publish_at = timezone.now()  # a future date is a schedule and stays
-                fields.append("publish_at")
-            news.save(update_fields=fields)
-            _audit(audit_action, request, news, **{"from": before, "to": to})
-        messages.success(request, ok)
+        self._step(action)
+        get_object_or_404(News, pk=pk)
+        try:
+            news = workflow.perform(action, pk, request.user, request=request, comment=request.POST.get("comment", ""), version=request.POST.get("version") or None)
+        except workflow.WorkflowError as exc:
+            messages.error(request, str(exc))
+            return redirect("news_admin:preview", pk=pk)
+        messages.success(request, workflow.STEPS[action].success)
         return redirect("news_admin:preview", pk=news.pk)
 
 

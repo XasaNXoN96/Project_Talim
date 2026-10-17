@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:32+0500\n"
+"POT-Creation-Date: 2026-10-17 22:35+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -552,6 +552,18 @@ msgstr "News item archived"
 msgid "Yangilik arxivdan qaytarildi"
 msgstr "News item restored from the archive"
 
+msgid "Yangilik tekshiruvga yuborildi"
+msgstr "News item submitted for review"
+
+msgid "Yangilik tekshiruvdan qaytarib olindi"
+msgstr "News item withdrawn from review"
+
+msgid "Yangilik tuzatishga qaytarildi"
+msgstr "News item returned for changes"
+
+msgid "Yangilik ma’qullandi"
+msgstr "News item approved"
+
 msgid "Yangilik kategoriyasi o‘zgartirildi"
 msgstr "News category changed"
 
@@ -611,30 +623,6 @@ msgstr "The name must not be empty."
 msgid "Bunday kategoriya allaqachon bor."
 msgstr "This category already exists."
 
-msgid "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
-msgstr "Publish this news item? It will be visible to everyone on the public site."
-
-msgid "Yangilik nashr etildi."
-msgstr "News item published."
-
-msgid "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
-msgstr "Unpublish this news item? It will disappear from the public site and return to drafts."
-
-msgid "Yangilik nashrdan olindi."
-msgstr "News item unpublished."
-
-msgid "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
-msgstr "Archive this news item? It will disappear from the public site."
-
-msgid "Yangilik arxivlandi."
-msgstr "News item archived."
-
-msgid "Yangilikni arxivdan qoralamaga qaytarasizmi?"
-msgstr "Move this news item from the archive back to drafts?"
-
-msgid "Yangilik arxivdan qoralamaga qaytarildi."
-msgstr "News item moved from the archive back to drafts."
-
 msgid "Qoralama saqlandi. Nashr etishdan oldin ko‘rib chiqing."
 msgstr "Draft saved. Review it before publishing."
 
@@ -643,6 +631,9 @@ msgstr "The form has errors. What you entered is still in the fields."
 
 msgid "Saqlandi."
 msgstr "Saved."
+
+msgid "Saqlandi. Yangilik ma’qullangandan keyin o‘zgartirildi, shuning uchun qayta tekshiruv kerak."
+msgstr "Saved. The news item was changed after approval, so it must be reviewed again."
 
 msgid "Bu amalni hozirgi holatda bajarib bo‘lmaydi."
 msgstr "This action is not available in the current state."
@@ -661,6 +652,12 @@ msgstr "Draft"
 
 msgid "Tekshiruvda"
 msgstr "In review"
+
+msgid "Tuzatish talab etiladi"
+msgstr "Changes requested"
+
+msgid "Ma’qullangan"
+msgstr "Approved"
 
 msgid "Nashr etilgan"
 msgstr "Published"
@@ -691,6 +688,102 @@ msgstr "news"
 
 msgid "Yangilikni nashr etish"
 msgstr "Publish news"
+
+msgid "Yangilikni tekshirish: ma’qullash yoki tuzatishga qaytarish"
+msgstr "Review news: approve or return for changes"
+
+msgid "O‘z yangiligini ma’qullash (istisno)"
+msgstr "Approve one's own news item (exception)"
+
+msgid "Tekshiruvga yuborildi"
+msgstr "Submitted for review"
+
+msgid "Tekshiruvdan qaytarib olindi"
+msgstr "Withdrawn from review"
+
+msgid "Tuzatishga qaytarildi"
+msgstr "Returned for changes"
+
+msgid "Ma’qullandi"
+msgstr "Approved"
+
+msgid "Nashr etildi"
+msgstr "Published"
+
+msgid "Nashrdan olindi"
+msgstr "Unpublished"
+
+msgid "Arxivlandi"
+msgstr "Archived"
+
+msgid "Arxivdan qaytarildi"
+msgstr "Restored from the archive"
+
+msgid "Ma’qullangandan keyin o‘zgartirildi: qayta tekshiruv kerak"
+msgstr "Changed after approval: review needed again"
+
+msgid "Yangilikni tekshiruvga yuborasizmi? Tekshiruv tugaguncha uni tahrirlab bo‘lmaydi."
+msgstr "Submit this news item for review? It cannot be edited until the review is finished."
+
+msgid "Yangilik tekshiruvga yuborildi."
+msgstr "The news item was submitted for review."
+
+msgid "Yangilikni tekshiruvdan qaytarib olasizmi? U qoralamaga qaytadi."
+msgstr "Withdraw this news item from review? It will return to drafts."
+
+msgid "Yangilik qoralamaga qaytarildi."
+msgstr "The news item was returned to drafts."
+
+msgid "Yangilikni tuzatishga qaytarasizmi? Muallif sizning izohingizni ko‘radi."
+msgstr "Return this news item for changes? The author will see your comment."
+
+msgid "Yangilik tuzatishga qaytarildi."
+msgstr "The news item was returned for changes."
+
+msgid "Yangilikni ma’qullaysizmi? Shundan keyin vakolatli xodim uni nashr eta oladi."
+msgstr "Approve this news item? An authorised employee can then publish it."
+
+msgid "Yangilik ma’qullandi."
+msgstr "The news item was approved."
+
+msgid "Yangilikni nashr etasizmi? U ochiq saytda barcha uchun ko‘rinadi."
+msgstr "Publish this news item? It will be visible to everyone on the public site."
+
+msgid "Yangilik nashr etildi."
+msgstr "News item published."
+
+msgid "Yangilikni nashrdan olasizmi? U ochiq saytdan yo‘qoladi va qoralamaga qaytadi."
+msgstr "Unpublish this news item? It will disappear from the public site and return to drafts."
+
+msgid "Yangilik nashrdan olindi."
+msgstr "News item unpublished."
+
+msgid "Yangilikni arxivlaysizmi? U ochiq saytdan yo‘qoladi."
+msgstr "Archive this news item? It will disappear from the public site."
+
+msgid "Yangilik arxivlandi."
+msgstr "News item archived."
+
+msgid "Yangilikni arxivdan qoralamaga qaytarasizmi?"
+msgstr "Move this news item from the archive back to drafts?"
+
+msgid "Yangilik arxivdan qoralamaga qaytarildi."
+msgstr "News item moved from the archive back to drafts."
+
+msgid "Bu amal uchun ruxsatingiz yo‘q."
+msgstr "You do not have permission for this action."
+
+msgid "O‘z yangiligingizni ma’qullay yoki qaytara olmaysiz: uni boshqa tekshiruvchi ko‘rishi kerak."
+msgstr "You cannot approve or return your own news item: another reviewer must check it."
+
+msgid "Qaytarish uchun izoh yozing."
+msgstr "Write a comment to return it."
+
+msgid "Izoh juda uzun."
+msgstr "The comment is too long."
+
+msgid "Yangilik siz ko‘rganingizdan keyin o‘zgargan. Sahifani yangilab, qayta ko‘rib chiqing."
+msgstr "The news item changed after you opened it. Refresh the page and review it again."
 
 msgid "Umumiy"
 msgstr "General"
@@ -2205,6 +2298,9 @@ msgstr "No categories"
 msgid "Kategoriyani tahrirlash"
 msgstr "Edit category"
 
+msgid "ixtiyoriy"
+msgstr "optional"
+
 msgid "Ha, tasdiqlayman"
 msgstr "Yes, confirm"
 
@@ -2219,6 +2315,9 @@ msgstr "News management"
 
 msgid "Qoralama yarating, ko‘rib chiqing va nashr eting. Faqat nashr etilgan yangiliklar ochiq saytda ko‘rinadi."
 msgstr "Create drafts, review and publish them. Only published news appears on the public site."
+
+msgid "Tekshiruvni kutmoqda"
+msgstr "Awaiting review"
 
 msgid "Qidirish: sarlavha, tavsif"
 msgstr "Search: title, summary"
@@ -2241,11 +2340,29 @@ msgstr "No news found"
 msgid "Birinchi qoralamani yarating."
 msgstr "Create the first draft."
 
+msgid "Tekshiruv tarixi"
+msgstr "Review history"
+
+msgid "Kim"
+msgstr "Who"
+
 msgid "Oldindan ko‘rish"
 msgstr "Preview"
 
 msgid "Ochiq saytda yangilik shunday ko‘rinadi."
 msgstr "This is how the news item looks on the public site."
+
+msgid "Tekshiruvga yuborish"
+msgstr "Submit for review"
+
+msgid "Tekshiruvdan qaytarib olish"
+msgstr "Withdraw from review"
+
+msgid "Ma’qullash"
+msgstr "Approve"
+
+msgid "Tuzatishga qaytarish"
+msgstr "Return for changes"
 
 msgid "Nashr etish"
 msgstr "Publish"
@@ -2259,8 +2376,11 @@ msgstr "visible on the public site"
 msgid "ochiq saytda ko‘rinmaydi"
 msgstr "not visible on the public site"
 
-msgid "Topshiriqlar bo‘yicha yangiliklar."
-msgstr "News about tasks."
+msgid "Tekshiruvchi izohi"
+msgstr "Reviewer's comment"
+
+msgid "Topshiriqlar va yangiliklarni tekshirish bo‘yicha xabarlar."
+msgstr "Messages about tasks and news review."
 
 msgid "Faqat o‘qilmaganlar"
 msgstr "Unread only"
@@ -2268,8 +2388,8 @@ msgstr "Unread only"
 msgid "Barchasini o‘qilgan deb belgilash"
 msgstr "Mark all as read"
 
-msgid "Topshiriq mavjud emas yoki ruxsat yo‘q"
-msgstr "The task does not exist or you have no access"
+msgid "Obyekt mavjud emas yoki ruxsat yo‘q"
+msgstr "The item does not exist or you have no access"
 
 msgid "Ochish"
 msgstr "Open"
@@ -2476,3 +2596,6 @@ msgstr "Show password"
 
 msgid "Parolni unutdingizmi?"
 msgstr "Forgot your password?"
+
+#~ msgid "Topshiriqlar bo‘yicha yangiliklar."
+#~ msgstr "News about tasks."

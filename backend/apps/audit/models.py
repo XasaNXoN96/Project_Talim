@@ -88,6 +88,10 @@ class AuditLog(models.Model):
         NEWS_UNPUBLISHED = "news_unpublished", _("Yangilik nashrdan olindi")
         NEWS_ARCHIVED = "news_archived", _("Yangilik arxivlandi")
         NEWS_RESTORED = "news_restored", _("Yangilik arxivdan qaytarildi")
+        NEWS_SUBMITTED = "news_submitted", _("Yangilik tekshiruvga yuborildi")
+        NEWS_WITHDRAWN = "news_withdrawn", _("Yangilik tekshiruvdan qaytarib olindi")
+        NEWS_CHANGES_REQUESTED = "news_changes_requested", _("Yangilik tuzatishga qaytarildi")
+        NEWS_APPROVED = "news_approved", _("Yangilik ma’qullandi")
         NEWS_CATEGORY_CHANGED = "news_category_changed", _("Yangilik kategoriyasi o‘zgartirildi")
 
     at = models.DateTimeField(default=timezone.now, db_index=True, editable=False)
