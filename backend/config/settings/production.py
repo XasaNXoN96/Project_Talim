@@ -26,6 +26,8 @@ CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")  # noqa: F405
 # __Host- cookies are only accepted over HTTPS, without a Domain, for path "/": prevents subdomain cookie injection.
 SESSION_COOKIE_NAME = "__Host-sessionid"
 CSRF_COOKIE_NAME = "__Host-csrftoken"
+LANGUAGE_COOKIE_NAME = "__Host-django_language"
+LANGUAGE_COOKIE_SECURE = True
 
 # TOTP secrets cannot be stored without an encryption key.
 if not OTP_ENCRYPTION_KEYS:  # noqa: F405

@@ -7,6 +7,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import ListView
+from django.utils.translation import gettext_lazy as _
 
 from apps.access.models import RoleAssignment
 from apps.access.roles import PRIVILEGED_ROLES, RoleCode
@@ -22,8 +23,8 @@ User = get_user_model()
 
 def _allowed_roles(actor):
     if has_role(actor, RoleCode.ADMIN) or actor.is_superuser:
-        return [c for c, _ in RoleCode.choices]
-    return [c for c, _ in RoleCode.choices if c not in PRIVILEGED_ROLES]
+        return [c for c, label in RoleCode.choices]
+    return [c for c, label in RoleCode.choices if c not in PRIVILEGED_ROLES]
 
 
 def _is_admin(actor):
@@ -71,7 +72,7 @@ class UserCreateView(PortalPermissionMixin, View):
             except services.ActionNotAllowed as exc:
                 form.add_error(None, str(exc))
             else:
-                messages.success(request, "Foydalanuvchi yaratildi. Endi unga taklifnoma yuboring.")
+                messages.success(request, _("Foydalanuvchi yaratildi. Endi unga taklifnoma yuboring."))
                 return redirect("users:detail", pk=user.pk)
         return render(request, "portal/users/form.html", {"form": form, "creating": True})
 
@@ -117,7 +118,7 @@ class UserEditView(PortalPermissionMixin, View):
             except services.ActionNotAllowed as exc:
                 form.add_error(None, str(exc))
             else:
-                messages.success(request, "Ma’lumotlar saqlandi.")
+                messages.success(request, _("Ma’lumotlar saqlandi."))
                 return redirect("users:detail", pk=t.pk)
         return render(request, "portal/users/form.html", {"form": form, "target": t})
 
@@ -128,11 +129,11 @@ class UserActionView(PortalPermissionMixin, View):
     http_method_names = ["post"]
     permission_required = "accounts.view_user"
     ACTIONS = {
-        "deactivate": ("accounts.manage_users", services.deactivate_user, "Foydalanuvchi o‘chirildi (faolsizlantirildi)."),
-        "reactivate": ("accounts.manage_users", services.reactivate_user, "Foydalanuvchi qayta faollashtirildi."),
-        "unlock": ("accounts.unlock_accounts", services.unlock_account, "Hisob blokdan chiqarildi."),
-        "force_password": ("accounts.manage_users", services.force_password_change, "Keyingi kirishda parolni almashtirish talab qilinadi."),
-        "invite": ("accounts.manage_users", services.send_invitation, "Taklifnoma yuborildi."),
+        "deactivate": ("accounts.manage_users", services.deactivate_user, _("Foydalanuvchi o‘chirildi (faolsizlantirildi).")),
+        "reactivate": ("accounts.manage_users", services.reactivate_user, _("Foydalanuvchi qayta faollashtirildi.")),
+        "unlock": ("accounts.unlock_accounts", services.unlock_account, _("Hisob blokdan chiqarildi.")),
+        "force_password": ("accounts.manage_users", services.force_password_change, _("Keyingi kirishda parolni almashtirish talab qilinadi.")),
+        "invite": ("accounts.manage_users", services.send_invitation, _("Taklifnoma yuborildi.")),
     }
 
     def post(self, request, pk, action):
@@ -159,14 +160,14 @@ class RoleAssignView(PortalPermissionMixin, View):
         target = get_object_or_404(User, pk=pk)
         form = RoleAssignForm(request.POST, allowed_roles=_allowed_roles(request.user))
         if not form.is_valid():
-            messages.error(request, "Rol yoki bo‘lim noto‘g‘ri tanlangan.")
+            messages.error(request, _("Rol yoki bo‘lim noto‘g‘ri tanlangan."))
         else:
             try:
                 services.assign_role(request.user, target, request=request, **form.cleaned_data)
             except services.ActionNotAllowed as exc:
                 messages.error(request, str(exc))
             else:
-                messages.success(request, "Rol biriktirildi.")
+                messages.success(request, _("Rol biriktirildi."))
         return redirect("users:detail", pk=target.pk)
 
 
@@ -182,5 +183,5 @@ class RoleRevokeView(PortalPermissionMixin, View):
         except services.ActionNotAllowed as exc:
             messages.error(request, str(exc))
         else:
-            messages.success(request, "Rol olib tashlandi.")
+            messages.success(request, _("Rol olib tashlandi."))
         return redirect("users:detail", pk=target_pk)

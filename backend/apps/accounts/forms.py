@@ -7,9 +7,12 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, Pa
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader
+from django.utils.translation import override
+from django.utils.translation import gettext_lazy as _
 
 from apps.audit.models import AuditLog
 from apps.audit.services import client_ip, record
+from apps.core.locale import user_language
 from apps.core.network import throttle_ip_key
 
 from . import throttle
@@ -19,9 +22,9 @@ logger = logging.getLogger(__name__)
 
 # One message for "wrong credentials" AND "temporarily blocked": the response never reveals which, nor whether
 # the login/e-mail exists.
-NEUTRAL_LOGIN_ERROR = "Login yoki parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
-NEUTRAL_CODE_ERROR = "Kod noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
-NEUTRAL_PASSWORD_ERROR = "Joriy parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
+NEUTRAL_LOGIN_ERROR = _("Login yoki parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring.")
+NEUTRAL_CODE_ERROR = _("Kod noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring.")
+NEUTRAL_PASSWORD_ERROR = _("Joriy parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring.")
 
 
 def short_hash(value: str) -> str:
@@ -41,16 +44,16 @@ def login_keys(request, identifier, user):
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
-        label="Elektron pochta yoki login",
+        label=_("Elektron pochta yoki login"),
         max_length=254,
         widget=forms.TextInput(attrs={"autocomplete": "username", "autofocus": True, "class": "input"}),
     )
     password = forms.CharField(
-        label="Parol",
+        label=_("Parol"),
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "current-password", "class": "input"}),
     )
-    remember_me = forms.BooleanField(label="Meni eslab qolish", required=False)
+    remember_me = forms.BooleanField(label=_("Meni eslab qolish"), required=False)
 
     error_messages = {"invalid_login": NEUTRAL_LOGIN_ERROR, "inactive": NEUTRAL_LOGIN_ERROR}
 
@@ -105,7 +108,7 @@ class ThrottledPasswordChangeForm(PasswordChangeForm):
         cleaned = super().clean()
         password = cleaned.get("new_password1")
         if password and "new_password1" not in self.errors and self.user.check_password(password):
-            self.add_error("new_password1", ValidationError("Yangi parol joriy paroldan farq qilishi kerak.", code="password_unchanged"))
+            self.add_error("new_password1", ValidationError(_("Yangi parol joriy paroldan farq qilishi kerak."), code="password_unchanged"))
         return cleaned
 
 
@@ -131,11 +134,13 @@ class ThrottledPasswordResetForm(PasswordResetForm):
         Django's own version logs a full traceback, and SMTP exceptions can contain the recipient's address.
         The visible answer is the same either way, so a failure never reveals that the account exists.
         """
-        subject = "".join(loader.render_to_string(subject_template_name, context).splitlines())
-        body = loader.render_to_string(email_template_name, context)
+        with override(user_language(context.get("user"))):  # the mail is written in the account holder's language
+            subject = "".join(loader.render_to_string(subject_template_name, context).splitlines())
+            body = loader.render_to_string(email_template_name, context)
+            html_body = loader.render_to_string(html_email_template_name, context) if html_email_template_name is not None else None
         message = EmailMultiAlternatives(subject, body, from_email, [to_email])
-        if html_email_template_name is not None:
-            message.attach_alternative(loader.render_to_string(html_email_template_name, context), "text/html")
+        if html_body is not None:
+            message.attach_alternative(html_body, "text/html")
         try:
             message.send()
         except Exception as exc:  # noqa: BLE001
@@ -144,7 +149,7 @@ class ThrottledPasswordResetForm(PasswordResetForm):
 
 class OtpCodeForm(forms.Form):
     code = forms.CharField(
-        label="Tasdiqlash kodi yoki zaxira kod",
+        label=_("Tasdiqlash kodi yoki zaxira kod"),
         max_length=32,
         strip=True,
         widget=forms.TextInput(attrs={"autocomplete": "one-time-code", "inputmode": "text", "autofocus": True, "class": "input"}),
@@ -153,7 +158,7 @@ class OtpCodeForm(forms.Form):
 
 class TotpSetupForm(forms.Form):
     code = forms.CharField(
-        label="Ilovadagi 6 xonali kod",
+        label=_("Ilovadagi 6 xonali kod"),
         max_length=12,
         strip=True,
         widget=forms.TextInput(attrs={"autocomplete": "one-time-code", "inputmode": "numeric", "autofocus": True, "class": "input"}),
@@ -162,7 +167,7 @@ class TotpSetupForm(forms.Form):
 
 class PasswordConfirmForm(forms.Form):
     password = forms.CharField(
-        label="Joriy parol",
+        label=_("Joriy parol"),
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "current-password", "class": "input"}),
     )

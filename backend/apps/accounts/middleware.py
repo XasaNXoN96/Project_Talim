@@ -3,6 +3,7 @@ from django.contrib.auth import logout
 from django.shortcuts import redirect
 from django.urls import Resolver404, resolve, reverse
 from django.utils.http import urlencode
+from django.utils.translation import gettext_lazy as _
 
 from apps.audit.models import AuditLog
 from apps.audit.services import record
@@ -24,7 +25,7 @@ class TwoFactorEnforcementMiddleware:
         if user.is_authenticated and not request.session.get(VERIFIED_KEY) and must_verify_two_factor(user):
             record(AuditLog.Action.TWO_FACTOR_REQUIRED_LOGOUT, request=request, user=user)
             logout(request)
-            messages.error(request, "Xavfsizlik uchun qayta kiring: ikki bosqichli tasdiqlash talab qilinadi.")
+            messages.error(request, _("Xavfsizlik uchun qayta kiring: ikki bosqichli tasdiqlash talab qilinadi."))
             return redirect(f"{reverse('accounts:login')}?{urlencode({'next': request.get_full_path()})}")
         return self.get_response(request)
 
@@ -32,7 +33,7 @@ class TwoFactorEnforcementMiddleware:
 class MustChangePasswordMiddleware:
     """A signed-in user flagged `must_change_password` can do nothing but change the password (or sign out)."""
 
-    ALLOWED_URL_NAMES = {"accounts:password_change", "accounts:password_change_done", "accounts:logout", "healthz", "csp_report"}
+    ALLOWED_URL_NAMES = {"accounts:password_change", "accounts:password_change_done", "accounts:logout", "healthz", "csp_report", "set_language"}
 
     def __init__(self, get_response):
         self.get_response = get_response
@@ -46,6 +47,6 @@ class MustChangePasswordMiddleware:
             except Resolver404:
                 name = None
             if name not in self.ALLOWED_URL_NAMES:
-                messages.warning(request, "Davom etishdan oldin parolingizni almashtiring.")
+                messages.warning(request, _("Davom etishdan oldin parolingizni almashtiring."))
                 return redirect("accounts:password_change")
         return self.get_response(request)

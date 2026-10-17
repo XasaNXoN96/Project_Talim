@@ -21,6 +21,7 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.views.decorators.cache import never_cache
 from django.views.generic import FormView, TemplateView
+from django.utils.translation import gettext_lazy as _
 
 from apps.audit.models import AuditLog
 from apps.audit.services import client_ip, record
@@ -112,7 +113,7 @@ class TwoFactorVerifyView(FormView):
     def dispatch(self, request, *args, **kwargs):
         found = get_pending(request)
         if not found:
-            messages.error(request, "Kirish muddati tugadi. Qaytadan kiring.")
+            messages.error(request, _("Kirish muddati tugadi. Qaytadan kiring."))
             return redirect("accounts:login")
         self.user, self.pending = found
         if not has_confirmed_device(self.user):
@@ -149,7 +150,7 @@ class TwoFactorVerifyView(FormView):
         next_url = self.pending["next"]
         complete_login(self.request, self.user, self.pending["backend"], self.pending["remember"], verified=True)
         if used_backup and otp.remaining_backup_codes(self.user) <= 2:
-            messages.warning(self.request, "Zaxira kodlaringiz kam qoldi. Yangilarini yarating.")
+            messages.warning(self.request, _("Zaxira kodlaringiz kam qoldi. Yangilarini yarating."))
         return HttpResponseRedirect(next_url)
 
     def get_context_data(self, **kwargs):
@@ -167,7 +168,7 @@ class TwoFactorSetupView(PendingOrSignedInMixin, FormView):
     def dispatch(self, request, *args, **kwargs):
         self.user = self.get_actor(request)
         if self.user is None:
-            messages.error(request, "Kirish muddati tugadi. Qaytadan kiring.")
+            messages.error(request, _("Kirish muddati tugadi. Qaytadan kiring."))
             return redirect("accounts:login")
         if has_confirmed_device(self.user):
             return redirect("accounts:security" if request.user.is_authenticated else "accounts:two_factor_verify")
@@ -253,8 +254,8 @@ class BackupCodesRegenerateView(_PasswordConfirmedAction):
     template_name = "accounts/two_factor_confirm.html"
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(title="Zaxira kodlarni yangilash", button="Yangi kodlar yaratish",
-                                        note="Eski zaxira kodlar bekor qilinadi.", **kwargs)
+        return super().get_context_data(title=_("Zaxira kodlarni yangilash"), button=_("Yangi kodlar yaratish"),
+                                        note=_("Eski zaxira kodlar bekor qilinadi."), **kwargs)
 
     def form_valid(self, form):
         if not self.password_ok(form):
@@ -271,13 +272,13 @@ class TwoFactorDisableView(_PasswordConfirmedAction):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and requires_two_factor(request.user):
-            messages.error(request, "Sizning rolingiz uchun 2FA majburiy: uni o‘chirib bo‘lmaydi.")
+            messages.error(request, _("Sizning rolingiz uchun 2FA majburiy: uni o‘chirib bo‘lmaydi."))
             return redirect("accounts:security")
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(title="2FA ni o‘chirish", button="O‘chirish", danger=True,
-                                        note="Hisob faqat parol bilan himoyalanadi.", **kwargs)
+        return super().get_context_data(title=_("2FA ni o‘chirish"), button=_("O‘chirish"), danger=True,
+                                        note=_("Hisob faqat parol bilan himoyalanadi."), **kwargs)
 
     def form_valid(self, form):
         if not self.password_ok(form):
@@ -287,7 +288,7 @@ class TwoFactorDisableView(_PasswordConfirmedAction):
         user.totp_device.delete()
         record(AuditLog.Action.TWO_FACTOR_DISABLED, request=self.request, user=user)
         notify_security_event(user, "two_factor_disabled", self.request)
-        messages.success(self.request, "2FA o‘chirildi.")
+        messages.success(self.request, _("2FA o‘chirildi."))
         return redirect("accounts:security")
 
 

@@ -5,6 +5,7 @@ import logging
 
 from django.core.files.base import ContentFile
 from django.http import FileResponse, Http404
+from django.utils.translation import gettext_lazy as _
 
 from apps.audit.models import AuditLog
 from apps.audit.services import record
@@ -16,9 +17,9 @@ from .validation import CheckedUpload, UploadRejected, validate_upload
 logger = logging.getLogger(__name__)
 
 SCAN_MESSAGES = {
-    "scan_unavailable": "Fayllarni tekshirish xizmati hozir ishlamayapti. Fayl qabul qilinmadi; keyinroq qayta urinib ko‘ring.",
-    "scan_timeout": "Faylni tekshirish juda uzoq davom etdi. Fayl qabul qilinmadi; keyinroq qayta urinib ko‘ring.",
-    "scan_error": "Faylni tekshirib bo‘lmadi. Fayl qabul qilinmadi.",
+    "scan_unavailable": _("Fayllarni tekshirish xizmati hozir ishlamayapti. Fayl qabul qilinmadi; keyinroq qayta urinib ko‘ring."),
+    "scan_timeout": _("Faylni tekshirish juda uzoq davom etdi. Fayl qabul qilinmadi; keyinroq qayta urinib ko‘ring."),
+    "scan_error": _("Faylni tekshirib bo‘lmadi. Fayl qabul qilinmadi."),
 }
 
 
@@ -35,7 +36,7 @@ def screen_upload(uploaded) -> CheckedUpload:
     except scanner.ScanFailed as exc:
         raise UploadRejected(exc.code, SCAN_MESSAGES.get(exc.code, SCAN_MESSAGES["scan_error"])) from exc
     if not result.clean:
-        exc = UploadRejected("malware", "Faylda zararli dastur aniqlandi. Fayl qabul qilinmadi.")
+        exc = UploadRejected("malware", _("Faylda zararli dastur aniqlandi. Fayl qabul qilinmadi."))
         exc.signature = result.signature
         raise exc
     return replace(checked, scan_status="clean", scan_engine=result.engine)

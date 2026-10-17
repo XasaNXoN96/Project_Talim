@@ -117,7 +117,9 @@ class PasswordResetRequestTests(TestCase):
         unknown = self.request("nobody@example.test", ip="10.0.0.2")
         self.assertEqual(known.status_code, unknown.status_code)
         self.assertEqual(known["Location"], unknown["Location"])
-        page = lambda: self.client.get(known["Location"]).content
+        def page():  # the language switcher form carries a per-render CSRF token; everything else must be identical
+            return re.sub(rb'name="csrfmiddlewaretoken" value="[^"]+"', b"", self.client.get(known["Location"]).content)
+
         self.assertEqual(page(), page())
 
     def test_e_mail_is_sent_only_to_an_existing_active_account(self):

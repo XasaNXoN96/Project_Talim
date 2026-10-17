@@ -8,6 +8,8 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import ListView
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 from apps.audit.models import AuditLog
 from apps.audit.services import record
@@ -99,7 +101,7 @@ class DocumentCreateView(PortalPermissionMixin, View):
                     document.save()
                     version = services.add_version(document, checked, actor=request.user)
                     _audit(AuditLog.Action.DOCUMENT_UPLOADED, request, document, version=version.number, size=version.size, ext=version.extension)
-                messages.success(request, "Hujjat yuklandi.")
+                messages.success(request, _("Hujjat yuklandi."))
                 return redirect("documents:detail", pk=document.pk)
         return render(request, "portal/documents/form.html", {"form": form, "creating": True})
 
@@ -125,7 +127,7 @@ class DocumentEditView(_DocBase):
             form.save()
             if changed:
                 _audit(AuditLog.Action.DOCUMENT_UPDATED, request, d, fields=changed)
-            messages.success(request, "Saqlandi.")
+            messages.success(request, _("Saqlandi."))
             return redirect("documents:detail", pk=d.pk)
         return render(request, "portal/documents/form.html", {"form": form, "d": d})
 
@@ -147,9 +149,9 @@ class VersionAddView(_DocBase):
             else:
                 v = services.add_version(d, checked, actor=request.user, comment=form.cleaned_data["comment"])
                 _audit(AuditLog.Action.DOCUMENT_VERSION_ADDED, request, d, version=v.number, size=v.size, ext=v.extension)
-                messages.success(request, f"Yangi versiya (v{v.number}) yuklandi.")
+                messages.success(request, gettext("Yangi versiya (v%(n)d) yuklandi.") % {"n": v.number})
         else:
-            messages.error(request, "Fayl tanlanmagan yoki noto‘g‘ri.")
+            messages.error(request, _("Fayl tanlanmagan yoki noto‘g‘ri."))
         return redirect("documents:detail", pk=d.pk)
 
 
@@ -179,5 +181,5 @@ class DocumentArchiveView(_DocBase):
         d.status = Document.Status.ACTIVE if self.restore else Document.Status.ARCHIVED
         d.save(update_fields=["status", "updated_at"])
         _audit(AuditLog.Action.DOCUMENT_RESTORED if self.restore else AuditLog.Action.DOCUMENT_ARCHIVED, request, d)
-        messages.success(request, "Hujjat arxivdan qaytarildi." if self.restore else "Hujjat arxivlandi.")
+        messages.success(request, _("Hujjat arxivdan qaytarildi.") if self.restore else _("Hujjat arxivlandi."))
         return redirect("documents:detail", pk=d.pk)

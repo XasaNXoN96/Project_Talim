@@ -4,6 +4,9 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from django.db import IntegrityError, transaction
 from django.utils import timezone
+from django.utils.translation import gettext, override
+
+from apps.core.locale import user_language
 
 from .models import Notification
 
@@ -36,9 +39,11 @@ def send_email_copy(notification):
     The message has no link and no description: just the event and the task title."""
     if not settings.NOTIFICATION_EMAILS_ENABLED or not notification.user.email:
         return False
-    body = f"{notification.get_kind_display()}: {notification.title}\n\nBatafsil ma’lumot uchun xodimlar portaliga kiring."
+    with override(user_language(notification.user)):
+        kind = str(notification.get_kind_display())
+        body = gettext("%(kind)s: %(title)s\n\nBatafsil ma’lumot uchun xodimlar portaliga kiring.") % {"kind": kind, "title": notification.title}
     try:
-        EmailMessage(f"{settings.TWO_FACTOR_ISSUER}: {notification.get_kind_display()}", body, to=[notification.user.email]).send()
+        EmailMessage(f"{settings.TWO_FACTOR_ISSUER}: {kind}", body, to=[notification.user.email]).send()
         return True
     except Exception as exc:  # noqa: BLE001
         logger.error("Notification e-mail failed (%s)", type(exc).__name__)

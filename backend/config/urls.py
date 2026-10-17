@@ -2,11 +2,13 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
+from apps.core import locale as core_locale
 from apps.core import views as core_views
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path("healthz/", core_views.healthz, name="healthz"),
+    path("i18n/setlang/", core_locale.set_language, name="set_language"),  # the only language URL: no per-language duplicates
     path("csp-report/", core_views.csp_report, name="csp_report"),
     path("accounts/", include("apps.accounts.urls")),
     path("portal/users/", include("apps.accounts.manage_urls")),

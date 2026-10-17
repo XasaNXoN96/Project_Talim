@@ -7,6 +7,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 from apps.audit.models import AuditLog
 from apps.audit.services import record
@@ -31,7 +33,7 @@ class TaskListView(PortalPermissionMixin, ListView):
     template_name = "portal/tasks/list.html"
     paginate_by = 25
     context_object_name = "tasks"
-    TABS = (("mine", "Menga berilgan"), ("created", "Men bergan"), ("all", "Barchasi"))
+    TABS = (("mine", _("Menga berilgan")), ("created", _("Men bergan")), ("all", _("Barchasi")))
 
     def get_queryset(self):
         user = self.request.user
@@ -94,7 +96,7 @@ class TaskCommentView(_TaskBase):
         task = self.get_task(request, pk)
         form = CommentForm(request.POST)
         if not form.is_valid():
-            messages.error(request, "Izoh bo‘sh yoki juda uzun.")
+            messages.error(request, _("Izoh bo‘sh yoki juda uzun."))
             return redirect("tasks:detail", pk=task.pk)
         with transaction.atomic():
             comment = form.save(commit=False)
@@ -121,7 +123,7 @@ class TaskCreateView(PortalPermissionMixin, View):
                 _event(task, request.user, TaskEvent.Kind.CREATED, assignees=[str(u.pk) for u in form.cleaned_data["assignees"]])
                 for person in form.cleaned_data["assignees"]:
                     notify(person, Notification.Kind.TASK_ASSIGNED, task, actor=request.user)
-            messages.success(request, "Topshiriq yaratildi.")
+            messages.success(request, _("Topshiriq yaratildi."))
             return redirect("tasks:detail", pk=task.pk)
         return render(request, "portal/tasks/form.html", {"form": form, "creating": True})
 
@@ -151,7 +153,7 @@ class TaskEditView(_TaskBase):
                     _event(task, request.user, TaskEvent.Kind.EDITED, fields=changed)
                 for person in task.assignees.exclude(pk__in=before):
                     notify(person, Notification.Kind.TASK_ASSIGNED, task, actor=request.user)
-            messages.success(request, "Saqlandi.")
+            messages.success(request, _("Saqlandi."))
             return redirect("tasks:detail", pk=task.pk)
         return render(request, "portal/tasks/form.html", {"form": form, "task": task})
 
@@ -165,7 +167,7 @@ class TaskTransitionView(_TaskBase):
             if not access.can_view(request.user, task):
                 raise PermissionDenied
             if status not in access.allowed_transitions(request.user, task):
-                messages.error(request, "Bu holatga o‘tkazib bo‘lmaydi.")
+                messages.error(request, _("Bu holatga o‘tkazib bo‘lmaydi."))
                 return redirect("tasks:detail", pk=task.pk)
             old, task.status = task.status, status
             task.closed_at = timezone.now() if status in Task.FINAL else None
@@ -181,7 +183,7 @@ class TaskTransitionView(_TaskBase):
                         notify(person, kind, task, actor=request.user)
                     if status == S.CANCELLED:
                         notify(task.created_by, kind, task, actor=request.user)
-        messages.success(request, "Holat o‘zgartirildi.")
+        messages.success(request, _("Holat o‘zgartirildi."))
         return redirect("tasks:detail", pk=task.pk)
 
 
@@ -199,10 +201,10 @@ class TaskAttachmentAddView(_TaskBase):
             raise PermissionDenied
         form = _AttachmentForm(request.POST, request.FILES)
         if not form.is_valid():
-            messages.error(request, "Fayl tanlanmagan yoki noto‘g‘ri.")
+            messages.error(request, _("Fayl tanlanmagan yoki noto‘g‘ri."))
             return redirect("tasks:detail", pk=task.pk)
         if task.attachments.filter(removed_at__isnull=True).count() >= TaskAttachment.MAX_PER_TASK:
-            messages.error(request, f"Bitta topshiriqqa {TaskAttachment.MAX_PER_TASK} tadan ortiq fayl biriktirib bo‘lmaydi.")
+            messages.error(request, gettext("Bitta topshiriqqa %(n)d tadan ortiq fayl biriktirib bo‘lmaydi.") % {"n": TaskAttachment.MAX_PER_TASK})
             return redirect("tasks:detail", pk=task.pk)
         try:
             checked = files.check_or_audit(form.cleaned_data["file"], request=request, user=request.user, object_type="Task", object_id=task.pk)
@@ -219,7 +221,7 @@ class TaskAttachmentAddView(_TaskBase):
             _event(task, request.user, TaskEvent.Kind.ATTACHED, attachment=str(att.pk), ext=att.extension, size=att.size)
             record(AuditLog.Action.TASK_ATTACHMENT_ADDED, request=request, user=request.user, object_type="Task", object_id=task.pk,
                    meta={"attachment": str(att.pk), "ext": att.extension, "size": att.size})
-        messages.success(request, "Fayl biriktirildi.")
+        messages.success(request, _("Fayl biriktirildi."))
         return redirect("tasks:detail", pk=task.pk)
 
 
@@ -253,5 +255,5 @@ class TaskAttachmentRemoveView(_TaskBase):
             att.save(update_fields=["removed_at", "removed_by"])
             _event(task, request.user, TaskEvent.Kind.DETACHED, attachment=str(att.pk))
             record(AuditLog.Action.TASK_ATTACHMENT_REMOVED, request=request, user=request.user, object_type="Task", object_id=task.pk, meta={"attachment": str(att.pk)})
-        messages.success(request, "Fayl topshiriqdan olib tashlandi.")
+        messages.success(request, _("Fayl topshiriqdan olib tashlandi."))
         return redirect("tasks:detail", pk=task.pk)

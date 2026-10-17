@@ -1,4 +1,5 @@
 {% extends "base_portal.html" %}
+{% load ui %}
 {% load i18n %}
 {% block title %}{% translate "Bosh sahifa" %}{% endblock %}
 {% block content %}
@@ -10,7 +11,7 @@
     <div><i data-i="user" data-c="sm" style="display:contents"></i>{{ user.get_username }}</div>
     <div><i data-i="mail" data-c="sm" style="display:contents"></i>{{ user.email }}</div>
     <div><i data-i="shield" data-c="sm" style="display:contents"></i>{% translate "Rollar" %}:
-      {% for r in role_names %}<span class="badge plain b-info" style="margin-left:4px">{{ r }}</span>{% empty %}<span class="muted">{% translate "rol biriktirilmagan" %}</span>{% endfor %}</div>
+      {% for r in role_names %}<span class="badge plain b-info" style="margin-left:4px">{{ r|role_label }}</span>{% empty %}<span class="muted">{% translate "rol biriktirilmagan" %}</span>{% endfor %}</div>
   </div>
 </section>
 {% endblock %}

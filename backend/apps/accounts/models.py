@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.functions import Lower
+from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import TimeStampedModel, UUIDModel
 
@@ -18,17 +19,17 @@ class User(UUIDModel, AbstractUser):
         RU = "ru", "Русский"
         EN = "en", "English"
 
-    email = models.EmailField("e-mail", max_length=254)  # required (AbstractUser makes it optional)
-    locale = models.CharField("til", max_length=2, choices=Locale.choices, default=Locale.UZ)
-    must_change_password = models.BooleanField("parolni almashtirish shart", default=False)
+    email = models.EmailField(_("e-mail"), max_length=254)  # required (AbstractUser makes it optional)
+    locale = models.CharField(_("til"), max_length=2, choices=Locale.choices, default=Locale.UZ)
+    must_change_password = models.BooleanField(_("parolni almashtirish shart"), default=False)
 
     class Meta:
-        verbose_name = "foydalanuvchi"
-        verbose_name_plural = "foydalanuvchilar"
+        verbose_name = _("foydalanuvchi")
+        verbose_name_plural = _("foydalanuvchilar")
         permissions = [
-            ("manage_users", "Foydalanuvchilarni yaratish va boshqarish"),
-            ("assign_roles", "Rollarni biriktirish va olib tashlash"),
-            ("unlock_accounts", "Hisoblarni blokdan chiqarish"),
+            ("manage_users", _("Foydalanuvchilarni yaratish va boshqarish")),
+            ("assign_roles", _("Rollarni biriktirish va olib tashlash")),
+            ("unlock_accounts", _("Hisoblarni blokdan chiqarish")),
         ]
         constraints = [
             models.UniqueConstraint(Lower("email"), name="accounts_user_email_ci_unique"),

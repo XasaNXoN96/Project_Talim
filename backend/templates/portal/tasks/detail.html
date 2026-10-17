@@ -1,4 +1,5 @@
 {% extends "base_portal.html" %}
+{% load ui %}
 {% load i18n %}
 {% block title %}{{ task.title }}{% endblock %}
 {% block content %}
@@ -27,7 +28,7 @@
     {% if perms.tasks.add_taskcomment %}<form method="post" action="{% url 'tasks:comment' task.pk %}" style="display:grid;gap:8px;margin-top:12px">{% csrf_token %}{% include "includes/field.html" with field=form.body %}<div><button class="btn btn-secondary" type="submit">{% translate "Yuborish" %}</button></div></form>{% endif %}
   </section>
   <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Tarix" %}</h2>
-    <ul class="small" style="padding-left:18px">{% for e in events %}<li>{{ e.at|date:"d.m.Y H:i" }} — {{ e.actor.get_full_name|default:e.actor.get_username|default:"—" }}: {{ e.get_kind_display }}{% if e.kind == "status" %} ({{ e.meta.old }} → {{ e.meta.new }}){% endif %}</li>{% endfor %}</ul>
+    <ul class="small" style="padding-left:18px">{% for e in events %}<li>{{ e.at|date:"d.m.Y H:i" }} — {{ e.actor.get_full_name|default:e.actor.get_username|default:"—" }}: {{ e.get_kind_display }}{% if e.kind == "status" %} ({{ e.meta.old|task_status_label }} → {{ e.meta.new|task_status_label }}){% endif %}</li>{% endfor %}</ul>
   </section>
 </div>
 {% endblock %}

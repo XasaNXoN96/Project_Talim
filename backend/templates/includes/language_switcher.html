@@ -1,0 +1,5 @@
+{% load i18n %}{% get_available_languages as LANGS %}{% get_current_language as CURRENT %}
+<form class="lang-switch" method="post" action="{% url 'set_language' %}" aria-label="{% translate 'Til' %}">
+  {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+  {% for code, name in LANGS %}<button type="submit" name="language" value="{{ code }}" lang="{{ code }}" hreflang="{{ code }}" {% if code == CURRENT %}class="active" aria-current="true"{% endif %}>{{ code|upper }}<span class="sr-only"> — {{ name }}</span></button>{% endfor %}
+</form>

@@ -2,17 +2,18 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import TimeStampedModel
 
 
 class NewsCategory(TimeStampedModel):
-    name = models.CharField("nomi", max_length=100, unique=True)
+    name = models.CharField(_("nomi"), max_length=100, unique=True)
     slug = models.SlugField("slug", max_length=120, unique=True)
 
     class Meta:
-        verbose_name = "yangilik kategoriyasi"
-        verbose_name_plural = "yangilik kategoriyalari"
+        verbose_name = _("yangilik kategoriyasi")
+        verbose_name_plural = _("yangilik kategoriyalari")
         ordering = ["name"]
 
     def __str__(self):
@@ -27,19 +28,19 @@ class NewsQuerySet(models.QuerySet):
 
 class News(TimeStampedModel):
     class Status(models.TextChoices):
-        DRAFT = "draft", "Qoralama"
-        REVIEW = "review", "Tekshiruvda"
-        PUBLISHED = "published", "Nashr etilgan"
-        ARCHIVED = "archived", "Arxiv"
+        DRAFT = "draft", _("Qoralama")
+        REVIEW = "review", _("Tekshiruvda")
+        PUBLISHED = "published", _("Nashr etilgan")
+        ARCHIVED = "archived", _("Arxiv")
 
-    title = models.CharField("sarlavha", max_length=300)
+    title = models.CharField(_("sarlavha"), max_length=300)
     slug = models.SlugField("slug", max_length=320, unique=True)
-    excerpt = models.TextField("qisqa tavsif", blank=True)
+    excerpt = models.TextField(_("qisqa tavsif"), blank=True)
     # Plain text only on Day 1: rendered escaped. Rich text arrives together with an HTML sanitiser.
-    body = models.TextField("matn")
+    body = models.TextField(_("matn"))
     category = models.ForeignKey(NewsCategory, null=True, blank=True, on_delete=models.PROTECT, related_name="news")
-    status = models.CharField("holat", max_length=16, choices=Status.choices, default=Status.DRAFT)
-    publish_at = models.DateTimeField("nashr sanasi", null=True, blank=True)
+    status = models.CharField(_("holat"), max_length=16, choices=Status.choices, default=Status.DRAFT)
+    publish_at = models.DateTimeField(_("nashr sanasi"), null=True, blank=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
     )
@@ -47,10 +48,10 @@ class News(TimeStampedModel):
     objects = NewsQuerySet.as_manager()
 
     class Meta:
-        verbose_name = "yangilik"
-        verbose_name_plural = "yangiliklar"
+        verbose_name = _("yangilik")
+        verbose_name_plural = _("yangiliklar")
         ordering = ["-publish_at", "-created_at"]
-        permissions = [("publish_news", "Yangilikni nashr etish")]
+        permissions = [("publish_news", _("Yangilikni nashr etish"))]
         indexes = [models.Index(fields=["status", "-publish_at"])]
         constraints = [
             models.CheckConstraint(

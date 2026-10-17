@@ -65,9 +65,11 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "apps.core.middleware.SecurityHeadersMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",  # language from cookie / Accept-Language; after sessions, before Common
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "apps.core.locale.UserLanguageMiddleware",  # signed-in user's stored language when the browser has no language cookie
     "django.contrib.messages.middleware.MessageMiddleware",
     "apps.accounts.middleware.TwoFactorEnforcementMiddleware",  # needs auth + messages above
     "apps.accounts.middleware.MustChangePasswordMiddleware",  # after 2FA: first prove identity, then change the password
@@ -199,9 +201,15 @@ CSP_POLICY = "; ".join(f"{name} {' '.join(values)}" for name, values in CSP_DIRE
 # geolocation stays disabled until the attendance/geolocation stage is approved by the legal checklist.
 PERMISSIONS_POLICY = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
 
-# --- Internationalisation (uz first; ru/en translations come later) -------
+# --- Internationalisation. Source language of the message ids is Uzbek; catalogs for uz, ru and en live in backend/locale
+# (compile with `python manage.py compilemessages`; the compiled .mo files are committed). Language names are shown in
+# their own language and are NOT translated.
 LANGUAGE_CODE = "uz"
 LANGUAGES = [("uz", "O‘zbekcha"), ("ru", "Русский"), ("en", "English")]
+LOCALE_PATHS = [BASE_DIR / "locale"]
+LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365
+LANGUAGE_COOKIE_HTTPONLY = True
+LANGUAGE_COOKIE_SAMESITE = "Lax"
 TIME_ZONE = "Asia/Tashkent"
 USE_I18N = True
 USE_TZ = True

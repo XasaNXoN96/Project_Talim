@@ -1,17 +1,18 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import TimeStampedModel
 
 
 class Department(TimeStampedModel):
-    name = models.CharField("nomi", max_length=200)
+    name = models.CharField(_("nomi"), max_length=200)
     parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.PROTECT, related_name="children")
-    is_active = models.BooleanField("faol", default=True)
+    is_active = models.BooleanField(_("faol"), default=True)
 
     class Meta:
-        verbose_name = "bo‘lim"
-        verbose_name_plural = "bo‘limlar"
+        verbose_name = _("bo‘lim")
+        verbose_name_plural = _("bo‘limlar")
         ordering = ["name"]
         constraints = [
             models.UniqueConstraint(fields=["parent", "name"], nulls_distinct=False, name="department_unique_name_per_parent")
@@ -22,11 +23,11 @@ class Department(TimeStampedModel):
 
 
 class Position(TimeStampedModel):
-    name = models.CharField("nomi", max_length=200, unique=True)
+    name = models.CharField(_("nomi"), max_length=200, unique=True)
 
     class Meta:
-        verbose_name = "lavozim"
-        verbose_name_plural = "lavozimlar"
+        verbose_name = _("lavozim")
+        verbose_name_plural = _("lavozimlar")
         ordering = ["name"]
 
     def __str__(self):
@@ -37,34 +38,34 @@ class Employee(TimeStampedModel):
     """Staff profile. Contains personal data: no real records may be entered until the legal checklist is cleared."""
 
     class Status(models.TextChoices):
-        ACTIVE = "active", "Faol"
-        ON_LEAVE = "on_leave", "Ta’tilda"
-        NEW = "new", "Yangi"
-        ARCHIVED = "archived", "Arxiv"
+        ACTIVE = "active", _("Faol")
+        ON_LEAVE = "on_leave", _("Ta’tilda")
+        NEW = "new", _("Yangi")
+        ARCHIVED = "archived", _("Arxiv")
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="employee"
     )
-    last_name = models.CharField("familiya", max_length=100)
-    first_name = models.CharField("ism", max_length=100)
-    middle_name = models.CharField("otasining ismi", max_length=100, blank=True)
+    last_name = models.CharField(_("familiya"), max_length=100)
+    first_name = models.CharField(_("ism"), max_length=100)
+    middle_name = models.CharField(_("otasining ismi"), max_length=100, blank=True)
     department = models.ForeignKey(Department, on_delete=models.PROTECT, related_name="employees")
     position = models.ForeignKey(Position, null=True, blank=True, on_delete=models.PROTECT, related_name="employees")
-    work_phone = models.CharField("ish telefoni", max_length=32, blank=True)
-    work_email = models.EmailField("ish e-pochtasi", blank=True)
-    hired_at = models.DateField("ishga qabul sanasi", null=True, blank=True)
-    personal_phone = models.CharField("shaxsiy telefon", max_length=32, blank=True)
-    birth_date = models.DateField("tug‘ilgan sana", null=True, blank=True)
-    status = models.CharField("holat", max_length=16, choices=Status.choices, default=Status.NEW)
+    work_phone = models.CharField(_("ish telefoni"), max_length=32, blank=True)
+    work_email = models.EmailField(_("ish e-pochtasi"), blank=True)
+    hired_at = models.DateField(_("ishga qabul sanasi"), null=True, blank=True)
+    personal_phone = models.CharField(_("shaxsiy telefon"), max_length=32, blank=True)
+    birth_date = models.DateField(_("tug‘ilgan sana"), null=True, blank=True)
+    status = models.CharField(_("holat"), max_length=16, choices=Status.choices, default=Status.NEW)
 
     class Meta:
-        verbose_name = "xodim"
-        verbose_name_plural = "xodimlar"
+        verbose_name = _("xodim")
+        verbose_name_plural = _("xodimlar")
         ordering = ["last_name", "first_name"]
         permissions = [
-            ("view_employee_directory", "Xodimlar ro‘yxatini ko‘rish (ism, lavozim, bo‘lim, holat)"),
-            ("view_employee_contacts", "Xodimlarning aloqa ma’lumotlarini ko‘rish"),
-            ("view_employee_private", "Xodimlarning shaxsiy ma’lumotlarini ko‘rish"),
+            ("view_employee_directory", _("Xodimlar ro‘yxatini ko‘rish (ism, lavozim, bo‘lim, holat)")),
+            ("view_employee_contacts", _("Xodimlarning aloqa ma’lumotlarini ko‘rish")),
+            ("view_employee_private", _("Xodimlarning shaxsiy ma’lumotlarini ko‘rish")),
         ]
 
     def __str__(self):
@@ -75,20 +76,20 @@ class Institution(TimeStampedModel):
     """Education institution (school, kindergarten, ...). Public listing only when is_published."""
 
     class Kind(models.TextChoices):
-        SCHOOL = "school", "Umumiy o‘rta ta’lim maktabi"
-        SPECIALIZED = "specialized", "Ixtisoslashtirilgan maktab"
-        PRESCHOOL = "preschool", "Maktabgacha ta’lim muassasasi"
-        ARTS = "arts", "Ijod maktabi"
-        VOCATIONAL = "vocational", "Kasbiy ta’lim"
+        SCHOOL = "school", _("Umumiy o‘rta ta’lim maktabi")
+        SPECIALIZED = "specialized", _("Ixtisoslashtirilgan maktab")
+        PRESCHOOL = "preschool", _("Maktabgacha ta’lim muassasasi")
+        ARTS = "arts", _("Ijod maktabi")
+        VOCATIONAL = "vocational", _("Kasbiy ta’lim")
 
-    name = models.CharField("nomi", max_length=250)
-    kind = models.CharField("turi", max_length=16, choices=Kind.choices)
-    head_name = models.CharField("rahbar", max_length=200, blank=True)
-    is_published = models.BooleanField("saytda ko‘rsatish", default=False)
+    name = models.CharField(_("nomi"), max_length=250)
+    kind = models.CharField(_("turi"), max_length=16, choices=Kind.choices)
+    head_name = models.CharField(_("rahbar"), max_length=200, blank=True)
+    is_published = models.BooleanField(_("saytda ko‘rsatish"), default=False)
 
     class Meta:
-        verbose_name = "ta’lim muassasasi"
-        verbose_name_plural = "ta’lim muassasalari"
+        verbose_name = _("ta’lim muassasasi")
+        verbose_name_plural = _("ta’lim muassasalari")
         ordering = ["name"]
 
     def __str__(self):

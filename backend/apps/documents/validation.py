@@ -15,6 +15,8 @@ import zipfile
 from dataclasses import dataclass
 
 from django.conf import settings
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 ALLOWED = {
     # ext: (detected type label, acceptable declared MIME types)
@@ -63,6 +65,10 @@ class CheckedUpload:
     scan_engine: str = ""
 
 
+def _size_message(limit):
+    return gettext("Fayl hajmi %(mb)d MB dan oshmasligi kerak.") % {"mb": limit // (1024 * 1024)}
+
+
 def max_bytes():
     return int(settings.DOCUMENT_MAX_BYTES)
 
@@ -85,35 +91,35 @@ def _check_zip(data: bytes, ext: str):
     try:
         zf = zipfile.ZipFile(io.BytesIO(data))
     except zipfile.BadZipFile as exc:
-        raise UploadRejected("bad_zip", "Fayl buzilgan yoki kengaytmasiga mos kelmaydi.") from exc
+        raise UploadRejected("bad_zip", _("Fayl buzilgan yoki kengaytmasiga mos kelmaydi.")) from exc
     infos = zf.infolist()
     if len(infos) > ZIP_MAX_ENTRIES:
-        raise UploadRejected("zip_entries", "Fayl tarkibi shubhali (juda ko‘p elementlar).")
+        raise UploadRejected("zip_entries", _("Fayl tarkibi shubhali (juda ko‘p elementlar)."))
     total = 0
     for info in infos:
         total += info.file_size
         n = info.filename
         if n.startswith(("/", "\\")) or ".." in n.replace("\\", "/").split("/") or info.flag_bits & 0x1:
-            raise UploadRejected("zip_unsafe", "Fayl tarkibi xavfli yoki shifrlangan.")
+            raise UploadRejected("zip_unsafe", _("Fayl tarkibi xavfli yoki shifrlangan."))
         if info.compress_size and info.file_size / info.compress_size > ZIP_MAX_RATIO and info.file_size > 1024 * 1024:
-            raise UploadRejected("zip_bomb", "Fayl tarkibi shubhali (haddan tashqari siqilgan).")
+            raise UploadRejected("zip_bomb", _("Fayl tarkibi shubhali (haddan tashqari siqilgan)."))
     if total > ZIP_MAX_UNCOMPRESSED:
-        raise UploadRejected("zip_size", "Fayl ochilgandagi hajmi juda katta.")
+        raise UploadRejected("zip_size", _("Fayl ochilgandagi hajmi juda katta."))
     names = [i.filename for i in infos]
     if ext in OFFICE_REQUIRED:
         if "[Content_Types].xml" not in names or not any(n.startswith(OFFICE_REQUIRED[ext]) for n in names):
-            raise UploadRejected("office_structure", "Fayl kengaytmasiga mos kelmaydi.")
+            raise UploadRejected("office_structure", _("Fayl kengaytmasiga mos kelmaydi."))
         if any(n.lower().endswith(("vbaproject.bin", ".exe", ".dll")) or "/activex/" in n.lower() for n in names):
-            raise UploadRejected("office_active", "Makros yoki faol tarkibli fayllar qabul qilinmaydi.")
+            raise UploadRejected("office_active", _("Makros yoki faol tarkibli fayllar qabul qilinmaydi."))
     else:
         try:
             ok = "mimetype" in names and zf.read("mimetype").strip() == ODF_MIMETYPE[ext]
         except (KeyError, RuntimeError, zipfile.BadZipFile):
             ok = False
         if not ok:
-            raise UploadRejected("odf_structure", "Fayl kengaytmasiga mos kelmaydi.")
+            raise UploadRejected("odf_structure", _("Fayl kengaytmasiga mos kelmaydi."))
         if any(n.startswith("Scripts/") or n.startswith("Basic/") for n in names):
-            raise UploadRejected("office_active", "Makros yoki faol tarkibli fayllar qabul qilinmaydi.")
+            raise UploadRejected("office_active", _("Makros yoki faol tarkibli fayllar qabul qilinmaydi."))
 
 
 def validate_upload(uploaded) -> CheckedUpload:
@@ -121,46 +127,46 @@ def validate_upload(uploaded) -> CheckedUpload:
     limit = max_bytes()
     size = getattr(uploaded, "size", None)
     if size is None or size <= 0:
-        raise UploadRejected("empty", "Fayl bo‘sh.")
+        raise UploadRejected("empty", _("Fayl bo‘sh."))
     if size > limit:
-        raise UploadRejected("too_large", f"Fayl hajmi {limit // (1024 * 1024)} MB dan oshmasligi kerak.")
+        raise UploadRejected("too_large", _size_message(limit))
     name = clean_display_name(getattr(uploaded, "name", ""))
     if not name or "\x00" in (getattr(uploaded, "name", "") or ""):
-        raise UploadRejected("bad_name", "Fayl nomi noto‘g‘ri.")
+        raise UploadRejected("bad_name", _("Fayl nomi noto‘g‘ri."))
     stem_parts, ext = _split(name)
     if ext not in ALLOWED:
-        raise UploadRejected("extension", "Bu fayl turi ruxsat etilmagan. Ruxsat etilgan: " + ", ".join(sorted(ALLOWED)) + ".")
+        raise UploadRejected("extension", gettext("Bu fayl turi ruxsat etilmagan. Ruxsat etilgan: %(types)s.") % {"types": ", ".join(sorted(ALLOWED))})
     if any(p in DANGEROUS_PARTS for p in stem_parts):
-        raise UploadRejected("double_extension", "Fayl nomida xavfli kengaytma bor (masalan, report.php.pdf).")
+        raise UploadRejected("double_extension", _("Fayl nomida xavfli kengaytma bor (masalan, report.php.pdf)."))
     declared = (getattr(uploaded, "content_type", "") or "").split(";")[0].strip().lower()
     kind, mimes = ALLOWED[ext]
     if declared not in GENERIC_MIME and declared not in mimes:
-        raise UploadRejected("mime_mismatch", "Fayl turi kengaytmasiga mos kelmaydi.")
+        raise UploadRejected("mime_mismatch", _("Fayl turi kengaytmasiga mos kelmaydi."))
     uploaded.seek(0)
     data = uploaded.read(limit + 1)
     if len(data) > limit:
-        raise UploadRejected("too_large", f"Fayl hajmi {limit // (1024 * 1024)} MB dan oshmasligi kerak.")
+        raise UploadRejected("too_large", _size_message(limit))
     uploaded.seek(0)
     if kind == "pdf":
         if not data.startswith(b"%PDF-"):
-            raise UploadRejected("signature", "Fayl mazmuni kengaytmasiga mos kelmaydi.")
+            raise UploadRejected("signature", _("Fayl mazmuni kengaytmasiga mos kelmaydi."))
         if PDF_ACTIVE.search(data):
-            raise UploadRejected("pdf_active", "Faol tarkibli (skript, ilova) PDF qabul qilinmaydi.")
+            raise UploadRejected("pdf_active", _("Faol tarkibli (skript, ilova) PDF qabul qilinmaydi."))
     elif kind == "png":
         if not data.startswith(b"\x89PNG\r\n\x1a\n"):
-            raise UploadRejected("signature", "Fayl mazmuni kengaytmasiga mos kelmaydi.")
+            raise UploadRejected("signature", _("Fayl mazmuni kengaytmasiga mos kelmaydi."))
     elif kind == "jpeg":
         if not data.startswith(b"\xff\xd8\xff"):
-            raise UploadRejected("signature", "Fayl mazmuni kengaytmasiga mos kelmaydi.")
+            raise UploadRejected("signature", _("Fayl mazmuni kengaytmasiga mos kelmaydi."))
     elif kind == "text":
         if b"\x00" in data:
-            raise UploadRejected("signature", "Fayl mazmuni kengaytmasiga mos kelmaydi.")
+            raise UploadRejected("signature", _("Fayl mazmuni kengaytmasiga mos kelmaydi."))
         try:
             data.decode("utf-8")
         except UnicodeDecodeError as exc:
-            raise UploadRejected("signature", "Matn fayli UTF-8 bo‘lishi kerak.") from exc
+            raise UploadRejected("signature", _("Matn fayli UTF-8 bo‘lishi kerak.")) from exc
     else:
         if not data.startswith(b"PK\x03\x04"):
-            raise UploadRejected("signature", "Fayl mazmuni kengaytmasiga mos kelmaydi.")
+            raise UploadRejected("signature", _("Fayl mazmuni kengaytmasiga mos kelmaydi."))
         _check_zip(data, ext)
     return CheckedUpload(display_name=name, extension=ext, kind=kind, size=len(data), data=data)

@@ -1,0 +1,1864 @@
+# Project_Talim — Russian catalog. Source language of the message ids: Uzbek.
+msgid ""
+msgstr ""
+"Project-Id-Version: Project_Talim\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-17 11:38+0500\n"
+"Language: ru\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "Rollar va huquqlar"
+msgstr "Роли и права"
+
+msgid "Faqat o‘zi"
+msgstr "Только свои"
+
+msgid "Bo‘lim"
+msgstr "Подразделение"
+
+msgid "Butun tashkilot"
+msgstr "Вся организация"
+
+msgid "rol biriktirish"
+msgstr "назначение роли"
+
+msgid "rol biriktirishlar"
+msgstr "назначения ролей"
+
+msgid "Bo‘lim doirasi uchun bo‘lim ko‘rsatilishi shart."
+msgstr "Для области «Подразделение» необходимо указать подразделение."
+
+msgid "Bo‘lim faqat «Bo‘lim» doirasi uchun ko‘rsatiladi."
+msgstr "Подразделение указывается только для области «Подразделение»."
+
+msgid "Xodim"
+msgstr "Сотрудник"
+
+msgid "Bo‘lim boshlig‘i"
+msgstr "Руководитель подразделения"
+
+msgid "Kontent-menejer"
+msgstr "Контент-менеджер"
+
+msgid "Kadrlar bo‘limi"
+msgstr "Отдел кадров"
+
+msgid "Administrator"
+msgstr "Администратор"
+
+msgid "Tizim administratori"
+msgstr "Системный администратор"
+
+#, python-format
+msgid "Qo‘shish: %(model)s"
+msgstr "Добавление: %(model)s"
+
+#, python-format
+msgid "O‘zgartirish: %(model)s"
+msgstr "Изменение: %(model)s"
+
+#, python-format
+msgid "O‘chirish: %(model)s"
+msgstr "Удаление: %(model)s"
+
+#, python-format
+msgid "Ko‘rish: %(model)s"
+msgstr "Просмотр: %(model)s"
+
+msgid "Qo‘shimcha"
+msgstr "Дополнительно"
+
+msgid "Foydalanuvchilar"
+msgstr "Пользователи"
+
+msgid "Login yoki parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
+msgstr "Неверный логин или пароль, либо превышено число попыток. Повторите через 15 минут."
+
+msgid "Kod noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
+msgstr "Неверный код, либо превышено число попыток. Повторите через 15 минут."
+
+msgid "Joriy parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
+msgstr "Неверный текущий пароль, либо превышено число попыток. Повторите через 15 минут."
+
+msgid "Elektron pochta yoki login"
+msgstr "Электронная почта или логин"
+
+msgid "Parol"
+msgstr "Пароль"
+
+msgid "Meni eslab qolish"
+msgstr "Запомнить меня"
+
+msgid "Yangi parol joriy paroldan farq qilishi kerak."
+msgstr "Новый пароль должен отличаться от текущего."
+
+msgid "Tasdiqlash kodi yoki zaxira kod"
+msgstr "Код подтверждения или резервный код"
+
+msgid "Ilovadagi 6 xonali kod"
+msgstr "6-значный код из приложения"
+
+msgid "Joriy parol"
+msgstr "Текущий пароль"
+
+msgid "Login 3–150 belgi: lotin harflari, raqamlar, nuqta, tire, pastki chiziq."
+msgstr "Логин: 3–150 символов — латинские буквы, цифры, точка, дефис, подчёркивание."
+
+msgid "Login"
+msgstr "Логин"
+
+msgid "E-pochta"
+msgstr "Эл. почта"
+
+msgid "Familiya"
+msgstr "Фамилия"
+
+msgid "Ism"
+msgstr "Имя"
+
+msgid "Rol"
+msgstr "Роль"
+
+msgid "Bo‘lim (faqat bo‘lim boshlig‘i uchun)"
+msgstr "Подразделение (только для руководителя подразделения)"
+
+msgid "Bu login band."
+msgstr "Этот логин занят."
+
+msgid "Bu e-pochta band."
+msgstr "Эта электронная почта занята."
+
+msgid "Til"
+msgstr "Язык"
+
+msgid "Foydalanuvchi yaratildi. Endi unga taklifnoma yuboring."
+msgstr "Пользователь создан. Теперь отправьте ему приглашение."
+
+msgid "Ma’lumotlar saqlandi."
+msgstr "Данные сохранены."
+
+msgid "Foydalanuvchi o‘chirildi (faolsizlantirildi)."
+msgstr "Пользователь отключён (деактивирован)."
+
+msgid "Foydalanuvchi qayta faollashtirildi."
+msgstr "Пользователь снова активирован."
+
+msgid "Hisob blokdan chiqarildi."
+msgstr "Учётная запись разблокирована."
+
+msgid "Keyingi kirishda parolni almashtirish talab qilinadi."
+msgstr "При следующем входе потребуется сменить пароль."
+
+msgid "Taklifnoma yuborildi."
+msgstr "Приглашение отправлено."
+
+msgid "Rol yoki bo‘lim noto‘g‘ri tanlangan."
+msgstr "Роль или подразделение выбраны неверно."
+
+msgid "Rol biriktirildi."
+msgstr "Роль назначена."
+
+msgid "Rol olib tashlandi."
+msgstr "Роль снята."
+
+msgid "Xavfsizlik uchun qayta kiring: ikki bosqichli tasdiqlash talab qilinadi."
+msgstr "В целях безопасности войдите заново: требуется двухэтапное подтверждение."
+
+msgid "Davom etishdan oldin parolingizni almashtiring."
+msgstr "Прежде чем продолжить, смените пароль."
+
+msgid "e-mail"
+msgstr "эл. почта"
+
+msgid "til"
+msgstr "язык"
+
+msgid "parolni almashtirish shart"
+msgstr "обязательная смена пароля"
+
+#| msgid "Foydalanuvchi"
+msgid "foydalanuvchi"
+msgstr "пользователь"
+
+#| msgid "Foydalanuvchilar"
+msgid "foydalanuvchilar"
+msgstr "пользователи"
+
+msgid "Foydalanuvchilarni yaratish va boshqarish"
+msgstr "Создание пользователей и управление ими"
+
+msgid "Rollarni biriktirish va olib tashlash"
+msgstr "Назначение и снятие ролей"
+
+msgid "Hisoblarni blokdan chiqarish"
+msgstr "Разблокировка учётных записей"
+
+msgid "Parolingiz almashtirildi"
+msgstr "Ваш пароль изменён"
+
+msgid "Hisobingiz paroli almashtirildi. Boshqa qurilmalardagi sessiyalar yopildi."
+msgstr "Пароль вашей учётной записи изменён. Сеансы на других устройствах завершены."
+
+msgid "Parolingiz tiklandi"
+msgstr "Ваш пароль сброшен"
+
+msgid "Parolni tiklash havolasi orqali hisobingizga yangi parol o‘rnatildi. Barcha sessiyalar yopildi."
+msgstr "По ссылке для восстановления для вашей учётной записи установлен новый пароль. Все сеансы завершены."
+
+msgid "Ikki bosqichli himoya yoqildi"
+msgstr "Двухэтапная защита включена"
+
+msgid "Hisobingizda ikki bosqichli himoya (2FA) yoqildi."
+msgstr "Для вашей учётной записи включена двухэтапная защита (2FA)."
+
+msgid "Ikki bosqichli himoya o‘chirildi"
+msgstr "Двухэтапная защита отключена"
+
+msgid "Hisobingizda ikki bosqichli himoya (2FA) o‘chirildi. Endi hisob faqat parol bilan himoyalangan."
+msgstr "Для вашей учётной записи отключена двухэтапная защита (2FA). Теперь учётная запись защищена только паролем."
+
+msgid "Zaxira kodlar yangilandi"
+msgstr "Резервные коды обновлены"
+
+msgid "Hisobingizning zaxira kodlari yangilandi; eskilari bekor qilindi."
+msgstr "Резервные коды вашей учётной записи обновлены; прежние аннулированы."
+
+msgid "2FA administrator tomonidan tiklandi"
+msgstr "2FA сброшена администратором"
+
+msgid "Hisobingizning ikki bosqichli himoyasi administrator tomonidan olib tashlandi. Keyingi kirishda uni qayta sozlaysiz."
+msgstr "Двухэтапная защита вашей учётной записи снята администратором. При следующем входе вы настроите её заново."
+
+msgid "Xodimlar portaliga taklif"
+msgstr "Приглашение на портал сотрудников"
+
+msgid "Siz uchun xodimlar portalida hisob yaratildi."
+msgstr "Для вас создана учётная запись на портале сотрудников."
+
+#, python-format
+msgid ""
+"Assalomu alaykum!\n"
+"\n"
+"%(line)s\n"
+"\n"
+"Vaqt: %(when)s"
+msgstr ""
+"Здравствуйте!\n"
+"\n"
+"%(line)s\n"
+"\n"
+"Время: %(when)s"
+
+#, python-format
+msgid ""
+"\n"
+"Manzil (IP): %(ip)s"
+msgstr ""
+"\n"
+"Адрес (IP): %(ip)s"
+
+msgid "Agar buni siz qilmagan bo‘lsangiz, zudlik bilan administratorga murojaat qiling va parolingizni almashtiring."
+msgstr "Если это были не вы, немедленно обратитесь к администратору и смените пароль."
+
+msgid "Superuser hisoblarini bu sahifadan o‘zgartirib bo‘lmaydi."
+msgstr "Учётные записи суперпользователей нельзя изменять на этой странице."
+
+msgid "Bu rolni faqat administrator bera oladi."
+msgstr "Эту роль может назначить только администратор."
+
+msgid "Noma’lum rol."
+msgstr "Неизвестная роль."
+
+msgid "Bo‘lim boshlig‘i roli uchun bo‘lim ko‘rsatilishi shart."
+msgstr "Для роли руководителя подразделения необходимо указать подразделение."
+
+msgid "Bu rol allaqachon biriktirilgan."
+msgstr "Эта роль уже назначена."
+
+msgid "Bu rolni faqat administrator olib tashlay oladi."
+msgstr "Эту роль может снять только администратор."
+
+msgid "O‘zingizning administrator rolingizni olib tashlab bo‘lmaydi."
+msgstr "Нельзя снять собственную роль администратора."
+
+msgid "Oxirgi administratorning rolini olib tashlab bo‘lmaydi."
+msgstr "Нельзя снять роль у последнего администратора."
+
+msgid "O‘zingizni o‘chirib bo‘lmaydi."
+msgstr "Нельзя отключить самого себя."
+
+msgid "Oxirgi administratorni o‘chirib bo‘lmaydi."
+msgstr "Нельзя отключить последнего администратора."
+
+msgid "Faol bo‘lmagan hisobga taklif yuborib bo‘lmaydi."
+msgstr "Нельзя отправить приглашение неактивной учётной записи."
+
+msgid "Foydalanuvchining e-pochtasi ko‘rsatilmagan."
+msgstr "У пользователя не указан адрес электронной почты."
+
+msgid "Taklifnomalar juda ko‘p yuborildi. Keyinroq urinib ko‘ring."
+msgstr "Отправлено слишком много приглашений. Повторите позже."
+
+#, python-format
+msgid ""
+"Assalomu alaykum, %(name)s!\n"
+"\n"
+"Siz uchun %(site)s xodimlar portalida hisob yaratildi.\n"
+"Login: %(login)s\n"
+"\n"
+"Parolni o‘rnatish uchun havolaga o‘ting (30 daqiqa amal qiladi, faqat bir marta ishlaydi):\n"
+"\n"
+"%(link)s\n"
+"\n"
+"Havola muddati tugasa, kirish sahifasidagi «Parolni unutdingizmi?» orqali yangisini so‘rang.\n"
+msgstr ""
+"Здравствуйте, %(name)s!\n"
+"\n"
+"Для вас создана учётная запись на портале сотрудников «%(site)s».\n"
+"Логин: %(login)s\n"
+"\n"
+"Чтобы задать пароль, перейдите по ссылке (действует 30 минут, работает один раз):\n"
+"\n"
+"%(link)s\n"
+"\n"
+"Если срок действия ссылки истёк, запросите новую через «Забыли пароль?» на странице входа.\n"
+
+#, python-format
+msgid "%(site)s: portalga taklif"
+msgstr "%(site)s: приглашение на портал"
+
+msgid "Xatni yuborib bo‘lmadi. Pochta sozlamalarini tekshiring."
+msgstr "Не удалось отправить письмо. Проверьте настройки почты."
+
+msgid "Kirish muddati tugadi. Qaytadan kiring."
+msgstr "Время входа истекло. Войдите заново."
+
+msgid "Zaxira kodlaringiz kam qoldi. Yangilarini yarating."
+msgstr "Резервных кодов осталось мало. Создайте новые."
+
+msgid "Zaxira kodlarni yangilash"
+msgstr "Обновление резервных кодов"
+
+msgid "Yangi kodlar yaratish"
+msgstr "Создать новые коды"
+
+msgid "Eski zaxira kodlar bekor qilinadi."
+msgstr "Прежние резервные коды будут аннулированы."
+
+msgid "Sizning rolingiz uchun 2FA majburiy: uni o‘chirib bo‘lmaydi."
+msgstr "Для вашей роли 2FA обязательна: её нельзя отключить."
+
+msgid "2FA ni o‘chirish"
+msgstr "Отключение 2FA"
+
+msgid "O‘chirish"
+msgstr "Отключить"
+
+msgid "Hisob faqat parol bilan himoyalanadi."
+msgstr "Учётная запись будет защищена только паролем."
+
+msgid "2FA o‘chirildi."
+msgstr "2FA отключена."
+
+msgid "Audit jurnali"
+msgstr "Журнал аудита"
+
+msgid "Tizimga kirish"
+msgstr "Вход в систему"
+
+msgid "Muvaffaqiyatsiz kirish"
+msgstr "Неудачная попытка входа"
+
+msgid "Chiqish"
+msgstr "Выход"
+
+msgid "Rol biriktirildi"
+msgstr "Роль назначена"
+
+msgid "Rol olib tashlandi"
+msgstr "Роль снята"
+
+msgid "Kirish vaqtincha bloklandi"
+msgstr "Вход временно заблокирован"
+
+msgid "Bloklangan paytda kirishga urinish"
+msgstr "Попытка входа во время блокировки"
+
+msgid "Parol almashtirildi"
+msgstr "Пароль изменён"
+
+msgid "Parolni tiklash so‘raldi"
+msgstr "Запрошено восстановление пароля"
+
+msgid "Parolni tiklash so‘rovlari cheklandi"
+msgstr "Запросы на восстановление пароля ограничены"
+
+msgid "Parol tiklandi"
+msgstr "Пароль восстановлен"
+
+msgid "2FA yoqildi"
+msgstr "2FA включена"
+
+msgid "2FA o‘chirildi"
+msgstr "2FA отключена"
+
+msgid "2FA kodi noto‘g‘ri"
+msgstr "Неверный код 2FA"
+
+msgid "2FA tekshiruvi vaqtincha bloklandi"
+msgstr "Проверка 2FA временно заблокирована"
+
+msgid "Bloklangan paytda 2FA urinishi"
+msgstr "Попытка 2FA во время блокировки"
+
+msgid "Zaxira kod ishlatildi"
+msgstr "Использован резервный код"
+
+msgid "2FA talab qilingani uchun sessiya yopildi"
+msgstr "Сеанс закрыт: требуется 2FA"
+
+msgid "Foydalanuvchi yaratildi"
+msgstr "Пользователь создан"
+
+msgid "Foydalanuvchi o‘zgartirildi"
+msgstr "Пользователь изменён"
+
+msgid "Foydalanuvchi o‘chirildi (faolsizlantirildi)"
+msgstr "Пользователь отключён (деактивирован)"
+
+msgid "Foydalanuvchi qayta faollashtirildi"
+msgstr "Пользователь снова активирован"
+
+msgid "Taklifnoma yuborildi"
+msgstr "Приглашение отправлено"
+
+msgid "Hisob blokdan chiqarildi"
+msgstr "Учётная запись разблокирована"
+
+msgid "Parolni almashtirish majburiy qilindi"
+msgstr "Потребована смена пароля"
+
+msgid "Xodim kartasi ko‘rildi (shaxsiy ma’lumotlar)"
+msgstr "Просмотрена карточка сотрудника (личные данные)"
+
+msgid "Xodim qo‘shildi"
+msgstr "Сотрудник добавлен"
+
+msgid "Xodim o‘zgartirildi"
+msgstr "Сотрудник изменён"
+
+msgid "Xodim arxivlandi"
+msgstr "Сотрудник архивирован"
+
+msgid "Xodim arxivdan qaytarildi"
+msgstr "Сотрудник восстановлен из архива"
+
+msgid "Tashkiliy tuzilma o‘zgartirildi"
+msgstr "Организационная структура изменена"
+
+msgid "Hujjat yuklandi"
+msgstr "Документ загружен"
+
+msgid "Hujjatning yangi versiyasi yuklandi"
+msgstr "Загружена новая версия документа"
+
+msgid "Maxfiy hujjat ko‘rildi"
+msgstr "Просмотрен конфиденциальный документ"
+
+msgid "Hujjat yuklab olindi"
+msgstr "Документ скачан"
+
+msgid "Hujjat ma’lumotlari o‘zgartirildi"
+msgstr "Данные документа изменены"
+
+msgid "Hujjat arxivlandi"
+msgstr "Документ архивирован"
+
+msgid "Hujjat arxivdan qaytarildi"
+msgstr "Документ восстановлен из архива"
+
+msgid "Hujjat yuklash rad etildi"
+msgstr "Загрузка документа отклонена"
+
+msgid "Yuklangan faylda xavf aniqlandi"
+msgstr "В загруженном файле обнаружена угроза"
+
+msgid "Hisobot yuklab olindi"
+msgstr "Отчёт скачан"
+
+msgid "Hisobotda ijrochilar kesimi ko‘rildi"
+msgstr "Просмотрен разрез отчёта по исполнителям"
+
+msgid "Topshiriqqa fayl biriktirildi"
+msgstr "К заданию прикреплён файл"
+
+msgid "Topshiriq fayli yuklab olindi"
+msgstr "Файл задания скачан"
+
+msgid "Topshiriq fayli olib tashlandi"
+msgstr "Файл задания откреплён"
+
+msgid "audit yozuvi"
+msgstr "запись аудита"
+
+msgid "audit yozuvlari"
+msgstr "записи аудита"
+
+msgid "Kontent"
+msgstr "Контент"
+
+msgid "nomi"
+msgstr "название"
+
+msgid "yangilik kategoriyasi"
+msgstr "категория новостей"
+
+msgid "yangilik kategoriyalari"
+msgstr "категории новостей"
+
+msgid "Qoralama"
+msgstr "Черновик"
+
+msgid "Tekshiruvda"
+msgstr "На проверке"
+
+msgid "Nashr etilgan"
+msgstr "Опубликовано"
+
+msgid "Arxiv"
+msgstr "Архив"
+
+msgid "sarlavha"
+msgstr "заголовок"
+
+msgid "qisqa tavsif"
+msgstr "краткое описание"
+
+msgid "matn"
+msgstr "текст"
+
+msgid "holat"
+msgstr "статус"
+
+msgid "nashr sanasi"
+msgstr "дата публикации"
+
+#| msgid "Yangiliklar"
+msgid "yangilik"
+msgstr "новость"
+
+#| msgid "Yangiliklar"
+msgid "yangiliklar"
+msgstr "новости"
+
+msgid "Yangilikni nashr etish"
+msgstr "Публикация новостей"
+
+msgid "Umumiy"
+msgstr "Общее"
+
+msgid "Mirzacho‘l tumani Xalq ta’limi bo‘limi"
+msgstr "Отдел народного образования Мирзачульского района"
+
+msgid "Xalq ta’limi bo‘limi"
+msgstr "Отдел народного образования"
+
+msgid "Mirzacho‘l tumani"
+msgstr "Мирзачульский район"
+
+msgid "Hujjatlar"
+msgstr "Документы"
+
+msgid "Fayllarni tekshirish xizmati hozir ishlamayapti. Fayl qabul qilinmadi; keyinroq qayta urinib ko‘ring."
+msgstr "Служба проверки файлов сейчас недоступна. Файл не принят; повторите попытку позже."
+
+msgid "Faylni tekshirish juda uzoq davom etdi. Fayl qabul qilinmadi; keyinroq qayta urinib ko‘ring."
+msgstr "Проверка файла заняла слишком много времени. Файл не принят; повторите попытку позже."
+
+msgid "Faylni tekshirib bo‘lmadi. Fayl qabul qilinmadi."
+msgstr "Не удалось проверить файл. Файл не принят."
+
+msgid "Faylda zararli dastur aniqlandi. Fayl qabul qilinmadi."
+msgstr "В файле обнаружена вредоносная программа. Файл не принят."
+
+msgid "Faqat «Faqat bo‘lim» darajasi uchun."
+msgstr "Только для уровня «Только подразделение»."
+
+msgid "Bo‘lim darajasi uchun bo‘lim tanlang."
+msgstr "Для уровня «Подразделение» выберите подразделение."
+
+msgid "Fayl"
+msgstr "Файл"
+
+msgid "Izoh (nima o‘zgardi)"
+msgstr "Комментарий (что изменилось)"
+
+msgid "Buyruqlar"
+msgstr "Приказы"
+
+msgid "Nizomlar va yo‘riqnomalar"
+msgstr "Положения и инструкции"
+
+msgid "Hisobotlar"
+msgstr "Отчёты"
+
+msgid "Shablonlar va namunalar"
+msgstr "Шаблоны и образцы"
+
+msgid "Boshqa"
+msgstr "Прочее"
+
+msgid "faol"
+msgstr "активно"
+
+msgid "hujjat turkumi"
+msgstr "категория документов"
+
+msgid "hujjat turkumlari"
+msgstr "категории документов"
+
+msgid "Faol"
+msgstr "Активен"
+
+msgid "Arxivda"
+msgstr "В архиве"
+
+msgid "Barcha xodimlar"
+msgstr "Все сотрудники"
+
+msgid "Faqat bo‘lim"
+msgstr "Только подразделение"
+
+msgid "Maxfiy (muallif va kadrlar/administrator)"
+msgstr "Конфиденциально (автор, кадры и администратор)"
+
+msgid "tavsif"
+msgstr "описание"
+
+msgid "hujjat raqami"
+msgstr "номер документа"
+
+msgid "turkum"
+msgstr "категория"
+
+msgid "hujjat sanasi"
+msgstr "дата документа"
+
+msgid "kirish darajasi"
+msgstr "уровень доступа"
+
+msgid "bo‘lim"
+msgstr "подразделение"
+
+#| msgid "Hujjatlar"
+msgid "hujjat"
+msgstr "документ"
+
+#| msgid "Hujjatlar"
+msgid "hujjatlar"
+msgstr "документы"
+
+msgid "Barcha (maxfiy bo‘lmagan) hujjatlarni, jumladan bo‘limlarnikini ko‘rish"
+msgstr "Просмотр всех неконфиденциальных документов, включая документы подразделений"
+
+msgid "Maxfiy hujjatlarni ko‘rish"
+msgstr "Просмотр конфиденциальных документов"
+
+msgid "izoh"
+msgstr "комментарий"
+
+msgid "Toza"
+msgstr "Чистый"
+
+msgid "Tekshirilmagan"
+msgstr "Не проверен"
+
+msgid "Xavfli"
+msgstr "Опасный"
+
+#, python-format
+msgid "Fayl hajmi %(mb)d MB dan oshmasligi kerak."
+msgstr "Размер файла не должен превышать %(mb)d МБ."
+
+msgid "Fayl buzilgan yoki kengaytmasiga mos kelmaydi."
+msgstr "Файл повреждён или не соответствует расширению."
+
+msgid "Fayl tarkibi shubhali (juda ko‘p elementlar)."
+msgstr "Содержимое файла подозрительно (слишком много элементов)."
+
+msgid "Fayl tarkibi xavfli yoki shifrlangan."
+msgstr "Содержимое файла небезопасно или зашифровано."
+
+msgid "Fayl tarkibi shubhali (haddan tashqari siqilgan)."
+msgstr "Содержимое файла подозрительно (чрезмерно сжато)."
+
+msgid "Fayl ochilgandagi hajmi juda katta."
+msgstr "Размер файла после распаковки слишком велик."
+
+msgid "Fayl kengaytmasiga mos kelmaydi."
+msgstr "Файл не соответствует расширению."
+
+msgid "Makros yoki faol tarkibli fayllar qabul qilinmaydi."
+msgstr "Файлы с макросами или активным содержимым не принимаются."
+
+msgid "Fayl bo‘sh."
+msgstr "Файл пуст."
+
+msgid "Fayl nomi noto‘g‘ri."
+msgstr "Недопустимое имя файла."
+
+#, python-format
+msgid "Bu fayl turi ruxsat etilmagan. Ruxsat etilgan: %(types)s."
+msgstr "Этот тип файла не разрешён. Разрешены: %(types)s."
+
+msgid "Fayl nomida xavfli kengaytma bor (masalan, report.php.pdf)."
+msgstr "В имени файла есть опасное расширение (например, report.php.pdf)."
+
+msgid "Fayl turi kengaytmasiga mos kelmaydi."
+msgstr "Тип файла не соответствует расширению."
+
+msgid "Fayl mazmuni kengaytmasiga mos kelmaydi."
+msgstr "Содержимое файла не соответствует расширению."
+
+msgid "Faol tarkibli (skript, ilova) PDF qabul qilinmaydi."
+msgstr "PDF с активным содержимым (скрипты, вложения) не принимаются."
+
+msgid "Matn fayli UTF-8 bo‘lishi kerak."
+msgstr "Текстовый файл должен быть в кодировке UTF-8."
+
+msgid "Hujjat yuklandi."
+msgstr "Документ загружен."
+
+msgid "Saqlandi."
+msgstr "Сохранено."
+
+#, python-format
+msgid "Yangi versiya (v%(n)d) yuklandi."
+msgstr "Загружена новая версия (v%(n)d)."
+
+msgid "Fayl tanlanmagan yoki noto‘g‘ri."
+msgstr "Файл не выбран или недопустим."
+
+msgid "Hujjat arxivdan qaytarildi."
+msgstr "Документ восстановлен из архива."
+
+msgid "Hujjat arxivlandi."
+msgstr "Документ архивирован."
+
+msgid "Bildirishnomalar"
+msgstr "Уведомления"
+
+msgid "Topshiriq berildi"
+msgstr "Вам назначено задание"
+
+msgid "Topshiriq tekshiruvga topshirildi"
+msgstr "Задание сдано на проверку"
+
+msgid "Topshiriq qabul qilindi"
+msgstr "Задание принято"
+
+msgid "Topshiriq qaytarildi"
+msgstr "Задание возвращено на доработку"
+
+msgid "Topshiriq bekor qilindi"
+msgstr "Задание отменено"
+
+msgid "Topshiriq muddati yaqin"
+msgstr "Срок задания близко"
+
+msgid "Topshiriq muddati o‘tdi"
+msgstr "Срок задания истёк"
+
+#, python-format
+msgid ""
+"%(kind)s: %(title)s\n"
+"\n"
+"Batafsil ma’lumot uchun xodimlar portaliga kiring."
+msgstr ""
+"%(kind)s: %(title)s\n"
+"\n"
+"Подробности — на портале сотрудников."
+
+msgid "Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
+msgstr "У вас нет доступа к этому заданию, либо оно удалено."
+
+msgid "Tashkilot"
+msgstr "Организация"
+
+msgid "Foydalanuvchi hisobi"
+msgstr "Учётная запись пользователя"
+
+msgid "Bu hisob boshqa xodimga biriktirilgan."
+msgstr "Эта учётная запись уже привязана к другому сотруднику."
+
+msgid "Bu nomdagi bo‘lim shu joyda allaqachon bor."
+msgstr "Подразделение с таким названием здесь уже есть."
+
+msgid "Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo‘lmaydi."
+msgstr "Нельзя отключить подразделение, в котором есть активные сотрудники или активные дочерние подразделения."
+
+msgid "bo‘limlar"
+msgstr "подразделения"
+
+#| msgid "Lavozim"
+msgid "lavozim"
+msgstr "должность"
+
+#| msgid "Lavozimlar"
+msgid "lavozimlar"
+msgstr "должности"
+
+msgid "Ta’tilda"
+msgstr "В отпуске"
+
+msgid "Yangi"
+msgstr "Новый"
+
+msgid "familiya"
+msgstr "фамилия"
+
+msgid "ism"
+msgstr "имя"
+
+msgid "otasining ismi"
+msgstr "отчество"
+
+msgid "ish telefoni"
+msgstr "рабочий телефон"
+
+msgid "ish e-pochtasi"
+msgstr "рабочая эл. почта"
+
+msgid "ishga qabul sanasi"
+msgstr "дата приёма на работу"
+
+msgid "shaxsiy telefon"
+msgstr "личный телефон"
+
+msgid "tug‘ilgan sana"
+msgstr "дата рождения"
+
+#| msgid "Xodim"
+msgid "xodim"
+msgstr "сотрудник"
+
+#| msgid "Xodimlar"
+msgid "xodimlar"
+msgstr "сотрудники"
+
+msgid "Xodimlar ro‘yxatini ko‘rish (ism, lavozim, bo‘lim, holat)"
+msgstr "Просмотр списка сотрудников (имя, должность, подразделение, статус)"
+
+msgid "Xodimlarning aloqa ma’lumotlarini ko‘rish"
+msgstr "Просмотр контактных данных сотрудников"
+
+msgid "Xodimlarning shaxsiy ma’lumotlarini ko‘rish"
+msgstr "Просмотр личных данных сотрудников"
+
+msgid "Umumiy o‘rta ta’lim maktabi"
+msgstr "Общеобразовательная школа"
+
+msgid "Ixtisoslashtirilgan maktab"
+msgstr "Специализированная школа"
+
+msgid "Maktabgacha ta’lim muassasasi"
+msgstr "Дошкольное образовательное учреждение"
+
+msgid "Ijod maktabi"
+msgstr "Школа искусств"
+
+msgid "Kasbiy ta’lim"
+msgstr "Профессиональное образование"
+
+msgid "turi"
+msgstr "тип"
+
+msgid "rahbar"
+msgstr "руководитель"
+
+msgid "saytda ko‘rsatish"
+msgstr "показывать на сайте"
+
+msgid "ta’lim muassasasi"
+msgstr "образовательное учреждение"
+
+msgid "ta’lim muassasalari"
+msgstr "образовательные учреждения"
+
+msgid "Sizning hisobingizga xodim kartasi biriktirilmagan."
+msgstr "К вашей учётной записи не привязана карточка сотрудника."
+
+msgid "Xodim qo‘shildi."
+msgstr "Сотрудник добавлен."
+
+msgid "Xodim arxivdan qaytarildi."
+msgstr "Сотрудник восстановлен из архива."
+
+msgid "Xodim arxivlandi."
+msgstr "Сотрудник архивирован."
+
+msgid "Lavozim"
+msgstr "Должность"
+
+msgid "Portal"
+msgstr "Портал"
+
+msgid "Faol xodimlar"
+msgstr "Активные сотрудники"
+
+msgid "Xodimlar (arxivdan tashqari)"
+msgstr "Сотрудники (без архива)"
+
+msgid "Davrda yaratilgan topshiriqlar"
+msgstr "Заданий создано за период"
+
+msgid "Shundan bajarilgan"
+msgstr "Из них выполнено"
+
+msgid "Bajarilish ulushi, %"
+msgstr "Доля выполненных, %"
+
+msgid "Muddati o‘tgan (ochiq)"
+msgstr "Просрочено (открытые)"
+
+msgid "Kechikib bajarilgan"
+msgstr "Выполнено с опозданием"
+
+msgid "Davrda yakunlangan topshiriqlar"
+msgstr "Заданий завершено за период"
+
+msgid "Davrda yuklangan hujjatlar"
+msgstr "Документов загружено за период"
+
+msgid "barchasi"
+msgstr "все"
+
+#, python-format
+msgid "Davr: %(a)s – %(b)s"
+msgstr "Период: %(a)s – %(b)s"
+
+#, python-format
+msgid "Doira: %(scope)s"
+msgstr "Область: %(scope)s"
+
+#, python-format
+msgid "Bo‘lim filtri: %(v)s"
+msgstr "Фильтр по подразделению: %(v)s"
+
+#, python-format
+msgid "Topshiriq holati: %(v)s"
+msgstr "Статус задания: %(v)s"
+
+#, python-format
+msgid "Hujjat turkumi: %(v)s"
+msgstr "Категория документов: %(v)s"
+
+#, python-format
+msgid "Tayyorlangan: %(when)s (%(user)s)"
+msgstr "Подготовлено: %(when)s (%(user)s)"
+
+msgid "Hisobot"
+msgstr "Отчёт"
+
+msgid "Ko‘rsatkich"
+msgstr "Показатель"
+
+msgid "Qiymat"
+msgstr "Значение"
+
+msgid "Dinamika"
+msgstr "Динамика"
+
+msgid "Davr"
+msgstr "Период"
+
+msgid "Yaratilgan"
+msgstr "Создано"
+
+msgid "Yakunlangan"
+msgstr "Завершено"
+
+#, python-format
+msgid "… yana %(n)d ta qator ko‘rsatilmadi (chegara %(limit)d)"
+msgstr "… ещё %(n)d строк не показано (лимит %(limit)d)"
+
+msgid "Asosiy ko‘rsatkichlar"
+msgstr "Основные показатели"
+
+msgid "Topshiriqlar dinamikasi"
+msgstr "Динамика заданий"
+
+#, python-format
+msgid "… yana %(n)d ta davr ko‘rsatilmadi (to‘liq ro‘yxat Excel faylida)."
+msgstr "… ещё %(n)d периодов не показано (полный список — в файле Excel)."
+
+msgid "Ma’lumot yo‘q."
+msgstr "Нет данных."
+
+#, python-format
+msgid "… yana %(n)d ta qator ko‘rsatilmadi (to‘liq ro‘yxat Excel faylida)."
+msgstr "… ещё %(n)d строк не показано (полный список — в файле Excel)."
+
+msgid "Hisobotlar sahifasini ko‘rish (doira rol bo‘yicha)"
+msgstr "Просмотр страницы отчётов (область определяется ролью)"
+
+msgid "Hisobotlarni Excel/PDF ga yuklab olish"
+msgstr "Скачивание отчётов в Excel/PDF"
+
+msgid "Hisobotda ijrochilar kesimini ko‘rish (shaxsiy natijalar)"
+msgstr "Просмотр отчёта в разрезе исполнителей (личные результаты)"
+
+msgid "Boshlanish sanasi"
+msgstr "Дата начала"
+
+msgid "Tugash sanasi"
+msgstr "Дата окончания"
+
+msgid "Topshiriq holati"
+msgstr "Статус задания"
+
+msgid "Barchasi"
+msgstr "Все"
+
+msgid "Hujjat turkumi"
+msgstr "Категория документов"
+
+msgid "Guruhlash"
+msgstr "Группировка"
+
+msgid "Avtomatik"
+msgstr "Автоматически"
+
+msgid "Kunlar"
+msgstr "Дни"
+
+msgid "Haftalar"
+msgstr "Недели"
+
+msgid "Oylar"
+msgstr "Месяцы"
+
+msgid "Barcha bo‘limlar"
+msgstr "Все подразделения"
+
+msgid "Barcha turkumlar"
+msgstr "Все категории"
+
+msgid "Boshlanish sanasi tugash sanasidan keyin bo‘lishi mumkin emas."
+msgstr "Дата начала не может быть позже даты окончания."
+
+#, python-format
+msgid "Davr %(n)d kundan oshmasligi kerak."
+msgstr "Период не должен превышать %(n)d дн."
+
+#, python-format
+msgid "Bo‘lim: %(name)s"
+msgstr "Подразделение: %(name)s"
+
+msgid "sizning doirangiz"
+msgstr "ваша область"
+
+msgid "Xodimlar: bo‘limlar bo‘yicha"
+msgstr "Сотрудники: по подразделениям"
+
+msgid "Xodimlar"
+msgstr "Сотрудники"
+
+msgid "— (lavozim ko‘rsatilmagan)"
+msgstr "— (должность не указана)"
+
+msgid "Xodimlar: lavozimlar bo‘yicha"
+msgstr "Сотрудники: по должностям"
+
+msgid "Topshiriqlar: holatlar bo‘yicha"
+msgstr "Задания: по статусам"
+
+msgid "Holat"
+msgstr "Статус"
+
+msgid "Soni"
+msgstr "Количество"
+
+msgid "— (bo‘limsiz)"
+msgstr "— (без подразделения)"
+
+msgid "Bajarilish: bo‘limlar bo‘yicha"
+msgstr "Выполнение: по подразделениям"
+
+msgid "Jami"
+msgstr "Всего"
+
+msgid "Bajarilgan"
+msgstr "Выполнено"
+
+msgid "Bajarilish"
+msgstr "Выполнение"
+
+msgid "Bir nechta ijrochili topshiriq har bir ijrochining bo‘limida hisoblanadi."
+msgstr "Задание с несколькими исполнителями учитывается в подразделении каждого исполнителя."
+
+msgid "Bajarilish: ijrochilar bo‘yicha"
+msgstr "Выполнение: по исполнителям"
+
+msgid "Ijrochi"
+msgstr "Исполнитель"
+
+msgid "Shaxsiy natijalar: faqat ruxsati bor foydalanuvchilarga ko‘rinadi."
+msgstr "Личные результаты: видны только пользователям с соответствующим правом."
+
+msgid "Hujjatlar: turkumlar bo‘yicha"
+msgstr "Документы: по категориям"
+
+msgid "Turkum"
+msgstr "Категория"
+
+msgid "Faqat siz ko‘rishga ruxsat etilgan, faol hujjatlar hisoblanadi."
+msgstr "Учитываются только активные документы, которые вам разрешено просматривать."
+
+msgid "Hujjatlar: davrlar bo‘yicha"
+msgstr "Документы: по периодам"
+
+msgid "Faqat hujjat yuklangan davrlar ko‘rsatiladi."
+msgstr "Показаны только периоды, в которые загружались документы."
+
+#, python-format
+msgid "Filtrlar noto‘g‘ri: %(errors)s"
+msgstr "Фильтры указаны неверно: %(errors)s"
+
+msgid "Topshiriqlar"
+msgstr "Задания"
+
+msgid "Ijrochilar"
+msgstr "Исполнители"
+
+msgid "Bir nechta ijrochini Ctrl (⌘) bosib tanlang."
+msgstr "Для выбора нескольких исполнителей удерживайте Ctrl (⌘)."
+
+msgid "Kamida bitta ijrochi tanlang."
+msgstr "Выберите хотя бы одного исполнителя."
+
+msgid "Izoh"
+msgstr "Комментарий"
+
+msgctxt "task status"
+msgid "Yangi"
+msgstr "Новое"
+
+msgid "Jarayonda"
+msgstr "В работе"
+
+msgid "Bajarildi"
+msgstr "Выполнено"
+
+msgid "Bekor qilindi"
+msgstr "Отменено"
+
+msgid "Past"
+msgstr "Низкий"
+
+msgid "Oddiy"
+msgstr "Обычный"
+
+msgid "Yuqori"
+msgstr "Высокий"
+
+msgid "muhimlik"
+msgstr "приоритет"
+
+msgid "muddat"
+msgstr "срок"
+
+#| msgid "Topshiriqlar"
+msgid "topshiriq"
+msgstr "задание"
+
+#| msgid "Topshiriqlar"
+msgid "topshiriqlar"
+msgstr "задания"
+
+msgid "Bo‘lim (yoki butun tashkilot) topshiriqlarini ko‘rish"
+msgstr "Просмотр заданий подразделения (или всей организации)"
+
+#| msgid "Izohlar"
+msgid "izohlar"
+msgstr "комментарии"
+
+msgid "Yaratildi"
+msgstr "Создано"
+
+msgid "O‘zgartirildi"
+msgstr "Изменено"
+
+msgid "Holat o‘zgardi"
+msgstr "Статус изменён"
+
+msgid "Izoh qoldirildi"
+msgstr "Оставлен комментарий"
+
+msgid "Fayl biriktirildi"
+msgstr "Файл прикреплён"
+
+msgid "Fayl olib tashlandi"
+msgstr "Файл откреплён"
+
+msgid "Faylni topshiriqdan olib tashlash (faylning o‘zi o‘chirilmaydi)"
+msgstr "Открепление файла от задания (сам файл не удаляется)"
+
+msgid "Menga berilgan"
+msgstr "Назначенные мне"
+
+msgid "Men bergan"
+msgstr "Поручённые мной"
+
+msgid "Izoh bo‘sh yoki juda uzun."
+msgstr "Комментарий пуст или слишком длинный."
+
+msgid "Topshiriq yaratildi."
+msgstr "Задание создано."
+
+msgid "Bu holatga o‘tkazib bo‘lmaydi."
+msgstr "В этот статус перевести нельзя."
+
+msgid "Holat o‘zgartirildi."
+msgstr "Статус изменён."
+
+#, python-format
+msgid "Bitta topshiriqqa %(n)d tadan ortiq fayl biriktirib bo‘lmaydi."
+msgstr "К одному заданию нельзя прикрепить более %(n)d файлов."
+
+msgid "Fayl biriktirildi."
+msgstr "Файл прикреплён."
+
+msgid "Fayl topshiriqdan olib tashlandi."
+msgstr "Файл откреплён от задания."
+
+msgid "Ta’lim — kelajak poydevori"
+msgstr "Образование — основа будущего"
+
+msgid "Parolni almashtirish"
+msgstr "Смена пароля"
+
+msgid "Almashtirgandan so‘ng boshqa qurilmalardagi sessiyalar yopiladi."
+msgstr "После смены пароля сеансы на других устройствах будут завершены."
+
+msgid "Saqlash"
+msgstr "Сохранить"
+
+msgid "Bekor qilish"
+msgstr "Отмена"
+
+msgid "Parolingiz yangilandi. Boshqa qurilmalardagi sessiyalar yopildi."
+msgstr "Пароль обновлён. Сеансы на других устройствах завершены."
+
+msgid "Xavfsizlik sahifasiga qaytish"
+msgstr "Вернуться к безопасности"
+
+msgid "Yangi parol o‘rnatildi. Barcha eski sessiyalar yopildi. Endi kirishingiz mumkin."
+msgstr "Новый пароль установлен. Все прежние сеансы завершены. Теперь вы можете войти."
+
+msgid "Kirish"
+msgstr "Войти"
+
+msgid "Yangi parol"
+msgstr "Новый пароль"
+
+msgid "Yangi parol o‘rnatish"
+msgstr "Установка нового пароля"
+
+msgid "Parolni saqlash"
+msgstr "Сохранить пароль"
+
+msgid "Havola yaroqsiz"
+msgstr "Ссылка недействительна"
+
+msgid "Havola muddati tugagan, allaqachon ishlatilgan yoki noto‘g‘ri. Yangi havola so‘rang."
+msgstr "Срок действия ссылки истёк, она уже использована или неверна. Запросите новую ссылку."
+
+msgid "Yangi havola so‘rash"
+msgstr "Запросить новую ссылку"
+
+msgid "Havola yuborildi"
+msgstr "Ссылка отправлена"
+
+msgid "E-pochtangizni tekshiring"
+msgstr "Проверьте электронную почту"
+
+msgid "Agar kiritilgan e-pochta tizimda mavjud bo‘lsa, parolni tiklash havolasi yuborildi. Havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi."
+msgstr "Если указанный адрес есть в системе, на него отправлена ссылка для восстановления пароля. Ссылка действует 30 минут и работает только один раз."
+
+msgid "Kirish sahifasi"
+msgstr "Страница входа"
+
+msgid "Assalomu alaykum!"
+msgstr "Здравствуйте!"
+
+#, python-format
+msgid "%(site_name)s xodimlar portalida parolni tiklash so‘raldi."
+msgstr "На портале сотрудников «%(site_name)s» запрошено восстановление пароля."
+
+msgid "Yangi parol o‘rnatish uchun havolaga o‘ting (havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi):"
+msgstr "Чтобы задать новый пароль, перейдите по ссылке (действует 30 минут и работает только один раз):"
+
+msgid "Agar siz buni so‘ramagan bo‘lsangiz, bu xatga e’tibor bermang — parolingiz o‘zgarmaydi."
+msgstr "Если вы этого не запрашивали, проигнорируйте это письмо — ваш пароль не изменится."
+
+msgid "Parolni tiklash"
+msgstr "Восстановление пароля"
+
+msgid "Hisobingizga biriktirilgan e-pochta manzilini kiriting. Agar u tizimda bo‘lsa, parolni tiklash havolasi yuboriladi."
+msgstr "Введите адрес электронной почты вашей учётной записи. Если он есть в системе, мы отправим ссылку для восстановления пароля."
+
+msgid "Havola yuborish"
+msgstr "Отправить ссылку"
+
+msgid "Boshiga qaytish"
+msgstr "Вернуться ко входу"
+
+#, python-format
+msgid "%(site_name)s: parolni tiklash"
+msgstr "%(site_name)s: восстановление пароля"
+
+msgid "Xavfsizlik"
+msgstr "Безопасность"
+
+msgid "Parol va ikki bosqichli himoya"
+msgstr "Пароль и двухэтапная защита"
+
+msgid "Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi."
+msgstr "После смены пароля сеансы на других устройствах будут завершены."
+
+msgid "Ikki bosqichli himoya (2FA)"
+msgstr "Двухэтапная защита (2FA)"
+
+msgid "Yoqilgan"
+msgstr "Включена"
+
+#, python-format
+msgid "Qolgan zaxira kodlar: %(n)s"
+msgstr "Осталось резервных кодов: %(n)s"
+
+msgid "Sizning rolingiz uchun 2FA majburiy."
+msgstr "Для вашей роли 2FA обязательна."
+
+msgid "Yoqilmagan"
+msgstr "Не включена"
+
+msgid "2FA ni yoqish"
+msgstr "Включить 2FA"
+
+msgid "Zaxira kodlar"
+msgstr "Резервные коды"
+
+msgid "Hozir saqlang."
+msgstr "Сохраните их сейчас."
+
+msgid "Bu kodlar faqat bir marta ko‘rsatiladi. Har biri bir marta ishlaydi va telefoningiz yo‘qolganda kirishga yordam beradi. Xavfsiz joyda saqlang."
+msgstr "Эти коды показываются только один раз. Каждый работает один раз и поможет войти, если вы потеряете телефон. Храните их в надёжном месте."
+
+msgid "Saqladim, davom etish"
+msgstr "Я сохранил(а), продолжить"
+
+msgid "2FA ni sozlash"
+msgstr "Настройка 2FA"
+
+msgid "Ikki bosqichli himoyani sozlash"
+msgstr "Настройка двухэтапной защиты"
+
+msgid "Sizning rolingiz uchun bu majburiy. Sozlashni tugatmaguncha tizimga kira olmaysiz."
+msgstr "Для вашей роли это обязательно. Пока вы не завершите настройку, войти в систему нельзя."
+
+msgid "Telefoningizda autentifikator ilovasini oching (masalan, Google Authenticator, Microsoft Authenticator, Aegis)."
+msgstr "Откройте на телефоне приложение-аутентификатор (например, Google Authenticator, Microsoft Authenticator, Aegis)."
+
+msgid "QR-kodni skanerlang yoki maxfiy kalitni qo‘lda kiriting."
+msgstr "Отсканируйте QR-код или введите секретный ключ вручную."
+
+msgid "Ilovada ko‘rinadigan 6 xonali kodni pastga kiriting."
+msgstr "Введите ниже 6-значный код из приложения."
+
+msgid "Qo‘lda kiritish uchun kalit"
+msgstr "Ключ для ручного ввода"
+
+msgid "Hisob"
+msgstr "Учётная запись"
+
+msgid "Tasdiqlash va yoqish"
+msgstr "Подтвердить и включить"
+
+msgid "Yangi kalit yaratish"
+msgstr "Создать новый ключ"
+
+msgid "Ikki bosqichli tasdiqlash"
+msgstr "Двухэтапное подтверждение"
+
+msgid "Autentifikator ilovasidagi 6 xonali kodni kiriting. Qurilmangiz yo‘q bo‘lsa, zaxira kodlardan birini kiriting."
+msgstr "Введите 6-значный код из приложения-аутентификатора. Если устройства нет под рукой, введите один из резервных кодов."
+
+msgid "Tasdiqlash"
+msgstr "Подтвердить"
+
+msgid "Asosiy navigatsiya"
+msgstr "Основная навигация"
+
+msgid "Xodimlar portali"
+msgstr "Портал сотрудников"
+
+msgid "Bo‘limlar"
+msgstr "Разделы"
+
+msgid "Bosh sahifa"
+msgstr "Главная"
+
+msgid "Tuzilma"
+msgstr "Структура"
+
+msgid "Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘shiladi"
+msgstr "Этап разработки: остальные разделы будут добавлены позже"
+
+msgid "Menyuni ochish yoki yig‘ish"
+msgstr "Открыть или свернуть меню"
+
+msgid "Sayt"
+msgstr "Сайт"
+
+msgid "Profil menyusi"
+msgstr "Меню профиля"
+
+msgid "Tizimdan chiqish"
+msgstr "Выйти из системы"
+
+msgid "Ishlab chiqish bosqichi"
+msgstr "Этап разработки"
+
+msgid "Asosiy mazmunga o‘tish"
+msgstr "Перейти к основному содержимому"
+
+msgid "Asosiy menyu"
+msgstr "Главное меню"
+
+msgid "Yangiliklar"
+msgstr "Новости"
+
+msgid "Menyu"
+msgstr "Меню"
+
+msgid "Ta’lim — kelajak poydevori. Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!"
+msgstr "Образование — основа будущего. Качественное образование, гармоничное поколение и движение вперёд — вместе!"
+
+msgid "Foydali havolalar"
+msgstr "Полезные ссылки"
+
+msgid "Aloqa"
+msgstr "Контакты"
+
+msgid "Manzil: tasdiqlangan ma’lumot kiritiladi"
+msgstr "Адрес: будут указаны подтверждённые данные"
+
+msgid "Telefon: tasdiqlangan ma’lumot kiritiladi"
+msgstr "Телефон: будут указаны подтверждённые данные"
+
+msgid "E-pochta: tasdiqlangan ma’lumot kiritiladi"
+msgstr "Эл. почта: будут указаны подтверждённые данные"
+
+msgid "Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!"
+msgstr "Качественное образование, гармоничное поколение и движение вперёд — вместе!"
+
+msgid "So‘nggi yangiliklar"
+msgstr "Последние новости"
+
+msgid "Barchasini ko‘rish"
+msgstr "Смотреть все"
+
+msgid "Hozircha yangiliklar yo‘q"
+msgstr "Новостей пока нет"
+
+msgid "Nashr etilgan yangiliklar shu yerda ko‘rinadi."
+msgstr "Опубликованные новости появятся здесь."
+
+msgid "Barcha yangiliklar"
+msgstr "Все новости"
+
+msgid "So‘rov noto‘g‘ri"
+msgstr "Некорректный запрос"
+
+msgid "Xavfsizlik tekshiruvi muvaffaqiyatsiz tugadi. Sahifani yangilab, qayta urinib ko‘ring."
+msgstr "Проверка безопасности не пройдена. Обновите страницу и повторите попытку."
+
+msgid "Yuborilgan so‘rovni qayta ishlab bo‘lmadi."
+msgstr "Отправленный запрос не удалось обработать."
+
+msgid "Ruxsat yo‘q"
+msgstr "Доступ запрещён"
+
+msgid "Bu sahifani ko‘rish uchun huquqingiz yetarli emas."
+msgstr "У вас недостаточно прав для просмотра этой страницы."
+
+msgid "Sahifa topilmadi"
+msgstr "Страница не найдена"
+
+msgid "Siz izlagan sahifa mavjud emas yoki ko‘chirilgan."
+msgstr "Страница, которую вы ищете, не существует или была перемещена."
+
+msgid "Serverda xatolik"
+msgstr "Ошибка сервера"
+
+msgid "Kutilmagan xatolik yuz berdi. Keyinroq qayta urinib ko‘ring."
+msgstr "Произошла непредвиденная ошибка. Повторите попытку позже."
+
+msgid "Rasm yo‘q"
+msgstr "Нет изображения"
+
+msgid "Batafsil"
+msgstr "Подробнее"
+
+msgid "Sahifalar"
+msgstr "Страницы"
+
+msgid "Kirish, chiqish va rollar o‘zgarishi yozuvlari. Yozuvlarni o‘zgartirib yoki o‘chirib bo‘lmaydi."
+msgstr "Записи о входах, выходах и изменении ролей. Записи нельзя изменять или удалять."
+
+msgid "Vaqt"
+msgstr "Время"
+
+msgid "Foydalanuvchi"
+msgstr "Пользователь"
+
+msgid "Harakat"
+msgstr "Действие"
+
+msgid "Obyekt"
+msgstr "Объект"
+
+msgid "Yozuvlar hozircha yo‘q"
+msgstr "Записей пока нет"
+
+#, python-format
+msgid "Xush kelibsiz, %(name)s."
+msgstr "Добро пожаловать, %(name)s."
+
+msgid "Ishlab chiqish bosqichi."
+msgstr "Этап разработки."
+
+msgid "Bu portalning asosiy skeleti: kirish, rollar va audit ishlaydi. Xodimlar, topshiriqlar, hujjatlar va boshqa bo‘limlar keyingi bosqichlarda qo‘shiladi."
+msgstr "Это основа портала: работают вход, роли и аудит. Сотрудники, задания, документы и другие разделы будут добавлены на следующих этапах."
+
+msgid "Sizning hisobingiz"
+msgstr "Ваша учётная запись"
+
+msgid "Rollar"
+msgstr "Роли"
+
+msgid "rol biriktirilmagan"
+msgstr "роль не назначена"
+
+msgid "Ro‘yxat"
+msgstr "К списку"
+
+msgid "Yuklab olish"
+msgstr "Скачать"
+
+msgid "Tahrirlash"
+msgstr "Редактировать"
+
+msgid "Arxivdan qaytarish"
+msgstr "Восстановить из архива"
+
+msgid "Arxivlash"
+msgstr "В архив"
+
+msgid "Muallif"
+msgstr "Автор"
+
+msgid "Versiyalar"
+msgstr "Версии"
+
+msgid "Hajmi"
+msgstr "Размер"
+
+msgid "Yuklagan"
+msgstr "Загрузил"
+
+msgid "Yangi versiya yuklash"
+msgstr "Загрузить новую версию"
+
+msgid "Yuklash"
+msgstr "Загрузить"
+
+msgid "Hujjat yuklash"
+msgstr "Загрузка документа"
+
+msgid "Ruxsat etilgan: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Makroli va faol tarkibli fayllar qabul qilinmaydi. Yuklangan fayl antivirus bilan tekshiriladi; tekshiruv bajarilmasa, fayl qabul qilinmaydi."
+msgstr "Разрешены: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Файлы с макросами и активным содержимым не принимаются. Загружаемый файл проверяется антивирусом; если проверку выполнить не удалось, файл не принимается."
+
+msgid "Fayllar xavfsiz saqlanadi va faqat huquqingiz bo‘lsa yuklab olinadi."
+msgstr "Файлы хранятся в защищённом хранилище и скачиваются только при наличии прав."
+
+msgid "Qidirish: sarlavha, raqam"
+msgstr "Поиск: название, номер"
+
+msgid "Barcha darajalar"
+msgstr "Все уровни"
+
+msgid "Qidirish"
+msgstr "Найти"
+
+msgid "Sarlavha"
+msgstr "Название"
+
+msgid "Raqam"
+msgstr "Номер"
+
+msgid "Sana"
+msgstr "Дата"
+
+msgid "Daraja"
+msgstr "Уровень"
+
+msgid "Hujjatlar topilmadi"
+msgstr "Документы не найдены"
+
+msgid "Asosiy"
+msgstr "Основное"
+
+msgid "Ish telefoni"
+msgstr "Рабочий телефон"
+
+msgid "Ish e-pochtasi"
+msgstr "Рабочая эл. почта"
+
+msgid "Shaxsiy ma’lumotlar"
+msgstr "Личные данные"
+
+msgid "Bu ma’lumotlarni ko‘rish jurnalga yoziladi."
+msgstr "Просмотр этих данных фиксируется в журнале."
+
+msgid "Ishga qabul sanasi"
+msgstr "Дата приёма на работу"
+
+msgid "Tug‘ilgan sana"
+msgstr "Дата рождения"
+
+msgid "Shaxsiy telefon"
+msgstr "Личный телефон"
+
+msgid "Xodim qo‘shish"
+msgstr "Добавить сотрудника"
+
+msgid "Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak."
+msgstr "Перед внесением реальных личных данных должна быть завершена юридическая проверка."
+
+msgid "Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi."
+msgstr "Имя, подразделение, должность и статус. Контактные данные — на карточке сотрудника, если у вас есть право."
+
+msgid "Mening kartam"
+msgstr "Моя карточка"
+
+msgid "Qidirish: ism, lavozim"
+msgstr "Поиск: имя, должность"
+
+msgid "Barcha holatlar"
+msgstr "Все статусы"
+
+msgid "F.I.Sh."
+msgstr "Ф.И.О."
+
+msgid "Hech narsa topilmadi"
+msgstr "Ничего не найдено"
+
+msgid "Topshiriqlar bo‘yicha yangiliklar."
+msgstr "Новости по заданиям."
+
+msgid "Faqat o‘qilmaganlar"
+msgstr "Только непрочитанные"
+
+msgid "Barchasini o‘qilgan deb belgilash"
+msgstr "Отметить все как прочитанные"
+
+msgid "Topshiriq mavjud emas yoki ruxsat yo‘q"
+msgstr "Задание не существует или нет доступа"
+
+msgid "Ochish"
+msgstr "Открыть"
+
+msgid "O‘qildi"
+msgstr "Прочитано"
+
+msgid "Bildirishnomalar yo‘q"
+msgstr "Уведомлений нет"
+
+#, python-format
+msgid "Birinchi %(n)s ta qator ko‘rsatildi (jami %(total)s). Filtrlarni toraytiring."
+msgstr "Показаны первые %(n)s строк (всего %(total)s). Сузьте фильтры."
+
+msgid "Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q."
+msgstr "Нет данных за выбранный период и по выбранным фильтрам."
+
+msgid "Ma’lumotlar bazasidagi joriy ma’lumotlar. Siz faqat o‘z doirangizdagi ma’lumotlarni ko‘rasiz."
+msgstr "Актуальные данные из базы данных. Вы видите только данные в пределах своей области."
+
+msgid "Tayyorlanmoqda…"
+msgstr "Подготовка…"
+
+msgid "Excel"
+msgstr "Excel"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Qo‘llash"
+msgstr "Применить"
+
+msgid "Tozalash"
+msgstr "Сбросить"
+
+msgid "Hisobotni tayyorlab bo‘lmadi"
+msgstr "Не удалось подготовить отчёт"
+
+msgid "Xatolik yuz berdi. Keyinroq qayta urinib ko‘ring; muammo davom etsa, administratorga murojaat qiling."
+msgstr "Произошла ошибка. Повторите попытку позже; если проблема сохраняется, обратитесь к администратору."
+
+#, python-format
+msgid "Davr: %(a)s – %(b)s · Doira: %(scope)s"
+msgstr "Период: %(a)s – %(b)s · Область: %(scope)s"
+
+#, python-format
+msgid "Bajarilgan (%(r)s%%)"
+msgstr "Выполнено (%(r)s%%)"
+
+msgid "Tashkiliy tuzilma"
+msgstr "Организационная структура"
+
+msgid "Bo‘limlar daraxti va lavozimlar. Bo‘limlar o‘chirilmaydi, faqat faol emas qilinadi."
+msgstr "Дерево подразделений и должности. Подразделения не удаляются, а только отключаются."
+
+msgid "Bo‘lim qo‘shish"
+msgstr "Добавить подразделение"
+
+msgid "Lavozim qo‘shish"
+msgstr "Добавить должность"
+
+msgid "Nomi"
+msgstr "Название"
+
+msgid "Faol emas"
+msgstr "Не активно"
+
+msgid "Bo‘limlar hali kiritilmagan."
+msgstr "Подразделения ещё не внесены."
+
+msgid "Lavozimlar"
+msgstr "Должности"
+
+msgid "Lavozimlar hali kiritilmagan."
+msgstr "Должности ещё не внесены."
+
+#, python-format
+msgid "Bergan: %(who)s"
+msgstr "Поручил(а): %(who)s"
+
+msgid "Muddat"
+msgstr "Срок"
+
+msgid "muddati o‘tgan"
+msgstr "просрочено"
+
+msgid "Fayllar"
+msgstr "Файлы"
+
+msgid "Olib tashlash"
+msgstr "Открепить"
+
+msgid "Fayllar biriktirilmagan."
+msgstr "Файлы не прикреплены."
+
+msgid "Biriktirish"
+msgstr "Прикрепить"
+
+msgid "Izohlar"
+msgstr "Комментарии"
+
+msgid "Izohlar yo‘q."
+msgstr "Комментариев нет."
+
+msgid "Yuborish"
+msgstr "Отправить"
+
+msgid "Tarix"
+msgstr "История"
+
+msgid "Yangi topshiriq"
+msgstr "Новое задание"
+
+msgid "Sizga berilgan, siz bergan va ko‘rishga ruxsat etilgan topshiriqlar."
+msgstr "Задания, назначенные вам, поручённые вами и те, которые вам разрешено просматривать."
+
+msgid "Faol holatlar"
+msgstr "Активные статусы"
+
+msgid "Muddati o‘tgan"
+msgstr "Просрочено"
+
+msgid "Topshiriqlar yo‘q"
+msgstr "Заданий нет"
+
+msgid "Vaqtincha bloklangan"
+msgstr "Временно заблокирована"
+
+msgid "Parolni almashtirishi shart"
+msgstr "Обязана сменить пароль"
+
+msgid "2FA majburiy, hali yoqilmagan"
+msgstr "2FA обязательна, ещё не включена"
+
+msgid "2FA yoqilmagan"
+msgstr "2FA не включена"
+
+msgid "Taklifnoma yuborish"
+msgstr "Отправить приглашение"
+
+msgid "Parolni almashtirishni talab qilish"
+msgstr "Потребовать смену пароля"
+
+msgid "Blokdan chiqarish"
+msgstr "Разблокировать"
+
+msgid "O‘chirish (faolsizlantirish)"
+msgstr "Отключить (деактивировать)"
+
+msgid "Qayta faollashtirish"
+msgstr "Активировать снова"
+
+msgid "Doira"
+msgstr "Область"
+
+msgid "Rol biriktirilmagan: foydalanuvchi hech narsaga kira olmaydi."
+msgstr "Роль не назначена: пользователь ни к чему не имеет доступа."
+
+msgid "Rol biriktirish"
+msgstr "Назначить роль"
+
+msgid "Yangi foydalanuvchi"
+msgstr "Новый пользователь"
+
+msgid "Parol kiritilmaydi: foydalanuvchi o‘z parolini taklifnoma havolasi orqali o‘rnatadi."
+msgstr "Пароль не вводится: пользователь задаёт пароль сам по ссылке из приглашения."
+
+msgid "Hisoblar va rollar. Parollar bu yerda ko‘rinmaydi."
+msgstr "Учётные записи и роли. Пароли здесь не отображаются."
+
+msgid "Qidirish: login, ism, e-pochta"
+msgstr "Поиск: логин, имя, эл. почта"
+
+msgid "Barcha rollar"
+msgstr "Все роли"
+
+msgid "Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting."
+msgstr "Введите свои данные для входа на портал сотрудников."
+
+msgid "Parolni ko‘rsatish"
+msgstr "Показать пароль"
+
+msgid "Parolni unutdingizmi?"
+msgstr "Забыли пароль?"

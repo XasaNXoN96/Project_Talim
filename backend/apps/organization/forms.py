@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from .models import Department, Employee, Position
 
@@ -33,14 +34,14 @@ class EmployeeForm(forms.ModelForm):
         if can_link_user:
             self.fields["user"].queryset = User.objects.filter(is_active=True)
             self.fields["user"].required = False
-            self.fields["user"].label = "Foydalanuvchi hisobi"
+            self.fields["user"].label = _("Foydalanuvchi hisobi")
         else:
             del self.fields["user"]
 
     def clean_user(self):
         user = self.cleaned_data.get("user")
         if user and Employee.objects.filter(user=user).exclude(pk=self.instance.pk).exists():
-            raise forms.ValidationError("Bu hisob boshqa xodimga biriktirilgan.")
+            raise forms.ValidationError(_("Bu hisob boshqa xodimga biriktirilgan."))
         return user
 
 
@@ -65,10 +66,10 @@ class DepartmentForm(forms.ModelForm):
         data = super().clean()
         name, parent = data.get("name"), data.get("parent")
         if name and Department.objects.filter(name__iexact=name.strip(), parent=parent).exclude(pk=self.instance.pk).exists():
-            self.add_error("name", "Bu nomdagi bo‘lim shu joyda allaqachon bor.")
+            self.add_error("name", _("Bu nomdagi bo‘lim shu joyda allaqachon bor."))
         if data.get("is_active") is False and self.instance.pk:
             if self.instance.employees.exclude(status=Employee.Status.ARCHIVED).exists() or self.instance.children.filter(is_active=True).exists():
-                self.add_error("is_active", "Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo‘lmaydi.")
+                self.add_error("is_active", _("Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo‘lmaydi."))
         return data
 
 

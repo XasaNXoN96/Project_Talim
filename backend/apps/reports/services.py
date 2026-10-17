@@ -15,6 +15,8 @@ from django.conf import settings
 from django.db.models import Count, Q
 from django.db.models.functions import TruncDay, TruncMonth, TruncWeek
 from django.utils import timezone
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 from apps.documents.access import visible_documents
 from apps.documents.models import Document, DocumentCategory
@@ -26,12 +28,12 @@ INPUT = {"class": "input"}
 
 
 class FilterForm(forms.Form):
-    date_from = forms.DateField(label="Boshlanish sanasi", required=False, widget=forms.DateInput(attrs={**INPUT, "type": "date"}, format="%Y-%m-%d"))
-    date_to = forms.DateField(label="Tugash sanasi", required=False, widget=forms.DateInput(attrs={**INPUT, "type": "date"}, format="%Y-%m-%d"))
-    department = forms.ModelChoiceField(label="Bo‘lim", queryset=Department.objects.none(), required=False, widget=forms.Select(attrs=INPUT))
-    status = forms.ChoiceField(label="Topshiriq holati", required=False, choices=[("", "Barchasi"), *Task.Status.choices], widget=forms.Select(attrs=INPUT))
-    category = forms.ModelChoiceField(label="Hujjat turkumi", queryset=DocumentCategory.objects.none(), required=False, widget=forms.Select(attrs=INPUT))
-    period = forms.ChoiceField(label="Guruhlash", required=False, choices=[("", "Avtomatik"), ("day", "Kunlar"), ("week", "Haftalar"), ("month", "Oylar")], widget=forms.Select(attrs=INPUT))
+    date_from = forms.DateField(label=_("Boshlanish sanasi"), required=False, widget=forms.DateInput(attrs={**INPUT, "type": "date"}, format="%Y-%m-%d"))
+    date_to = forms.DateField(label=_("Tugash sanasi"), required=False, widget=forms.DateInput(attrs={**INPUT, "type": "date"}, format="%Y-%m-%d"))
+    department = forms.ModelChoiceField(label=_("Bo‘lim"), queryset=Department.objects.none(), required=False, widget=forms.Select(attrs=INPUT))
+    status = forms.ChoiceField(label=_("Topshiriq holati"), required=False, choices=[("", _("Barchasi")), *Task.Status.choices], widget=forms.Select(attrs=INPUT))
+    category = forms.ModelChoiceField(label=_("Hujjat turkumi"), queryset=DocumentCategory.objects.none(), required=False, widget=forms.Select(attrs=INPUT))
+    period = forms.ChoiceField(label=_("Guruhlash"), required=False, choices=[("", _("Avtomatik")), ("day", _("Kunlar")), ("week", _("Haftalar")), ("month", _("Oylar"))], widget=forms.Select(attrs=INPUT))
 
     def __init__(self, *args, user, **kwargs):
         super().__init__(*args, **kwargs)
@@ -42,8 +44,8 @@ class FilterForm(forms.Form):
             depts = depts.filter(pk__in=covered)
         self.fields["department"].queryset = depts  # a department outside the user's scope is simply not a valid choice
         self.fields["category"].queryset = DocumentCategory.objects.filter(is_active=True)
-        self.fields["department"].empty_label = "Barcha bo‘limlar"
-        self.fields["category"].empty_label = "Barcha turkumlar"
+        self.fields["department"].empty_label = _("Barcha bo‘limlar")
+        self.fields["category"].empty_label = _("Barcha turkumlar")
 
     def clean(self):
         data = super().clean()
@@ -51,9 +53,9 @@ class FilterForm(forms.Form):
         end = data.get("date_to") or today
         start = data.get("date_from") or (end - datetime.timedelta(days=29))
         if start > end:
-            raise forms.ValidationError("Boshlanish sanasi tugash sanasidan keyin bo‘lishi mumkin emas.")
+            raise forms.ValidationError(_("Boshlanish sanasi tugash sanasidan keyin bo‘lishi mumkin emas."))
         if (end - start).days + 1 > settings.REPORT_MAX_DAYS:
-            raise forms.ValidationError(f"Davr {settings.REPORT_MAX_DAYS} kundan oshmasligi kerak.")
+            raise forms.ValidationError(gettext("Davr %(n)d kundan oshmasligi kerak.") % {"n": settings.REPORT_MAX_DAYS})
         data["date_from"], data["date_to"] = start, end
         return data
 
@@ -155,7 +157,7 @@ def build_report(user, filters: dict) -> ReportData:
     today = timezone.localdate()
     data = ReportData(filters=filters, period=period)
     data.sections = {"employees", "tasks"}
-    data.scope_note = "Butun tashkilot" if scope is None else ("Bo‘lim: " + (dept.name if dept else "sizning doirangiz"))
+    data.scope_note = _("Butun tashkilot") if scope is None else (gettext("Bo‘lim: %(name)s") % {"name": dept.name if dept else gettext("sizning doirangiz")})
     if user.has_perm("documents.view_document"):
         data.sections.add("documents")
     if user.has_perm("reports.view_report_people"):
@@ -168,9 +170,9 @@ def build_report(user, filters: dict) -> ReportData:
     data.kpis["employees_active"] = emp.filter(status=Employee.Status.ACTIVE).count()
     data.kpis["employees_total"] = emp.count()
     by_dept, n = _cap([(r["department__name"], r["n"]) for r in emp.values("department__name").annotate(n=Count("pk")).order_by("-n", "department__name")])
-    data.tables.append(Table("emp_dept", "Xodimlar: bo‘limlar bo‘yicha", ["Bo‘lim", "Xodimlar"], by_dept, n))
-    by_pos, n = _cap([(r["position__name"] or "— (lavozim ko‘rsatilmagan)", r["n"]) for r in emp.values("position__name").annotate(n=Count("pk")).order_by("-n", "position__name")])
-    data.tables.append(Table("emp_pos", "Xodimlar: lavozimlar bo‘yicha", ["Lavozim", "Xodimlar"], by_pos, n))
+    data.tables.append(Table("emp_dept", _("Xodimlar: bo‘limlar bo‘yicha"), [_("Bo‘lim"), _("Xodimlar")], by_dept, n))
+    by_pos, n = _cap([(r["position__name"] or gettext("— (lavozim ko‘rsatilmagan)"), r["n"]) for r in emp.values("position__name").annotate(n=Count("pk")).order_by("-n", "position__name")])
+    data.tables.append(Table("emp_pos", _("Xodimlar: lavozimlar bo‘yicha"), [_("Lavozim"), _("Xodimlar")], by_pos, n))
 
     # ---- tasks. The task set: created in the period, assignees in scope. A task with several assignees counts once in totals.
     tasks = Task.objects.filter(created_at__gte=lo, created_at__lt=hi)
@@ -188,8 +190,8 @@ def build_report(user, filters: dict) -> ReportData:
     data.kpis["tasks_done_late"] = late
     data.kpis["tasks_done_rate"] = round(100 * data.kpis["tasks_done"] / len(task_ids)) if task_ids else 0
     counts = dict(base.values_list("status").annotate(n=Count("pk")).order_by())
-    rows = [(label, counts.get(code, 0)) for code, label in Task.Status.choices]
-    data.tables.append(Table("task_status", "Topshiriqlar: holatlar bo‘yicha", ["Holat", "Soni"], rows, len(rows)))
+    rows = [(str(label), counts.get(code, 0)) for code, label in Task.Status.choices]
+    data.tables.append(Table("task_status", _("Topshiriqlar: holatlar bo‘yicha"), [_("Holat"), _("Soni")], rows, len(rows)))
 
     # performance by department and executor: through assignees; multi-assignee tasks count for each (stated in the note)
     link = Task.assignees.through.objects.filter(task_id__in=task_ids)
@@ -201,9 +203,9 @@ def build_report(user, filters: dict) -> ReportData:
         .annotate(total=Count("task_id", distinct=True), done=Count("task_id", filter=Q(task__status=Task.Status.DONE), distinct=True), overdue=Count("task_id", filter=open_overdue, distinct=True))
         .order_by("-total", "user__employee__department__name")
     )
-    rows, n = _cap([(r["user__employee__department__name"] or "— (bo‘limsiz)", r["total"], r["done"], r["overdue"], f'{round(100 * r["done"] / r["total"])}%' if r["total"] else "0%") for r in perf_dept])
-    data.tables.append(Table("perf_dept", "Bajarilish: bo‘limlar bo‘yicha", ["Bo‘lim", "Jami", "Bajarilgan", "Muddati o‘tgan (ochiq)", "Bajarilish"], rows, n,
-                             note="Bir nechta ijrochili topshiriq har bir ijrochining bo‘limida hisoblanadi."))
+    rows, n = _cap([(r["user__employee__department__name"] or gettext("— (bo‘limsiz)"), r["total"], r["done"], r["overdue"], f'{round(100 * r["done"] / r["total"])}%' if r["total"] else "0%") for r in perf_dept])
+    data.tables.append(Table("perf_dept", _("Bajarilish: bo‘limlar bo‘yicha"), [_("Bo‘lim"), _("Jami"), _("Bajarilgan"), _("Muddati o‘tgan (ochiq)"), _("Bajarilish")], rows, n,
+                             note=_("Bir nechta ijrochili topshiriq har bir ijrochining bo‘limida hisoblanadi.")))
     if "people" in data.sections:
         perf_user = (
             link.values("user__id", "user__first_name", "user__last_name", "user__username")
@@ -211,8 +213,8 @@ def build_report(user, filters: dict) -> ReportData:
             .order_by("-total", "user__last_name", "user__username")
         )
         rows, n = _cap([(f'{(r["user__last_name"] + " " + r["user__first_name"]).strip() or r["user__username"]}', r["total"], r["done"], r["overdue"], f'{round(100 * r["done"] / r["total"])}%' if r["total"] else "0%") for r in perf_user])
-        data.tables.append(Table("perf_user", "Bajarilish: ijrochilar bo‘yicha", ["Ijrochi", "Jami", "Bajarilgan", "Muddati o‘tgan (ochiq)", "Bajarilish"], rows, n,
-                                 note="Shaxsiy natijalar: faqat ruxsati bor foydalanuvchilarga ko‘rinadi."))
+        data.tables.append(Table("perf_user", _("Bajarilish: ijrochilar bo‘yicha"), [_("Ijrochi"), _("Jami"), _("Bajarilgan"), _("Muddati o‘tgan (ochiq)"), _("Bajarilish")], rows, n,
+                                 note=_("Shaxsiy natijalar: faqat ruxsati bor foydalanuvchilarga ko‘rinadi.")))
 
     # ---- dynamics: created (in period) and completed (closed_at in period, status done) per bucket
     trunc = {"day": TruncDay, "week": TruncWeek, "month": TruncMonth}[period]
@@ -235,15 +237,15 @@ def build_report(user, filters: dict) -> ReportData:
             docs = docs.filter(category=filters["category"])
         docs = docs.filter(status=Document.Status.ACTIVE)
         data.kpis["documents_total"] = docs.count()
-        rows, n = _cap([(r["category__name"], r["n"]) for r in docs.values("category__name").annotate(n=Count("pk", distinct=True)).order_by("-n", "category__name")])
-        data.tables.append(Table("doc_cat", "Hujjatlar: turkumlar bo‘yicha", ["Turkum", "Hujjatlar"], rows, n,
-                                 note="Faqat siz ko‘rishga ruxsat etilgan, faol hujjatlar hisoblanadi."))
+        rows, n = _cap([(gettext(r["category__name"]), r["n"]) for r in docs.values("category__name").annotate(n=Count("pk", distinct=True)).order_by("-n", "category__name")])
+        data.tables.append(Table("doc_cat", _("Hujjatlar: turkumlar bo‘yicha"), [_("Turkum"), _("Hujjatlar")], rows, n,
+                                 note=_("Faqat siz ko‘rishga ruxsat etilgan, faol hujjatlar hisoblanadi.")))
         per = {}
         for r in docs.annotate(b=trunc("created_at", tzinfo=timezone.get_current_timezone())).values("b").annotate(n=Count("pk", distinct=True)).order_by():
             per[_bucket_date(r["b"], period)] = r["n"]
         rows = [(_bucket_label(b, period), per[b]) for b in _buckets(start, end, period) if per.get(b)]  # only periods that have documents
         rows, n = _cap(rows)
-        data.tables.append(Table("doc_period", "Hujjatlar: davrlar bo‘yicha", ["Davr", "Hujjatlar"], rows, n, note="Faqat hujjat yuklangan davrlar ko‘rsatiladi."))
+        data.tables.append(Table("doc_period", _("Hujjatlar: davrlar bo‘yicha"), [_("Davr"), _("Hujjatlar")], rows, n, note=_("Faqat hujjat yuklangan davrlar ko‘rsatiladi.")))
     return data
 
 

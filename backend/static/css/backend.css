@@ -24,3 +24,26 @@
 .report-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 @media (max-width: 900px) { .report-grid { grid-template-columns: minmax(0, 1fr); } .rbar-row { grid-template-columns: 62px minmax(0, 1fr) 56px; } }
 .report-note { font-size: 12px; color: var(--text-2); margin-top: 6px; }
+
+/* ---- language switcher: three small buttons, no JavaScript (works under the strict CSP) */
+.lang-switch { display: inline-flex; gap: 2px; padding: 2px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
+.lang-switch button { border: 0; background: transparent; padding: 4px 9px; border-radius: 999px; font: inherit; font-size: 12px; font-weight: 700; color: var(--text-2); cursor: pointer; }
+.lang-switch button:hover { background: var(--surface-2); }
+.lang-switch button.active { background: var(--info-bg); color: var(--info); }
+.lang-switch button:focus-visible { outline: 2px solid var(--info); outline-offset: 1px; }
+.login-lang { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+
+/* Public header on narrow screens: the longer Russian/English site name must shrink (ellipsis) instead of pushing the
+   language switcher, the sign-in button and the menu button off screen. */
+@media (max-width: 600px) {
+  .pub-header .container { gap: 8px; }
+  .pub-header .brand { min-width: 0; flex: 1 1 0; }
+  .pub-header .brand > div { min-width: 0; }
+  .pub-header .brand b, .pub-header .brand span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pub-header .brand b { font-size: 13px; }
+  .pub-actions { flex: none; gap: 6px; }
+  .lang-switch button { padding: 4px 6px; }
+  .pub-actions .btn span { display: inline; }  /* the shared design hides the label here, leaving an empty button */
+  .pub-actions .btn [data-i] { display: none; }
+  .pub-actions .btn { padding-inline: 12px; }
+}

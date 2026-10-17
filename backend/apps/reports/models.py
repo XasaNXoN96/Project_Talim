@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class ReportAccess(models.Model):
@@ -8,7 +9,7 @@ class ReportAccess(models.Model):
         managed = False
         default_permissions = ()
         permissions = [
-            ("view_reports", "Hisobotlar sahifasini ko‘rish (doira rol bo‘yicha)"),
-            ("export_reports", "Hisobotlarni Excel/PDF ga yuklab olish"),
-            ("view_report_people", "Hisobotda ijrochilar kesimini ko‘rish (shaxsiy natijalar)"),
+            ("view_reports", _("Hisobotlar sahifasini ko‘rish (doira rol bo‘yicha)")),
+            ("export_reports", _("Hisobotlarni Excel/PDF ga yuklab olish")),
+            ("view_report_people", _("Hisobotda ijrochilar kesimini ko‘rish (shaxsiy natijalar)")),
         ]

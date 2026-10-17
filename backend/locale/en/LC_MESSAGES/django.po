@@ -1,0 +1,1864 @@
+# Project_Talim — English catalog. Source language of the message ids: Uzbek.
+msgid ""
+msgstr ""
+"Project-Id-Version: Project_Talim\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-17 11:38+0500\n"
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Rollar va huquqlar"
+msgstr "Roles and permissions"
+
+msgid "Faqat o‘zi"
+msgstr "Own only"
+
+msgid "Bo‘lim"
+msgstr "Department"
+
+msgid "Butun tashkilot"
+msgstr "Whole organization"
+
+msgid "rol biriktirish"
+msgstr "role assignment"
+
+msgid "rol biriktirishlar"
+msgstr "role assignments"
+
+msgid "Bo‘lim doirasi uchun bo‘lim ko‘rsatilishi shart."
+msgstr "A department is required for the “Department” scope."
+
+msgid "Bo‘lim faqat «Bo‘lim» doirasi uchun ko‘rsatiladi."
+msgstr "A department can only be set for the “Department” scope."
+
+msgid "Xodim"
+msgstr "Employee"
+
+msgid "Bo‘lim boshlig‘i"
+msgstr "Department head"
+
+msgid "Kontent-menejer"
+msgstr "Content manager"
+
+msgid "Kadrlar bo‘limi"
+msgstr "HR department"
+
+msgid "Administrator"
+msgstr "Administrator"
+
+msgid "Tizim administratori"
+msgstr "System administrator"
+
+#, python-format
+msgid "Qo‘shish: %(model)s"
+msgstr "Add: %(model)s"
+
+#, python-format
+msgid "O‘zgartirish: %(model)s"
+msgstr "Change: %(model)s"
+
+#, python-format
+msgid "O‘chirish: %(model)s"
+msgstr "Delete: %(model)s"
+
+#, python-format
+msgid "Ko‘rish: %(model)s"
+msgstr "View: %(model)s"
+
+msgid "Qo‘shimcha"
+msgstr "Additional"
+
+msgid "Foydalanuvchilar"
+msgstr "Users"
+
+msgid "Login yoki parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
+msgstr "The login or password is incorrect, or the number of attempts was exceeded. Try again in 15 minutes."
+
+msgid "Kod noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
+msgstr "The code is incorrect, or the number of attempts was exceeded. Try again in 15 minutes."
+
+msgid "Joriy parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
+msgstr "The current password is incorrect, or the number of attempts was exceeded. Try again in 15 minutes."
+
+msgid "Elektron pochta yoki login"
+msgstr "E-mail or username"
+
+msgid "Parol"
+msgstr "Password"
+
+msgid "Meni eslab qolish"
+msgstr "Remember me"
+
+msgid "Yangi parol joriy paroldan farq qilishi kerak."
+msgstr "The new password must be different from the current one."
+
+msgid "Tasdiqlash kodi yoki zaxira kod"
+msgstr "Verification code or backup code"
+
+msgid "Ilovadagi 6 xonali kod"
+msgstr "6-digit code from the app"
+
+msgid "Joriy parol"
+msgstr "Current password"
+
+msgid "Login 3–150 belgi: lotin harflari, raqamlar, nuqta, tire, pastki chiziq."
+msgstr "Username: 3–150 characters — Latin letters, digits, dot, hyphen, underscore."
+
+msgid "Login"
+msgstr "Username"
+
+msgid "E-pochta"
+msgstr "E-mail"
+
+msgid "Familiya"
+msgstr "Last name"
+
+msgid "Ism"
+msgstr "First name"
+
+msgid "Rol"
+msgstr "Role"
+
+msgid "Bo‘lim (faqat bo‘lim boshlig‘i uchun)"
+msgstr "Department (only for a department head)"
+
+msgid "Bu login band."
+msgstr "This username is already taken."
+
+msgid "Bu e-pochta band."
+msgstr "This e-mail address is already in use."
+
+msgid "Til"
+msgstr "Language"
+
+msgid "Foydalanuvchi yaratildi. Endi unga taklifnoma yuboring."
+msgstr "The user was created. Now send them an invitation."
+
+msgid "Ma’lumotlar saqlandi."
+msgstr "Changes saved."
+
+msgid "Foydalanuvchi o‘chirildi (faolsizlantirildi)."
+msgstr "The user was deactivated."
+
+msgid "Foydalanuvchi qayta faollashtirildi."
+msgstr "The user was reactivated."
+
+msgid "Hisob blokdan chiqarildi."
+msgstr "The account was unlocked."
+
+msgid "Keyingi kirishda parolni almashtirish talab qilinadi."
+msgstr "A password change will be required at the next sign-in."
+
+msgid "Taklifnoma yuborildi."
+msgstr "The invitation was sent."
+
+msgid "Rol yoki bo‘lim noto‘g‘ri tanlangan."
+msgstr "The role or department selection is invalid."
+
+msgid "Rol biriktirildi."
+msgstr "The role was assigned."
+
+msgid "Rol olib tashlandi."
+msgstr "The role was removed."
+
+msgid "Xavfsizlik uchun qayta kiring: ikki bosqichli tasdiqlash talab qilinadi."
+msgstr "For your security, please sign in again: two-step verification is required."
+
+msgid "Davom etishdan oldin parolingizni almashtiring."
+msgstr "Please change your password before continuing."
+
+msgid "e-mail"
+msgstr "e-mail"
+
+msgid "til"
+msgstr "language"
+
+msgid "parolni almashtirish shart"
+msgstr "password change required"
+
+#| msgid "Foydalanuvchi"
+msgid "foydalanuvchi"
+msgstr "user"
+
+#| msgid "Foydalanuvchilar"
+msgid "foydalanuvchilar"
+msgstr "users"
+
+msgid "Foydalanuvchilarni yaratish va boshqarish"
+msgstr "Create and manage users"
+
+msgid "Rollarni biriktirish va olib tashlash"
+msgstr "Assign and remove roles"
+
+msgid "Hisoblarni blokdan chiqarish"
+msgstr "Unlock accounts"
+
+msgid "Parolingiz almashtirildi"
+msgstr "Your password was changed"
+
+msgid "Hisobingiz paroli almashtirildi. Boshqa qurilmalardagi sessiyalar yopildi."
+msgstr "Your account password was changed. Sessions on other devices were closed."
+
+msgid "Parolingiz tiklandi"
+msgstr "Your password was reset"
+
+msgid "Parolni tiklash havolasi orqali hisobingizga yangi parol o‘rnatildi. Barcha sessiyalar yopildi."
+msgstr "A new password was set for your account using a password-reset link. All sessions were closed."
+
+msgid "Ikki bosqichli himoya yoqildi"
+msgstr "Two-step protection enabled"
+
+msgid "Hisobingizda ikki bosqichli himoya (2FA) yoqildi."
+msgstr "Two-step protection (2FA) was turned on for your account."
+
+msgid "Ikki bosqichli himoya o‘chirildi"
+msgstr "Two-step protection disabled"
+
+msgid "Hisobingizda ikki bosqichli himoya (2FA) o‘chirildi. Endi hisob faqat parol bilan himoyalangan."
+msgstr "Two-step protection (2FA) was turned off for your account. It is now protected by a password only."
+
+msgid "Zaxira kodlar yangilandi"
+msgstr "Backup codes regenerated"
+
+msgid "Hisobingizning zaxira kodlari yangilandi; eskilari bekor qilindi."
+msgstr "The backup codes of your account were regenerated; the old ones are no longer valid."
+
+msgid "2FA administrator tomonidan tiklandi"
+msgstr "2FA reset by an administrator"
+
+msgid "Hisobingizning ikki bosqichli himoyasi administrator tomonidan olib tashlandi. Keyingi kirishda uni qayta sozlaysiz."
+msgstr "The two-step protection of your account was removed by an administrator. You will set it up again at your next sign-in."
+
+msgid "Xodimlar portaliga taklif"
+msgstr "Invitation to the staff portal"
+
+msgid "Siz uchun xodimlar portalida hisob yaratildi."
+msgstr "An account was created for you on the staff portal."
+
+#, python-format
+msgid ""
+"Assalomu alaykum!\n"
+"\n"
+"%(line)s\n"
+"\n"
+"Vaqt: %(when)s"
+msgstr ""
+"Hello,\n"
+"\n"
+"%(line)s\n"
+"\n"
+"Time: %(when)s"
+
+#, python-format
+msgid ""
+"\n"
+"Manzil (IP): %(ip)s"
+msgstr ""
+"\n"
+"Address (IP): %(ip)s"
+
+msgid "Agar buni siz qilmagan bo‘lsangiz, zudlik bilan administratorga murojaat qiling va parolingizni almashtiring."
+msgstr "If this was not you, contact an administrator immediately and change your password."
+
+msgid "Superuser hisoblarini bu sahifadan o‘zgartirib bo‘lmaydi."
+msgstr "Superuser accounts cannot be changed on this page."
+
+msgid "Bu rolni faqat administrator bera oladi."
+msgstr "Only an administrator can assign this role."
+
+msgid "Noma’lum rol."
+msgstr "Unknown role."
+
+msgid "Bo‘lim boshlig‘i roli uchun bo‘lim ko‘rsatilishi shart."
+msgstr "A department is required for the department head role."
+
+msgid "Bu rol allaqachon biriktirilgan."
+msgstr "This role is already assigned."
+
+msgid "Bu rolni faqat administrator olib tashlay oladi."
+msgstr "Only an administrator can remove this role."
+
+msgid "O‘zingizning administrator rolingizni olib tashlab bo‘lmaydi."
+msgstr "You cannot remove your own administrator role."
+
+msgid "Oxirgi administratorning rolini olib tashlab bo‘lmaydi."
+msgstr "The last administrator’s role cannot be removed."
+
+msgid "O‘zingizni o‘chirib bo‘lmaydi."
+msgstr "You cannot deactivate yourself."
+
+msgid "Oxirgi administratorni o‘chirib bo‘lmaydi."
+msgstr "The last administrator cannot be deactivated."
+
+msgid "Faol bo‘lmagan hisobga taklif yuborib bo‘lmaydi."
+msgstr "An invitation cannot be sent to an inactive account."
+
+msgid "Foydalanuvchining e-pochtasi ko‘rsatilmagan."
+msgstr "The user has no e-mail address."
+
+msgid "Taklifnomalar juda ko‘p yuborildi. Keyinroq urinib ko‘ring."
+msgstr "Too many invitations were sent. Try again later."
+
+#, python-format
+msgid ""
+"Assalomu alaykum, %(name)s!\n"
+"\n"
+"Siz uchun %(site)s xodimlar portalida hisob yaratildi.\n"
+"Login: %(login)s\n"
+"\n"
+"Parolni o‘rnatish uchun havolaga o‘ting (30 daqiqa amal qiladi, faqat bir marta ishlaydi):\n"
+"\n"
+"%(link)s\n"
+"\n"
+"Havola muddati tugasa, kirish sahifasidagi «Parolni unutdingizmi?» orqali yangisini so‘rang.\n"
+msgstr ""
+"Hello, %(name)s!\n"
+"\n"
+"An account was created for you on the “%(site)s” staff portal.\n"
+"Username: %(login)s\n"
+"\n"
+"To set your password, open this link (valid for 30 minutes, works only once):\n"
+"\n"
+"%(link)s\n"
+"\n"
+"If the link has expired, request a new one with “Forgot your password?” on the sign-in page.\n"
+
+#, python-format
+msgid "%(site)s: portalga taklif"
+msgstr "%(site)s: portal invitation"
+
+msgid "Xatni yuborib bo‘lmadi. Pochta sozlamalarini tekshiring."
+msgstr "The e-mail could not be sent. Check the mail settings."
+
+msgid "Kirish muddati tugadi. Qaytadan kiring."
+msgstr "The sign-in session expired. Please sign in again."
+
+msgid "Zaxira kodlaringiz kam qoldi. Yangilarini yarating."
+msgstr "You are running low on backup codes. Generate new ones."
+
+msgid "Zaxira kodlarni yangilash"
+msgstr "Regenerate backup codes"
+
+msgid "Yangi kodlar yaratish"
+msgstr "Generate new codes"
+
+msgid "Eski zaxira kodlar bekor qilinadi."
+msgstr "The old backup codes will be invalidated."
+
+msgid "Sizning rolingiz uchun 2FA majburiy: uni o‘chirib bo‘lmaydi."
+msgstr "2FA is mandatory for your role: it cannot be turned off."
+
+msgid "2FA ni o‘chirish"
+msgstr "Turn off 2FA"
+
+msgid "O‘chirish"
+msgstr "Turn off"
+
+msgid "Hisob faqat parol bilan himoyalanadi."
+msgstr "The account will be protected by a password only."
+
+msgid "2FA o‘chirildi."
+msgstr "2FA was turned off."
+
+msgid "Audit jurnali"
+msgstr "Audit log"
+
+msgid "Tizimga kirish"
+msgstr "Sign in"
+
+msgid "Muvaffaqiyatsiz kirish"
+msgstr "Failed sign-in attempt"
+
+msgid "Chiqish"
+msgstr "Signed out"
+
+msgid "Rol biriktirildi"
+msgstr "Role assigned"
+
+msgid "Rol olib tashlandi"
+msgstr "Role removed"
+
+msgid "Kirish vaqtincha bloklandi"
+msgstr "Sign-in temporarily locked"
+
+msgid "Bloklangan paytda kirishga urinish"
+msgstr "Sign-in attempt while locked"
+
+msgid "Parol almashtirildi"
+msgstr "Password changed"
+
+msgid "Parolni tiklash so‘raldi"
+msgstr "Password reset requested"
+
+msgid "Parolni tiklash so‘rovlari cheklandi"
+msgstr "Password reset requests throttled"
+
+msgid "Parol tiklandi"
+msgstr "Password reset completed"
+
+msgid "2FA yoqildi"
+msgstr "2FA enabled"
+
+msgid "2FA o‘chirildi"
+msgstr "2FA disabled"
+
+msgid "2FA kodi noto‘g‘ri"
+msgstr "Incorrect 2FA code"
+
+msgid "2FA tekshiruvi vaqtincha bloklandi"
+msgstr "2FA verification temporarily locked"
+
+msgid "Bloklangan paytda 2FA urinishi"
+msgstr "2FA attempt while locked"
+
+msgid "Zaxira kod ishlatildi"
+msgstr "Backup code used"
+
+msgid "2FA talab qilingani uchun sessiya yopildi"
+msgstr "Session closed: 2FA required"
+
+msgid "Foydalanuvchi yaratildi"
+msgstr "User created"
+
+msgid "Foydalanuvchi o‘zgartirildi"
+msgstr "User changed"
+
+msgid "Foydalanuvchi o‘chirildi (faolsizlantirildi)"
+msgstr "User deactivated"
+
+msgid "Foydalanuvchi qayta faollashtirildi"
+msgstr "User reactivated"
+
+msgid "Taklifnoma yuborildi"
+msgstr "Invitation sent"
+
+msgid "Hisob blokdan chiqarildi"
+msgstr "Account unlocked"
+
+msgid "Parolni almashtirish majburiy qilindi"
+msgstr "Password change required"
+
+msgid "Xodim kartasi ko‘rildi (shaxsiy ma’lumotlar)"
+msgstr "Employee card viewed (personal data)"
+
+msgid "Xodim qo‘shildi"
+msgstr "Employee added"
+
+msgid "Xodim o‘zgartirildi"
+msgstr "Employee changed"
+
+msgid "Xodim arxivlandi"
+msgstr "Employee archived"
+
+msgid "Xodim arxivdan qaytarildi"
+msgstr "Employee restored from the archive"
+
+msgid "Tashkiliy tuzilma o‘zgartirildi"
+msgstr "Organization structure changed"
+
+msgid "Hujjat yuklandi"
+msgstr "Document uploaded"
+
+msgid "Hujjatning yangi versiyasi yuklandi"
+msgstr "New document version uploaded"
+
+msgid "Maxfiy hujjat ko‘rildi"
+msgstr "Confidential document viewed"
+
+msgid "Hujjat yuklab olindi"
+msgstr "Document downloaded"
+
+msgid "Hujjat ma’lumotlari o‘zgartirildi"
+msgstr "Document details changed"
+
+msgid "Hujjat arxivlandi"
+msgstr "Document archived"
+
+msgid "Hujjat arxivdan qaytarildi"
+msgstr "Document restored from the archive"
+
+msgid "Hujjat yuklash rad etildi"
+msgstr "Document upload rejected"
+
+msgid "Yuklangan faylda xavf aniqlandi"
+msgstr "Threat detected in an uploaded file"
+
+msgid "Hisobot yuklab olindi"
+msgstr "Report downloaded"
+
+msgid "Hisobotda ijrochilar kesimi ko‘rildi"
+msgstr "Report breakdown by assignee viewed"
+
+msgid "Topshiriqqa fayl biriktirildi"
+msgstr "File attached to a task"
+
+msgid "Topshiriq fayli yuklab olindi"
+msgstr "Task file downloaded"
+
+msgid "Topshiriq fayli olib tashlandi"
+msgstr "Task file removed"
+
+msgid "audit yozuvi"
+msgstr "audit entry"
+
+msgid "audit yozuvlari"
+msgstr "audit entries"
+
+msgid "Kontent"
+msgstr "Content"
+
+msgid "nomi"
+msgstr "name"
+
+msgid "yangilik kategoriyasi"
+msgstr "news category"
+
+msgid "yangilik kategoriyalari"
+msgstr "news categories"
+
+msgid "Qoralama"
+msgstr "Draft"
+
+msgid "Tekshiruvda"
+msgstr "In review"
+
+msgid "Nashr etilgan"
+msgstr "Published"
+
+msgid "Arxiv"
+msgstr "Archive"
+
+msgid "sarlavha"
+msgstr "title"
+
+msgid "qisqa tavsif"
+msgstr "summary"
+
+msgid "matn"
+msgstr "text"
+
+msgid "holat"
+msgstr "status"
+
+msgid "nashr sanasi"
+msgstr "publication date"
+
+#| msgid "Yangiliklar"
+msgid "yangilik"
+msgstr "news item"
+
+#| msgid "Yangiliklar"
+msgid "yangiliklar"
+msgstr "news"
+
+msgid "Yangilikni nashr etish"
+msgstr "Publish news"
+
+msgid "Umumiy"
+msgstr "General"
+
+msgid "Mirzacho‘l tumani Xalq ta’limi bo‘limi"
+msgstr "Mirzachul District Public Education Department"
+
+msgid "Xalq ta’limi bo‘limi"
+msgstr "Public Education Department"
+
+msgid "Mirzacho‘l tumani"
+msgstr "Mirzachul District"
+
+msgid "Hujjatlar"
+msgstr "Documents"
+
+msgid "Fayllarni tekshirish xizmati hozir ishlamayapti. Fayl qabul qilinmadi; keyinroq qayta urinib ko‘ring."
+msgstr "The file scanning service is currently unavailable. The file was not accepted; please try again later."
+
+msgid "Faylni tekshirish juda uzoq davom etdi. Fayl qabul qilinmadi; keyinroq qayta urinib ko‘ring."
+msgstr "Scanning the file took too long. The file was not accepted; please try again later."
+
+msgid "Faylni tekshirib bo‘lmadi. Fayl qabul qilinmadi."
+msgstr "The file could not be scanned. The file was not accepted."
+
+msgid "Faylda zararli dastur aniqlandi. Fayl qabul qilinmadi."
+msgstr "Malware was detected in the file. The file was not accepted."
+
+msgid "Faqat «Faqat bo‘lim» darajasi uchun."
+msgstr "Only for the “Department only” level."
+
+msgid "Bo‘lim darajasi uchun bo‘lim tanlang."
+msgstr "Choose a department for the “Department” level."
+
+msgid "Fayl"
+msgstr "File"
+
+msgid "Izoh (nima o‘zgardi)"
+msgstr "Comment (what changed)"
+
+msgid "Buyruqlar"
+msgstr "Orders"
+
+msgid "Nizomlar va yo‘riqnomalar"
+msgstr "Regulations and instructions"
+
+msgid "Hisobotlar"
+msgstr "Reports"
+
+msgid "Shablonlar va namunalar"
+msgstr "Templates and samples"
+
+msgid "Boshqa"
+msgstr "Other"
+
+msgid "faol"
+msgstr "active"
+
+msgid "hujjat turkumi"
+msgstr "document category"
+
+msgid "hujjat turkumlari"
+msgstr "document categories"
+
+msgid "Faol"
+msgstr "Active"
+
+msgid "Arxivda"
+msgstr "Archived"
+
+msgid "Barcha xodimlar"
+msgstr "All employees"
+
+msgid "Faqat bo‘lim"
+msgstr "Department only"
+
+msgid "Maxfiy (muallif va kadrlar/administrator)"
+msgstr "Confidential (author, HR and administrator)"
+
+msgid "tavsif"
+msgstr "description"
+
+msgid "hujjat raqami"
+msgstr "document number"
+
+msgid "turkum"
+msgstr "category"
+
+msgid "hujjat sanasi"
+msgstr "document date"
+
+msgid "kirish darajasi"
+msgstr "access level"
+
+msgid "bo‘lim"
+msgstr "department"
+
+#| msgid "Hujjatlar"
+msgid "hujjat"
+msgstr "document"
+
+#| msgid "Hujjatlar"
+msgid "hujjatlar"
+msgstr "documents"
+
+msgid "Barcha (maxfiy bo‘lmagan) hujjatlarni, jumladan bo‘limlarnikini ko‘rish"
+msgstr "View all non-confidential documents, including department documents"
+
+msgid "Maxfiy hujjatlarni ko‘rish"
+msgstr "View confidential documents"
+
+msgid "izoh"
+msgstr "comment"
+
+msgid "Toza"
+msgstr "Clean"
+
+msgid "Tekshirilmagan"
+msgstr "Not scanned"
+
+msgid "Xavfli"
+msgstr "Infected"
+
+#, python-format
+msgid "Fayl hajmi %(mb)d MB dan oshmasligi kerak."
+msgstr "The file size must not exceed %(mb)d MB."
+
+msgid "Fayl buzilgan yoki kengaytmasiga mos kelmaydi."
+msgstr "The file is corrupted or does not match its extension."
+
+msgid "Fayl tarkibi shubhali (juda ko‘p elementlar)."
+msgstr "The file contents look suspicious (too many entries)."
+
+msgid "Fayl tarkibi xavfli yoki shifrlangan."
+msgstr "The file contents are unsafe or encrypted."
+
+msgid "Fayl tarkibi shubhali (haddan tashqari siqilgan)."
+msgstr "The file contents look suspicious (excessively compressed)."
+
+msgid "Fayl ochilgandagi hajmi juda katta."
+msgstr "The file is too large when unpacked."
+
+msgid "Fayl kengaytmasiga mos kelmaydi."
+msgstr "The file does not match its extension."
+
+msgid "Makros yoki faol tarkibli fayllar qabul qilinmaydi."
+msgstr "Files with macros or active content are not accepted."
+
+msgid "Fayl bo‘sh."
+msgstr "The file is empty."
+
+msgid "Fayl nomi noto‘g‘ri."
+msgstr "The file name is not valid."
+
+#, python-format
+msgid "Bu fayl turi ruxsat etilmagan. Ruxsat etilgan: %(types)s."
+msgstr "This file type is not allowed. Allowed: %(types)s."
+
+msgid "Fayl nomida xavfli kengaytma bor (masalan, report.php.pdf)."
+msgstr "The file name contains a dangerous extension (for example, report.php.pdf)."
+
+msgid "Fayl turi kengaytmasiga mos kelmaydi."
+msgstr "The file type does not match its extension."
+
+msgid "Fayl mazmuni kengaytmasiga mos kelmaydi."
+msgstr "The file contents do not match its extension."
+
+msgid "Faol tarkibli (skript, ilova) PDF qabul qilinmaydi."
+msgstr "PDF files with active content (scripts, attachments) are not accepted."
+
+msgid "Matn fayli UTF-8 bo‘lishi kerak."
+msgstr "A text file must be UTF-8 encoded."
+
+msgid "Hujjat yuklandi."
+msgstr "The document was uploaded."
+
+msgid "Saqlandi."
+msgstr "Saved."
+
+#, python-format
+msgid "Yangi versiya (v%(n)d) yuklandi."
+msgstr "A new version (v%(n)d) was uploaded."
+
+msgid "Fayl tanlanmagan yoki noto‘g‘ri."
+msgstr "No file was selected, or the file is not valid."
+
+msgid "Hujjat arxivdan qaytarildi."
+msgstr "The document was restored from the archive."
+
+msgid "Hujjat arxivlandi."
+msgstr "The document was archived."
+
+msgid "Bildirishnomalar"
+msgstr "Notifications"
+
+msgid "Topshiriq berildi"
+msgstr "A task was assigned to you"
+
+msgid "Topshiriq tekshiruvga topshirildi"
+msgstr "A task was submitted for review"
+
+msgid "Topshiriq qabul qilindi"
+msgstr "A task was accepted"
+
+msgid "Topshiriq qaytarildi"
+msgstr "A task was returned for rework"
+
+msgid "Topshiriq bekor qilindi"
+msgstr "A task was cancelled"
+
+msgid "Topshiriq muddati yaqin"
+msgstr "A task is due soon"
+
+msgid "Topshiriq muddati o‘tdi"
+msgstr "A task is overdue"
+
+#, python-format
+msgid ""
+"%(kind)s: %(title)s\n"
+"\n"
+"Batafsil ma’lumot uchun xodimlar portaliga kiring."
+msgstr ""
+"%(kind)s: %(title)s\n"
+"\n"
+"See the staff portal for details."
+
+msgid "Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
+msgstr "You do not have access to this task, or it was deleted."
+
+msgid "Tashkilot"
+msgstr "Organization"
+
+msgid "Foydalanuvchi hisobi"
+msgstr "User account"
+
+msgid "Bu hisob boshqa xodimga biriktirilgan."
+msgstr "This account is already linked to another employee."
+
+msgid "Bu nomdagi bo‘lim shu joyda allaqachon bor."
+msgstr "A department with this name already exists here."
+
+msgid "Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo‘lmaydi."
+msgstr "A department with active employees or active sub-departments cannot be deactivated."
+
+msgid "bo‘limlar"
+msgstr "departments"
+
+#| msgid "Lavozim"
+msgid "lavozim"
+msgstr "position"
+
+#| msgid "Lavozimlar"
+msgid "lavozimlar"
+msgstr "positions"
+
+msgid "Ta’tilda"
+msgstr "On leave"
+
+msgid "Yangi"
+msgstr "New"
+
+msgid "familiya"
+msgstr "last name"
+
+msgid "ism"
+msgstr "first name"
+
+msgid "otasining ismi"
+msgstr "middle name"
+
+msgid "ish telefoni"
+msgstr "work phone"
+
+msgid "ish e-pochtasi"
+msgstr "work e-mail"
+
+msgid "ishga qabul sanasi"
+msgstr "hire date"
+
+msgid "shaxsiy telefon"
+msgstr "personal phone"
+
+msgid "tug‘ilgan sana"
+msgstr "date of birth"
+
+#| msgid "Xodim"
+msgid "xodim"
+msgstr "employee"
+
+#| msgid "Xodimlar"
+msgid "xodimlar"
+msgstr "employees"
+
+msgid "Xodimlar ro‘yxatini ko‘rish (ism, lavozim, bo‘lim, holat)"
+msgstr "View the employee list (name, position, department, status)"
+
+msgid "Xodimlarning aloqa ma’lumotlarini ko‘rish"
+msgstr "View employees’ contact details"
+
+msgid "Xodimlarning shaxsiy ma’lumotlarini ko‘rish"
+msgstr "View employees’ personal data"
+
+msgid "Umumiy o‘rta ta’lim maktabi"
+msgstr "General secondary school"
+
+msgid "Ixtisoslashtirilgan maktab"
+msgstr "Specialized school"
+
+msgid "Maktabgacha ta’lim muassasasi"
+msgstr "Preschool institution"
+
+msgid "Ijod maktabi"
+msgstr "Arts school"
+
+msgid "Kasbiy ta’lim"
+msgstr "Vocational education"
+
+msgid "turi"
+msgstr "type"
+
+msgid "rahbar"
+msgstr "head"
+
+msgid "saytda ko‘rsatish"
+msgstr "show on the website"
+
+msgid "ta’lim muassasasi"
+msgstr "educational institution"
+
+msgid "ta’lim muassasalari"
+msgstr "educational institutions"
+
+msgid "Sizning hisobingizga xodim kartasi biriktirilmagan."
+msgstr "No employee card is linked to your account."
+
+msgid "Xodim qo‘shildi."
+msgstr "The employee was added."
+
+msgid "Xodim arxivdan qaytarildi."
+msgstr "The employee was restored from the archive."
+
+msgid "Xodim arxivlandi."
+msgstr "The employee was archived."
+
+msgid "Lavozim"
+msgstr "Position"
+
+msgid "Portal"
+msgstr "Portal"
+
+msgid "Faol xodimlar"
+msgstr "Active employees"
+
+msgid "Xodimlar (arxivdan tashqari)"
+msgstr "Employees (excluding archived)"
+
+msgid "Davrda yaratilgan topshiriqlar"
+msgstr "Tasks created in the period"
+
+msgid "Shundan bajarilgan"
+msgstr "Of which completed"
+
+msgid "Bajarilish ulushi, %"
+msgstr "Completion rate, %"
+
+msgid "Muddati o‘tgan (ochiq)"
+msgstr "Overdue (open)"
+
+msgid "Kechikib bajarilgan"
+msgstr "Completed late"
+
+msgid "Davrda yakunlangan topshiriqlar"
+msgstr "Tasks completed in the period"
+
+msgid "Davrda yuklangan hujjatlar"
+msgstr "Documents uploaded in the period"
+
+msgid "barchasi"
+msgstr "all"
+
+#, python-format
+msgid "Davr: %(a)s – %(b)s"
+msgstr "Period: %(a)s – %(b)s"
+
+#, python-format
+msgid "Doira: %(scope)s"
+msgstr "Scope: %(scope)s"
+
+#, python-format
+msgid "Bo‘lim filtri: %(v)s"
+msgstr "Department filter: %(v)s"
+
+#, python-format
+msgid "Topshiriq holati: %(v)s"
+msgstr "Task status: %(v)s"
+
+#, python-format
+msgid "Hujjat turkumi: %(v)s"
+msgstr "Document category: %(v)s"
+
+#, python-format
+msgid "Tayyorlangan: %(when)s (%(user)s)"
+msgstr "Prepared: %(when)s (%(user)s)"
+
+msgid "Hisobot"
+msgstr "Report"
+
+msgid "Ko‘rsatkich"
+msgstr "Indicator"
+
+msgid "Qiymat"
+msgstr "Value"
+
+msgid "Dinamika"
+msgstr "Trend"
+
+msgid "Davr"
+msgstr "Period"
+
+msgid "Yaratilgan"
+msgstr "Created"
+
+msgid "Yakunlangan"
+msgstr "Completed"
+
+#, python-format
+msgid "… yana %(n)d ta qator ko‘rsatilmadi (chegara %(limit)d)"
+msgstr "… %(n)d more rows not shown (limit %(limit)d)"
+
+msgid "Asosiy ko‘rsatkichlar"
+msgstr "Key indicators"
+
+msgid "Topshiriqlar dinamikasi"
+msgstr "Task trend"
+
+#, python-format
+msgid "… yana %(n)d ta davr ko‘rsatilmadi (to‘liq ro‘yxat Excel faylida)."
+msgstr "… %(n)d more periods not shown (the full list is in the Excel file)."
+
+msgid "Ma’lumot yo‘q."
+msgstr "No data."
+
+#, python-format
+msgid "… yana %(n)d ta qator ko‘rsatilmadi (to‘liq ro‘yxat Excel faylida)."
+msgstr "… %(n)d more rows not shown (the full list is in the Excel file)."
+
+msgid "Hisobotlar sahifasini ko‘rish (doira rol bo‘yicha)"
+msgstr "View the reports page (scope depends on the role)"
+
+msgid "Hisobotlarni Excel/PDF ga yuklab olish"
+msgstr "Download reports as Excel/PDF"
+
+msgid "Hisobotda ijrochilar kesimini ko‘rish (shaxsiy natijalar)"
+msgstr "View the report broken down by assignee (personal results)"
+
+msgid "Boshlanish sanasi"
+msgstr "Start date"
+
+msgid "Tugash sanasi"
+msgstr "End date"
+
+msgid "Topshiriq holati"
+msgstr "Task status"
+
+msgid "Barchasi"
+msgstr "All"
+
+msgid "Hujjat turkumi"
+msgstr "Document category"
+
+msgid "Guruhlash"
+msgstr "Group by"
+
+msgid "Avtomatik"
+msgstr "Automatic"
+
+msgid "Kunlar"
+msgstr "Days"
+
+msgid "Haftalar"
+msgstr "Weeks"
+
+msgid "Oylar"
+msgstr "Months"
+
+msgid "Barcha bo‘limlar"
+msgstr "All departments"
+
+msgid "Barcha turkumlar"
+msgstr "All categories"
+
+msgid "Boshlanish sanasi tugash sanasidan keyin bo‘lishi mumkin emas."
+msgstr "The start date cannot be later than the end date."
+
+#, python-format
+msgid "Davr %(n)d kundan oshmasligi kerak."
+msgstr "The period must not exceed %(n)d days."
+
+#, python-format
+msgid "Bo‘lim: %(name)s"
+msgstr "Department: %(name)s"
+
+msgid "sizning doirangiz"
+msgstr "your scope"
+
+msgid "Xodimlar: bo‘limlar bo‘yicha"
+msgstr "Employees: by department"
+
+msgid "Xodimlar"
+msgstr "Employees"
+
+msgid "— (lavozim ko‘rsatilmagan)"
+msgstr "— (no position set)"
+
+msgid "Xodimlar: lavozimlar bo‘yicha"
+msgstr "Employees: by position"
+
+msgid "Topshiriqlar: holatlar bo‘yicha"
+msgstr "Tasks: by status"
+
+msgid "Holat"
+msgstr "Status"
+
+msgid "Soni"
+msgstr "Count"
+
+msgid "— (bo‘limsiz)"
+msgstr "— (no department)"
+
+msgid "Bajarilish: bo‘limlar bo‘yicha"
+msgstr "Completion: by department"
+
+msgid "Jami"
+msgstr "Total"
+
+msgid "Bajarilgan"
+msgstr "Completed"
+
+msgid "Bajarilish"
+msgstr "Completion"
+
+msgid "Bir nechta ijrochili topshiriq har bir ijrochining bo‘limida hisoblanadi."
+msgstr "A task with several assignees is counted in each assignee’s department."
+
+msgid "Bajarilish: ijrochilar bo‘yicha"
+msgstr "Completion: by assignee"
+
+msgid "Ijrochi"
+msgstr "Assignee"
+
+msgid "Shaxsiy natijalar: faqat ruxsati bor foydalanuvchilarga ko‘rinadi."
+msgstr "Personal results: visible only to users with the corresponding permission."
+
+msgid "Hujjatlar: turkumlar bo‘yicha"
+msgstr "Documents: by category"
+
+msgid "Turkum"
+msgstr "Category"
+
+msgid "Faqat siz ko‘rishga ruxsat etilgan, faol hujjatlar hisoblanadi."
+msgstr "Only active documents you are allowed to view are counted."
+
+msgid "Hujjatlar: davrlar bo‘yicha"
+msgstr "Documents: by period"
+
+msgid "Faqat hujjat yuklangan davrlar ko‘rsatiladi."
+msgstr "Only periods in which documents were uploaded are shown."
+
+#, python-format
+msgid "Filtrlar noto‘g‘ri: %(errors)s"
+msgstr "The filters are invalid: %(errors)s"
+
+msgid "Topshiriqlar"
+msgstr "Tasks"
+
+msgid "Ijrochilar"
+msgstr "Assignees"
+
+msgid "Bir nechta ijrochini Ctrl (⌘) bosib tanlang."
+msgstr "Hold Ctrl (⌘) to select several assignees."
+
+msgid "Kamida bitta ijrochi tanlang."
+msgstr "Select at least one assignee."
+
+msgid "Izoh"
+msgstr "Comment"
+
+msgctxt "task status"
+msgid "Yangi"
+msgstr "New"
+
+msgid "Jarayonda"
+msgstr "In progress"
+
+msgid "Bajarildi"
+msgstr "Done"
+
+msgid "Bekor qilindi"
+msgstr "Cancelled"
+
+msgid "Past"
+msgstr "Low"
+
+msgid "Oddiy"
+msgstr "Normal"
+
+msgid "Yuqori"
+msgstr "High"
+
+msgid "muhimlik"
+msgstr "priority"
+
+msgid "muddat"
+msgstr "due date"
+
+#| msgid "Topshiriqlar"
+msgid "topshiriq"
+msgstr "task"
+
+#| msgid "Topshiriqlar"
+msgid "topshiriqlar"
+msgstr "tasks"
+
+msgid "Bo‘lim (yoki butun tashkilot) topshiriqlarini ko‘rish"
+msgstr "View tasks of a department (or the whole organization)"
+
+#| msgid "Izohlar"
+msgid "izohlar"
+msgstr "comments"
+
+msgid "Yaratildi"
+msgstr "Created"
+
+msgid "O‘zgartirildi"
+msgstr "Changed"
+
+msgid "Holat o‘zgardi"
+msgstr "Status changed"
+
+msgid "Izoh qoldirildi"
+msgstr "Comment added"
+
+msgid "Fayl biriktirildi"
+msgstr "File attached"
+
+msgid "Fayl olib tashlandi"
+msgstr "File removed"
+
+msgid "Faylni topshiriqdan olib tashlash (faylning o‘zi o‘chirilmaydi)"
+msgstr "Remove a file from a task (the file itself is not deleted)"
+
+msgid "Menga berilgan"
+msgstr "Assigned to me"
+
+msgid "Men bergan"
+msgstr "Assigned by me"
+
+msgid "Izoh bo‘sh yoki juda uzun."
+msgstr "The comment is empty or too long."
+
+msgid "Topshiriq yaratildi."
+msgstr "The task was created."
+
+msgid "Bu holatga o‘tkazib bo‘lmaydi."
+msgstr "The task cannot be moved to this status."
+
+msgid "Holat o‘zgartirildi."
+msgstr "The status was changed."
+
+#, python-format
+msgid "Bitta topshiriqqa %(n)d tadan ortiq fayl biriktirib bo‘lmaydi."
+msgstr "No more than %(n)d files can be attached to one task."
+
+msgid "Fayl biriktirildi."
+msgstr "The file was attached."
+
+msgid "Fayl topshiriqdan olib tashlandi."
+msgstr "The file was removed from the task."
+
+msgid "Ta’lim — kelajak poydevori"
+msgstr "Education is the foundation of the future"
+
+msgid "Parolni almashtirish"
+msgstr "Change password"
+
+msgid "Almashtirgandan so‘ng boshqa qurilmalardagi sessiyalar yopiladi."
+msgstr "After the change, sessions on other devices will be closed."
+
+msgid "Saqlash"
+msgstr "Save"
+
+msgid "Bekor qilish"
+msgstr "Cancel"
+
+msgid "Parolingiz yangilandi. Boshqa qurilmalardagi sessiyalar yopildi."
+msgstr "Your password was updated. Sessions on other devices were closed."
+
+msgid "Xavfsizlik sahifasiga qaytish"
+msgstr "Back to security"
+
+msgid "Yangi parol o‘rnatildi. Barcha eski sessiyalar yopildi. Endi kirishingiz mumkin."
+msgstr "Your new password has been set. All previous sessions were closed. You can now sign in."
+
+msgid "Kirish"
+msgstr "Sign in"
+
+msgid "Yangi parol"
+msgstr "New password"
+
+msgid "Yangi parol o‘rnatish"
+msgstr "Set a new password"
+
+msgid "Parolni saqlash"
+msgstr "Save password"
+
+msgid "Havola yaroqsiz"
+msgstr "The link is not valid"
+
+msgid "Havola muddati tugagan, allaqachon ishlatilgan yoki noto‘g‘ri. Yangi havola so‘rang."
+msgstr "The link has expired, was already used, or is incorrect. Request a new link."
+
+msgid "Yangi havola so‘rash"
+msgstr "Request a new link"
+
+msgid "Havola yuborildi"
+msgstr "Link sent"
+
+msgid "E-pochtangizni tekshiring"
+msgstr "Check your e-mail"
+
+msgid "Agar kiritilgan e-pochta tizimda mavjud bo‘lsa, parolni tiklash havolasi yuborildi. Havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi."
+msgstr "If the address you entered exists in the system, a password-reset link was sent to it. The link is valid for 30 minutes and works only once."
+
+msgid "Kirish sahifasi"
+msgstr "Sign-in page"
+
+msgid "Assalomu alaykum!"
+msgstr "Hello,"
+
+#, python-format
+msgid "%(site_name)s xodimlar portalida parolni tiklash so‘raldi."
+msgstr "A password reset was requested on the “%(site_name)s” staff portal."
+
+msgid "Yangi parol o‘rnatish uchun havolaga o‘ting (havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi):"
+msgstr "To set a new password, open this link (valid for 30 minutes and works only once):"
+
+msgid "Agar siz buni so‘ramagan bo‘lsangiz, bu xatga e’tibor bermang — parolingiz o‘zgarmaydi."
+msgstr "If you did not request this, ignore this e-mail — your password will not change."
+
+msgid "Parolni tiklash"
+msgstr "Password reset"
+
+msgid "Hisobingizga biriktirilgan e-pochta manzilini kiriting. Agar u tizimda bo‘lsa, parolni tiklash havolasi yuboriladi."
+msgstr "Enter the e-mail address of your account. If it exists in the system, we will send a password-reset link."
+
+msgid "Havola yuborish"
+msgstr "Send link"
+
+msgid "Boshiga qaytish"
+msgstr "Back to sign-in"
+
+#, python-format
+msgid "%(site_name)s: parolni tiklash"
+msgstr "%(site_name)s: password reset"
+
+msgid "Xavfsizlik"
+msgstr "Security"
+
+msgid "Parol va ikki bosqichli himoya"
+msgstr "Password and two-step protection"
+
+msgid "Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi."
+msgstr "After you change your password, sessions on other devices will be closed."
+
+msgid "Ikki bosqichli himoya (2FA)"
+msgstr "Two-step protection (2FA)"
+
+msgid "Yoqilgan"
+msgstr "Enabled"
+
+#, python-format
+msgid "Qolgan zaxira kodlar: %(n)s"
+msgstr "Backup codes left: %(n)s"
+
+msgid "Sizning rolingiz uchun 2FA majburiy."
+msgstr "2FA is mandatory for your role."
+
+msgid "Yoqilmagan"
+msgstr "Not enabled"
+
+msgid "2FA ni yoqish"
+msgstr "Turn on 2FA"
+
+msgid "Zaxira kodlar"
+msgstr "Backup codes"
+
+msgid "Hozir saqlang."
+msgstr "Save them now."
+
+msgid "Bu kodlar faqat bir marta ko‘rsatiladi. Har biri bir marta ishlaydi va telefoningiz yo‘qolganda kirishga yordam beradi. Xavfsiz joyda saqlang."
+msgstr "These codes are shown only once. Each works one time and helps you sign in if you lose your phone. Keep them somewhere safe."
+
+msgid "Saqladim, davom etish"
+msgstr "I have saved them, continue"
+
+msgid "2FA ni sozlash"
+msgstr "Set up 2FA"
+
+msgid "Ikki bosqichli himoyani sozlash"
+msgstr "Set up two-step protection"
+
+msgid "Sizning rolingiz uchun bu majburiy. Sozlashni tugatmaguncha tizimga kira olmaysiz."
+msgstr "This is mandatory for your role. You cannot use the system until the setup is finished."
+
+msgid "Telefoningizda autentifikator ilovasini oching (masalan, Google Authenticator, Microsoft Authenticator, Aegis)."
+msgstr "Open an authenticator app on your phone (for example Google Authenticator, Microsoft Authenticator, Aegis)."
+
+msgid "QR-kodni skanerlang yoki maxfiy kalitni qo‘lda kiriting."
+msgstr "Scan the QR code or enter the secret key manually."
+
+msgid "Ilovada ko‘rinadigan 6 xonali kodni pastga kiriting."
+msgstr "Enter the 6-digit code shown in the app below."
+
+msgid "Qo‘lda kiritish uchun kalit"
+msgstr "Key for manual entry"
+
+msgid "Hisob"
+msgstr "Account"
+
+msgid "Tasdiqlash va yoqish"
+msgstr "Confirm and turn on"
+
+msgid "Yangi kalit yaratish"
+msgstr "Generate a new key"
+
+msgid "Ikki bosqichli tasdiqlash"
+msgstr "Two-step verification"
+
+msgid "Autentifikator ilovasidagi 6 xonali kodni kiriting. Qurilmangiz yo‘q bo‘lsa, zaxira kodlardan birini kiriting."
+msgstr "Enter the 6-digit code from your authenticator app. If you do not have your device, enter one of your backup codes."
+
+msgid "Tasdiqlash"
+msgstr "Verify"
+
+msgid "Asosiy navigatsiya"
+msgstr "Main navigation"
+
+msgid "Xodimlar portali"
+msgstr "Staff portal"
+
+msgid "Bo‘limlar"
+msgstr "Sections"
+
+msgid "Bosh sahifa"
+msgstr "Home"
+
+msgid "Tuzilma"
+msgstr "Structure"
+
+msgid "Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘shiladi"
+msgstr "Development stage: the remaining sections will be added later"
+
+msgid "Menyuni ochish yoki yig‘ish"
+msgstr "Open or collapse the menu"
+
+msgid "Sayt"
+msgstr "Site"
+
+msgid "Profil menyusi"
+msgstr "Profile menu"
+
+msgid "Tizimdan chiqish"
+msgstr "Sign out"
+
+msgid "Ishlab chiqish bosqichi"
+msgstr "Development stage"
+
+msgid "Asosiy mazmunga o‘tish"
+msgstr "Skip to main content"
+
+msgid "Asosiy menyu"
+msgstr "Main menu"
+
+msgid "Yangiliklar"
+msgstr "News"
+
+msgid "Menyu"
+msgstr "Menu"
+
+msgid "Ta’lim — kelajak poydevori. Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!"
+msgstr "Education is the foundation of the future. Quality education, a well-rounded generation and progress — together!"
+
+msgid "Foydali havolalar"
+msgstr "Useful links"
+
+msgid "Aloqa"
+msgstr "Contacts"
+
+msgid "Manzil: tasdiqlangan ma’lumot kiritiladi"
+msgstr "Address: verified information will be added"
+
+msgid "Telefon: tasdiqlangan ma’lumot kiritiladi"
+msgstr "Phone: verified information will be added"
+
+msgid "E-pochta: tasdiqlangan ma’lumot kiritiladi"
+msgstr "E-mail: verified information will be added"
+
+msgid "Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!"
+msgstr "Quality education, a well-rounded generation and progress — together!"
+
+msgid "So‘nggi yangiliklar"
+msgstr "Latest news"
+
+msgid "Barchasini ko‘rish"
+msgstr "View all"
+
+msgid "Hozircha yangiliklar yo‘q"
+msgstr "No news yet"
+
+msgid "Nashr etilgan yangiliklar shu yerda ko‘rinadi."
+msgstr "Published news will appear here."
+
+msgid "Barcha yangiliklar"
+msgstr "All news"
+
+msgid "So‘rov noto‘g‘ri"
+msgstr "Bad request"
+
+msgid "Xavfsizlik tekshiruvi muvaffaqiyatsiz tugadi. Sahifani yangilab, qayta urinib ko‘ring."
+msgstr "The security check failed. Refresh the page and try again."
+
+msgid "Yuborilgan so‘rovni qayta ishlab bo‘lmadi."
+msgstr "The submitted request could not be processed."
+
+msgid "Ruxsat yo‘q"
+msgstr "Access denied"
+
+msgid "Bu sahifani ko‘rish uchun huquqingiz yetarli emas."
+msgstr "You do not have permission to view this page."
+
+msgid "Sahifa topilmadi"
+msgstr "Page not found"
+
+msgid "Siz izlagan sahifa mavjud emas yoki ko‘chirilgan."
+msgstr "The page you are looking for does not exist or has been moved."
+
+msgid "Serverda xatolik"
+msgstr "Server error"
+
+msgid "Kutilmagan xatolik yuz berdi. Keyinroq qayta urinib ko‘ring."
+msgstr "An unexpected error occurred. Please try again later."
+
+msgid "Rasm yo‘q"
+msgstr "No image"
+
+msgid "Batafsil"
+msgstr "Read more"
+
+msgid "Sahifalar"
+msgstr "Pages"
+
+msgid "Kirish, chiqish va rollar o‘zgarishi yozuvlari. Yozuvlarni o‘zgartirib yoki o‘chirib bo‘lmaydi."
+msgstr "Records of sign-ins, sign-outs and role changes. Records cannot be changed or deleted."
+
+msgid "Vaqt"
+msgstr "Time"
+
+msgid "Foydalanuvchi"
+msgstr "User"
+
+msgid "Harakat"
+msgstr "Action"
+
+msgid "Obyekt"
+msgstr "Object"
+
+msgid "Yozuvlar hozircha yo‘q"
+msgstr "No entries yet"
+
+#, python-format
+msgid "Xush kelibsiz, %(name)s."
+msgstr "Welcome, %(name)s."
+
+msgid "Ishlab chiqish bosqichi."
+msgstr "Development stage."
+
+msgid "Bu portalning asosiy skeleti: kirish, rollar va audit ishlaydi. Xodimlar, topshiriqlar, hujjatlar va boshqa bo‘limlar keyingi bosqichlarda qo‘shiladi."
+msgstr "This is the portal’s foundation: sign-in, roles and audit work. Employees, tasks, documents and other sections will be added in later stages."
+
+msgid "Sizning hisobingiz"
+msgstr "Your account"
+
+msgid "Rollar"
+msgstr "Roles"
+
+msgid "rol biriktirilmagan"
+msgstr "no role assigned"
+
+msgid "Ro‘yxat"
+msgstr "Back to the list"
+
+msgid "Yuklab olish"
+msgstr "Download"
+
+msgid "Tahrirlash"
+msgstr "Edit"
+
+msgid "Arxivdan qaytarish"
+msgstr "Restore from the archive"
+
+msgid "Arxivlash"
+msgstr "Archive"
+
+msgid "Muallif"
+msgstr "Author"
+
+msgid "Versiyalar"
+msgstr "Versions"
+
+msgid "Hajmi"
+msgstr "Size"
+
+msgid "Yuklagan"
+msgstr "Uploaded by"
+
+msgid "Yangi versiya yuklash"
+msgstr "Upload a new version"
+
+msgid "Yuklash"
+msgstr "Upload"
+
+msgid "Hujjat yuklash"
+msgstr "Upload a document"
+
+msgid "Ruxsat etilgan: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Makroli va faol tarkibli fayllar qabul qilinmaydi. Yuklangan fayl antivirus bilan tekshiriladi; tekshiruv bajarilmasa, fayl qabul qilinmaydi."
+msgstr "Allowed: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Files with macros or active content are not accepted. Uploaded files are scanned by an antivirus; if the scan cannot be completed, the file is not accepted."
+
+msgid "Fayllar xavfsiz saqlanadi va faqat huquqingiz bo‘lsa yuklab olinadi."
+msgstr "Files are stored securely and can be downloaded only if you have permission."
+
+msgid "Qidirish: sarlavha, raqam"
+msgstr "Search: title, number"
+
+msgid "Barcha darajalar"
+msgstr "All levels"
+
+msgid "Qidirish"
+msgstr "Search"
+
+msgid "Sarlavha"
+msgstr "Title"
+
+msgid "Raqam"
+msgstr "Number"
+
+msgid "Sana"
+msgstr "Date"
+
+msgid "Daraja"
+msgstr "Level"
+
+msgid "Hujjatlar topilmadi"
+msgstr "No documents found"
+
+msgid "Asosiy"
+msgstr "Main"
+
+msgid "Ish telefoni"
+msgstr "Work phone"
+
+msgid "Ish e-pochtasi"
+msgstr "Work e-mail"
+
+msgid "Shaxsiy ma’lumotlar"
+msgstr "Personal data"
+
+msgid "Bu ma’lumotlarni ko‘rish jurnalga yoziladi."
+msgstr "Viewing this data is recorded in the log."
+
+msgid "Ishga qabul sanasi"
+msgstr "Hire date"
+
+msgid "Tug‘ilgan sana"
+msgstr "Date of birth"
+
+msgid "Shaxsiy telefon"
+msgstr "Personal phone"
+
+msgid "Xodim qo‘shish"
+msgstr "Add an employee"
+
+msgid "Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak."
+msgstr "A legal review must be completed before real personal data is entered."
+
+msgid "Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi."
+msgstr "Name, department, position and status. Contact details are on the employee card, if you have permission."
+
+msgid "Mening kartam"
+msgstr "My card"
+
+msgid "Qidirish: ism, lavozim"
+msgstr "Search: name, position"
+
+msgid "Barcha holatlar"
+msgstr "All statuses"
+
+msgid "F.I.Sh."
+msgstr "Full name"
+
+msgid "Hech narsa topilmadi"
+msgstr "Nothing found"
+
+msgid "Topshiriqlar bo‘yicha yangiliklar."
+msgstr "News about tasks."
+
+msgid "Faqat o‘qilmaganlar"
+msgstr "Unread only"
+
+msgid "Barchasini o‘qilgan deb belgilash"
+msgstr "Mark all as read"
+
+msgid "Topshiriq mavjud emas yoki ruxsat yo‘q"
+msgstr "The task does not exist or you have no access"
+
+msgid "Ochish"
+msgstr "Open"
+
+msgid "O‘qildi"
+msgstr "Mark as read"
+
+msgid "Bildirishnomalar yo‘q"
+msgstr "No notifications"
+
+#, python-format
+msgid "Birinchi %(n)s ta qator ko‘rsatildi (jami %(total)s). Filtrlarni toraytiring."
+msgstr "The first %(n)s rows are shown (%(total)s in total). Narrow the filters."
+
+msgid "Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q."
+msgstr "No data for the selected period and filters."
+
+msgid "Ma’lumotlar bazasidagi joriy ma’lumotlar. Siz faqat o‘z doirangizdagi ma’lumotlarni ko‘rasiz."
+msgstr "Current data from the database. You only see data within your own scope."
+
+msgid "Tayyorlanmoqda…"
+msgstr "Preparing…"
+
+msgid "Excel"
+msgstr "Excel"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Qo‘llash"
+msgstr "Apply"
+
+msgid "Tozalash"
+msgstr "Reset"
+
+msgid "Hisobotni tayyorlab bo‘lmadi"
+msgstr "The report could not be prepared"
+
+msgid "Xatolik yuz berdi. Keyinroq qayta urinib ko‘ring; muammo davom etsa, administratorga murojaat qiling."
+msgstr "An error occurred. Try again later; if the problem persists, contact an administrator."
+
+#, python-format
+msgid "Davr: %(a)s – %(b)s · Doira: %(scope)s"
+msgstr "Period: %(a)s – %(b)s · Scope: %(scope)s"
+
+#, python-format
+msgid "Bajarilgan (%(r)s%%)"
+msgstr "Completed (%(r)s%%)"
+
+msgid "Tashkiliy tuzilma"
+msgstr "Organization structure"
+
+msgid "Bo‘limlar daraxti va lavozimlar. Bo‘limlar o‘chirilmaydi, faqat faol emas qilinadi."
+msgstr "Department tree and positions. Departments are never deleted, only deactivated."
+
+msgid "Bo‘lim qo‘shish"
+msgstr "Add a department"
+
+msgid "Lavozim qo‘shish"
+msgstr "Add a position"
+
+msgid "Nomi"
+msgstr "Name"
+
+msgid "Faol emas"
+msgstr "Inactive"
+
+msgid "Bo‘limlar hali kiritilmagan."
+msgstr "No departments have been entered yet."
+
+msgid "Lavozimlar"
+msgstr "Positions"
+
+msgid "Lavozimlar hali kiritilmagan."
+msgstr "No positions have been entered yet."
+
+#, python-format
+msgid "Bergan: %(who)s"
+msgstr "Assigned by: %(who)s"
+
+msgid "Muddat"
+msgstr "Due date"
+
+msgid "muddati o‘tgan"
+msgstr "overdue"
+
+msgid "Fayllar"
+msgstr "Files"
+
+msgid "Olib tashlash"
+msgstr "Remove"
+
+msgid "Fayllar biriktirilmagan."
+msgstr "No files attached."
+
+msgid "Biriktirish"
+msgstr "Attach"
+
+msgid "Izohlar"
+msgstr "Comments"
+
+msgid "Izohlar yo‘q."
+msgstr "No comments."
+
+msgid "Yuborish"
+msgstr "Send"
+
+msgid "Tarix"
+msgstr "History"
+
+msgid "Yangi topshiriq"
+msgstr "New task"
+
+msgid "Sizga berilgan, siz bergan va ko‘rishga ruxsat etilgan topshiriqlar."
+msgstr "Tasks assigned to you, assigned by you, and those you are allowed to view."
+
+msgid "Faol holatlar"
+msgstr "Active statuses"
+
+msgid "Muddati o‘tgan"
+msgstr "Overdue"
+
+msgid "Topshiriqlar yo‘q"
+msgstr "No tasks"
+
+msgid "Vaqtincha bloklangan"
+msgstr "Temporarily locked"
+
+msgid "Parolni almashtirishi shart"
+msgstr "Must change password"
+
+msgid "2FA majburiy, hali yoqilmagan"
+msgstr "2FA is mandatory, not yet enabled"
+
+msgid "2FA yoqilmagan"
+msgstr "2FA is not enabled"
+
+msgid "Taklifnoma yuborish"
+msgstr "Send an invitation"
+
+msgid "Parolni almashtirishni talab qilish"
+msgstr "Require a password change"
+
+msgid "Blokdan chiqarish"
+msgstr "Unlock"
+
+msgid "O‘chirish (faolsizlantirish)"
+msgstr "Deactivate"
+
+msgid "Qayta faollashtirish"
+msgstr "Reactivate"
+
+msgid "Doira"
+msgstr "Scope"
+
+msgid "Rol biriktirilmagan: foydalanuvchi hech narsaga kira olmaydi."
+msgstr "No role assigned: the user cannot access anything."
+
+msgid "Rol biriktirish"
+msgstr "Assign a role"
+
+msgid "Yangi foydalanuvchi"
+msgstr "New user"
+
+msgid "Parol kiritilmaydi: foydalanuvchi o‘z parolini taklifnoma havolasi orqali o‘rnatadi."
+msgstr "No password is entered: the user sets their own password using the link in the invitation."
+
+msgid "Hisoblar va rollar. Parollar bu yerda ko‘rinmaydi."
+msgstr "Accounts and roles. Passwords are never shown here."
+
+msgid "Qidirish: login, ism, e-pochta"
+msgstr "Search: username, name, e-mail"
+
+msgid "Barcha rollar"
+msgstr "All roles"
+
+msgid "Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting."
+msgstr "Enter your details to sign in to the staff portal."
+
+msgid "Parolni ko‘rsatish"
+msgstr "Show password"
+
+msgid "Parolni unutdingizmi?"
+msgstr "Forgot your password?"

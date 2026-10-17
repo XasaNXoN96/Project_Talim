@@ -6,15 +6,16 @@ and grows module by module — `employee` has no extra permissions yet because n
 Guests are anonymous users and have no role.
 """
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class RoleCode(models.TextChoices):
-    EMPLOYEE = "employee", "Xodim"
-    DEPARTMENT_HEAD = "department_head", "Bo‘lim boshlig‘i"
-    CONTENT_MANAGER = "content_manager", "Kontent-menejer"
-    HR = "hr", "Kadrlar bo‘limi"
-    ADMIN = "admin", "Administrator"
-    SYSADMIN = "sysadmin", "Tizim administratori"
+    EMPLOYEE = "employee", _("Xodim")
+    DEPARTMENT_HEAD = "department_head", _("Bo‘lim boshlig‘i")
+    CONTENT_MANAGER = "content_manager", _("Kontent-menejer")
+    HR = "hr", _("Kadrlar bo‘limi")
+    ADMIN = "admin", _("Administrator")
+    SYSADMIN = "sysadmin", _("Tizim administratori")
 
 
 _CONTENT = [

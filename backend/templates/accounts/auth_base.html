@@ -10,6 +10,7 @@
 <body>
 <div class="login">
   <main class="login-form">
+    <div class="login-lang">{% include "includes/language_switcher.html" %}</div>
     <a class="brand" href="{% url 'content:home' %}"><span data-logo style="display:block;width:52px;height:52px;flex:none"></span><div><b>{{ SITE_DISTRICT }}</b><span>{{ SITE_SHORT }}</span></div></a>
     {% include "includes/messages.html" %}
     {% block content %}{% endblock %}

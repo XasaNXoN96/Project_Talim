@@ -1,6 +1,7 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class ContentConfig(AppConfig):
     name = "apps.content"
-    verbose_name = "Kontent"
+    verbose_name = _("Kontent")

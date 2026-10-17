@@ -14,6 +14,8 @@ from django.db import transaction
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from django.utils.translation import gettext, override
+from django.utils.translation import gettext_lazy as _
 
 from apps.access.models import RoleAssignment
 from apps.access.roles import PRIVILEGED_ROLES, ROLE_SCOPE, RoleCode
@@ -24,6 +26,8 @@ from apps.audit.services import record
 from . import throttle
 from .notifications import notify_security_event
 from .sessions import invalidate_user_sessions
+
+from apps.core.locale import user_language
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -39,7 +43,7 @@ def _meta(target, **extra):
 
 def _guard_target(actor, target):
     if target.is_superuser and not actor.is_superuser:
-        raise ActionNotAllowed("Superuser hisoblarini bu sahifadan o‘zgartirib bo‘lmaydi.")
+        raise ActionNotAllowed(_("Superuser hisoblarini bu sahifadan o‘zgartirib bo‘lmaydi."))
 
 
 def active_admin_count(excluding=None):
@@ -55,7 +59,7 @@ def _holds_admin(user):
 
 def create_user(actor, *, username, email, first_name, last_name, role, department, request):
     if role in PRIVILEGED_ROLES and not has_role(actor, RoleCode.ADMIN):
-        raise ActionNotAllowed("Bu rolni faqat administrator bera oladi.")
+        raise ActionNotAllowed(_("Bu rolni faqat administrator bera oladi."))
     with transaction.atomic():
         user = User(username=username, email=email, first_name=first_name, last_name=last_name, is_active=True)
         user.set_unusable_password()  # the person sets their own password through the invitation link
@@ -75,10 +79,10 @@ def update_user(actor, user, *, email, first_name, last_name, locale, request):
 
 def _assign(actor, user, role_name, department, request):
     if role_name not in RoleCode.values:
-        raise ActionNotAllowed("Noma’lum rol.")
+        raise ActionNotAllowed(_("Noma’lum rol."))
     scope = ROLE_SCOPE[role_name]
     if scope == "department" and department is None:
-        raise ActionNotAllowed("Bo‘lim boshlig‘i roli uchun bo‘lim ko‘rsatilishi shart.")
+        raise ActionNotAllowed(_("Bo‘lim boshlig‘i roli uchun bo‘lim ko‘rsatilishi shart."))
     if scope != "department":
         department = None
     assignment = RoleAssignment(user=user, role=Group.objects.get(name=role_name), scope=scope, department=department)
@@ -90,9 +94,9 @@ def _assign(actor, user, role_name, department, request):
 def assign_role(actor, user, *, role, department, request):
     _guard_target(actor, user)
     if role in PRIVILEGED_ROLES and not has_role(actor, RoleCode.ADMIN):
-        raise ActionNotAllowed("Bu rolni faqat administrator bera oladi.")
+        raise ActionNotAllowed(_("Bu rolni faqat administrator bera oladi."))
     if RoleAssignment.objects.filter(user=user, role__name=role, department=department if ROLE_SCOPE.get(role) == "department" else None).exists():
-        raise ActionNotAllowed("Bu rol allaqachon biriktirilgan.")
+        raise ActionNotAllowed(_("Bu rol allaqachon biriktirilgan."))
     return _assign(actor, user, role, department, request)
 
 
@@ -100,12 +104,12 @@ def revoke_role(actor, assignment, request):
     user = assignment.user
     _guard_target(actor, user)
     if assignment.role.name in PRIVILEGED_ROLES and not has_role(actor, RoleCode.ADMIN):
-        raise ActionNotAllowed("Bu rolni faqat administrator olib tashlay oladi.")
+        raise ActionNotAllowed(_("Bu rolni faqat administrator olib tashlay oladi."))
     if assignment.role.name == RoleCode.ADMIN:
         if user.pk == actor.pk:
-            raise ActionNotAllowed("O‘zingizning administrator rolingizni olib tashlab bo‘lmaydi.")
+            raise ActionNotAllowed(_("O‘zingizning administrator rolingizni olib tashlab bo‘lmaydi."))
         if user.is_active and active_admin_count(excluding=user) == 0:
-            raise ActionNotAllowed("Oxirgi administratorning rolini olib tashlab bo‘lmaydi.")
+            raise ActionNotAllowed(_("Oxirgi administratorning rolini olib tashlab bo‘lmaydi."))
     assignment._audit_actor, assignment._audit_request = actor, request
     assignment.delete()
 
@@ -113,9 +117,9 @@ def revoke_role(actor, assignment, request):
 def deactivate_user(actor, user, request):
     _guard_target(actor, user)
     if user.pk == actor.pk:
-        raise ActionNotAllowed("O‘zingizni o‘chirib bo‘lmaydi.")
+        raise ActionNotAllowed(_("O‘zingizni o‘chirib bo‘lmaydi."))
     if _holds_admin(user) and user.is_active and active_admin_count(excluding=user) == 0:
-        raise ActionNotAllowed("Oxirgi administratorni o‘chirib bo‘lmaydi.")
+        raise ActionNotAllowed(_("Oxirgi administratorni o‘chirib bo‘lmaydi."))
     user.is_active = False
     user.save(update_fields=["is_active"])
     closed = invalidate_user_sessions(user)
@@ -160,23 +164,25 @@ def send_invitation(actor, user, request):
     """E-mail a one-time link to set the first password (the same mechanism and lifetime as a password reset)."""
     _guard_target(actor, user)
     if not user.is_active:
-        raise ActionNotAllowed("Faol bo‘lmagan hisobga taklif yuborib bo‘lmaydi.")
+        raise ActionNotAllowed(_("Faol bo‘lmagan hisobga taklif yuborib bo‘lmaydi."))
     if not user.email:
-        raise ActionNotAllowed("Foydalanuvchining e-pochtasi ko‘rsatilmagan.")
+        raise ActionNotAllowed(_("Foydalanuvchining e-pochtasi ko‘rsatilmagan."))
     if not throttle.reserve([throttle.Key("invite:user", str(user.pk), "keep")]).allowed:
-        raise ActionNotAllowed("Taklifnomalar juda ko‘p yuborildi. Keyinroq urinib ko‘ring.")
+        raise ActionNotAllowed(_("Taklifnomalar juda ko‘p yuborildi. Keyinroq urinib ko‘ring."))
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     link = request.build_absolute_uri(reverse("accounts:password_reset_confirm", args=[uid, default_token_generator.make_token(user)]))
-    body = (
-        f"Assalomu alaykum, {user.get_full_name() or user.get_username()}!\n\n"
-        f"Siz uchun {settings.TWO_FACTOR_ISSUER} xodimlar portalida hisob yaratildi.\n"
-        f"Login: {user.get_username()}\n\n"
-        f"Parolni o‘rnatish uchun havolaga o‘ting (30 daqiqa amal qiladi, faqat bir marta ishlaydi):\n\n{link}\n\n"
-        "Havola muddati tugasa, kirish sahifasidagi «Parolni unutdingizmi?» orqali yangisini so‘rang.\n"
-    )
+    with override(user_language(user)):  # written in the invited person's language
+        body = gettext(
+            "Assalomu alaykum, %(name)s!\n\n"
+            "Siz uchun %(site)s xodimlar portalida hisob yaratildi.\n"
+            "Login: %(login)s\n\n"
+            "Parolni o‘rnatish uchun havolaga o‘ting (30 daqiqa amal qiladi, faqat bir marta ishlaydi):\n\n%(link)s\n\n"
+            "Havola muddati tugasa, kirish sahifasidagi «Parolni unutdingizmi?» orqali yangisini so‘rang.\n"
+        ) % {"name": user.get_full_name() or user.get_username(), "site": settings.TWO_FACTOR_ISSUER, "login": user.get_username(), "link": link}
+        subject = gettext("%(site)s: portalga taklif") % {"site": settings.TWO_FACTOR_ISSUER}
     try:
-        EmailMessage(f"{settings.TWO_FACTOR_ISSUER}: portalga taklif", body, to=[user.email]).send()
+        EmailMessage(subject, body, to=[user.email]).send()
     except Exception as exc:  # noqa: BLE001
         logger.error("Invitation e-mail could not be sent (%s)", type(exc).__name__)
-        raise ActionNotAllowed("Xatni yuborib bo‘lmadi. Pochta sozlamalarini tekshiring.") from exc
+        raise ActionNotAllowed(_("Xatni yuborib bo‘lmadi. Pochta sozlamalarini tekshiring.")) from exc
     record(AuditLog.Action.USER_INVITED, request=request, user=actor, object_type="User", object_id=user.pk, meta=_meta(user))

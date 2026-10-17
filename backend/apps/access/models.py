@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import TimeStampedModel
 from apps.organization.models import Department
@@ -11,9 +12,9 @@ class RoleAssignment(TimeStampedModel):
     """Gives a user a role (Group) with a scope. Saving/deleting keeps user.groups in sync (see signals)."""
 
     class Scope(models.TextChoices):
-        OWN = "own", "Faqat o‘zi"
-        DEPARTMENT = "department", "Bo‘lim"
-        ALL = "all", "Butun tashkilot"
+        OWN = "own", _("Faqat o‘zi")
+        DEPARTMENT = "department", _("Bo‘lim")
+        ALL = "all", _("Butun tashkilot")
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="role_assignments")
     role = models.ForeignKey(Group, on_delete=models.PROTECT, related_name="assignments")
@@ -21,8 +22,8 @@ class RoleAssignment(TimeStampedModel):
     department = models.ForeignKey(Department, null=True, blank=True, on_delete=models.PROTECT, related_name="+")
 
     class Meta:
-        verbose_name = "rol biriktirish"
-        verbose_name_plural = "rol biriktirishlar"
+        verbose_name = _("rol biriktirish")
+        verbose_name_plural = _("rol biriktirishlar")
         constraints = [
             models.CheckConstraint(
                 condition=(models.Q(scope="department", department__isnull=False))
@@ -36,9 +37,9 @@ class RoleAssignment(TimeStampedModel):
 
     def clean(self):
         if self.scope == self.Scope.DEPARTMENT and not self.department_id:
-            raise ValidationError({"department": "Bo‘lim doirasi uchun bo‘lim ko‘rsatilishi shart."})
+            raise ValidationError({"department": _("Bo‘lim doirasi uchun bo‘lim ko‘rsatilishi shart.")})
         if self.scope != self.Scope.DEPARTMENT and self.department_id:
-            raise ValidationError({"department": "Bo‘lim faqat «Bo‘lim» doirasi uchun ko‘rsatiladi."})
+            raise ValidationError({"department": _("Bo‘lim faqat «Bo‘lim» doirasi uchun ko‘rsatiladi.")})
 
     def save(self, *args, **kwargs):
         self.clean()

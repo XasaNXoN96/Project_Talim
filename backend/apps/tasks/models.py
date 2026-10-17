@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 
 from apps.core.models import TimeStampedModel, UUIDModel
 from apps.documents.storage import PrivateStorage
@@ -7,33 +9,33 @@ from apps.documents.storage import PrivateStorage
 
 class Task(TimeStampedModel):
     class Status(models.TextChoices):
-        NEW = "new", "Yangi"
-        IN_PROGRESS = "in_progress", "Jarayonda"
-        REVIEW = "review", "Tekshiruvda"
-        DONE = "done", "Bajarildi"
-        CANCELLED = "cancelled", "Bekor qilindi"
+        NEW = "new", pgettext_lazy("task status", "Yangi")
+        IN_PROGRESS = "in_progress", _("Jarayonda")
+        REVIEW = "review", _("Tekshiruvda")
+        DONE = "done", _("Bajarildi")
+        CANCELLED = "cancelled", _("Bekor qilindi")
 
     class Priority(models.TextChoices):
-        LOW = "low", "Past"
-        NORMAL = "normal", "Oddiy"
-        HIGH = "high", "Yuqori"
+        LOW = "low", _("Past")
+        NORMAL = "normal", _("Oddiy")
+        HIGH = "high", _("Yuqori")
 
     FINAL = (Status.DONE, Status.CANCELLED)
 
-    title = models.CharField("sarlavha", max_length=200)
-    description = models.TextField("tavsif", blank=True, max_length=5000)
+    title = models.CharField(_("sarlavha"), max_length=200)
+    description = models.TextField(_("tavsif"), blank=True, max_length=5000)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="tasks_created")
     assignees = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tasks_assigned", blank=True)
-    status = models.CharField("holat", max_length=16, choices=Status.choices, default=Status.NEW)
-    priority = models.CharField("muhimlik", max_length=8, choices=Priority.choices, default=Priority.NORMAL)
-    due_date = models.DateField("muddat", null=True, blank=True)
+    status = models.CharField(_("holat"), max_length=16, choices=Status.choices, default=Status.NEW)
+    priority = models.CharField(_("muhimlik"), max_length=8, choices=Priority.choices, default=Priority.NORMAL)
+    due_date = models.DateField(_("muddat"), null=True, blank=True)
     closed_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        verbose_name = "topshiriq"
-        verbose_name_plural = "topshiriqlar"
+        verbose_name = _("topshiriq")
+        verbose_name_plural = _("topshiriqlar")
         ordering = ["-created_at"]
-        permissions = [("view_department_tasks", "Bo‘lim (yoki butun tashkilot) topshiriqlarini ko‘rish")]
+        permissions = [("view_department_tasks", _("Bo‘lim (yoki butun tashkilot) topshiriqlarini ko‘rish"))]
         indexes = [models.Index(fields=["status"]), models.Index(fields=["due_date"])]
 
     def __str__(self):
@@ -47,20 +49,20 @@ class TaskComment(TimeStampedModel):
 
     class Meta:
         ordering = ["created_at"]
-        verbose_name = "izoh"
-        verbose_name_plural = "izohlar"
+        verbose_name = _("izoh")
+        verbose_name_plural = _("izohlar")
 
 
 class TaskEvent(UUIDModel):
     """Append-only history of a task (who did what). Comment text is NOT copied here."""
 
     class Kind(models.TextChoices):
-        CREATED = "created", "Yaratildi"
-        EDITED = "edited", "O‘zgartirildi"
-        STATUS = "status", "Holat o‘zgardi"
-        COMMENTED = "commented", "Izoh qoldirildi"
-        ATTACHED = "attached", "Fayl biriktirildi"
-        DETACHED = "detached", "Fayl olib tashlandi"
+        CREATED = "created", _("Yaratildi")
+        EDITED = "edited", _("O‘zgartirildi")
+        STATUS = "status", _("Holat o‘zgardi")
+        COMMENTED = "commented", _("Izoh qoldirildi")
+        ATTACHED = "attached", _("Fayl biriktirildi")
+        DETACHED = "detached", _("Fayl olib tashlandi")
 
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="events")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+")
@@ -94,4 +96,4 @@ class TaskAttachment(UUIDModel):
 
     class Meta:
         ordering = ["uploaded_at"]
-        permissions = [("remove_taskattachment", "Faylni topshiriqdan olib tashlash (faylning o‘zi o‘chirilmaydi)")]
+        permissions = [("remove_taskattachment", _("Faylni topshiriqdan olib tashlash (faylning o‘zi o‘chirilmaydi)"))]

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views import View
+from django.utils.translation import gettext
 
 from apps.audit.models import AuditLog
 from apps.audit.services import record
@@ -66,7 +67,7 @@ class ReportExportView(PortalPermissionMixin, View):
             return HttpResponse(status=404)
         form = FilterForm(request.GET, user=request.user)
         if not form.is_valid():
-            messages.error(request, "Filtrlar noto‘g‘ri: " + "; ".join(e for errs in form.errors.values() for e in errs))
+            messages.error(request, gettext("Filtrlar noto‘g‘ri: %(errors)s") % {"errors": "; ".join(e for errs in form.errors.values() for e in errs)})
             return redirect(f"{request.path.rsplit('export/', 1)[0]}?{request.GET.urlencode()}")
         try:
             data = build_report(request.user, form.cleaned_data)

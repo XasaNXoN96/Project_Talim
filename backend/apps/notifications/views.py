@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView
+from django.utils.translation import gettext_lazy as _
 
 from apps.core.mixins import PortalPermissionMixin
 from apps.tasks import access as task_access
@@ -46,7 +47,7 @@ class NotificationOpenView(PortalPermissionMixin, View):
             n.save(update_fields=["read_at"])
         if n.task_id and task_access.visible_tasks(request.user).filter(pk=n.task_id).exists():
             return redirect("tasks:detail", pk=n.task_id)
-        messages.info(request, "Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan.")
+        messages.info(request, _("Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."))
         return redirect("notifications:list")
 
 

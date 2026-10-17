@@ -1,18 +1,19 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import UUIDModel
 
 
 class Notification(UUIDModel):
     class Kind(models.TextChoices):
-        TASK_ASSIGNED = "task_assigned", "Topshiriq berildi"
-        TASK_SUBMITTED = "task_submitted", "Topshiriq tekshiruvga topshirildi"
-        TASK_ACCEPTED = "task_accepted", "Topshiriq qabul qilindi"
-        TASK_RETURNED = "task_returned", "Topshiriq qaytarildi"
-        TASK_CANCELLED = "task_cancelled", "Topshiriq bekor qilindi"
-        TASK_DUE_SOON = "task_due_soon", "Topshiriq muddati yaqin"
-        TASK_OVERDUE = "task_overdue", "Topshiriq muddati o‘tdi"
+        TASK_ASSIGNED = "task_assigned", _("Topshiriq berildi")
+        TASK_SUBMITTED = "task_submitted", _("Topshiriq tekshiruvga topshirildi")
+        TASK_ACCEPTED = "task_accepted", _("Topshiriq qabul qilindi")
+        TASK_RETURNED = "task_returned", _("Topshiriq qaytarildi")
+        TASK_CANCELLED = "task_cancelled", _("Topshiriq bekor qilindi")
+        TASK_DUE_SOON = "task_due_soon", _("Topshiriq muddati yaqin")
+        TASK_OVERDUE = "task_overdue", _("Topshiriq muddati o‘tdi")
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="notifications")
     kind = models.CharField(max_length=24, choices=Kind.choices)

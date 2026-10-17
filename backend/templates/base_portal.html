@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:,">
-<title>{% block title %}Portal{% endblock %} — {{ SITE_NAME }}</title>
+<title>{% block title %}{% translate "Portal" %}{% endblock %} — {{ SITE_NAME }}</title>
 <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
 <link rel="stylesheet" href="{% static 'css/backend.css' %}">
 </head>
@@ -42,6 +42,7 @@
       <button class="btn btn-secondary btn-icon" id="sbToggle" type="button" aria-label="{% translate 'Menyuni ochish yoki yig‘ish' %}"><i data-i="menu" style="display:contents"></i></button>
       <div class="grow"></div>
       {% if perms.tasks.view_task %}<a class="btn btn-secondary btn-sm" href="{% url 'notifications:list' %}" aria-label="{% translate 'Bildirishnomalar' %}"><i data-i="bell" data-c="sm" style="display:contents"></i>{% if unread_notifications %} <span class="badge b-err plain" id="unreadCount">{{ unread_notifications }}</span>{% endif %}</a>{% endif %}
+      {% include "includes/language_switcher.html" %}
       <a class="btn btn-secondary btn-sm" href="{% url 'content:home' %}">{% translate "Sayt" %}</a>
       <div class="dd">
         <button class="me" type="button" data-dd aria-label="{% translate 'Profil menyusi' %}"><span class="av" data-name="{{ user.get_username }}"></span><div><b>{{ user.get_full_name|default:user.get_username }}</b><small>{{ user.email }}</small></div><i data-i="down" data-c="sm" style="display:contents"></i></button>

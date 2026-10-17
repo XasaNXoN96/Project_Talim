@@ -6,6 +6,7 @@ from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import ListView
+from django.utils.translation import gettext_lazy as _
 
 from apps.audit.models import AuditLog
 from apps.audit.services import record
@@ -77,7 +78,7 @@ class EmployeeMeView(PortalPermissionMixin, View):
     def get(self, request):
         employee = Employee.objects.filter(user=request.user).first()
         if employee is None:
-            messages.info(request, "Sizning hisobingizga xodim kartasi biriktirilmagan.")
+            messages.info(request, _("Sizning hisobingizga xodim kartasi biriktirilmagan."))
             return redirect("employees:list")
         return redirect("employees:detail", pk=employee.pk)
 
@@ -103,7 +104,7 @@ class EmployeeCreateView(PortalPermissionMixin, View):
                 AuditLog.Action.EMPLOYEE_CREATED, request=request, user=request.user, object_type="Employee", object_id=employee.pk,
                 meta={"fields": _changed(form)},
             )
-            messages.success(request, "Xodim qo‘shildi.")
+            messages.success(request, _("Xodim qo‘shildi."))
             return redirect("employees:detail", pk=employee.pk)
         return render(request, "portal/employees/form.html", {"form": form, "creating": True})
 
@@ -129,7 +130,7 @@ class EmployeeEditView(PortalPermissionMixin, View):
                     AuditLog.Action.EMPLOYEE_UPDATED, request=request, user=request.user, object_type="Employee", object_id=employee.pk,
                     meta={"fields": changed},
                 )
-            messages.success(request, "Ma’lumotlar saqlandi.")
+            messages.success(request, _("Ma’lumotlar saqlandi."))
             return redirect("employees:detail", pk=employee.pk)
         return render(request, "portal/employees/form.html", {"form": form, "e": employee})
 
@@ -143,10 +144,10 @@ class EmployeeArchiveView(PortalPermissionMixin, View):
         employee = get_object_or_404(Employee, pk=pk)
         if self.restore:
             employee.status = Employee.Status.ACTIVE
-            action, text = AuditLog.Action.EMPLOYEE_RESTORED, "Xodim arxivdan qaytarildi."
+            action, text = AuditLog.Action.EMPLOYEE_RESTORED, _("Xodim arxivdan qaytarildi.")
         else:
             employee.status = Employee.Status.ARCHIVED
-            action, text = AuditLog.Action.EMPLOYEE_ARCHIVED, "Xodim arxivlandi."
+            action, text = AuditLog.Action.EMPLOYEE_ARCHIVED, _("Xodim arxivlandi.")
         employee.save(update_fields=["status", "updated_at"])
         record(action, request=request, user=request.user, object_type="Employee", object_id=employee.pk)
         messages.success(request, text)
@@ -207,7 +208,7 @@ class _OrgFormView(PortalPermissionMixin, View):
                 AuditLog.Action.ORG_CHANGED, request=request, user=request.user, object_type=self.model.__name__, object_id=saved.pk,
                 meta={"created": obj is None, "fields": changed},
             )
-            messages.success(request, "Saqlandi.")
+            messages.success(request, _("Saqlandi."))
             return redirect("employees:structure")
         return render(request, self.template_name, {"form": form, "title": self.title, "obj": obj})
 
@@ -215,7 +216,7 @@ class _OrgFormView(PortalPermissionMixin, View):
 class DepartmentFormView(_OrgFormView):
     form_class = DepartmentForm
     model = Department
-    title = "Bo‘lim"
+    title = _("Bo‘lim")
 
     @property
     def permission_required(self):
@@ -225,7 +226,7 @@ class DepartmentFormView(_OrgFormView):
 class PositionFormView(_OrgFormView):
     form_class = PositionForm
     model = Position
-    title = "Lavozim"
+    title = _("Lavozim")
 
     @property
     def permission_required(self):

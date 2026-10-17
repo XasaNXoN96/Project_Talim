@@ -17,6 +17,7 @@
       <a href="{% url 'content:news_list' %}" {% if request.resolver_match.url_name == 'news_list' or request.resolver_match.url_name == 'news_detail' %}class="active" aria-current="page"{% endif %}>{% translate "Yangiliklar" %}</a>
     </nav>
     <div class="pub-actions">
+      {% include "includes/language_switcher.html" %}
       {% if user.is_authenticated %}
         <a class="btn btn-primary" href="{% url 'portal:dashboard' %}"><span data-i="user" data-c="sm"></span><span>{% translate "Portal" %}</span></a>
       {% else %}
