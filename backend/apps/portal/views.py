@@ -67,3 +67,16 @@ class SearchView(LoginRequiredMixin, TemplateView):
             ctx["sections"].append({"kind": k, "label": search.LABELS[k], "count": count, "more": count > len(items) and not kind, "items": [search.describe(user, k, o) for o in items]})
         ctx["total"] = sum(s["count"] for s in ctx["sections"])
         return ctx
+
+
+class JobsView(PortalPermissionMixin, TemplateView):
+    """Background-job overview for people who may read the audit log. Counts, times and states only: no paths, settings or record data."""
+
+    template_name = "portal/jobs.html"
+    permission_required = "audit.view_auditlog"
+
+    def get_context_data(self, **kwargs):
+        from apps.core import jobs
+
+        states = jobs.all_job_states()
+        return super().get_context_data(jobs=[{**s, "healthy": jobs.is_healthy(s)} for s in states], **kwargs)

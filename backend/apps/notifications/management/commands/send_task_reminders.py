@@ -1,38 +1,26 @@
+import logging
 from datetime import timedelta
 
-from django.core.management.base import BaseCommand
-from django.db import connection
 from django.utils import timezone
 
+from apps.core.jobs import TrackedCommand
 from apps.notifications.models import Notification
 from apps.notifications.services import notify
 from apps.tasks.models import Task
 
+logger = logging.getLogger("apps.jobs")
 
-class Command(BaseCommand):
+
+class Command(TrackedCommand):
     help = (
-        "Create 'due soon' (due today or tomorrow) and 'overdue' notifications for open tasks. Safe to run as often as "
-        "you like: each (task, assignee, due date, kind) produces at most one notification. Nothing runs it automatically: "
-        "schedule it (cron/systemd timer), e.g. every hour: `python manage.py send_task_reminders`."
+        "Create 'due soon' (due today or tomorrow, by the LOCAL date) and 'overdue' notifications for open tasks. Safe to run as "
+        "often as you like: each (task, assignee, due date, kind) produces at most one notification (a database unique key), and "
+        "a second run that starts while one is working exits at once. One failing record is counted and skipped, the rest are "
+        "still processed; any failure gives exit code 1. Nothing runs it automatically: see docs/SCHEDULER.md."
     )
+    job_name = "send_task_reminders"
 
-    LOCK_ID = 7_310_001  # arbitrary application-wide key for the PostgreSQL advisory lock
-
-    def handle(self, *args, **options):
-        # A second run that starts while one is still working exits at once instead of doing the same work twice.
-        # (Even without the lock, the unique dedupe key makes duplicates impossible; the lock only saves effort.)
-        with connection.cursor() as cur:
-            cur.execute("SELECT pg_try_advisory_lock(%s)", [self.LOCK_ID])
-            if not cur.fetchone()[0]:
-                self.stdout.write("another run is in progress: skipped")
-                return
-        try:
-            self._run()
-        finally:
-            with connection.cursor() as cur:
-                cur.execute("SELECT pg_advisory_unlock(%s)", [self.LOCK_ID])
-
-    def _run(self):
+    def run_job(self, run, *args, **options):
         today = timezone.localdate()
         soon = today + timedelta(days=1)
         created = {"due_soon": 0, "overdue": 0}
@@ -42,8 +30,13 @@ class Command(BaseCommand):
                 kind, label = Notification.Kind.TASK_OVERDUE, "overdue"
             else:
                 kind, label = Notification.Kind.TASK_DUE_SOON, "due_soon"
+            key = f"{label}:{task.pk}:{task.due_date.isoformat()}"
             for user in task.assignees.all():
-                key = f"{label}:{task.pk}:{task.due_date.isoformat()}"
-                if notify(user, kind, task, dedupe_key=key):
-                    created[label] += 1
+                run.processed += 1
+                try:
+                    if notify(user, kind, task, dedupe_key=key):
+                        created[label] += 1
+                except Exception as exc:  # noqa: BLE001 — one bad record must not stop the others
+                    run.errors += 1
+                    logger.error("reminder failed task=%s user=%s kind=%s (%s)", task.pk, user.pk, label, type(exc).__name__)
         self.stdout.write(f"due_soon={created['due_soon']} overdue={created['overdue']}")

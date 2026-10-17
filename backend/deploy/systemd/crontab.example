@@ -1,9 +1,16 @@
-# Alternative to the systemd timer. Install with `crontab -e` as the application user.
-# flock -n: if the previous run is somehow still going, skip instead of piling up.
-7 * * * * cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && flock -n /tmp/talim-reminders.lock .venv/bin/python manage.py send_task_reminders >> /var/log/talim/reminders.log 2>&1
-
-# Housekeeping (not installed anywhere yet — see docs/SCHEDULER.md "Служебная очистка"):
-# parsed employee-import previews hold personal data for at most 60 minutes; this wipes the ones nobody confirmed.
-*/15 * * * * cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && flock -n /tmp/talim-purge-imports.lock .venv/bin/python manage.py purge_employee_imports >> /var/log/talim/housekeeping.log 2>&1
-# expired Django sessions (and, through them, the "active sessions" index) — once a day
-23 3 * * * cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && flock -n /tmp/talim-clearsessions.lock .venv/bin/python manage.py clearsessions >> /var/log/talim/housekeeping.log 2>&1
+# CRON VARIANT of the schedule (the systemd timers in this directory are preferred, see docs/SCHEDULER.md).
+# Install as the unprivileged application user, never root:   sudo crontab -u talim crontab.example
+# Needs /run/talim (lock files) and /var/log/talim (logs): deploy/tmpfiles.d/talim.conf creates both, owned by talim.
+# Secrets are NOT here: the environment file is read at run time (root:talim, mode 0640).
+# flock -n: if the same job is still running, skip instead of piling up (the jobs also take a database lock of their own).
+# Exit codes: 0 = fine (or skipped because another run holds the lock), 1 = crashed or a record failed. MAILTO is empty: output goes to the log files.
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin
+MAILTO=
+# m   h dom mon dow  command
+7 * * * *    umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && /usr/bin/flock -n /run/talim/send_task_reminders.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py send_task_reminders >> /var/log/talim/send_task_reminders.log 2>&1
+*/15 * * * * umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && /usr/bin/flock -n /run/talim/purge_employee_imports.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py purge_employee_imports >> /var/log/talim/purge_employee_imports.log 2>&1
+37 * * * *   umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && /usr/bin/flock -n /run/talim/purge_throttles.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py purge_throttles >> /var/log/talim/purge_throttles.log 2>&1
+23 3 * * *    umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && /usr/bin/flock -n /run/talim/clear_expired_sessions.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py clear_expired_sessions >> /var/log/talim/clear_expired_sessions.log 2>&1
+*/5 * * * *  umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && /usr/bin/flock -n /run/talim/check_scanner.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py check_scanner >> /var/log/talim/check_scanner.log 2>&1
+11 4 * * 0   umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && /usr/bin/flock -n /run/talim/verify_document_files.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py verify_document_files >> /var/log/talim/verify_document_files.log 2>&1

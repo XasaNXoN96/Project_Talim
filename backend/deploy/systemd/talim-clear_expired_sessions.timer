@@ -1,0 +1,12 @@
+# Daily: expired sessions and stale entries of the active-sessions index.
+[Unit]
+Description=Talim portal schedule: clear_expired_sessions
+
+[Timer]
+OnCalendar=*-*-* 03:23:00
+Persistent=true
+RandomizedDelaySec=300
+Unit=talim-job@clear_expired_sessions.service
+
+[Install]
+WantedBy=timers.target

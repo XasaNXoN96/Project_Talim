@@ -1,0 +1,12 @@
+# Every 15 minutes: unconfirmed employee-import previews hold personal data for at most 60 minutes.
+[Unit]
+Description=Talim portal schedule: purge_employee_imports
+
+[Timer]
+OnCalendar=*-*-* *:00/15:00
+Persistent=true
+RandomizedDelaySec=30
+Unit=talim-job@purge_employee_imports.service
+
+[Install]
+WantedBy=timers.target

@@ -12,10 +12,10 @@
 5. Узбекская латиница: апострофы `‘ ’` и термины источника.
 6. Длинные подписи в RU на узких экранах (проверено визуально на 390 px: горизонтальной прокрутки нет, но читаемость оценивает дизайнер).
 
-Всего строк в каталогах: 766.
+Всего строк в каталогах: 788.
 
 
-## A. E-mail texts (sent to real people; tone and formality matter) — 43
+## A. E-mail texts (sent to real people; tone and formality matter) — 45
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -33,37 +33,39 @@
 | 12 | Parolni tiklash so‘rovlari cheklandi | Запросы на восстановление пароля ограничены | Password reset requests throttled |
 | 13 | Taklifnoma yuborildi | Приглашение отправлено | Invitation sent |
 | 14 | Oddiy matn. Bo‘sh qator — yangi abzats. HTML va havolalar matn sifatida ko‘rinadi. | Простой текст. Пустая строка — новый абзац. HTML и ссылки отображаются как обычный текст. | Plain text. A blank line starts a new paragraph. HTML and links are shown as plain text. |
-| 15 | Topshiriq muddati yaqin | Срок задания близко | A task is due soon |
-| 16 | Topshiriq muddati o‘tdi | Срок задания истёк | A task is overdue |
-| 17 | %(kind)s: %(title)s ⏎  ⏎ Batafsil ma’lumot uchun xodimlar portaliga kiring. | %(kind)s: %(title)s ⏎  ⏎ Подробности — на портале сотрудников. | %(kind)s: %(title)s ⏎  ⏎ See the staff portal for details. |
-| 18 | Bu import allaqachon bajarilgan, bekor qilingan yoki muddati o‘tgan. | Этот импорт уже выполнен, отменён или просрочен. | This import has already been completed, cancelled or has expired. |
-| 19 | Muddati o‘tdi | Срок истёк | Expired |
-| 20 | Muddati o‘tgan (ochiq) | Просрочено (открытые) | Overdue (open) |
-| 21 | Havola yaroqsiz | Ссылка недействительна | The link is not valid |
-| 22 | Havola muddati tugagan, allaqachon ishlatilgan yoki noto‘g‘ri. Yangi havola so‘rang. | Срок действия ссылки истёк, она уже использована или неверна. Запросите новую ссылку. | The link has expired, was already used, or is incorrect. Request a new link. |
-| 23 | Yangi havola so‘rash | Запросить новую ссылку | Request a new link |
-| 24 | Havola yuborildi | Ссылка отправлена | Link sent |
-| 25 | Agar kiritilgan e-pochta tizimda mavjud bo‘lsa, parolni tiklash havolasi yuborildi. Havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi. | Если указанный адрес есть в системе, на него отправлена ссылка для восстановления пароля. Ссылка действует 30 минут и работает только один раз. | If the address you entered exists in the system, a password-reset link was sent to it. The link is valid for 30 minutes and works only once. |
-| 26 | %(site_name)s xodimlar portalida parolni tiklash so‘raldi. | На портале сотрудников «%(site_name)s» запрошено восстановление пароля. | A password reset was requested on the “%(site_name)s” staff portal. |
-| 27 | Yangi parol o‘rnatish uchun havolaga o‘ting (havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi): | Чтобы задать новый пароль, перейдите по ссылке (действует 30 минут и работает только один раз): | To set a new password, open this link (valid for 30 minutes and works only once): |
-| 28 | Parolni tiklash | Восстановление пароля | Password reset |
-| 29 | Hisobingizga biriktirilgan e-pochta manzilini kiriting. Agar u tizimda bo‘lsa, parolni tiklash havolasi yuboriladi. | Введите адрес электронной почты вашей учётной записи. Если он есть в системе, мы отправим ссылку для восстановления пароля. | Enter the e-mail address of your account. If it exists in the system, we will send a password-reset link. |
-| 30 | Havola yuborish | Отправить ссылку | Send link |
-| 31 | %(site_name)s: parolni tiklash | %(site_name)s: восстановление пароля | %(site_name)s: password reset |
-| 32 | Amal qilish muddati | Действует до | Valid until |
-| 33 | Oxirgi faollik taxminan 5 daqiqa aniqlikda ko‘rsatiladi. Brauzer yopilgan bo‘lsa ham, sessiya muddati tugamaguncha server uchun amalda bo‘lib turadi. Joylashuv va qurilma modeli aniqlanmaydi. | Последняя активность показана с точностью около 5 минут. Даже если браузер закрыт, сессия остаётся действующей для сервера до истечения срока. Местоположение и модель устройства не определяются. | Last activity is shown to within about 5 minutes. Even if the browser was closed, the session stays valid for the server until it expires. Location and device model are not determined. |
-| 34 | Xodimlar portali | Портал сотрудников | Staff portal |
-| 35 | Foydali havolalar | Полезные ссылки | Useful links |
-| 36 | Bu sahifani ko‘rish uchun huquqingiz yetarli emas. | У вас недостаточно прав для просмотра этой страницы. | You do not have permission to view this page. |
-| 37 | Ko‘rib chiqish muddati o‘tdi, yuklangan qatorlar o‘chirildi. Faylni qayta yuklang. | Срок проверки истёк, загруженные строки удалены. Загрузите файл заново. | The review period has expired and the uploaded rows were deleted. Upload the file again. |
-| 38 | Sanalar: YYYY-MM-DD yoki DD.MM.YYYY. Formulalar, makroslar va havolalar qabul qilinmaydi. | Даты: YYYY-MM-DD или DD.MM.YYYY. Формулы, макросы и ссылки не принимаются. | Dates: YYYY-MM-DD or DD.MM.YYYY. Formulas, macros and links are not accepted. |
-| 39 | muddati o‘tgan | просрочено | overdue |
-| 40 | Muddati o‘tgan | Просрочено | Overdue |
-| 41 | Taklifnoma yuborish | Отправить приглашение | Send an invitation |
-| 42 | Parol kiritilmaydi: foydalanuvchi o‘z parolini taklifnoma havolasi orqali o‘rnatadi. | Пароль не вводится: пользователь задаёт пароль сам по ссылке из приглашения. | No password is entered: the user sets their own password using the link in the invitation. |
-| 43 | Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting. | Введите свои данные для входа на портал сотрудников. | Enter your details to sign in to the staff portal. |
+| 15 | Topshiriq eslatmalarini yuborish | Отправка напоминаний по заданиям | Sending task reminders |
+| 16 | Muddati o‘tgan sessiyalarni tozalash | Очистка просроченных сессий | Cleaning expired sessions |
+| 17 | Topshiriq muddati yaqin | Срок задания близко | A task is due soon |
+| 18 | Topshiriq muddati o‘tdi | Срок задания истёк | A task is overdue |
+| 19 | %(kind)s: %(title)s ⏎  ⏎ Batafsil ma’lumot uchun xodimlar portaliga kiring. | %(kind)s: %(title)s ⏎  ⏎ Подробности — на портале сотрудников. | %(kind)s: %(title)s ⏎  ⏎ See the staff portal for details. |
+| 20 | Bu import allaqachon bajarilgan, bekor qilingan yoki muddati o‘tgan. | Этот импорт уже выполнен, отменён или просрочен. | This import has already been completed, cancelled or has expired. |
+| 21 | Muddati o‘tdi | Срок истёк | Expired |
+| 22 | Muddati o‘tgan (ochiq) | Просрочено (открытые) | Overdue (open) |
+| 23 | Havola yaroqsiz | Ссылка недействительна | The link is not valid |
+| 24 | Havola muddati tugagan, allaqachon ishlatilgan yoki noto‘g‘ri. Yangi havola so‘rang. | Срок действия ссылки истёк, она уже использована или неверна. Запросите новую ссылку. | The link has expired, was already used, or is incorrect. Request a new link. |
+| 25 | Yangi havola so‘rash | Запросить новую ссылку | Request a new link |
+| 26 | Havola yuborildi | Ссылка отправлена | Link sent |
+| 27 | Agar kiritilgan e-pochta tizimda mavjud bo‘lsa, parolni tiklash havolasi yuborildi. Havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi. | Если указанный адрес есть в системе, на него отправлена ссылка для восстановления пароля. Ссылка действует 30 минут и работает только один раз. | If the address you entered exists in the system, a password-reset link was sent to it. The link is valid for 30 minutes and works only once. |
+| 28 | %(site_name)s xodimlar portalida parolni tiklash so‘raldi. | На портале сотрудников «%(site_name)s» запрошено восстановление пароля. | A password reset was requested on the “%(site_name)s” staff portal. |
+| 29 | Yangi parol o‘rnatish uchun havolaga o‘ting (havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi): | Чтобы задать новый пароль, перейдите по ссылке (действует 30 минут и работает только один раз): | To set a new password, open this link (valid for 30 minutes and works only once): |
+| 30 | Parolni tiklash | Восстановление пароля | Password reset |
+| 31 | Hisobingizga biriktirilgan e-pochta manzilini kiriting. Agar u tizimda bo‘lsa, parolni tiklash havolasi yuboriladi. | Введите адрес электронной почты вашей учётной записи. Если он есть в системе, мы отправим ссылку для восстановления пароля. | Enter the e-mail address of your account. If it exists in the system, we will send a password-reset link. |
+| 32 | Havola yuborish | Отправить ссылку | Send link |
+| 33 | %(site_name)s: parolni tiklash | %(site_name)s: восстановление пароля | %(site_name)s: password reset |
+| 34 | Amal qilish muddati | Действует до | Valid until |
+| 35 | Oxirgi faollik taxminan 5 daqiqa aniqlikda ko‘rsatiladi. Brauzer yopilgan bo‘lsa ham, sessiya muddati tugamaguncha server uchun amalda bo‘lib turadi. Joylashuv va qurilma modeli aniqlanmaydi. | Последняя активность показана с точностью около 5 минут. Даже если браузер закрыт, сессия остаётся действующей для сервера до истечения срока. Местоположение и модель устройства не определяются. | Last activity is shown to within about 5 minutes. Even if the browser was closed, the session stays valid for the server until it expires. Location and device model are not determined. |
+| 36 | Xodimlar portali | Портал сотрудников | Staff portal |
+| 37 | Foydali havolalar | Полезные ссылки | Useful links |
+| 38 | Bu sahifani ko‘rish uchun huquqingiz yetarli emas. | У вас недостаточно прав для просмотра этой страницы. | You do not have permission to view this page. |
+| 39 | Ko‘rib chiqish muddati o‘tdi, yuklangan qatorlar o‘chirildi. Faylni qayta yuklang. | Срок проверки истёк, загруженные строки удалены. Загрузите файл заново. | The review period has expired and the uploaded rows were deleted. Upload the file again. |
+| 40 | Sanalar: YYYY-MM-DD yoki DD.MM.YYYY. Formulalar, makroslar va havolalar qabul qilinmaydi. | Даты: YYYY-MM-DD или DD.MM.YYYY. Формулы, макросы и ссылки не принимаются. | Dates: YYYY-MM-DD or DD.MM.YYYY. Formulas, macros and links are not accepted. |
+| 41 | muddati o‘tgan | просрочено | overdue |
+| 42 | Muddati o‘tgan | Просрочено | Overdue |
+| 43 | Taklifnoma yuborish | Отправить приглашение | Send an invitation |
+| 44 | Parol kiritilmaydi: foydalanuvchi o‘z parolini taklifnoma havolasi orqali o‘rnatadi. | Пароль не вводится: пользователь задаёт пароль сам по ссылке из приглашения. | No password is entered: the user sets their own password using the link in the invitation. |
+| 45 | Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting. | Введите свои данные для входа на портал сотрудников. | Enter your details to sign in to the staff portal. |
 
-## B. Security, login and 2FA messages (must be unambiguous) — 100
+## B. Security, login and 2FA messages (must be unambiguous) — 102
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -118,55 +120,57 @@
 | 49 | Parolni almashtirish majburiy qilindi | Потребована смена пароля | Password change required |
 | 50 | Sessiya yakunlandi | Сессия завершена | Session ended |
 | 51 | Boshqa sessiyalar yakunlandi | Остальные сессии завершены | Other sessions ended |
-| 52 | kirish darajasi | уровень доступа | access level |
-| 53 | Parolni almashtirish | Смена пароля | Change password |
-| 54 | Almashtirgandan so‘ng boshqa qurilmalardagi sessiyalar yopiladi. | После смены пароля сеансы на других устройствах будут завершены. | After the change, sessions on other devices will be closed. |
-| 55 | Parolingiz yangilandi. Boshqa qurilmalardagi sessiyalar yopildi. | Пароль обновлён. Сеансы на других устройствах завершены. | Your password was updated. Sessions on other devices were closed. |
-| 56 | Xavfsizlik sahifasiga qaytish | Вернуться к безопасности | Back to security |
-| 57 | Yangi parol o‘rnatildi. Barcha eski sessiyalar yopildi. Endi kirishingiz mumkin. | Новый пароль установлен. Все прежние сеансы завершены. Теперь вы можете войти. | Your new password has been set. All previous sessions were closed. You can now sign in. |
-| 58 | Kirish | Войти | Sign in |
-| 59 | Yangi parol | Новый пароль | New password |
-| 60 | Yangi parol o‘rnatish | Установка нового пароля | Set a new password |
-| 61 | Parolni saqlash | Сохранить пароль | Save password |
-| 62 | Kirish sahifasi | Страница входа | Sign-in page |
-| 63 | Agar siz buni so‘ramagan bo‘lsangiz, bu xatga e’tibor bermang — parolingiz o‘zgarmaydi. | Если вы этого не запрашивали, проигнорируйте это письмо — ваш пароль не изменится. | If you did not request this, ignore this e-mail — your password will not change. |
-| 64 | Xavfsizlik | Безопасность | Security |
-| 65 | Parol va ikki bosqichli himoya | Пароль и двухэтапная защита | Password and two-step protection |
-| 66 | Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi. | После смены пароля сеансы на других устройствах будут завершены. | After you change your password, sessions on other devices will be closed. |
-| 67 | Faol sessiyalar | Активные сессии | Active sessions |
-| 68 | Qaysi qurilmalardan kirilganini ko‘ring va keraksiz sessiyalarni yakunlang. | Посмотрите, с каких устройств выполнен вход, и завершите ненужные сессии. | See which devices are signed in and end the sessions you do not need. |
-| 69 | Sessiyalarni ko‘rish | Посмотреть сессии | View sessions |
-| 70 | Ikki bosqichli himoya (2FA) | Двухэтапная защита (2FA) | Two-step protection (2FA) |
-| 71 | Qolgan zaxira kodlar: %(n)s | Осталось резервных кодов: %(n)s | Backup codes left: %(n)s |
-| 72 | Sizning rolingiz uchun 2FA majburiy. | Для вашей роли 2FA обязательна. | 2FA is mandatory for your role. |
-| 73 | 2FA ni yoqish | Включить 2FA | Turn on 2FA |
-| 74 | Sessiyani yakunlash | Завершить сессию | End session |
-| 75 | Bu sessiya yakunlansa, o‘sha qurilmada qayta kirish kerak bo‘ladi. | После завершения этой сессии на том устройстве нужно будет войти заново. | If this session is ended, you will have to sign in again on that device. |
-| 76 | Hisobingizga kirilgan va server hali qabul qilayotgan sessiyalar. Tanimagan sessiya bo‘lsa, uni yakunlang va parolni almashtiring. | Сессии, в которых выполнен вход в вашу учётную запись и которые сервер ещё принимает. Если видите незнакомую сессию — завершите её и смените пароль. | Sessions signed in to your account that the server still accepts. If you see one you do not recognise, end it and change your password. |
-| 77 | Boshqa barcha sessiyalarni yakunlash | Завершить все остальные сессии | End all other sessions |
-| 78 | Joriy sessiya | Текущая сессия | Current session |
-| 79 | Faol sessiyalar topilmadi | Активных сессий не найдено | No active sessions found |
-| 80 | Boshqa sessiyalarni yakunlash | Завершить остальные сессии | End other sessions |
-| 81 | Joriy sessiyadan tashqari barcha sessiyalar yakunlanadi (%(count)s ta ko‘rinadigan). Siz bu qurilmada tizimda qolasiz; boshqa qurilmalarda qayta kirish kerak bo‘ladi. | Все сессии, кроме текущей, будут завершены (видимых: %(count)s). На этом устройстве вы останетесь в системе; на других нужно будет войти заново. | All sessions except the current one will be ended (%(count)s visible). You stay signed in on this device; on the others you will have to sign in again. |
-| 82 | Zaxira kodlar | Резервные коды | Backup codes |
-| 83 | Bu kodlar faqat bir marta ko‘rsatiladi. Har biri bir marta ishlaydi va telefoningiz yo‘qolganda kirishga yordam beradi. Xavfsiz joyda saqlang. | Эти коды показываются только один раз. Каждый работает один раз и поможет войти, если вы потеряете телефон. Храните их в надёжном месте. | These codes are shown only once. Each works one time and helps you sign in if you lose your phone. Keep them somewhere safe. |
-| 84 | 2FA ni sozlash | Настройка 2FA | Set up 2FA |
-| 85 | Telefoningizda autentifikator ilovasini oching (masalan, Google Authenticator, Microsoft Authenticator, Aegis). | Откройте на телефоне приложение-аутентификатор (например, Google Authenticator, Microsoft Authenticator, Aegis). | Open an authenticator app on your phone (for example Google Authenticator, Microsoft Authenticator, Aegis). |
-| 86 | QR-kodni skanerlang yoki maxfiy kalitni qo‘lda kiriting. | Отсканируйте QR-код или введите секретный ключ вручную. | Scan the QR code or enter the secret key manually. |
-| 87 | Ilovada ko‘rinadigan 6 xonali kodni pastga kiriting. | Введите ниже 6-значный код из приложения. | Enter the 6-digit code shown in the app below. |
-| 88 | Autentifikator ilovasidagi 6 xonali kodni kiriting. Qurilmangiz yo‘q bo‘lsa, zaxira kodlardan birini kiriting. | Введите 6-значный код из приложения-аутентификатора. Если устройства нет под рукой, введите один из резервных кодов. | Enter the 6-digit code from your authenticator app. If you do not have your device, enter one of your backup codes. |
-| 89 | Xavfsizlik tekshiruvi muvaffaqiyatsiz tugadi. Sahifani yangilab, qayta urinib ko‘ring. | Проверка безопасности не пройдена. Обновите страницу и повторите попытку. | The security check failed. Refresh the page and try again. |
-| 90 | Kirish, chiqish va rollar o‘zgarishi yozuvlari. Yozuvlarni o‘zgartirib yoki o‘chirib bo‘lmaydi. | Записи о входах, выходах и изменении ролей. Записи нельзя изменять или удалять. | Records of sign-ins, sign-outs and role changes. Records cannot be changed or deleted. |
-| 91 | Bu portalning asosiy skeleti: kirish, rollar va audit ishlaydi. Xodimlar, topshiriqlar, hujjatlar va boshqa bo‘limlar keyingi bosqichlarda qo‘shiladi. | Это основа портала: работают вход, роли и аудит. Сотрудники, задания, документы и другие разделы будут добавлены на следующих этапах. | This is the portal’s foundation: sign-in, roles and audit work. Employees, tasks, documents and other sections will be added in later stages. |
-| 92 | Xavfsizlik uchun faqat PDF, rasm va oddiy matn ko‘rsatiladi. Faylni yuklab olib oching. | В целях безопасности в портале показываются только PDF, изображения и простой текст. Скачайте файл и откройте его на своём устройстве. | For security, the portal shows only PDF, images and plain text. Download the file and open it on your device. |
-| 93 | Vaqtincha bloklangan | Временно заблокирована | Temporarily locked |
-| 94 | Parolni almashtirishi shart | Обязана сменить пароль | Must change password |
-| 95 | 2FA majburiy, hali yoqilmagan | 2FA обязательна, ещё не включена | 2FA is mandatory, not yet enabled |
-| 96 | 2FA yoqilmagan | 2FA не включена | 2FA is not enabled |
-| 97 | Parolni almashtirishni talab qilish | Потребовать смену пароля | Require a password change |
-| 98 | Hisoblar va rollar. Parollar bu yerda ko‘rinmaydi. | Учётные записи и роли. Пароли здесь не отображаются. | Accounts and roles. Passwords are never shown here. |
-| 99 | Parolni ko‘rsatish | Показать пароль | Show password |
-| 100 | Parolni unutdingizmi? | Забыли пароль? | Forgot your password? |
+| 52 | Urinishlar hisoblagichini tozalash | Очистка счётчиков попыток входа | Cleaning attempt counters |
+| 53 | kirish darajasi | уровень доступа | access level |
+| 54 | Parolni almashtirish | Смена пароля | Change password |
+| 55 | Almashtirgandan so‘ng boshqa qurilmalardagi sessiyalar yopiladi. | После смены пароля сеансы на других устройствах будут завершены. | After the change, sessions on other devices will be closed. |
+| 56 | Parolingiz yangilandi. Boshqa qurilmalardagi sessiyalar yopildi. | Пароль обновлён. Сеансы на других устройствах завершены. | Your password was updated. Sessions on other devices were closed. |
+| 57 | Xavfsizlik sahifasiga qaytish | Вернуться к безопасности | Back to security |
+| 58 | Yangi parol o‘rnatildi. Barcha eski sessiyalar yopildi. Endi kirishingiz mumkin. | Новый пароль установлен. Все прежние сеансы завершены. Теперь вы можете войти. | Your new password has been set. All previous sessions were closed. You can now sign in. |
+| 59 | Kirish | Войти | Sign in |
+| 60 | Yangi parol | Новый пароль | New password |
+| 61 | Yangi parol o‘rnatish | Установка нового пароля | Set a new password |
+| 62 | Parolni saqlash | Сохранить пароль | Save password |
+| 63 | Kirish sahifasi | Страница входа | Sign-in page |
+| 64 | Agar siz buni so‘ramagan bo‘lsangiz, bu xatga e’tibor bermang — parolingiz o‘zgarmaydi. | Если вы этого не запрашивали, проигнорируйте это письмо — ваш пароль не изменится. | If you did not request this, ignore this e-mail — your password will not change. |
+| 65 | Xavfsizlik | Безопасность | Security |
+| 66 | Parol va ikki bosqichli himoya | Пароль и двухэтапная защита | Password and two-step protection |
+| 67 | Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi. | После смены пароля сеансы на других устройствах будут завершены. | After you change your password, sessions on other devices will be closed. |
+| 68 | Faol sessiyalar | Активные сессии | Active sessions |
+| 69 | Qaysi qurilmalardan kirilganini ko‘ring va keraksiz sessiyalarni yakunlang. | Посмотрите, с каких устройств выполнен вход, и завершите ненужные сессии. | See which devices are signed in and end the sessions you do not need. |
+| 70 | Sessiyalarni ko‘rish | Посмотреть сессии | View sessions |
+| 71 | Ikki bosqichli himoya (2FA) | Двухэтапная защита (2FA) | Two-step protection (2FA) |
+| 72 | Qolgan zaxira kodlar: %(n)s | Осталось резервных кодов: %(n)s | Backup codes left: %(n)s |
+| 73 | Sizning rolingiz uchun 2FA majburiy. | Для вашей роли 2FA обязательна. | 2FA is mandatory for your role. |
+| 74 | 2FA ni yoqish | Включить 2FA | Turn on 2FA |
+| 75 | Sessiyani yakunlash | Завершить сессию | End session |
+| 76 | Bu sessiya yakunlansa, o‘sha qurilmada qayta kirish kerak bo‘ladi. | После завершения этой сессии на том устройстве нужно будет войти заново. | If this session is ended, you will have to sign in again on that device. |
+| 77 | Hisobingizga kirilgan va server hali qabul qilayotgan sessiyalar. Tanimagan sessiya bo‘lsa, uni yakunlang va parolni almashtiring. | Сессии, в которых выполнен вход в вашу учётную запись и которые сервер ещё принимает. Если видите незнакомую сессию — завершите её и смените пароль. | Sessions signed in to your account that the server still accepts. If you see one you do not recognise, end it and change your password. |
+| 78 | Boshqa barcha sessiyalarni yakunlash | Завершить все остальные сессии | End all other sessions |
+| 79 | Joriy sessiya | Текущая сессия | Current session |
+| 80 | Faol sessiyalar topilmadi | Активных сессий не найдено | No active sessions found |
+| 81 | Boshqa sessiyalarni yakunlash | Завершить остальные сессии | End other sessions |
+| 82 | Joriy sessiyadan tashqari barcha sessiyalar yakunlanadi (%(count)s ta ko‘rinadigan). Siz bu qurilmada tizimda qolasiz; boshqa qurilmalarda qayta kirish kerak bo‘ladi. | Все сессии, кроме текущей, будут завершены (видимых: %(count)s). На этом устройстве вы останетесь в системе; на других нужно будет войти заново. | All sessions except the current one will be ended (%(count)s visible). You stay signed in on this device; on the others you will have to sign in again. |
+| 83 | Zaxira kodlar | Резервные коды | Backup codes |
+| 84 | Bu kodlar faqat bir marta ko‘rsatiladi. Har biri bir marta ishlaydi va telefoningiz yo‘qolganda kirishga yordam beradi. Xavfsiz joyda saqlang. | Эти коды показываются только один раз. Каждый работает один раз и поможет войти, если вы потеряете телефон. Храните их в надёжном месте. | These codes are shown only once. Each works one time and helps you sign in if you lose your phone. Keep them somewhere safe. |
+| 85 | 2FA ni sozlash | Настройка 2FA | Set up 2FA |
+| 86 | Telefoningizda autentifikator ilovasini oching (masalan, Google Authenticator, Microsoft Authenticator, Aegis). | Откройте на телефоне приложение-аутентификатор (например, Google Authenticator, Microsoft Authenticator, Aegis). | Open an authenticator app on your phone (for example Google Authenticator, Microsoft Authenticator, Aegis). |
+| 87 | QR-kodni skanerlang yoki maxfiy kalitni qo‘lda kiriting. | Отсканируйте QR-код или введите секретный ключ вручную. | Scan the QR code or enter the secret key manually. |
+| 88 | Ilovada ko‘rinadigan 6 xonali kodni pastga kiriting. | Введите ниже 6-значный код из приложения. | Enter the 6-digit code shown in the app below. |
+| 89 | Autentifikator ilovasidagi 6 xonali kodni kiriting. Qurilmangiz yo‘q bo‘lsa, zaxira kodlardan birini kiriting. | Введите 6-значный код из приложения-аутентификатора. Если устройства нет под рукой, введите один из резервных кодов. | Enter the 6-digit code from your authenticator app. If you do not have your device, enter one of your backup codes. |
+| 90 | Xavfsizlik tekshiruvi muvaffaqiyatsiz tugadi. Sahifani yangilab, qayta urinib ko‘ring. | Проверка безопасности не пройдена. Обновите страницу и повторите попытку. | The security check failed. Refresh the page and try again. |
+| 91 | Kirish, chiqish va rollar o‘zgarishi yozuvlari. Yozuvlarni o‘zgartirib yoki o‘chirib bo‘lmaydi. | Записи о входах, выходах и изменении ролей. Записи нельзя изменять или удалять. | Records of sign-ins, sign-outs and role changes. Records cannot be changed or deleted. |
+| 92 | Bu portalning asosiy skeleti: kirish, rollar va audit ishlaydi. Xodimlar, topshiriqlar, hujjatlar va boshqa bo‘limlar keyingi bosqichlarda qo‘shiladi. | Это основа портала: работают вход, роли и аудит. Сотрудники, задания, документы и другие разделы будут добавлены на следующих этапах. | This is the portal’s foundation: sign-in, roles and audit work. Employees, tasks, documents and other sections will be added in later stages. |
+| 93 | Xavfsizlik uchun faqat PDF, rasm va oddiy matn ko‘rsatiladi. Faylni yuklab olib oching. | В целях безопасности в портале показываются только PDF, изображения и простой текст. Скачайте файл и откройте его на своём устройстве. | For security, the portal shows only PDF, images and plain text. Download the file and open it on your device. |
+| 94 | “Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin. Zaxira nusxalash bu jadvalga kirmaydi: u alohida skript. | «Результат неизвестен» — задача началась, но давно не завершилась (процесс мог быть остановлен). «Опаздывает» — последний успешный запуск периодической задачи был намного раньше ожидаемого. Резервное копирование в эту таблицу не входит: это отдельный скрипт. | “Result unknown” — the job started but has not finished for a long time (the process may have been stopped). “Overdue” — the last successful run of a periodic job is much older than expected. Backups are not in this table: they are a separate script. |
+| 95 | Vaqtincha bloklangan | Временно заблокирована | Temporarily locked |
+| 96 | Parolni almashtirishi shart | Обязана сменить пароль | Must change password |
+| 97 | 2FA majburiy, hali yoqilmagan | 2FA обязательна, ещё не включена | 2FA is mandatory, not yet enabled |
+| 98 | 2FA yoqilmagan | 2FA не включена | 2FA is not enabled |
+| 99 | Parolni almashtirishni talab qilish | Потребовать смену пароля | Require a password change |
+| 100 | Hisoblar va rollar. Parollar bu yerda ko‘rinmaydi. | Учётные записи и роли. Пароли здесь не отображаются. | Accounts and roles. Passwords are never shown here. |
+| 101 | Parolni ko‘rsatish | Показать пароль | Show password |
+| 102 | Parolni unutdingizmi? | Забыли пароль? | Forgot your password? |
 
 ## C. Personal-data, privacy and access wording (legal weight) — 50
 
@@ -339,7 +343,7 @@
 | 110 | Rol biriktirish | Назначить роль | Assign a role |
 | 111 | Barcha rollar | Все роли | All roles |
 
-## E. Task and document workflow wording — 69
+## E. Task and document workflow wording — 71
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -354,66 +358,68 @@
 | 9 | Topshiriqqa fayl biriktirildi | К заданию прикреплён файл | File attached to a task |
 | 10 | Topshiriq fayli yuklab olindi | Файл задания скачан | Task file downloaded |
 | 11 | Topshiriq fayli olib tashlandi | Файл задания откреплён | Task file removed |
-| 12 | Hujjatlar | Документы | Documents |
-| 13 | Hisobotlar | Отчёты | Reports |
-| 14 | hujjat turkumi | категория документов | document category |
-| 15 | hujjat turkumlari | категории документов | document categories |
-| 16 | hujjat raqami | номер документа | document number |
-| 17 | turkum | категория | category |
-| 18 | hujjat sanasi | дата документа | document date |
-| 19 | hujjat | документ | document |
-| 20 | hujjatlar | документы | documents |
-| 21 | Hujjat yuklandi. | Документ загружен. | The document was uploaded. |
-| 22 | Yangi versiya (v%(n)d) yuklandi. | Загружена новая версия (v%(n)d). | A new version (v%(n)d) was uploaded. |
-| 23 | Hujjat arxivdan qaytarildi. | Документ восстановлен из архива. | The document was restored from the archive. |
-| 24 | Hujjat arxivlandi. | Документ архивирован. | The document was archived. |
-| 25 | Bildirishnomalar | Уведомления | Notifications |
-| 26 | Topshiriq berildi | Вам назначено задание | A task was assigned to you |
-| 27 | Topshiriq tekshiruvga topshirildi | Задание сдано на проверку | A task was submitted for review |
-| 28 | Topshiriq qabul qilindi | Задание принято | A task was accepted |
-| 29 | Topshiriq qaytarildi | Задание возвращено на доработку | A task was returned for rework |
-| 30 | Topshiriq bekor qilindi | Задание отменено | A task was cancelled |
-| 31 | Topshiriqlar | Задания | Tasks |
-| 32 | Davrda yaratilgan topshiriqlar | Заданий создано за период | Tasks created in the period |
-| 33 | Davrda yakunlangan topshiriqlar | Заданий завершено за период | Tasks completed in the period |
-| 34 | Davrda yuklangan hujjatlar | Документов загружено за период | Documents uploaded in the period |
-| 35 | Topshiriq holati: %(v)s | Статус задания: %(v)s | Task status: %(v)s |
-| 36 | Hujjat turkumi: %(v)s | Категория документов: %(v)s | Document category: %(v)s |
-| 37 | Hisobot | Отчёт | Report |
-| 38 | Topshiriqlar dinamikasi | Динамика заданий | Task trend |
-| 39 | Hisobotlarni Excel/PDF ga yuklab olish | Скачивание отчётов в Excel/PDF | Download reports as Excel/PDF |
-| 40 | Topshiriq holati | Статус задания | Task status |
-| 41 | Hujjat turkumi | Категория документов | Document category |
-| 42 | Barcha turkumlar | Все категории | All categories |
-| 43 | Topshiriqlar: holatlar bo‘yicha | Задания: по статусам | Tasks: by status |
-| 44 | Bajarilish: ijrochilar bo‘yicha | Выполнение: по исполнителям | Completion: by assignee |
-| 45 | Ijrochi | Исполнитель | Assignee |
-| 46 | Hujjatlar: turkumlar bo‘yicha | Документы: по категориям | Documents: by category |
-| 47 | Turkum | Категория | Category |
-| 48 | Hujjatlar: davrlar bo‘yicha | Документы: по периодам | Documents: by period |
-| 49 | Faqat hujjat yuklangan davrlar ko‘rsatiladi. | Показаны только периоды, в которые загружались документы. | Only periods in which documents were uploaded are shown. |
-| 50 | Ijrochilar | Исполнители | Assignees |
-| 51 | Bir nechta ijrochini Ctrl (⌘) bosib tanlang. | Для выбора нескольких исполнителей удерживайте Ctrl (⌘). | Hold Ctrl (⌘) to select several assignees. |
-| 52 | Kamida bitta ijrochi tanlang. | Выберите хотя бы одного исполнителя. | Select at least one assignee. |
-| 53 | topshiriq | задание | task |
-| 54 | topshiriqlar | задания | tasks |
-| 55 | Faylni topshiriqdan olib tashlash (faylning o‘zi o‘chirilmaydi) | Открепление файла от задания (сам файл не удаляется) | Remove a file from a task (the file itself is not deleted) |
-| 56 | Topshiriq yaratildi. | Задание создано. | The task was created. |
-| 57 | Bitta topshiriqqa %(n)d tadan ortiq fayl biriktirib bo‘lmaydi. | К одному заданию нельзя прикрепить более %(n)d файлов. | No more than %(n)d files can be attached to one task. |
-| 58 | Fayl topshiriqdan olib tashlandi. | Файл откреплён от задания. | The file was removed from the task. |
-| 59 | Versiyalar | Версии | Versions |
-| 60 | Yangi versiya yuklash | Загрузить новую версию | Upload a new version |
-| 61 | Hujjat yuklash | Загрузка документа | Upload a document |
-| 62 | Hujjatlar topilmadi | Документы не найдены | No documents found |
-| 63 | Hujjat sahifasi | Страница документа | Document page |
-| 64 | Hujjat arxivda. | Документ находится в архиве. | The document is archived. |
-| 65 | Topshiriqlar bo‘yicha yangiliklar. | Новости по заданиям. | News about tasks. |
-| 66 | Bildirishnomalar yo‘q | Уведомлений нет | No notifications |
-| 67 | Hisobotni tayyorlab bo‘lmadi | Не удалось подготовить отчёт | The report could not be prepared |
-| 68 | Yangi topshiriq | Новое задание | New task |
-| 69 | Topshiriqlar yo‘q | Заданий нет | No tasks |
+| 12 | Hujjat fayllari yaxlitligini tekshirish | Проверка целостности файлов документов | Document file integrity check |
+| 13 | Hujjatlarni antivirus bilan qayta tekshirish | Повторная проверка документов антивирусом | Re-scanning documents with the antivirus |
+| 14 | Hujjatlar | Документы | Documents |
+| 15 | Hisobotlar | Отчёты | Reports |
+| 16 | hujjat turkumi | категория документов | document category |
+| 17 | hujjat turkumlari | категории документов | document categories |
+| 18 | hujjat raqami | номер документа | document number |
+| 19 | turkum | категория | category |
+| 20 | hujjat sanasi | дата документа | document date |
+| 21 | hujjat | документ | document |
+| 22 | hujjatlar | документы | documents |
+| 23 | Hujjat yuklandi. | Документ загружен. | The document was uploaded. |
+| 24 | Yangi versiya (v%(n)d) yuklandi. | Загружена новая версия (v%(n)d). | A new version (v%(n)d) was uploaded. |
+| 25 | Hujjat arxivdan qaytarildi. | Документ восстановлен из архива. | The document was restored from the archive. |
+| 26 | Hujjat arxivlandi. | Документ архивирован. | The document was archived. |
+| 27 | Bildirishnomalar | Уведомления | Notifications |
+| 28 | Topshiriq berildi | Вам назначено задание | A task was assigned to you |
+| 29 | Topshiriq tekshiruvga topshirildi | Задание сдано на проверку | A task was submitted for review |
+| 30 | Topshiriq qabul qilindi | Задание принято | A task was accepted |
+| 31 | Topshiriq qaytarildi | Задание возвращено на доработку | A task was returned for rework |
+| 32 | Topshiriq bekor qilindi | Задание отменено | A task was cancelled |
+| 33 | Topshiriqlar | Задания | Tasks |
+| 34 | Davrda yaratilgan topshiriqlar | Заданий создано за период | Tasks created in the period |
+| 35 | Davrda yakunlangan topshiriqlar | Заданий завершено за период | Tasks completed in the period |
+| 36 | Davrda yuklangan hujjatlar | Документов загружено за период | Documents uploaded in the period |
+| 37 | Topshiriq holati: %(v)s | Статус задания: %(v)s | Task status: %(v)s |
+| 38 | Hujjat turkumi: %(v)s | Категория документов: %(v)s | Document category: %(v)s |
+| 39 | Hisobot | Отчёт | Report |
+| 40 | Topshiriqlar dinamikasi | Динамика заданий | Task trend |
+| 41 | Hisobotlarni Excel/PDF ga yuklab olish | Скачивание отчётов в Excel/PDF | Download reports as Excel/PDF |
+| 42 | Topshiriq holati | Статус задания | Task status |
+| 43 | Hujjat turkumi | Категория документов | Document category |
+| 44 | Barcha turkumlar | Все категории | All categories |
+| 45 | Topshiriqlar: holatlar bo‘yicha | Задания: по статусам | Tasks: by status |
+| 46 | Bajarilish: ijrochilar bo‘yicha | Выполнение: по исполнителям | Completion: by assignee |
+| 47 | Ijrochi | Исполнитель | Assignee |
+| 48 | Hujjatlar: turkumlar bo‘yicha | Документы: по категориям | Documents: by category |
+| 49 | Turkum | Категория | Category |
+| 50 | Hujjatlar: davrlar bo‘yicha | Документы: по периодам | Documents: by period |
+| 51 | Faqat hujjat yuklangan davrlar ko‘rsatiladi. | Показаны только периоды, в которые загружались документы. | Only periods in which documents were uploaded are shown. |
+| 52 | Ijrochilar | Исполнители | Assignees |
+| 53 | Bir nechta ijrochini Ctrl (⌘) bosib tanlang. | Для выбора нескольких исполнителей удерживайте Ctrl (⌘). | Hold Ctrl (⌘) to select several assignees. |
+| 54 | Kamida bitta ijrochi tanlang. | Выберите хотя бы одного исполнителя. | Select at least one assignee. |
+| 55 | topshiriq | задание | task |
+| 56 | topshiriqlar | задания | tasks |
+| 57 | Faylni topshiriqdan olib tashlash (faylning o‘zi o‘chirilmaydi) | Открепление файла от задания (сам файл не удаляется) | Remove a file from a task (the file itself is not deleted) |
+| 58 | Topshiriq yaratildi. | Задание создано. | The task was created. |
+| 59 | Bitta topshiriqqa %(n)d tadan ortiq fayl biriktirib bo‘lmaydi. | К одному заданию нельзя прикрепить более %(n)d файлов. | No more than %(n)d files can be attached to one task. |
+| 60 | Fayl topshiriqdan olib tashlandi. | Файл откреплён от задания. | The file was removed from the task. |
+| 61 | Versiyalar | Версии | Versions |
+| 62 | Yangi versiya yuklash | Загрузить новую версию | Upload a new version |
+| 63 | Hujjat yuklash | Загрузка документа | Upload a document |
+| 64 | Hujjatlar topilmadi | Документы не найдены | No documents found |
+| 65 | Hujjat sahifasi | Страница документа | Document page |
+| 66 | Hujjat arxivda. | Документ находится в архиве. | The document is archived. |
+| 67 | Topshiriqlar bo‘yicha yangiliklar. | Новости по заданиям. | News about tasks. |
+| 68 | Bildirishnomalar yo‘q | Уведомлений нет | No notifications |
+| 69 | Hisobotni tayyorlab bo‘lmadi | Не удалось подготовить отчёт | The report could not be prepared |
+| 70 | Yangi topshiriq | Новое задание | New task |
+| 71 | Topshiriqlar yo‘q | Заданий нет | No tasks |
 
-## F. Остальные строки — 393
+## F. Остальные строки — 409
 
 Интерфейсные подписи общего назначения (кнопки, заголовки, подсказки). Проверяются выборочно при общей вычитке; полный список — в файлах `.po`.
 

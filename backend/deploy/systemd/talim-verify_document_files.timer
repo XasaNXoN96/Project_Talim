@@ -1,0 +1,12 @@
+# Weekly integrity check of the private document store (reads every file: schedule off-peak).
+[Unit]
+Description=Talim portal schedule: verify_document_files
+
+[Timer]
+OnCalendar=Sun *-*-* 04:11:00
+Persistent=true
+RandomizedDelaySec=600
+Unit=talim-job@verify_document_files.service
+
+[Install]
+WantedBy=timers.target

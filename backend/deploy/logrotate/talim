@@ -1,0 +1,10 @@
+# /etc/logrotate.d/talim — logs written by the cron variant (the systemd variant logs to the journal).
+/var/log/talim/*.log {
+    weekly
+    rotate 8
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 talim talim
+}

@@ -1,0 +1,12 @@
+# Hourly. Persistent: a run missed while the server was down is made up after boot.
+[Unit]
+Description=Talim portal schedule: send_task_reminders
+
+[Timer]
+OnCalendar=*-*-* *:07:00
+Persistent=true
+RandomizedDelaySec=60
+Unit=talim-job@send_task_reminders.service
+
+[Install]
+WantedBy=timers.target

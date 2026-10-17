@@ -1,14 +1,15 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
 from django.utils import timezone
 
 from apps.audit.models import AuditLog
+from apps.core.jobs import TrackedCommand
 from apps.audit.services import record
 from apps.documents import scanner
 from apps.documents.models import DocumentVersion
 from apps.tasks.models import TaskAttachment
 
 
-class Command(BaseCommand):
+class Command(TrackedCommand):
     help = (
         "Scan stored document versions that were never scanned (uploaded while the scanner was off) or, with --all, every "
         "version again (e.g. after a signature update). A version found infected is marked 'infected' and is never served. "
@@ -18,15 +19,18 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("--all", action="store_true", help="re-scan versions already marked clean as well")
 
-    def handle(self, *args, **options):
+    job_name = "scan_documents"
+
+    def run_job(self, run, *args, **options):
         if scanner.mode() == "disabled":
             raise CommandError("DOCUMENT_SCAN_MODE=disabled: nothing to do.")
         counts = {"clean": 0, "infected": 0, "missing": 0}
         for model in (DocumentVersion, TaskAttachment):
-            self._scan(model, options["all"], counts)
+            self._scan(model, options["all"], counts, run)
+        run.errors += counts["missing"]  # a stored file that cannot be read is a problem to be told about (exit code 1)
         self.stdout.write(f"clean={counts['clean']} infected={counts['infected']} missing_files={counts['missing']}")
 
-    def _scan(self, model, rescan_all, counts):
+    def _scan(self, model, rescan_all, counts, run):
         qs = model.objects.exclude(scan_status="infected")
         if not rescan_all:
             qs = qs.filter(scan_status="not_scanned")
@@ -41,6 +45,7 @@ class Command(BaseCommand):
                 result = scanner.scan_bytes(data)
             except scanner.ScanFailed as exc:
                 raise CommandError(f"Scanner failure ({exc.code}); stopped. Counts so far: {counts}") from exc
+            run.processed += 1
             version.scan_engine = result.engine
             if hasattr(version, "scanned_at"):
                 version.scanned_at = timezone.now()

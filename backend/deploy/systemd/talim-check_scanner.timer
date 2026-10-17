@@ -1,0 +1,12 @@
+# Every 5 minutes: antivirus daemon probe. Not Persistent: a missed probe is not worth catching up.
+[Unit]
+Description=Talim portal schedule: check_scanner
+
+[Timer]
+OnCalendar=*-*-* *:00/5:00
+Persistent=false
+RandomizedDelaySec=20
+Unit=talim-job@check_scanner.service
+
+[Install]
+WantedBy=timers.target

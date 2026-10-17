@@ -35,6 +35,7 @@
       <a href="{% url 'users:list' %}" title="{% translate 'Foydalanuvchilar' %}" {% if request.resolver_match.namespace == 'users' %}class="active" aria-current="page"{% endif %}><i data-i="users" style="display:contents"></i><span>{% translate "Foydalanuvchilar" %}</span></a>
       {% endif %}
       {% if perms.audit.view_auditlog %}
+      <a href="{% url 'portal:jobs' %}" title="{% translate 'Fon vazifalari' %}" {% if request.resolver_match.url_name == 'jobs' %}class="active" aria-current="page"{% endif %}><i data-i="clock" style="display:contents"></i><span>{% translate "Fon vazifalari" %}</span></a>
       <a href="{% url 'portal:audit' %}" title="{% translate 'Audit jurnali' %}" {% if request.resolver_match.url_name == 'audit' %}class="active" aria-current="page"{% endif %}><i data-i="shield" style="display:contents"></i><span>{% translate "Audit jurnali" %}</span></a>
       {% endif %}
     </nav>

@@ -1,0 +1,36 @@
+# One template for every scheduled job: the instance name is the manage.py command (see docs/SCHEDULER.md).
+#   systemctl start talim-job@send_task_reminders.service      # run one job now
+#   systemctl start talim-job@job_status.service               # monitoring probe: fails (exit 1) when any job is not healthy
+# Adjust User/Group, WorkingDirectory, ExecStart and EnvironmentFile to the real layout. No secrets in this file:
+# they live in /etc/talim/talim.env (root:talim, mode 0640), see docs/SCHEDULER.md.
+[Unit]
+Description=Talim portal job: %i
+After=postgresql.service
+OnFailure=talim-job-failed@%n.service
+
+[Service]
+Type=oneshot
+User=talim
+Group=talim
+WorkingDirectory=/srv/talim/backend
+EnvironmentFile=/etc/talim/talim.env
+ExecStart=/srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py %i
+# A job that hangs is killed; the stale "running" record then reads as "result unknown" in job_status.
+TimeoutStartSec=900
+UMask=0077
+Nice=10
+IOSchedulingClass=idle
+# Hardening: the jobs only talk to PostgreSQL, clamd and SMTP and read the application tree.
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+LockPersonality=true
+CapabilityBoundingSet=
+SystemCallFilter=@system-service

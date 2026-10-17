@@ -1,13 +1,17 @@
 from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
+
+from apps.core.jobs import TrackedCommand
 
 from apps.documents import scanner
 
 
-class Command(BaseCommand):
+class Command(TrackedCommand):
     help = "Check that the antivirus daemon answers (exit code 1 otherwise). Use it from monitoring or after maintenance."
 
-    def handle(self, *args, **options):
+    job_name = "check_scanner"
+
+    def run_job(self, run, *args, **options):
         if scanner.mode() == "disabled":
             raise CommandError("DOCUMENT_SCAN_MODE=disabled: uploads are NOT scanned (allowed in development only).")
         if not scanner.ping():
@@ -19,4 +23,5 @@ class Command(BaseCommand):
             raise CommandError(f"clamd answers PING but a scan failed ({exc.code}).") from exc
         if not result.clean:
             raise CommandError("A harmless test string was reported as a threat: check the signature databases.")
+        run.processed = 1
         self.stdout.write("clamd OK (PING and a test scan succeeded)")

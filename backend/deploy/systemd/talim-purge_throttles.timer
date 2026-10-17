@@ -1,0 +1,12 @@
+# Hourly housekeeping of rate-limit rows.
+[Unit]
+Description=Talim portal schedule: purge_throttles
+
+[Timer]
+OnCalendar=*-*-* *:37:00
+Persistent=true
+RandomizedDelaySec=120
+Unit=talim-job@purge_throttles.service
+
+[Install]
+WantedBy=timers.target

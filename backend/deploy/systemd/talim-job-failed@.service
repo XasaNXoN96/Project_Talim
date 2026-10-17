@@ -1,0 +1,8 @@
+# Runs when a talim-job@... unit fails. It only writes to the journal (priority "err"), which monitoring/journald forwarding can
+# pick up; to e-mail or page someone, replace ExecStart with your alerting command (never put credentials in this file).
+[Unit]
+Description=Talim portal job failed: %i
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/logger --priority user.err --tag talim-jobs "unit %i failed; see: journalctl -u %i -n 50"

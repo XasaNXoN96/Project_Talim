@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 17:43+0500\n"
+"POT-Creation-Date: 2026-10-17 18:09+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -703,6 +703,27 @@ msgstr "Отдел народного образования"
 
 msgid "Mirzacho‘l tumani"
 msgstr "Мирзачульский район"
+
+msgid "Topshiriq eslatmalarini yuborish"
+msgstr "Отправка напоминаний по заданиям"
+
+msgid "Import ko‘rib chiqishlarini tozalash"
+msgstr "Очистка просроченных предпросмотров импорта"
+
+msgid "Muddati o‘tgan sessiyalarni tozalash"
+msgstr "Очистка просроченных сессий"
+
+msgid "Urinishlar hisoblagichini tozalash"
+msgstr "Очистка счётчиков попыток входа"
+
+msgid "Antivirus xizmatini tekshirish"
+msgstr "Проверка службы антивируса"
+
+msgid "Hujjat fayllari yaxlitligini tekshirish"
+msgstr "Проверка целостности файлов документов"
+
+msgid "Hujjatlarni antivirus bilan qayta tekshirish"
+msgstr "Повторная проверка документов антивирусом"
 
 msgid "Hujjatlar"
 msgstr "Документы"
@@ -1713,6 +1734,9 @@ msgstr "Главная"
 msgid "Tuzilma"
 msgstr "Структура"
 
+msgid "Fon vazifalari"
+msgstr "Фоновые задачи"
+
 msgid "Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘shiladi"
 msgstr "Этап разработки: остальные разделы будут добавлены позже"
 
@@ -2113,6 +2137,49 @@ msgstr "Все статусы"
 
 msgid "Hech narsa topilmadi"
 msgstr "Ничего не найдено"
+
+msgid "Rejali vazifalarning oxirgi natijasi. Holat faqat yozib borilgan ishga tushirishlardan olinadi: hech qachon ishlamagan vazifa “yaxshi” deb ko‘rsatilmaydi."
+msgstr "Последний результат плановых задач. Состояние берётся только из записанных запусков: задача, которая ни разу не запускалась, не показывается как «в порядке»."
+
+msgid "Vazifa"
+msgstr "Задача"
+
+msgid "Oxirgi muvaffaqiyatli"
+msgstr "Последний успешный"
+
+msgid "Oxirgi ishga tushirish"
+msgstr "Последний запуск"
+
+msgid "Qayta ishlangan"
+msgstr "Обработано"
+
+msgid "Xatolar"
+msgstr "Ошибки"
+
+#, python-format
+msgid "Har %(n)s daqiqada"
+msgstr "Каждые %(n)s мин."
+
+msgid "Kerak bo‘lganda"
+msgstr "По необходимости"
+
+msgid "Muvaffaqiyatli"
+msgstr "Успешно"
+
+msgid "Ishlayapti"
+msgstr "Выполняется"
+
+msgid "Natija noma’lum"
+msgstr "Результат неизвестен"
+
+msgid "Hali ishga tushmagan"
+msgstr "Ещё не запускалась"
+
+msgid "Kechikmoqda"
+msgstr "Опаздывает"
+
+msgid "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin. Zaxira nusxalash bu jadvalga kirmaydi: u alohida skript."
+msgstr "«Результат неизвестен» — задача началась, но давно не завершилась (процесс мог быть остановлен). «Опаздывает» — последний успешный запуск периодической задачи был намного раньше ожидаемого. Резервное копирование в эту таблицу не входит: это отдельный скрипт."
 
 msgid "Kategoriyalar"
 msgstr "Категории"

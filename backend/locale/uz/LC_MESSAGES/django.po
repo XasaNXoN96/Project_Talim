@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 17:43+0500\n"
+"POT-Creation-Date: 2026-10-17 18:09+0500\n"
 "Language: uz\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -703,6 +703,27 @@ msgstr "Xalq ta’limi bo‘limi"
 
 msgid "Mirzacho‘l tumani"
 msgstr "Mirzacho‘l tumani"
+
+msgid "Topshiriq eslatmalarini yuborish"
+msgstr "Topshiriq eslatmalarini yuborish"
+
+msgid "Import ko‘rib chiqishlarini tozalash"
+msgstr "Import ko‘rib chiqishlarini tozalash"
+
+msgid "Muddati o‘tgan sessiyalarni tozalash"
+msgstr "Muddati o‘tgan sessiyalarni tozalash"
+
+msgid "Urinishlar hisoblagichini tozalash"
+msgstr "Urinishlar hisoblagichini tozalash"
+
+msgid "Antivirus xizmatini tekshirish"
+msgstr "Antivirus xizmatini tekshirish"
+
+msgid "Hujjat fayllari yaxlitligini tekshirish"
+msgstr "Hujjat fayllari yaxlitligini tekshirish"
+
+msgid "Hujjatlarni antivirus bilan qayta tekshirish"
+msgstr "Hujjatlarni antivirus bilan qayta tekshirish"
 
 msgid "Hujjatlar"
 msgstr "Hujjatlar"
@@ -1713,6 +1734,9 @@ msgstr "Bosh sahifa"
 msgid "Tuzilma"
 msgstr "Tuzilma"
 
+msgid "Fon vazifalari"
+msgstr "Fon vazifalari"
+
 msgid "Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘shiladi"
 msgstr "Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘shiladi"
 
@@ -2113,6 +2137,49 @@ msgstr "Barcha holatlar"
 
 msgid "Hech narsa topilmadi"
 msgstr "Hech narsa topilmadi"
+
+msgid "Rejali vazifalarning oxirgi natijasi. Holat faqat yozib borilgan ishga tushirishlardan olinadi: hech qachon ishlamagan vazifa “yaxshi” deb ko‘rsatilmaydi."
+msgstr "Rejali vazifalarning oxirgi natijasi. Holat faqat yozib borilgan ishga tushirishlardan olinadi: hech qachon ishlamagan vazifa “yaxshi” deb ko‘rsatilmaydi."
+
+msgid "Vazifa"
+msgstr "Vazifa"
+
+msgid "Oxirgi muvaffaqiyatli"
+msgstr "Oxirgi muvaffaqiyatli"
+
+msgid "Oxirgi ishga tushirish"
+msgstr "Oxirgi ishga tushirish"
+
+msgid "Qayta ishlangan"
+msgstr "Qayta ishlangan"
+
+msgid "Xatolar"
+msgstr "Xatolar"
+
+#, python-format
+msgid "Har %(n)s daqiqada"
+msgstr "Har %(n)s daqiqada"
+
+msgid "Kerak bo‘lganda"
+msgstr "Kerak bo‘lganda"
+
+msgid "Muvaffaqiyatli"
+msgstr "Muvaffaqiyatli"
+
+msgid "Ishlayapti"
+msgstr "Ishlayapti"
+
+msgid "Natija noma’lum"
+msgstr "Natija noma’lum"
+
+msgid "Hali ishga tushmagan"
+msgstr "Hali ishga tushmagan"
+
+msgid "Kechikmoqda"
+msgstr "Kechikmoqda"
+
+msgid "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin. Zaxira nusxalash bu jadvalga kirmaydi: u alohida skript."
+msgstr "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin. Zaxira nusxalash bu jadvalga kirmaydi: u alohida skript."
 
 msgid "Kategoriyalar"
 msgstr "Kategoriyalar"

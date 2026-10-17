@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 17:43+0500\n"
+"POT-Creation-Date: 2026-10-17 18:09+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -703,6 +703,27 @@ msgstr "Public Education Department"
 
 msgid "Mirzacho‘l tumani"
 msgstr "Mirzachul District"
+
+msgid "Topshiriq eslatmalarini yuborish"
+msgstr "Sending task reminders"
+
+msgid "Import ko‘rib chiqishlarini tozalash"
+msgstr "Cleaning expired import previews"
+
+msgid "Muddati o‘tgan sessiyalarni tozalash"
+msgstr "Cleaning expired sessions"
+
+msgid "Urinishlar hisoblagichini tozalash"
+msgstr "Cleaning attempt counters"
+
+msgid "Antivirus xizmatini tekshirish"
+msgstr "Antivirus service check"
+
+msgid "Hujjat fayllari yaxlitligini tekshirish"
+msgstr "Document file integrity check"
+
+msgid "Hujjatlarni antivirus bilan qayta tekshirish"
+msgstr "Re-scanning documents with the antivirus"
 
 msgid "Hujjatlar"
 msgstr "Documents"
@@ -1713,6 +1734,9 @@ msgstr "Home"
 msgid "Tuzilma"
 msgstr "Structure"
 
+msgid "Fon vazifalari"
+msgstr "Background jobs"
+
 msgid "Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘shiladi"
 msgstr "Development stage: the remaining sections will be added later"
 
@@ -2113,6 +2137,49 @@ msgstr "All statuses"
 
 msgid "Hech narsa topilmadi"
 msgstr "Nothing found"
+
+msgid "Rejali vazifalarning oxirgi natijasi. Holat faqat yozib borilgan ishga tushirishlardan olinadi: hech qachon ishlamagan vazifa “yaxshi” deb ko‘rsatilmaydi."
+msgstr "The latest result of scheduled jobs. The state comes only from recorded runs: a job that has never run is not shown as “fine”."
+
+msgid "Vazifa"
+msgstr "Job"
+
+msgid "Oxirgi muvaffaqiyatli"
+msgstr "Last successful"
+
+msgid "Oxirgi ishga tushirish"
+msgstr "Last run"
+
+msgid "Qayta ishlangan"
+msgstr "Processed"
+
+msgid "Xatolar"
+msgstr "Errors"
+
+#, python-format
+msgid "Har %(n)s daqiqada"
+msgstr "Every %(n)s minutes"
+
+msgid "Kerak bo‘lganda"
+msgstr "On demand"
+
+msgid "Muvaffaqiyatli"
+msgstr "Successful"
+
+msgid "Ishlayapti"
+msgstr "Running"
+
+msgid "Natija noma’lum"
+msgstr "Result unknown"
+
+msgid "Hali ishga tushmagan"
+msgstr "Not run yet"
+
+msgid "Kechikmoqda"
+msgstr "Overdue"
+
+msgid "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin. Zaxira nusxalash bu jadvalga kirmaydi: u alohida skript."
+msgstr "“Result unknown” — the job started but has not finished for a long time (the process may have been stopped). “Overdue” — the last successful run of a periodic job is much older than expected. Backups are not in this table: they are a separate script."
 
 msgid "Kategoriyalar"
 msgstr "Categories"

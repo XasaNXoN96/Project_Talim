@@ -114,7 +114,7 @@ python manage.py test --settings=config.settings.test --noinput
 
 Импорт сотрудников из Excel — `/portal/employees/import/` (формат и правила дубликатов: [../docs/EMPLOYEE_IMPORT.md](../docs/EMPLOYEE_IMPORT.md)); команда `python manage.py purge_employee_imports` очищает непотверждённые предпросмотры. Глобальный поиск — `/portal/search/` (подстрока по названиям, не полнотекстовый; охват в `docs/FUNCTIONAL_MAP.md` §8).
 
-Активные сессии — `/accounts/security/sessions/` (список своих сессий, завершение одной или всех остальных; описание и ограничения — `docs/FUNCTIONAL_MAP.md` §9). Служебные команды без расписания: `purge_employee_imports`, `clearsessions` (`docs/SCHEDULER.md`).
+Активные сессии — `/accounts/security/sessions/` (список своих сессий, завершение одной или всех остальных; описание и ограничения — `docs/FUNCTIONAL_MAP.md` §9). Фоновые задачи (напоминания, очистки, проверки) и их контроль — `docs/SCHEDULER.md`: `python manage.py job_status`, страница `/portal/jobs/`; расписание готово, но нигде не установлено.
 
 Портал новостей — `/portal/news/` (роли «контент-менеджер» и «администратор»; право `content.publish_news` нужно для публикации, снятия, архива и правки опубликованного). Просмотр документов — `/portal/documents/<id>/view/`. Эти разделы не дают доступа к Django Admin: он остаётся только у superuser.
 
