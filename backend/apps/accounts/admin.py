@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.http import urlencode
@@ -27,6 +28,10 @@ class UserAdmin(DjangoUserAdmin):
 def _admin_login_redirect(request, extra_context=None):
     """The stock admin login would authenticate with a password alone: no lockout, no second factor.
     Every sign-in goes through apps.accounts LoginView instead (which then validates the `next` target)."""
+    if request.user.is_authenticated:
+        # Already signed in but not allowed into the admin (no is_staff): answer 403. Redirecting to the sign-in page
+        # would bounce the user back here forever.
+        raise PermissionDenied
     target = request.GET.get("next") or reverse("admin:index")
     return redirect(f"{reverse('accounts:login')}?{urlencode({'next': target})}")
 

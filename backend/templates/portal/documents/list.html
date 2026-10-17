@@ -1,0 +1,20 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Hujjatlar" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Hujjatlar" %}</h1><p>{% translate "Fayllar xavfsiz saqlanadi va faqat huquqingiz bo‘lsa yuklab olinadi." %}</p></div>
+{% if can_add %}<a class="btn btn-primary" href="{% url 'documents:create' %}">{% translate "Hujjat yuklash" %}</a>{% endif %}</div>
+<form method="get" class="row wrap" style="margin-bottom:16px">
+  <input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Qidirish: sarlavha, raqam' %}" style="max-width:240px" maxlength="100">
+  <select class="input" name="category" style="max-width:200px"><option value="">{% translate "Barcha turkumlar" %}</option>{% for c in categories %}<option value="{{ c.pk }}" {% if category == c.pk|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select>
+  <select class="input" name="level" style="max-width:200px"><option value="">{% translate "Barcha darajalar" %}</option>{% for code, label in levels %}<option value="{{ code }}" {% if level == code %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+  {% if can_see_archive %}<select class="input" name="status" style="max-width:150px"><option value="">{% translate "Faol" %}</option><option value="archived" {% if status == "archived" %}selected{% endif %}>{% translate "Arxiv" %}</option></select>{% endif %}
+  <button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button>
+</form>
+{% if documents %}
+<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Sarlavha" %}</th><th>{% translate "Raqam" %}</th><th>{% translate "Turkum" %}</th><th>{% translate "Sana" %}</th><th>{% translate "Daraja" %}</th></tr></thead><tbody>
+{% for d in documents %}<tr><td><a href="{% url 'documents:detail' d.pk %}">{{ d.title }}</a></td><td>{{ d.number|default:"—" }}</td><td>{{ d.category.name }}</td><td class="nw">{{ d.doc_date|date:"d.m.Y"|default:"—" }}</td><td><span class="badge {% if d.access_level == 'confidential' %}b-err{% elif d.access_level == 'department' %}b-warn{% else %}b-info{% endif %}">{{ d.get_access_level_display }}</span></td></tr>{% endfor %}
+</tbody></table></div>
+{% include "includes/pagination.html" %}
+{% else %}<div class="card empty"><h3>{% translate "Hujjatlar topilmadi" %}</h3></div>{% endif %}
+{% endblock %}

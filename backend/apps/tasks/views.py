@@ -8,6 +8,8 @@ from django.views import View
 from django.views.generic import ListView
 
 from apps.core.mixins import PortalPermissionMixin
+from apps.notifications.models import Notification
+from apps.notifications.services import notify
 
 from . import access
 from .forms import CommentForm, TaskForm
@@ -109,6 +111,8 @@ class TaskCreateView(PortalPermissionMixin, View):
                 task.save()
                 form.save_m2m()
                 _event(task, request.user, TaskEvent.Kind.CREATED, assignees=[str(u.pk) for u in form.cleaned_data["assignees"]])
+                for person in form.cleaned_data["assignees"]:
+                    notify(person, Notification.Kind.TASK_ASSIGNED, task, actor=request.user)
             messages.success(request, "Topshiriq yaratildi.")
             return redirect("tasks:detail", pk=task.pk)
         return render(request, "portal/tasks/form.html", {"form": form, "creating": True})
@@ -132,10 +136,13 @@ class TaskEditView(_TaskBase):
         form = TaskForm(request.POST, instance=task, assignable=access.assignable_users(request.user))
         if form.is_valid():
             changed = sorted(form.changed_data)
+            before = set(task.assignees.values_list("pk", flat=True))
             with transaction.atomic():
                 form.save()
                 if changed:
                     _event(task, request.user, TaskEvent.Kind.EDITED, fields=changed)
+                for person in task.assignees.exclude(pk__in=before):
+                    notify(person, Notification.Kind.TASK_ASSIGNED, task, actor=request.user)
             messages.success(request, "Saqlandi.")
             return redirect("tasks:detail", pk=task.pk)
         return render(request, "portal/tasks/form.html", {"form": form, "task": task})
@@ -156,5 +163,15 @@ class TaskTransitionView(_TaskBase):
             task.closed_at = timezone.now() if status in Task.FINAL else None
             task.save(update_fields=["status", "closed_at", "updated_at"])
             _event(task, request.user, TaskEvent.Kind.STATUS, old=old, new=status)
+            S, K = Task.Status, Notification.Kind
+            if status == S.REVIEW:
+                notify(task.created_by, K.TASK_SUBMITTED, task, actor=request.user)
+            else:
+                kind = {S.DONE: K.TASK_ACCEPTED, S.CANCELLED: K.TASK_CANCELLED}.get(status) or (K.TASK_RETURNED if old == S.REVIEW else None)
+                if kind:
+                    for person in task.assignees.all():
+                        notify(person, kind, task, actor=request.user)
+                    if status == S.CANCELLED:
+                        notify(task.created_by, kind, task, actor=request.user)
         messages.success(request, "Holat o‘zgartirildi.")
         return redirect("tasks:detail", pk=task.pk)

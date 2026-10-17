@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     "apps.content",
     "apps.audit",
     "apps.tasks",
+    "apps.documents",
+    "apps.notifications",
     "apps.portal",
 ]
 
@@ -94,6 +96,7 @@ TEMPLATES = [
                 "django.template.context_processors.i18n",  # LANGUAGE_CODE for <html lang>
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.notifications.context.unread",
                 "apps.core.context_processors.site",
             ],
         },
@@ -224,3 +227,15 @@ LOGGING = {
         "apps": {"handlers": ["console"], "level": LOG_LEVEL, "propagate": False},
     },
 }
+
+
+# --- Documents: private storage (no URL, outside static/media) and upload limits.
+PRIVATE_MEDIA_ROOT = Path(env("DJANGO_PRIVATE_MEDIA_ROOT", str(BASE_DIR / "private_media")))
+DOCUMENT_MAX_BYTES = int(env("DOCUMENT_MAX_BYTES", str(10 * 1024 * 1024)))
+# Django reads the whole request body limit for non-file fields only; files above this go to a temp file on disk.
+FILE_UPLOAD_MAX_MEMORY_SIZE = 2 * 1024 * 1024
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1 * 1024 * 1024
+FILE_UPLOAD_PERMISSIONS = 0o600
+
+# --- Notifications: e-mail copies are OFF unless explicitly enabled (and SMTP configured).
+NOTIFICATION_EMAILS_ENABLED = env_bool("NOTIFICATION_EMAILS_ENABLED", False)

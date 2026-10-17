@@ -1,0 +1,24 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Bildirishnomalar" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Bildirishnomalar" %}</h1><p>{% translate "Topshiriqlar bo‘yicha yangiliklar." %}</p></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% if only_unread %}?{% else %}?unread=1{% endif %}">{% if only_unread %}{% translate "Barchasi" %}{% else %}{% translate "Faqat o‘qilmaganlar" %}{% endif %}</a>
+<form method="post" action="{% url 'notifications:read_all' %}">{% csrf_token %}<button class="btn btn-secondary" type="submit">{% translate "Barchasini o‘qilgan deb belgilash" %}</button></form></div></div>
+{% if notifications %}
+<div class="stack" style="max-width:820px">
+{% for n in notifications %}
+<div class="card card-pad" {% if not n.read_at %}style="border-left:4px solid var(--primary, #1f6bff)"{% endif %}>
+  <div class="row between wrap"><div><b>{{ n.get_kind_display }}</b>{% if not n.read_at %} <span class="badge b-info plain">{% translate "Yangi" %}</span>{% endif %}
+    <div>{% if n.target_visible %}{{ n.title }}{% else %}<span class="muted">{% translate "Topshiriq mavjud emas yoki ruxsat yo‘q" %}</span>{% endif %}</div>
+    <div class="muted small">{{ n.created_at|date:"d.m.Y H:i" }}</div></div>
+  <div class="row">
+    {% if n.target_visible %}<form method="post" action="{% url 'notifications:open' n.pk %}">{% csrf_token %}<button class="btn btn-primary btn-sm" type="submit">{% translate "Ochish" %}</button></form>{% endif %}
+    {% if not n.read_at %}<form method="post" action="{% url 'notifications:read' n.pk %}">{% csrf_token %}<button class="btn btn-ghost btn-sm" type="submit">{% translate "O‘qildi" %}</button></form>{% endif %}
+  </div></div>
+</div>
+{% endfor %}
+</div>
+{% include "includes/pagination.html" %}
+{% else %}<div class="card empty"><h3>{% translate "Bildirishnomalar yo‘q" %}</h3></div>{% endif %}
+{% endblock %}

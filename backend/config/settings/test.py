@@ -16,3 +16,7 @@ OTP_ENCRYPTION_KEYS = ["Vd89ffgaIBKyfs3cTdxx0oY3ExI6vPux7GHTCBdWaTE="]
 LOGGING["loggers"]["django"]["level"] = "ERROR"  # noqa: F405
 LOGGING["loggers"]["django.request"] = {"handlers": [], "level": "CRITICAL", "propagate": False}  # noqa: F405
 LOGGING["loggers"]["apps"]["level"] = "CRITICAL"  # noqa: F405
+
+import tempfile  # noqa: E402
+
+PRIVATE_MEDIA_ROOT = Path(tempfile.mkdtemp(prefix="talim-test-private-"))  # noqa: F405

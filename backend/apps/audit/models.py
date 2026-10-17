@@ -60,6 +60,14 @@ class AuditLog(models.Model):
         EMPLOYEE_ARCHIVED = "employee_archived", "Xodim arxivlandi"
         EMPLOYEE_RESTORED = "employee_restored", "Xodim arxivdan qaytarildi"
         ORG_CHANGED = "org_changed", "Tashkiliy tuzilma o‘zgartirildi"
+        DOCUMENT_UPLOADED = "document_uploaded", "Hujjat yuklandi"
+        DOCUMENT_VERSION_ADDED = "document_version_added", "Hujjatning yangi versiyasi yuklandi"
+        DOCUMENT_VIEWED = "document_viewed", "Maxfiy hujjat ko‘rildi"
+        DOCUMENT_DOWNLOADED = "document_downloaded", "Hujjat yuklab olindi"
+        DOCUMENT_UPDATED = "document_updated", "Hujjat ma’lumotlari o‘zgartirildi"
+        DOCUMENT_ARCHIVED = "document_archived", "Hujjat arxivlandi"
+        DOCUMENT_RESTORED = "document_restored", "Hujjat arxivdan qaytarildi"
+        DOCUMENT_UPLOAD_REJECTED = "document_upload_rejected", "Hujjat yuklash rad etildi"
 
     at = models.DateTimeField(default=timezone.now, db_index=True, editable=False)
     user = models.ForeignKey(

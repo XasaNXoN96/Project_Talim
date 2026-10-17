@@ -1,0 +1,71 @@
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect
+from django.utils import timezone
+from django.views import View
+from django.views.generic import ListView
+
+from apps.core.mixins import PortalPermissionMixin
+from apps.tasks import access as task_access
+
+from .models import Notification
+from .services import mark_all_read
+
+
+class NotificationListView(PortalPermissionMixin, ListView):
+    permission_required = "tasks.view_task"
+    template_name = "portal/notifications/list.html"
+    paginate_by = 30
+    context_object_name = "notifications"
+
+    def get_queryset(self):
+        qs = Notification.objects.filter(user=self.request.user).select_related("task")
+        if self.request.GET.get("unread") == "1":
+            qs = qs.filter(read_at__isnull=True)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        user = self.request.user
+        visible = set(task_access.visible_tasks(user).filter(pk__in=[n.task_id for n in ctx["notifications"] if n.task_id]).values_list("pk", flat=True))
+        for n in ctx["notifications"]:
+            n.target_visible = n.task_id in visible  # the link is offered only if the task can still be opened
+        ctx["only_unread"] = self.request.GET.get("unread") == "1"
+        return ctx
+
+
+class NotificationOpenView(PortalPermissionMixin, View):
+    """Marks one notification (own only) as read and goes to its task, if the user may still see it."""
+
+    http_method_names = ["post"]
+    permission_required = "tasks.view_task"
+
+    def post(self, request, pk):
+        n = get_object_or_404(Notification, pk=pk, user=request.user)  # someone else's id -> 404
+        if n.read_at is None:
+            n.read_at = timezone.now()
+            n.save(update_fields=["read_at"])
+        if n.task_id and task_access.visible_tasks(request.user).filter(pk=n.task_id).exists():
+            return redirect("tasks:detail", pk=n.task_id)
+        messages.info(request, "Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan.")
+        return redirect("notifications:list")
+
+
+class NotificationReadView(PortalPermissionMixin, View):
+    http_method_names = ["post"]
+    permission_required = "tasks.view_task"
+
+    def post(self, request, pk):
+        n = get_object_or_404(Notification, pk=pk, user=request.user)
+        if n.read_at is None:
+            n.read_at = timezone.now()
+            n.save(update_fields=["read_at"])
+        return redirect("notifications:list")
+
+
+class NotificationReadAllView(PortalPermissionMixin, View):
+    http_method_names = ["post"]
+    permission_required = "tasks.view_task"
+
+    def post(self, request):
+        mark_all_read(request.user)
+        return redirect("notifications:list")

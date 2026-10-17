@@ -16,6 +16,9 @@
       {% if perms.tasks.view_task %}
       <a href="{% url 'tasks:list' %}" title="{% translate 'Topshiriqlar' %}" {% if request.resolver_match.namespace == 'tasks' %}class="active" aria-current="page"{% endif %}><i data-i="clipboard" style="display:contents"></i><span>{% translate "Topshiriqlar" %}</span></a>
       {% endif %}
+      {% if perms.documents.view_document %}
+      <a href="{% url 'documents:list' %}" title="{% translate 'Hujjatlar' %}" {% if request.resolver_match.namespace == 'documents' %}class="active" aria-current="page"{% endif %}><i data-i="file" style="display:contents"></i><span>{% translate "Hujjatlar" %}</span></a>
+      {% endif %}
       {% if perms.organization.view_employee_directory %}
       <a href="{% url 'employees:list' %}" title="{% translate 'Xodimlar' %}" {% if request.resolver_match.namespace == 'employees' %}class="active" aria-current="page"{% endif %}><i data-i="users" style="display:contents"></i><span>{% translate "Xodimlar" %}</span></a>
       {% endif %}
@@ -35,6 +38,7 @@
     <header class="topbar">
       <button class="btn btn-secondary btn-icon" id="sbToggle" type="button" aria-label="{% translate 'Menyuni ochish yoki yig‘ish' %}"><i data-i="menu" style="display:contents"></i></button>
       <div class="grow"></div>
+      {% if perms.tasks.view_task %}<a class="btn btn-secondary btn-sm" href="{% url 'notifications:list' %}" aria-label="{% translate 'Bildirishnomalar' %}"><i data-i="bell" data-c="sm" style="display:contents"></i>{% if unread_notifications %} <span class="badge b-err plain" id="unreadCount">{{ unread_notifications }}</span>{% endif %}</a>{% endif %}
       <a class="btn btn-secondary btn-sm" href="{% url 'content:home' %}">{% translate "Sayt" %}</a>
       <div class="dd">
         <button class="me" type="button" data-dd aria-label="{% translate 'Profil menyusi' %}"><span class="av" data-name="{{ user.get_username }}"></span><div><b>{{ user.get_full_name|default:user.get_username }}</b><small>{{ user.email }}</small></div><i data-i="down" data-c="sm" style="display:contents"></i></button>

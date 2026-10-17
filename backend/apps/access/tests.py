@@ -51,7 +51,7 @@ class SeedRolesTests(TestCase):
 
     def test_employee_role_can_only_read_the_directory_structure_and_work_on_own_tasks(self):
         perms = {f"{p.content_type.app_label}.{p.codename}" for p in Group.objects.get(name="employee").permissions.select_related("content_type")}
-        self.assertEqual(perms, {"organization.view_employee_directory", "organization.view_department", "organization.view_position", "tasks.view_task", "tasks.add_taskcomment"})
+        self.assertEqual(perms, {"organization.view_employee_directory", "organization.view_department", "organization.view_position", "tasks.view_task", "tasks.add_taskcomment", "documents.view_document", "documents.view_documentcategory"})
         for forbidden in ("view_employee_contacts", "view_employee_private", "add_employee", "change_employee"):
             self.assertNotIn("organization." + forbidden, perms)
 
@@ -150,3 +150,24 @@ class HasRoleServiceTests(TestCase):
         self.assertFalse(has_role(self.user, "department_head"))
         self.assertFalse(has_role(AnonymousUser(), "department_head"))
         self.assertEqual(user_role_names(AnonymousUser()), set())
+
+
+class DjangoAdminAccessTests(TestCase):
+    """Roles never grant is_staff: the technical admin is for superusers only, whatever business role someone has."""
+
+    def test_no_role_user_can_open_the_django_admin(self):
+        from django.core.management import call_command
+        from django.test import Client
+
+        from apps.accounts.testing import login_with_two_factor, make_user
+
+        call_command("seed_roles", verbosity=0)
+        for role in RoleCode.values:
+            user = make_user(f"u_{role}", role=role)
+            self.assertFalse(user.is_staff or user.is_superuser, role)
+            c = Client()
+            login_with_two_factor(c, user)
+            for path in ("/admin/", "/admin/accounts/user/", "/admin/organization/employee/", "/admin/audit/auditlog/"):
+                r = c.get(path, follow=True)
+                self.assertEqual(r.status_code, 403, (role, path))  # no redirect loop, no admin page
+                self.assertNotContains(r, "Django administration", status_code=403, msg_prefix=f"{role} {path}")
