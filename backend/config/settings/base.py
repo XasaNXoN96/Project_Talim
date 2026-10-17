@@ -63,6 +63,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "apps.core.network.TrustedProxyMiddleware",  # first: decides is_secure() from a TRUSTED proxy only
     "django.middleware.security.SecurityMiddleware",
+    "apps.core.middleware.AllowedMethodsMiddleware",  # only GET/HEAD/OPTIONS/POST reach any view
     "apps.core.middleware.SecurityHeadersMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",  # language from cookie / Accept-Language; after sessions, before Common

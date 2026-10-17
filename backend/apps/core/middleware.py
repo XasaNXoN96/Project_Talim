@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.http import HttpResponseNotAllowed
 from django.utils.cache import add_never_cache_headers
 
 # Pages that show or change account data must never be stored by browsers or shared caches.
@@ -24,3 +25,20 @@ class SecurityHeadersMiddleware:
         if request.path.startswith(NO_STORE_PREFIXES):
             add_never_cache_headers(response)
         return response
+
+
+class AllowedMethodsMiddleware:
+    """The application reads (GET, HEAD, OPTIONS) and submits forms (POST); it has no use for anything else.
+
+    Without this, Django's FormView would treat PUT as POST and function views such as /healthz/ would answer any method.
+    CSRF protection already covers every unsafe method, so this is defence in depth, not the only barrier."""
+
+    ALLOWED = ("GET", "HEAD", "OPTIONS", "POST")
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.method not in self.ALLOWED:
+            return HttpResponseNotAllowed(self.ALLOWED)
+        return self.get_response(request)

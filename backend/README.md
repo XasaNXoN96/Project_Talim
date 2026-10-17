@@ -107,6 +107,14 @@ python manage.py test --settings=config.settings.test --noinput
 ```
 Тесты используют PostgreSQL (создаётся и удаляется `test_<DB_NAME>`). Без доступной БД они не запустятся.
 
+Приёмочные тесты (День 8) лежат в `apps/core/tests_acceptance_*.py` и строятся на общей вымышленной «вселенной» `apps/core/acceptance.py`:
+* `matrix` — маршруты из живого URLconf × 9 актёров × методы (нет 5xx, права совпадают с объявленными, запись — 405, CSRF на всех POST);
+* `objects` — точная таблица «кто какой объект видит»; `security` — XSS, открытые перенаправления, прямые ссылки на файлы, утечки личных данных;
+* `journeys` — сквозные сценарии (задание, вложения, документ, онбординг, блокировка, смена языка).
+
+`AllowedMethodsMiddleware` (`apps/core/middleware.py`) пропускает только GET/HEAD/OPTIONS/POST: приложению не нужны PUT/PATCH/DELETE, а часть представлений Django иначе отвечала бы на них как на POST.
+Новый маршрут автоматически попадает в матрицу; тест `test_the_inventory_is_not_empty_and_every_route_is_classified` упадёт, пока вы не укажете его класс доступа.
+
 ## Проверка конфигурации безопасности (без запуска сервера)
 ```bash
 DJANGO_SECRET_KEY=<любой-длинный-ключ> DJANGO_ALLOWED_HOSTS=example.test \
