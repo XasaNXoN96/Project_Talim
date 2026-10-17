@@ -1,0 +1,3 @@
+# Alternative to the systemd timer. Install with `crontab -e` as the application user.
+# flock -n: if the previous run is somehow still going, skip instead of piling up.
+7 * * * * cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && flock -n /tmp/talim-reminders.lock .venv/bin/python manage.py send_task_reminders >> /var/log/talim/reminders.log 2>&1

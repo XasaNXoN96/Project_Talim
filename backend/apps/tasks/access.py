@@ -75,3 +75,17 @@ def allowed_transitions(user, task):
         if task.status == S.REVIEW:
             allowed |= {S.DONE, S.IN_PROGRESS}
     return allowed
+
+
+def can_attach(user, task):
+    """Adding a file: only on open tasks, by an assignee or by someone who manages the task."""
+    if task.status in Task.FINAL or not user.has_perm("tasks.add_taskattachment"):
+        return False
+    return task.assignees.filter(pk=user.pk).exists() or manages(user, task)
+
+
+def can_remove_attachment(user, task, attachment):
+    """Unlinking: only on open tasks, by the uploader or by a manager of the task."""
+    if task.status in Task.FINAL or attachment.removed_at is not None or not user.has_perm("tasks.remove_taskattachment"):
+        return False
+    return attachment.uploaded_by_id == user.pk or manages(user, task)

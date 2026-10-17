@@ -59,6 +59,8 @@ class CheckedUpload:
     kind: str
     size: int
     data: bytes
+    scan_status: str = "not_scanned"  # clean | not_scanned (scanner disabled); set by apps.documents.files
+    scan_engine: str = ""
 
 
 def max_bytes():

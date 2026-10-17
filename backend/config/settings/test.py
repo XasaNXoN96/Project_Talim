@@ -20,3 +20,6 @@ LOGGING["loggers"]["apps"]["level"] = "CRITICAL"  # noqa: F405
 import tempfile  # noqa: E402
 
 PRIVATE_MEDIA_ROOT = Path(tempfile.mkdtemp(prefix="talim-test-private-"))  # noqa: F405
+
+# Most tests do not talk to an antivirus. Scanner tests switch it on explicitly (stub server or a real clamd).
+DOCUMENT_SCAN_MODE = "disabled"

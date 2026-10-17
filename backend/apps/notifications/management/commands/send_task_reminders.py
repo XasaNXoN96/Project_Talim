@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.core.management.base import BaseCommand
+from django.db import connection
 from django.utils import timezone
 
 from apps.notifications.models import Notification
@@ -15,7 +16,23 @@ class Command(BaseCommand):
         "schedule it (cron/systemd timer), e.g. every hour: `python manage.py send_task_reminders`."
     )
 
+    LOCK_ID = 7_310_001  # arbitrary application-wide key for the PostgreSQL advisory lock
+
     def handle(self, *args, **options):
+        # A second run that starts while one is still working exits at once instead of doing the same work twice.
+        # (Even without the lock, the unique dedupe key makes duplicates impossible; the lock only saves effort.)
+        with connection.cursor() as cur:
+            cur.execute("SELECT pg_try_advisory_lock(%s)", [self.LOCK_ID])
+            if not cur.fetchone()[0]:
+                self.stdout.write("another run is in progress: skipped")
+                return
+        try:
+            self._run()
+        finally:
+            with connection.cursor() as cur:
+                cur.execute("SELECT pg_advisory_unlock(%s)", [self.LOCK_ID])
+
+    def _run(self):
         today = timezone.localdate()
         soon = today + timedelta(days=1)
         created = {"due_soon": 0, "overdue": 0}

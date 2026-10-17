@@ -7,3 +7,4 @@ python-dotenv>=1.0        # reads backend/.env in development
 pyotp>=2.9,<3             # TOTP (RFC 6238) code generation/verification
 cryptography>=44          # Fernet: TOTP secrets are encrypted at rest
 qrcode>=8,<9              # QR code for authenticator enrolment (SVG output, no Pillow)
+gunicorn>=23,<24          # WSGI server behind Nginx (production)

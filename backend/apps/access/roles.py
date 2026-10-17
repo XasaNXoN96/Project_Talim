@@ -31,7 +31,7 @@ _ORG_WRITE = [
     "organization.add_employee", "organization.change_employee",
     "organization.view_institution", "organization.add_institution", "organization.change_institution",
 ]
-_TASKS_BASIC = ["tasks.view_task", "tasks.add_taskcomment"]
+_TASKS_BASIC = ["tasks.view_task", "tasks.add_taskcomment", "tasks.add_taskattachment", "tasks.remove_taskattachment"]
 _TASKS_MANAGE = ["tasks.add_task", "tasks.change_task", "tasks.view_department_tasks"]
 _DOCS_VIEW = ["documents.view_document", "documents.view_documentcategory"]
 _DOCS_WRITE = ["documents.add_document", "documents.change_document"]

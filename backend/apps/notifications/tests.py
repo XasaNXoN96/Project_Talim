@@ -1,11 +1,13 @@
 import datetime
+import threading
 from io import StringIO
 from unittest import mock
 
 from django.contrib.auth.models import Group
 from django.core import mail
 from django.core.management import call_command
-from django.test import Client, TestCase, override_settings
+from django.db import connection
+from django.test import Client, TestCase, TransactionTestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
 
@@ -273,3 +275,117 @@ class EmailLayerTests(Base):
         from django.conf import settings
 
         self.assertFalse(settings.NOTIFICATION_EMAILS_ENABLED)
+
+
+class BoundaryTests(Base):
+    def run_cmd(self):
+        out = StringIO()
+        call_command("send_task_reminders", stdout=out)
+        return out.getvalue().strip()
+
+    def test_day_boundaries(self):
+        today = timezone.localdate()
+        d = datetime.timedelta
+        cases = {"vchera": -1, "bugun": 0, "ertaga": 1, "indinga": 2}
+        for title, delta in cases.items():
+            self.task(title=title, due_date=today + d(days=delta))
+        self.assertEqual(self.run_cmd(), "due_soon=2 overdue=1")
+        by_title = {n.title: n.kind for n in Notification.objects.all()}
+        self.assertEqual(by_title, {"vchera": K.TASK_OVERDUE, "bugun": K.TASK_DUE_SOON, "ertaga": K.TASK_DUE_SOON})
+
+    def test_the_local_date_not_utc_decides_around_midnight(self):
+        # 23:30 local on the 10th: a task due on the 11th is "tomorrow" (due soon), one due on the 10th is "today", the 9th is overdue.
+        with mock.patch("django.utils.timezone.localdate", return_value=datetime.date(2030, 1, 10)):
+            self.task(title="o9", due_date=datetime.date(2030, 1, 9))
+            self.task(title="o10", due_date=datetime.date(2030, 1, 10))
+            self.task(title="o11", due_date=datetime.date(2030, 1, 11))
+            self.task(title="o12", due_date=datetime.date(2030, 1, 12))
+            self.assertEqual(self.run_cmd(), "due_soon=2 overdue=1")
+        # the next morning the 11th is today and the 12th is tomorrow: new due-soon for o12 only; o10 becomes overdue
+        with mock.patch("django.utils.timezone.localdate", return_value=datetime.date(2030, 1, 11)):
+            self.assertEqual(self.run_cmd(), "due_soon=1 overdue=1")
+            self.assertEqual(self.run_cmd(), "due_soon=0 overdue=0")
+
+    def test_a_task_gets_due_soon_once_even_across_two_days(self):
+        t = self.task(title="x", due_date=datetime.date(2030, 1, 11))
+        with mock.patch("django.utils.timezone.localdate", return_value=datetime.date(2030, 1, 10)):
+            self.run_cmd()
+        with mock.patch("django.utils.timezone.localdate", return_value=datetime.date(2030, 1, 11)):
+            self.run_cmd()  # same due date -> same key: no second due_soon
+        self.assertEqual(Notification.objects.filter(task=t, kind=K.TASK_DUE_SOON).count(), 1)
+
+    def test_reopened_by_status_change_is_not_resent(self):
+        t = self.task(due_date=timezone.localdate())
+        self.run_cmd()
+        t.status = "in_progress"
+        t.save()
+        self.assertEqual(self.run_cmd(), "due_soon=0 overdue=0")
+
+
+class ConcurrencyTests(TransactionTestCase):
+    """Real parallel database sessions (threads), because a race cannot be shown inside one transaction."""
+
+    def setUp(self):
+        call_command("seed_roles", verbosity=0)
+        self.dept = Department.objects.create(name="A")
+        self.users = []
+        for name in ("w1", "w2", "w3"):
+            u = make_user(name, role="employee")
+            Employee.objects.create(last_name=name, first_name="X", department=self.dept, user=u, status="active")
+            self.users.append(u)
+        self.creator = make_user("creator", role="admin")
+        self.task = Task.objects.create(title="Parallel", created_by=self.creator, due_date=timezone.localdate())
+        self.task.assignees.set(self.users)
+
+    def _parallel(self, fn, n=8):
+        barrier, errors = threading.Barrier(n), []
+
+        def work():
+            try:
+                barrier.wait()
+                fn()
+            except Exception as exc:  # noqa: BLE001
+                errors.append(exc)
+            finally:
+                connection.close()
+
+        threads = [threading.Thread(target=work) for _ in range(n)]
+        [t.start() for t in threads]
+        [t.join(30) for t in threads]
+        self.assertEqual(errors, [])
+
+    def test_many_parallel_notify_calls_with_one_key_create_exactly_one(self):
+        user = self.users[0]
+        self._parallel(lambda: notify(user, K.TASK_DUE_SOON, Task.objects.get(pk=self.task.pk), dedupe_key="race-key"))
+        self.assertEqual(Notification.objects.filter(user=user, dedupe_key="race-key").count(), 1)
+
+    def test_many_parallel_command_runs_create_one_notification_per_assignee(self):
+        self._parallel(lambda: call_command("send_task_reminders", stdout=StringIO()))
+        self.assertEqual(Notification.objects.count(), 3)
+        self.assertEqual(sorted(Notification.objects.values_list("user__username", flat=True)), ["w1", "w2", "w3"])
+
+    def test_the_advisory_lock_makes_a_concurrent_run_skip(self):
+        lock_id = __import__("apps.notifications.management.commands.send_task_reminders", fromlist=["Command"]).Command.LOCK_ID
+        holder_ready, release = threading.Event(), threading.Event()
+
+        def holder():
+            with connection.cursor() as cur:
+                cur.execute("SELECT pg_advisory_lock(%s)", [lock_id])
+            holder_ready.set()
+            release.wait(10)
+            with connection.cursor() as cur:
+                cur.execute("SELECT pg_advisory_unlock(%s)", [lock_id])
+            connection.close()
+
+        t = threading.Thread(target=holder)
+        t.start()
+        holder_ready.wait(10)
+        out = StringIO()
+        call_command("send_task_reminders", stdout=out)
+        release.set()
+        t.join(10)
+        self.assertIn("skipped", out.getvalue())
+        self.assertEqual(Notification.objects.count(), 0)
+        out = StringIO()
+        call_command("send_task_reminders", stdout=out)  # the lock was released: this run works
+        self.assertEqual(Notification.objects.count(), 3)

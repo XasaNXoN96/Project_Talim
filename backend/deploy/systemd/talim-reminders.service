@@ -1,0 +1,16 @@
+# Runs the reminder command once. Install together with talim-reminders.timer (see docs/SCHEDULER.md).
+# Adjust User, WorkingDirectory, EnvironmentFile and the Python path to the real server layout.
+[Unit]
+Description=Talim portal: task due-date reminders
+After=postgresql.service
+
+[Service]
+Type=oneshot
+User=talim
+WorkingDirectory=/srv/talim/backend
+EnvironmentFile=/etc/talim/talim.env
+ExecStart=/srv/talim/backend/.venv/bin/python manage.py send_task_reminders
+# The command is idempotent and takes a database lock, so an overlapping or repeated run is harmless.
+TimeoutStartSec=300
+NoNewPrivileges=true
+PrivateTmp=true

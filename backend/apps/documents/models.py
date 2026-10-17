@@ -75,6 +75,11 @@ class DocumentVersion(UUIDModel):
     comment = models.CharField("izoh", max_length=200, blank=True)
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="+")
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    # Antivirus verdict recorded at upload. "not_scanned" = stored while the scanner was disabled (or before it existed);
+    # "infected" = found by a later re-scan: never served.
+    scan_status = models.CharField(max_length=12, choices=[("clean", "Toza"), ("not_scanned", "Tekshirilmagan"), ("infected", "Xavfli")], default="not_scanned")
+    scan_engine = models.CharField(max_length=20, blank=True)
+    scanned_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ["-number"]

@@ -1,0 +1,52 @@
+# Nginx site for the Talim portal (TEMPLATE). The same file is used by verify/run.sh against a real nginx; only the
+# {{PLACEHOLDERS}} differ. Read docs/NGINX_AND_CLIENT_IP.md before using it and fill the TLS part for the real server.
+#
+# Trust model (B-1): this nginx is the ONLY public entry. It OVERWRITES X-Forwarded-For with the address it actually
+# saw ($remote_addr) and always connects to the application from 127.0.0.1, so that Django's DJANGO_TRUSTED_PROXIES=127.0.0.1
+# means exactly "this nginx". Never append ($proxy_add_x_forwarded_for) unless nginx sits behind another trusted proxy.
+# The application must listen on 127.0.0.1 (or a unix socket) only, so nobody can reach it around nginx.
+
+server_tokens off;
+
+upstream talim_app {
+    server 127.0.0.1:{{BACKEND_PORT}};
+    keepalive 8;
+}
+
+server {
+    listen {{LISTEN}};
+    server_name {{SERVER_NAME}};
+
+    # Documents are limited to 10 MB by the application (DOCUMENT_MAX_BYTES); leave room for the form fields.
+    client_max_body_size 11m;
+    client_body_timeout 30s;
+    client_header_timeout 15s;
+    send_timeout 60s;
+
+    # Errors from the application are shown as plain static pages (no stack traces, no upstream details).
+    error_page 502 503 504 /_errors/unavailable.html;
+    error_page 413 /_errors/too_large.html;
+    location /_errors/ { internal; alias {{ERROR_DIR}}/; }
+
+    # The private document store must never be served directly. (It should not be under any web root anyway.)
+    location ~* ^/(private_media|media)(/|$) { return 404; }
+
+    location /static/ { alias {{STATIC_DIR}}/; expires 1h; access_log off; }
+
+    location / {
+        proxy_pass http://talim_app;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_bind 127.0.0.1;                         # the application always sees nginx as 127.0.0.1
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;   # overwrite, never append: a client-supplied value is discarded
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP "";                   # not used by the application; do not forward client-supplied values
+        proxy_set_header Forwarded "";
+
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout {{READ_TIMEOUT}};             # 60s in production: the antivirus scan of a 10 MB file takes seconds
+        proxy_request_buffering on;                      # the whole upload is received (and size-checked) before the app sees it
+    }
+}

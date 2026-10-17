@@ -1,0 +1,10 @@
+[Unit]
+Description=Talim portal: run task reminders hourly
+
+[Timer]
+OnCalendar=*-*-* *:07:00
+Persistent=true
+RandomizedDelaySec=60
+
+[Install]
+WantedBy=timers.target

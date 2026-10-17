@@ -2,18 +2,24 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import Q
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView
 
+from apps.audit.models import AuditLog
+from apps.audit.services import record
 from apps.core.mixins import PortalPermissionMixin
+from apps.documents import files
+from apps.documents.forms import FileMixin
+from apps.documents.validation import UploadRejected
 from apps.notifications.models import Notification
 from apps.notifications.services import notify
 
 from . import access
 from .forms import CommentForm, TaskForm
-from .models import Task, TaskEvent
+from .models import Task, TaskAttachment, TaskEvent
 
 
 def _event(task, actor, kind, **meta):
@@ -75,6 +81,8 @@ class TaskDetailView(_TaskBase):
             "events": task.events.select_related("actor"), "form": form or CommentForm(),
             "transitions": [(c, l) for c, l in Task.Status.choices if c in transitions],
             "can_edit": access.can_edit(request.user, task), "today": timezone.localdate(),
+            "attachments": [(a, access.can_remove_attachment(request.user, task, a)) for a in task.attachments.filter(removed_at__isnull=True).select_related("uploaded_by")],
+            "can_attach": access.can_attach(request.user, task), "attach_form": FileMixin(),
         })
 
 
@@ -174,4 +182,76 @@ class TaskTransitionView(_TaskBase):
                     if status == S.CANCELLED:
                         notify(task.created_by, kind, task, actor=request.user)
         messages.success(request, "Holat o‘zgartirildi.")
+        return redirect("tasks:detail", pk=task.pk)
+
+
+class _AttachmentForm(FileMixin):
+    pass
+
+
+class TaskAttachmentAddView(_TaskBase):
+    http_method_names = ["post"]
+    permission_required = ["tasks.view_task", "tasks.add_taskattachment"]
+
+    def post(self, request, pk):
+        task = self.get_task(request, pk)
+        if not access.can_attach(request.user, task):
+            raise PermissionDenied
+        form = _AttachmentForm(request.POST, request.FILES)
+        if not form.is_valid():
+            messages.error(request, "Fayl tanlanmagan yoki noto‘g‘ri.")
+            return redirect("tasks:detail", pk=task.pk)
+        if task.attachments.filter(removed_at__isnull=True).count() >= TaskAttachment.MAX_PER_TASK:
+            messages.error(request, f"Bitta topshiriqqa {TaskAttachment.MAX_PER_TASK} tadan ortiq fayl biriktirib bo‘lmaydi.")
+            return redirect("tasks:detail", pk=task.pk)
+        try:
+            checked = files.check_or_audit(form.cleaned_data["file"], request=request, user=request.user, object_type="Task", object_id=task.pk)
+        except UploadRejected as exc:
+            messages.error(request, str(exc))
+            return redirect("tasks:detail", pk=task.pk)
+        with transaction.atomic():
+            att = TaskAttachment(
+                task=task, original_name=checked.display_name, extension=checked.extension, size=checked.size,
+                scan_status=checked.scan_status, scan_engine=checked.scan_engine, uploaded_by=request.user,
+            )
+            att.sha256 = files.store_file(att.file, checked)
+            att.save()
+            _event(task, request.user, TaskEvent.Kind.ATTACHED, attachment=str(att.pk), ext=att.extension, size=att.size)
+            record(AuditLog.Action.TASK_ATTACHMENT_ADDED, request=request, user=request.user, object_type="Task", object_id=task.pk,
+                   meta={"attachment": str(att.pk), "ext": att.extension, "size": att.size})
+        messages.success(request, "Fayl biriktirildi.")
+        return redirect("tasks:detail", pk=task.pk)
+
+
+def _attachment(task, attachment_id):
+    # the attachment must belong to THIS task: another task's attachment id gives 404, whatever the permissions
+    return get_object_or_404(TaskAttachment, pk=attachment_id, task_id=task.pk, removed_at__isnull=True)
+
+
+class TaskAttachmentDownloadView(_TaskBase):
+    def get(self, request, pk, attachment_id):
+        task = self.get_task(request, pk)  # visibility first: same rules as the task itself, whatever its status
+        att = _attachment(task, attachment_id)
+        if att.scan_status == "infected":
+            raise Http404
+        response = files.download_response(att.file, filename=files.safe_download_name(task.title, f"_{att.pk.hex[:6]}.{att.extension}"))
+        record(AuditLog.Action.TASK_ATTACHMENT_DOWNLOADED, request=request, user=request.user, object_type="Task", object_id=task.pk, meta={"attachment": str(att.pk)})
+        return response
+
+
+class TaskAttachmentRemoveView(_TaskBase):
+    http_method_names = ["post"]
+    permission_required = ["tasks.view_task", "tasks.remove_taskattachment"]
+
+    def post(self, request, pk, attachment_id):
+        task = self.get_task(request, pk)
+        att = _attachment(task, attachment_id)
+        if not access.can_remove_attachment(request.user, task, att):
+            raise PermissionDenied
+        with transaction.atomic():
+            att.removed_at, att.removed_by = timezone.now(), request.user
+            att.save(update_fields=["removed_at", "removed_by"])
+            _event(task, request.user, TaskEvent.Kind.DETACHED, attachment=str(att.pk))
+            record(AuditLog.Action.TASK_ATTACHMENT_REMOVED, request=request, user=request.user, object_type="Task", object_id=task.pk, meta={"attachment": str(att.pk)})
+        messages.success(request, "Fayl topshiriqdan olib tashlandi.")
         return redirect("tasks:detail", pk=task.pk)

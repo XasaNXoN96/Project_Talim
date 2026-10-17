@@ -239,3 +239,13 @@ FILE_UPLOAD_PERMISSIONS = 0o600
 
 # --- Notifications: e-mail copies are OFF unless explicitly enabled (and SMTP configured).
 NOTIFICATION_EMAILS_ENABLED = env_bool("NOTIFICATION_EMAILS_ENABLED", False)
+
+# --- Antivirus for uploads (ClamAV, local daemon only). Fail-closed: if the scan cannot finish, the upload is refused.
+# "disabled" exists for local development and tests ONLY; production refuses to start with it.
+DOCUMENT_SCAN_MODE = env("DOCUMENT_SCAN_MODE", "clamav")
+CLAMAV_SOCKET = env("CLAMAV_SOCKET", "")  # e.g. /run/clamav/clamd.ctl ; empty = use host/port below
+CLAMAV_HOST = env("CLAMAV_HOST", "127.0.0.1")
+CLAMAV_PORT = int(env("CLAMAV_PORT", "3310"))
+CLAMAV_TIMEOUT = float(env("CLAMAV_TIMEOUT", "20"))  # seconds for the whole scan
+if DOCUMENT_SCAN_MODE not in ("clamav", "disabled"):
+    raise ImproperlyConfigured("DOCUMENT_SCAN_MODE must be 'clamav' or 'disabled'.")

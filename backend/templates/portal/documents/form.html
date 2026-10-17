@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block title %}{% if creating %}{% translate "Hujjat yuklash" %}{% else %}{% translate "Tahrirlash" %}{% endif %}{% endblock %}
 {% block content %}
-<div class="page-head"><div><h1>{% if creating %}{% translate "Hujjat yuklash" %}{% else %}{{ d.title }}{% endif %}</h1>{% if creating %}<p>{% translate "Ruxsat etilgan: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Makroli va faol tarkibli fayllar qabul qilinmaydi. Fayl viruslarga tekshirilmaydi." %}</p>{% endif %}</div></div>
+<div class="page-head"><div><h1>{% if creating %}{% translate "Hujjat yuklash" %}{% else %}{{ d.title }}{% endif %}</h1>{% if creating %}<p>{% translate "Ruxsat etilgan: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Makroli va faol tarkibli fayllar qabul qilinmaydi. Yuklangan fayl antivirus bilan tekshiriladi; tekshiruv bajarilmasa, fayl qabul qilinmaydi." %}</p>{% endif %}</div></div>
 <form method="post" {% if creating %}enctype="multipart/form-data"{% endif %} class="card card-pad" style="display:grid;gap:16px;max-width:620px" novalidate>
   {% csrf_token %}
   {% if form.non_field_errors %}<div class="alert err" role="alert"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}

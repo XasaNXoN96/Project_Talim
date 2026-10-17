@@ -40,3 +40,6 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")  # noqa: F405
 EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)  # noqa: F405
 if not env("DEFAULT_FROM_EMAIL"):  # noqa: F405
     raise ImproperlyConfigured("DEFAULT_FROM_EMAIL must be set in production.")
+
+if DOCUMENT_SCAN_MODE != "clamav":  # noqa: F405
+    raise ImproperlyConfigured("DOCUMENT_SCAN_MODE must be 'clamav' in production (uploads are never accepted unscanned).")

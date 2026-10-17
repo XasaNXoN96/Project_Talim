@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import Q
-from django.http import FileResponse, Http404
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import ListView
@@ -13,7 +13,7 @@ from apps.audit.models import AuditLog
 from apps.audit.services import record
 from apps.core.mixins import PortalPermissionMixin
 
-from . import access, services
+from . import access, files, services
 from .forms import DocumentCreateForm, DocumentForm, VersionForm
 from .models import Document, DocumentCategory
 from .validation import UploadRejected
@@ -160,16 +160,10 @@ class DocumentDownloadView(_DocBase):
         version = versions.filter(number=number).first() if number else versions.order_by("-number").first()
         if version is None:
             raise Http404
-        try:
-            handle = version.file.storage.open(version.file.name, "rb")
-        except (FileNotFoundError, ValueError, OSError) as exc:
-            raise Http404 from exc
+        if version.scan_status == "infected":
+            raise Http404  # quarantined by a later scan: never served
+        response = files.download_response(version.file, filename=files.safe_download_name(d.title, f"_v{version.number}.{version.extension}"))
         _audit(AuditLog.Action.DOCUMENT_DOWNLOADED, request, d, version=version.number)
-        base = "".join(c for c in d.title if c.isalnum() or c in " ._-")[:60].strip() or "hujjat"
-        response = FileResponse(handle, as_attachment=True, filename=f"{base}_v{version.number}.{version.extension}", content_type="application/octet-stream")
-        response["X-Content-Type-Options"] = "nosniff"
-        response["Cache-Control"] = "private, no-store"
-        response["Content-Security-Policy"] = "default-src 'none'; sandbox"
         return response
 
 

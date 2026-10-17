@@ -68,6 +68,10 @@ class AuditLog(models.Model):
         DOCUMENT_ARCHIVED = "document_archived", "Hujjat arxivlandi"
         DOCUMENT_RESTORED = "document_restored", "Hujjat arxivdan qaytarildi"
         DOCUMENT_UPLOAD_REJECTED = "document_upload_rejected", "Hujjat yuklash rad etildi"
+        FILE_THREAT_DETECTED = "file_threat_detected", "Yuklangan faylda xavf aniqlandi"
+        TASK_ATTACHMENT_ADDED = "task_attachment_added", "Topshiriqqa fayl biriktirildi"
+        TASK_ATTACHMENT_DOWNLOADED = "task_attachment_downloaded", "Topshiriq fayli yuklab olindi"
+        TASK_ATTACHMENT_REMOVED = "task_attachment_removed", "Topshiriq fayli olib tashlandi"
 
     at = models.DateTimeField(default=timezone.now, db_index=True, editable=False)
     user = models.ForeignKey(

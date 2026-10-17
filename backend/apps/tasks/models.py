@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 
 from apps.core.models import TimeStampedModel, UUIDModel
+from apps.documents.storage import PrivateStorage
 
 
 class Task(TimeStampedModel):
@@ -58,6 +59,8 @@ class TaskEvent(UUIDModel):
         EDITED = "edited", "O‘zgartirildi"
         STATUS = "status", "Holat o‘zgardi"
         COMMENTED = "commented", "Izoh qoldirildi"
+        ATTACHED = "attached", "Fayl biriktirildi"
+        DETACHED = "detached", "Fayl olib tashlandi"
 
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="events")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+")
@@ -67,3 +70,28 @@ class TaskEvent(UUIDModel):
 
     class Meta:
         ordering = ["at"]
+
+
+class TaskAttachment(UUIDModel):
+    """A file attached to a task. Same private storage and the same validation + antivirus path as documents
+    (apps.documents.files); there is no separate upload code. "Removing" only unlinks it from the task: the file stays
+    on disk for the audit trail and backups, but is no longer offered or served."""
+
+    MAX_PER_TASK = 20
+
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="attachments")
+    file = models.FileField(storage=PrivateStorage(), max_length=120)
+    original_name = models.CharField(max_length=150)  # display only
+    extension = models.CharField(max_length=8)
+    size = models.PositiveBigIntegerField()
+    sha256 = models.CharField(max_length=64)
+    scan_status = models.CharField(max_length=12, default="not_scanned")
+    scan_engine = models.CharField(max_length=20, blank=True)
+    uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="+")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    removed_at = models.DateTimeField(null=True, blank=True)
+    removed_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
+
+    class Meta:
+        ordering = ["uploaded_at"]
+        permissions = [("remove_taskattachment", "Faylni topshiriqdan olib tashlash (faylning o‘zi o‘chirilmaydi)")]

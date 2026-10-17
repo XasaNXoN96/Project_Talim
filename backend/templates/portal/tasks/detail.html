@@ -14,6 +14,14 @@
     {% if transitions %}<div class="row wrap" style="margin-top:16px">{% for code, label in transitions %}
       <form method="post" action="{% url 'tasks:transition' task.pk code %}">{% csrf_token %}<button class="btn {% if code == 'cancelled' %}btn-danger{% else %}btn-primary{% endif %} btn-sm" type="submit">{{ label }}</button></form>{% endfor %}</div>{% endif %}
   </section>
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Fayllar" %}</h2>
+    {% if attachments %}<div class="table-wrap"><table class="t"><tbody>
+    {% for a, removable in attachments %}<tr><td>{{ a.original_name }}<div class="muted small">{{ a.size|filesizeformat }} · {{ a.uploaded_by.get_username }} · {{ a.uploaded_at|date:"d.m.Y H:i" }}</div></td>
+      <td class="nw">{% if a.scan_status != "infected" %}<a class="btn btn-ghost btn-sm" href="{% url 'tasks:attachment_download' task.pk a.pk %}">{% translate "Yuklab olish" %}</a>{% endif %}
+      {% if removable %}<form method="post" action="{% url 'tasks:attachment_remove' task.pk a.pk %}" style="display:inline">{% csrf_token %}<button class="btn btn-ghost btn-sm" type="submit">{% translate "Olib tashlash" %}</button></form>{% endif %}</td></tr>{% endfor %}
+    </tbody></table></div>{% else %}<p class="muted">{% translate "Fayllar biriktirilmagan." %}</p>{% endif %}
+    {% if can_attach %}<form method="post" action="{% url 'tasks:attachment_add' task.pk %}" enctype="multipart/form-data" style="display:grid;gap:12px;margin-top:12px;max-width:520px">{% csrf_token %}{% include "includes/field.html" with field=attach_form.file %}<div><button class="btn btn-secondary" type="submit">{% translate "Biriktirish" %}</button></div></form>{% endif %}
+  </section>
   <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Izohlar" %}</h2>
     {% for c in comments %}<div style="margin-bottom:12px"><b>{{ c.author.get_full_name|default:c.author.get_username }}</b> <span class="muted small">{{ c.created_at|date:"d.m.Y H:i" }}</span><div style="white-space:pre-wrap">{{ c.body }}</div></div>{% empty %}<p class="muted">{% translate "Izohlar yo‘q." %}</p>{% endfor %}
     {% if perms.tasks.add_taskcomment %}<form method="post" action="{% url 'tasks:comment' task.pk %}" style="display:grid;gap:8px;margin-top:12px">{% csrf_token %}{% include "includes/field.html" with field=form.body %}<div><button class="btn btn-secondary" type="submit">{% translate "Yuborish" %}</button></div></form>{% endif %}
