@@ -1,0 +1,71 @@
+# Nginx site for PRODUCTION (TEMPLATE, TLS): port 80 only redirects, port 443 terminates TLS and proxies to gunicorn on 127.0.0.1.
+# Fill {{...}} from the real server; never commit real names, certificates or keys. The proxy block is identical to talim.conf.template
+# (read docs/NGINX_AND_CLIENT_IP.md): nginx overwrites X-Forwarded-For/-Proto, the application sees nginx as 127.0.0.1 and trusts exactly that.
+# Certificates come from the organisation's CA or ACME client and live OUTSIDE the repository (key readable by root/nginx only).
+# HSTS is NOT sent here: the application sends it (DJANGO_HSTS_SECONDS) only after HTTPS has been verified end to end.
+# {{SERVER_NAME}} = the public host name; {{TLS_CERT}} / {{TLS_KEY}} = absolute paths; {{HTTPS_PORT_SUFFIX}} = empty in production (":NNNN" only in tests).
+
+server_tokens off;
+
+# Access log WITHOUT query strings and WITHOUT password-reset tokens: search words, filters and one-time links must not end up in log files.
+# (The application's own log filter cannot protect nginx's log.) Client addresses ARE logged: they are personal data, see the retention note in
+# docs/DEPLOYMENT_READINESS.md. {{ACCESS_LOG}} = absolute path of the log file (rotated by logrotate, mode 0640).
+map $uri $talim_logged_uri {
+    ~^(/accounts/reset/[^/]+/)[^/]+(/?)$  "$1[redacted]$2";
+    default                               $uri;
+}
+log_format talim '$remote_addr [$time_local] "$request_method $talim_logged_uri" $status $body_bytes_sent "$http_user_agent"';
+
+upstream talim_app {
+    server 127.0.0.1:{{BACKEND_PORT}};
+    keepalive 8;
+}
+
+server {
+    listen {{HTTP_LISTEN}};
+    server_name {{SERVER_NAME}};
+    location / { return 301 https://$host{{HTTPS_PORT_SUFFIX}}$request_uri; }
+}
+
+server {
+    listen {{HTTPS_LISTEN}} ssl http2;   # (on nginx >= 1.25.1 use "listen ... ssl;" plus "http2 on;")
+    server_name {{SERVER_NAME}};
+
+    ssl_certificate     {{TLS_CERT}};
+    ssl_certificate_key {{TLS_KEY}};
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers off;
+    ssl_session_timeout 1d;
+    ssl_session_cache shared:talim_tls:10m;
+    ssl_session_tickets off;
+    access_log {{ACCESS_LOG}} talim;
+
+    client_max_body_size 11m;
+    client_body_timeout 30s;
+    client_header_timeout 15s;
+    send_timeout 60s;
+
+    error_page 502 503 504 /_errors/unavailable.html;
+    error_page 413 /_errors/too_large.html;
+    location /_errors/ { internal; alias {{ERROR_DIR}}/; }
+
+    location ~* ^/(private_media|media)(/|$) { return 404; }
+    location /static/ { alias {{STATIC_DIR}}/; expires 1h; access_log off; }
+
+    location / {
+        proxy_pass http://talim_app;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_bind 127.0.0.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP "";
+        proxy_set_header Forwarded "";
+
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+        proxy_request_buffering on;
+    }
+}

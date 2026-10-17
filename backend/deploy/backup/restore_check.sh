@@ -8,7 +8,8 @@
 #
 # Steps: manifest -> decrypt (streamed, no plaintext on disk) -> pg_restore into the scratch DB -> files into the scratch directory ->
 # migrate (pending migrations are applied to the scratch copy) -> every file referenced by a row exists with the recorded size and SHA-256 (+ orphan count) -> the existing download
-# view, permissions included, serves the restored documents (anonymous refused, authorised people get byte-identical content).
+# view, permissions included, serves the restored documents (anonymous refused, authorised people get byte-identical content) -> the
+# restored two-factor secrets can be decrypted with the OTP_ENCRYPTION_KEYS of this run and their current codes are accepted.
 # Exit codes: 0 restore verified; 1 any step failed (wrong passphrase, damaged archive, inconsistent data ...); 2 misconfiguration;
 # 75 another restore check is running. stdout ends with RESTORE_OK name=<dir> ... on success. The scratch copy is removed on exit.
 set -euo pipefail
@@ -46,7 +47,9 @@ echo "migrations pending in the restored copy: $pending"
 "$PYTHON" manage.py migrate --noinput > /dev/null
 verify_out="$("$PYTHON" manage.py verify_document_files --report-orphans --no-record)"; echo "$verify_out"
 access_out="$("$PYTHON" manage.py verify_restored_access)"; echo "$access_out"
+# the 2FA secrets are encrypted with OTP_ENCRYPTION_KEYS, which is NOT in the backup: this proves the key configured for THIS run opens them
+tf_out="$("$PYTHON" manage.py verify_restored_two_factor)"; echo "$tf_out"
 echo "6/6 row counts of the restored database (numbers only)"
 counts="$(psql -d "$RESTORE_DB" -Atc "select 'users='||(select count(*) from accounts_user)||' documents='||(select count(*) from documents_document)||' versions='||(select count(*) from documents_documentversion)||' task_attachments='||(select count(*) from tasks_taskattachment)||' audit_rows='||(select count(*) from audit_auditlog)")"
 echo "$counts"
-echo "RESTORE_OK name=$(basename "$SRC") $counts $(echo "$verify_out" | grep -o 'orphans=[0-9]*' | head -1) migrations_applied_after_restore=$pending"
+echo "RESTORE_OK name=$(basename "$SRC") $counts $(echo "$verify_out" | grep -o 'orphans=[0-9]*' | head -1) migrations_applied_after_restore=$pending $(echo "$tf_out" | grep -o 'devices=[0-9]*' | sed s/devices=/two_factor_devices=/)"

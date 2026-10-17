@@ -550,3 +550,61 @@ class RecoveryCommandTests(SeededTestCase):
         with mock.patch("builtins.input", return_value="wrong"):
             with self.assertRaises(CommandError):
                 run("reset_2fa", "boss")
+
+
+class RotateOtpKeysTests(TestCase):
+    """Key rotation with throw-away keys only. No real key is involved anywhere."""
+
+    def setUp(self):
+        from cryptography.fernet import Fernet
+
+        self.k1, self.k2 = Fernet.generate_key().decode(), Fernet.generate_key().decode()
+        self.users = [make_user(f"rot{i}") for i in range(3)]
+        with override_settings(OTP_ENCRYPTION_KEYS=[self.k1]):
+            for u in self.users:
+                enrol(u)
+            self.secrets = {u.pk: otp.decrypt_secret(u.totp_device.secret_encrypted) for u in self.users}
+
+    def run_cmd(self, *args):
+        out = StringIO()
+        try:
+            call_command("rotate_otp_keys", *args, stdout=out)
+            return 0, out.getvalue()
+        except CommandError as exc:
+            return 1, out.getvalue() + str(exc)
+
+    def test_secrets_move_to_the_newest_key_and_the_old_key_can_then_be_dropped(self):
+        with override_settings(OTP_ENCRYPTION_KEYS=[self.k2, self.k1]):
+            code, out = self.run_cmd("--dry-run")
+            self.assertEqual((code, out.strip()), (0, "devices=3 already_on_newest_key=0 would rotate=3 failed=0"))
+            with override_settings(OTP_ENCRYPTION_KEYS=[self.k2]):  # a dry run changed nothing: the new key alone still cannot open them
+                with self.assertRaises(ImproperlyConfigured):
+                    otp.decrypt_secret(self.users[0].totp_device.secret_encrypted)
+            code, out = self.run_cmd()
+            self.assertEqual((code, out.strip()), (0, "devices=3 already_on_newest_key=0 rotated=3 failed=0"))
+            code, out = self.run_cmd()  # repeating is safe
+            self.assertEqual((code, out.strip()), (0, "devices=3 already_on_newest_key=3 rotated=0 failed=0"))
+        with override_settings(OTP_ENCRYPTION_KEYS=[self.k2]):  # the old key is gone and every secret still works
+            for u in self.users:
+                u.totp_device.refresh_from_db()
+                self.assertEqual(otp.decrypt_secret(u.totp_device.secret_encrypted), self.secrets[u.pk])
+                self.assertTrue(otp.verify_totp(u.totp_device, pyotp.TOTP(self.secrets[u.pk]).now()))
+
+    def test_a_secret_no_listed_key_opens_is_reported_left_unchanged_and_fails_the_run(self):
+        from cryptography.fernet import Fernet
+
+        stranger = make_user("rot_stranger")
+        with override_settings(OTP_ENCRYPTION_KEYS=[Fernet.generate_key().decode()]):  # encrypted under a key we do not have
+            enrol(stranger)
+        before = TotpDevice.objects.get(user=stranger).secret_encrypted
+        with override_settings(OTP_ENCRYPTION_KEYS=[self.k2, self.k1]):
+            code, out = self.run_cmd()
+        self.assertEqual(code, 1)
+        self.assertIn("rotated=3 failed=1", out)
+        self.assertEqual(TotpDevice.objects.get(user=stranger).secret_encrypted, before)
+        for secret in (self.k1, self.k2, *self.secrets.values(), "rot_stranger"):
+            self.assertNotIn(secret, out)  # counts only
+
+    def test_without_keys_it_refuses(self):
+        with override_settings(OTP_ENCRYPTION_KEYS=[]):
+            self.assertEqual(self.run_cmd()[0], 1)

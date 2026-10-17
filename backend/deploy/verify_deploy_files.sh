@@ -5,17 +5,17 @@
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
 root="$(mktemp -d)"; trap 'rm -rf "$root"' EXIT
-mkdir -p "$root/etc/systemd/system" "$root/etc/talim" "$root/srv/talim/backend/.venv/bin" "$root/usr/bin" "$root/var/backups/talim" "$root/run/talim" "$root/var/log/talim"
+mkdir -p "$root/bin" "$root/etc/systemd/system" "$root/etc/talim" "$root/srv/talim/backend/.venv/bin" "$root/usr/bin" "$root/var/backups/talim" "$root/var/lib/talim" "$root/run/talim" "$root/var/log/talim"
 cp -r "$here"/systemd/*.service "$here"/systemd/*.timer "$here"/systemd/*.service.d "$root/etc/systemd/system/"
 : > "$root/etc/talim/talim.env"; : > "$root/srv/talim/backend/manage.py"
 : > "$root/etc/talim/backup.env"
-for exe in srv/talim/backend/.venv/bin/python usr/bin/logger; do printf '#!/bin/sh\n' > "$root/$exe"; chmod +x "$root/$exe"; done  # stand-ins: only their existence is checked
+for exe in bin/kill srv/talim/backend/.venv/bin/python srv/talim/backend/.venv/bin/gunicorn usr/bin/logger; do printf '#!/bin/sh\n' > "$root/$exe"; chmod +x "$root/$exe"; done  # stand-ins: only their existence is checked
 for u in sysinit.target basic.target shutdown.target timers.target; do printf "[Unit]\nDescription=stub\n" > "$root/etc/systemd/system/$u"; done
 printf "[Unit]\nDescription=stub\n[Service]\nExecStart=/usr/bin/logger\n" > "$root/etc/systemd/system/postgresql.service"  # the system's own units, absent from the throw-away root
 id talim >/dev/null 2>&1 || echo "note: user 'talim' does not exist on this machine: systemd-analyze will warn about User=" >&2
 echo "== systemd-analyze verify"
 # (user "talim" may not exist where this runs: those warnings are filtered, everything else is shown and fails the script)
-out="$(systemd-analyze --root="$root" verify "$root"/etc/systemd/system/talim-*.timer "$root"/etc/systemd/system/talim-job@send_task_reminders.service "$root"/etc/systemd/system/talim-job@run_backup.service "$root"/etc/systemd/system/talim-job@run_restore_check.service "$root"/etc/systemd/system/talim-job-failed@x.service 2>&1 | grep -v "talim' \|User=\|Group=\|Failed to resolve user\|Failed to resolve group" || true)"
+out="$(systemd-analyze --root="$root" verify "$root"/etc/systemd/system/talim-*.timer "$root"/etc/systemd/system/talim-job@send_task_reminders.service "$root"/etc/systemd/system/talim-job@run_backup.service "$root"/etc/systemd/system/talim-job@run_restore_check.service "$root"/etc/systemd/system/talim-job-failed@x.service "$root"/etc/systemd/system/talim-gunicorn.service 2>&1 | grep -v "talim' \|User=\|Group=\|Failed to resolve user\|Failed to resolve group" || true)"
 [ -z "$out" ] && echo "clean" || { echo "$out"; exit 1; }
 echo "== OnCalendar"
 for t in "$here"/systemd/*.timer; do

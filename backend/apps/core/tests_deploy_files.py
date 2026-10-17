@@ -1,4 +1,5 @@
 """The scheduling files: complete (every job has a timer and a cron line), unprivileged, free of secrets, and syntactically valid."""
+import os
 import re
 import shutil
 import subprocess
@@ -114,3 +115,60 @@ class Files(SimpleTestCase):
         self.assertIn("/etc/talim/alert.address", example)
         self.assertNotRegex(example, r"[\w.+-]+@[\w-]+\.[\w.]+")
         self.assertNotRegex(example, r"(?i)password|secret|token")
+
+
+class Day14Files(SimpleTestCase):
+    def test_the_gunicorn_unit_is_unprivileged_local_only_and_leaves_access_logging_to_the_redacting_proxy(self):
+        unit = text(SYSTEMD / "talim-gunicorn.service")
+        self.assertRegex(unit, r"(?m)^User=talim$")
+        self.assertIn("--bind 127.0.0.1:8000", unit)
+        self.assertNotRegex(unit, r"--bind (0\.0\.0\.0|\[::\]|:)")
+        self.assertNotIn("--access-logfile", unit)  # reset tokens and query strings would land in it
+        self.assertIn("DJANGO_SETTINGS_MODULE=config.settings.production", unit)
+        self.assertIn("EnvironmentFile=/etc/talim/talim.env", unit)
+        for must in ("NoNewPrivileges=true", "ProtectSystem=strict", "ReadWritePaths=/var/lib/talim", "Restart=on-failure", "PrivateTmp=true"):
+            self.assertIn(must, unit)
+
+    def test_the_production_nginx_template_redirects_terminates_modern_tls_hides_secrets_in_logs_and_keeps_the_proxy_trust_model(self):
+        conf = text(DEPLOY / "nginx" / "talim-production.conf.template")
+        self.assertIn("return 301 https://$host{{HTTPS_PORT_SUFFIX}}$request_uri;", conf)
+        self.assertIn("ssl_protocols TLSv1.2 TLSv1.3;", conf)
+        self.assertNotRegex(conf, r"(?i)TLSv1\.[01]\b|SSLv")
+        self.assertIn("proxy_set_header X-Forwarded-For $remote_addr;", conf)
+        self.assertNotIn("$proxy_add_x_forwarded_for", conf)
+        self.assertIn("proxy_bind 127.0.0.1;", conf)
+        self.assertIn("server_tokens off;", conf)
+        self.assertRegex(conf, r"location ~\* \^/\(private_media\|media\)\(/\|\$\) \{ return 404; \}")
+        log_format = re.search(r"log_format talim (.*);", conf).group(1)
+        for leaking in ("$request_uri", "$args", "$query_string", "$request "):
+            self.assertNotIn(leaking, log_format)
+        self.assertIn("/accounts/reset/", conf)  # the reset token is masked
+        self.assertNotIn("Strict-Transport-Security", conf)  # HSTS is the application's decision, taken only after HTTPS is verified
+        for ph in re.findall(r"\{\{(\w+)\}\}", conf):
+            self.assertTrue(ph.isupper())  # placeholders only: no real host name, certificate path or address
+        self.assertNotRegex(conf, r"server_name\s+(?!\{\{)[\w.-]+\.[a-z]{2,}")
+
+    def test_the_database_role_files_make_the_audit_log_append_only_and_contain_no_password(self):
+        grants = text(DEPLOY / "postgres" / "apply_grants.sql")
+        self.assertIn('REVOKE UPDATE, DELETE, TRUNCATE ON audit_auditlog FROM :"app";', grants)
+        self.assertIn('GRANT UPDATE (user_id) ON audit_auditlog TO :"app";', grants)
+        self.assertIn('REVOKE INSERT, UPDATE, DELETE, TRUNCATE ON django_migrations FROM :"app";', grants)
+        self.assertIn('REVOKE CREATE ON SCHEMA public FROM :"app";', grants)
+        roles = text(DEPLOY / "postgres" / "create_roles.sql")
+        self.assertEqual(roles.count("NOSUPERUSER NOCREATEDB NOCREATEROLE"), 2)
+        self.assertIn("PASSWORD :'owner_password'", roles)
+        self.assertIn("PASSWORD :'app_password'", roles)
+        self.assertNotRegex(roles, r"PASSWORD '[^:]")  # never a literal
+        self.assertTrue(os.access(DEPLOY / "postgres" / "verify_roles.sh", os.X_OK))
+
+    def test_the_offsite_example_is_append_only_pins_the_host_key_holds_no_secret_and_says_it_is_untested(self):
+        script = text(DEPLOY / "backup" / "ship_offsite.example.sh")
+        self.assertIn("NOT TESTED", script)
+        self.assertIn("--ignore-existing", script)
+        self.assertNotIn("--delete", script.replace("no --delete", ""))
+        self.assertIn("StrictHostKeyChecking=yes", script)
+        self.assertIn("sha256sum --check", script)  # verified on the remote, not assumed
+        self.assertNotRegex(script, r"(?i)passphrase=|password=|BEGIN [A-Z ]*PRIVATE")
+        self.assertNotRegex(script, r"[\w.+-]+@(?!host\b)[\w-]+\.[a-z]{2,}")  # no real address
+        r = subprocess.run(["bash", "-n", str(DEPLOY / "backup" / "ship_offsite.example.sh")], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)

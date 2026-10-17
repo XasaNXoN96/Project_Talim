@@ -23,6 +23,10 @@ SECURE_HSTS_PRELOAD = False
 # NOTE: SECURE_PROXY_SSL_HEADER is deliberately NOT used: it believes the header from any client. HTTPS detection
 # behind a proxy is done by apps.core.network.TrustedProxyMiddleware, only for peers listed in DJANGO_TRUSTED_PROXIES.
 CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")  # noqa: F405
+# Content-Security-Policy is ENFORCED in production (the base default is report-only for development). Every page family was exercised in a real
+# browser with enforcement on, in three languages at 1440 and 390 px, with 0 violations (Days 7-13). Report-only can still be chosen explicitly
+# with DJANGO_CSP_REPORT_ONLY=1 (e.g. while diagnosing a violation); violations keep being reported to /csp-report/ either way.
+CSP_REPORT_ONLY = env_bool("DJANGO_CSP_REPORT_ONLY", False)  # noqa: F405
 # __Host- cookies are only accepted over HTTPS, without a Domain, for path "/": prevents subdomain cookie injection.
 SESSION_COOKIE_NAME = "__Host-sessionid"
 CSRF_COOKIE_NAME = "__Host-csrftoken"

@@ -186,6 +186,13 @@ class ProductionSettingsTests(SimpleTestCase):
         merged = {k: v for k, v in merged.items() if v is not None}
         return subprocess.run([sys.executable, "manage.py", *args], cwd=settings.BASE_DIR, env=merged, capture_output=True, text=True, timeout=60)
 
+    def test_csp_is_enforced_by_default_in_production_and_report_only_only_when_asked(self):
+        probe = "from django.conf import settings; print(settings.CSP_REPORT_ONLY)"
+        default = self.run_manage("shell", "-c", probe)
+        self.assertEqual((default.returncode, default.stdout.strip().splitlines()[-1]), (0, "False"), default.stderr[-300:])
+        explicit = self.run_manage("shell", "-c", probe, DJANGO_CSP_REPORT_ONLY="1")
+        self.assertEqual(explicit.stdout.strip().splitlines()[-1], "True")
+
     def test_refuses_a_short_secret_key(self):
         result = self.run_manage("check", DJANGO_SECRET_KEY="short")
         self.assertNotEqual(result.returncode, 0)
@@ -219,4 +226,4 @@ class ProductionSettingsTests(SimpleTestCase):
             "s.SESSION_COOKIE_NAME, s.CSRF_COOKIE_NAME, s.SECURE_HSTS_SECONDS, s.CSP_REPORT_ONLY, s.EMAIL_BACKEND.rsplit('.', 2)[-2])",
         )
         self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertIn("False True True True __Host-sessionid __Host-csrftoken 0 True smtp", result.stdout)
+        self.assertIn("False True True True __Host-sessionid __Host-csrftoken 0 False smtp", result.stdout)

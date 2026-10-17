@@ -54,6 +54,9 @@ class Base(TransactionTestCase):
 
         import_module("apps.documents.migrations.0002_default_categories").create(django_apps, None)
         self.world = World()  # users, documents (general + confidential), a task attachment, fictional
+        from apps.accounts.tests_twofactor import enrol
+
+        enrol(self.world.users["admin"])  # an administrator with a confirmed authenticator device (its secret is encrypted with the test-only key)
         self.media = self.tmp / "media"
         self.media.mkdir(mode=0o700)
         for v in [*DocumentVersion.objects.all(), *TaskAttachment.objects.all()]:  # a store that holds exactly what the rows refer to
@@ -247,6 +250,8 @@ class RestoringIt(Base):
         docs, allowed, denied, anon = map(int, m.groups())
         self.assertEqual((docs, allowed, anon), (2, 2, 2))  # the real download view, existing permissions: anonymous refused, allowed people get identical bytes
         self.assertGreaterEqual(denied, 1)  # and somebody without the right is refused
+        self.assertIn("two_factor_check devices=1 decryptable=1 accepted=1 failed=0", out)  # the restored 2FA secret opens with the same key, and its code is accepted
+        self.assertIn("two_factor_devices=1", out)
         # clean-up: the scratch database and directory are gone, the live data is untouched
         self.assertFalse(self.db_exists(self.restore_db))
         self.assertFalse(self.restored_files.exists())
@@ -254,6 +259,25 @@ class RestoringIt(Base):
         self.assertEqual(self.live_counts(), before)
         for secret in (self.passphrase, self.db_password):
             self.assertNotIn(secret, out + r.stderr)
+
+    def test_restoring_without_the_right_encryption_key_fails_the_check_and_reveals_nothing(self):
+        from cryptography.fernet import Fernet
+
+        b = self.make_backup()
+        wrong_key = Fernet.generate_key().decode()
+        r = self.restore(b, OTP_ENCRYPTION_KEYS=wrong_key)
+        self.assertEqual(r.returncode, 1, r.stdout + r.stderr)
+        self.assertRegex(r.stdout + r.stderr, r"two_factor_check devices=1 decryptable=0 accepted=0 failed=1|1 record\(s\) failed")
+        self.assertNotIn("RESTORE_OK", r.stdout)
+        for secret in (wrong_key, ",".join(settings.OTP_ENCRYPTION_KEYS), self.passphrase, self.db_password):
+            self.assertNotIn(secret, r.stdout + r.stderr)
+        self.assertFalse(self.db_exists(self.restore_db))  # and the scratch copy is gone
+        ok = self.restore(b)  # the right key again: the very same backup restores fine
+        self.assertEqual(ok.returncode, 0, ok.stdout + ok.stderr)
+
+    def test_the_two_factor_check_refuses_to_run_outside_a_scratch_copy(self):
+        with self.assertRaises(CommandError):
+            call_command("verify_restored_two_factor")
 
     def test_keep_leaves_the_scratch_copy_for_inspection_and_nothing_else(self):
         b = self.make_backup()

@@ -1,0 +1,38 @@
+# Application server. Listens on 127.0.0.1 ONLY (nginx is the single public entry; see docs/NGINX_AND_CLIENT_IP.md). Adjust User/Group and paths to the
+# real layout. No secrets here: /etc/talim/talim.env (root:talim, 0640) supplies them, including the RUN-TIME database role (not the owner role).
+# No access log on purpose: nginx writes the (redacted) access log; gunicorn's would contain password-reset tokens and query strings.
+[Unit]
+Description=Talim portal (gunicorn)
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=talim
+Group=talim
+WorkingDirectory=/srv/talim/backend
+Environment=DJANGO_SETTINGS_MODULE=config.settings.production
+EnvironmentFile=/etc/talim/talim.env
+ExecStart=/srv/talim/backend/.venv/bin/gunicorn config.wsgi:application --bind 127.0.0.1:8000 --workers 3 --timeout 90 --graceful-timeout 30 --max-requests 2000 --max-requests-jitter 200 --error-logfile -
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=on-failure
+RestartSec=3
+UMask=0077
+# Hardening: it needs the database, clamd, SMTP, the application tree (read) and the private document store (write).
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/talim
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+LockPersonality=true
+CapabilityBoundingSet=
+SystemCallFilter=@system-service
+
+[Install]
+WantedBy=multi-user.target
