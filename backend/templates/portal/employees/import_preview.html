@@ -17,8 +17,8 @@
 </form>
 <div class="row wrap" style="margin-bottom:8px">{% if only_problems %}<a href="?">{% translate "Barcha qatorlar" %}</a>{% else %}<a href="?only=problems">{% translate "Faqat muammoli qatorlar" %}</a>{% endif %}</div>
 <div class="table-wrap"><table class="t"><thead><tr><th>№</th><th>{% translate "F.I.Sh." %} / {% translate "Natija" %}</th><th>{% translate "Bo‘lim" %}</th><th>{% translate "Lavozim" %}</th></tr></thead><tbody>
-{% for r in rows %}<tr><td class="nw">{{ r.n }}</td><td style="min-width:200px">{{ r.cleaned.last_name }} {{ r.cleaned.first_name }} {{ r.cleaned.middle_name }}<div>
+{% for r in rows %}<tr><td class="nw">{{ r.n }}</td><td><div style="width:min(240px,62vw);white-space:normal">{{ r.cleaned.last_name }} {{ r.cleaned.first_name }} {{ r.cleaned.middle_name }}<div>
 {% if r.state == 'ok' %}<span class="badge b-ok plain">{% translate "Qo‘shiladi" %}</span>{% elif r.state == 'duplicate' %}<span class="badge b-warn plain">{% translate "Dublikat?" %}</span>{% else %}<span class="badge b-err plain">{% translate "Xato" %}</span>{% endif %}</div>
-{% for m in r.messages %}<div class="small muted">{{ m }}</div>{% endfor %}</td><td>{{ r.department|default:"—" }}</td><td>{{ r.position|default:"—" }}</td></tr>{% empty %}<tr><td colspan="4" class="muted">{% translate "Muammoli qatorlar yo‘q." %}</td></tr>{% endfor %}
+{% for m in r.messages %}<div class="small muted" style="overflow-wrap:anywhere">{{ m }}</div>{% endfor %}</div></td><td>{{ r.department|default:"—" }}</td><td>{{ r.position|default:"—" }}</td></tr>{% empty %}<tr><td colspan="4" class="muted">{% translate "Muammoli qatorlar yo‘q." %}</td></tr>{% endfor %}
 </tbody></table></div>
 {% endblock %}

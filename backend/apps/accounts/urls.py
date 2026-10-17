@@ -17,6 +17,9 @@ urlpatterns = [
     path("2fa/verify/", na(views.TwoFactorVerifyView.as_view()), name="two_factor_verify"),
     path("2fa/setup/", na(views.TwoFactorSetupView.as_view()), name="two_factor_setup"),
     path("security/", views.SecurityView.as_view(), name="security"),
+    path("security/sessions/", views.SessionsView.as_view(), name="sessions"),
+    path("security/sessions/end-others/", views.SessionsEndOthersView.as_view(), name="sessions_end_others"),
+    path("security/sessions/<uuid:pk>/end/", views.SessionEndView.as_view(), name="session_end"),
     path("security/backup-codes/", na(views.BackupCodesRegenerateView.as_view()), name="backup_codes_regenerate"),
     path("security/2fa-disable/", na(views.TwoFactorDisableView.as_view()), name="two_factor_disable"),
     # password

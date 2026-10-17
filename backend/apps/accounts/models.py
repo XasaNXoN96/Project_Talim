@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.functions import Lower
@@ -85,3 +87,24 @@ class BackupCode(TimeStampedModel):
 
     class Meta:
         indexes = [models.Index(fields=["user", "used_at"])]
+
+
+class UserSession(models.Model):
+    """What Django does not keep about a login session: when it was first seen, when it was last active, and a coarse
+    browser/OS label. One row per Django session of a signed-in user (the real session lives in django_session; this
+    row is only an index and is verified against it before anything is shown).
+
+    `session_key` is a secret equivalent to the cookie: it is never shown, logged or put in a URL; the public handle is `id`.
+    `ip` is the client address as the server determined it (apps.core.network: trusted proxies only); null when unknown."""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="login_sessions")
+    session_key = models.CharField(max_length=40, unique=True, editable=False)
+    first_seen_at = models.DateTimeField(auto_now_add=True)
+    last_seen_at = models.DateTimeField(auto_now_add=True)
+    ip = models.GenericIPAddressField(null=True, blank=True)
+    browser = models.CharField(max_length=40, blank=True)
+    os = models.CharField(max_length=40, blank=True)
+
+    class Meta:
+        indexes = [models.Index(fields=["user", "-last_seen_at"])]

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 17:11+0500\n"
+"POT-Creation-Date: 2026-10-17 17:43+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -360,6 +360,21 @@ msgstr "The account will be protected by a password only."
 msgid "2FA o‘chirildi."
 msgstr "2FA was turned off."
 
+msgid "Joriy sessiyani yakunlash uchun tizimdan chiqing."
+msgstr "To end the current session, sign out."
+
+msgid "Bu sessiya allaqachon yakunlangan."
+msgstr "This session has already ended."
+
+msgid "Sessiya yakunlandi."
+msgstr "Session ended."
+
+msgid "Boshqa sessiyalar yakunlandi."
+msgstr "The other sessions were ended."
+
+msgid "Yakunlash uchun boshqa sessiya yo‘q."
+msgstr "There are no other sessions to end."
+
 msgid "Audit jurnali"
 msgstr "Audit log"
 
@@ -512,6 +527,12 @@ msgstr "Employee import cancelled"
 
 msgid "Xodimlar importi xatolik bilan to‘xtadi"
 msgstr "Employee import stopped by an error"
+
+msgid "Sessiya yakunlandi"
+msgstr "Session ended"
+
+msgid "Boshqa sessiyalar yakunlandi"
+msgstr "Other sessions ended"
 
 msgid "Yangilik yaratildi"
 msgstr "News item created"
@@ -1549,6 +1570,15 @@ msgstr "Password and two-step protection"
 msgid "Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi."
 msgstr "After you change your password, sessions on other devices will be closed."
 
+msgid "Faol sessiyalar"
+msgstr "Active sessions"
+
+msgid "Qaysi qurilmalardan kirilganini ko‘ring va keraksiz sessiyalarni yakunlang."
+msgstr "See which devices are signed in and end the sessions you do not need."
+
+msgid "Sessiyalarni ko‘rish"
+msgstr "View sessions"
+
 msgid "Ikki bosqichli himoya (2FA)"
 msgstr "Two-step protection (2FA)"
 
@@ -1567,6 +1597,58 @@ msgstr "Not enabled"
 
 msgid "2FA ni yoqish"
 msgstr "Turn on 2FA"
+
+msgid "Sessiyani yakunlash"
+msgstr "End session"
+
+msgid "Noma’lum brauzer"
+msgstr "Unknown browser"
+
+msgid "Oxirgi faollik"
+msgstr "Last activity"
+
+msgid "Bu sessiya yakunlansa, o‘sha qurilmada qayta kirish kerak bo‘ladi."
+msgstr "If this session is ended, you will have to sign in again on that device."
+
+msgid "Ha, yakunlayman"
+msgstr "Yes, end it"
+
+msgid "Hisobingizga kirilgan va server hali qabul qilayotgan sessiyalar. Tanimagan sessiya bo‘lsa, uni yakunlang va parolni almashtiring."
+msgstr "Sessions signed in to your account that the server still accepts. If you see one you do not recognise, end it and change your password."
+
+msgid "Boshqa barcha sessiyalarni yakunlash"
+msgstr "End all other sessions"
+
+msgid "Joriy sessiya"
+msgstr "Current session"
+
+msgid "Yakunlash"
+msgstr "End"
+
+msgid "Birinchi faollik"
+msgstr "First activity"
+
+msgid "Amal qilish muddati"
+msgstr "Valid until"
+
+msgid "IP-manzil"
+msgstr "IP address"
+
+msgid "Faol sessiyalar topilmadi"
+msgstr "No active sessions found"
+
+msgid "Oxirgi faollik taxminan 5 daqiqa aniqlikda ko‘rsatiladi. Brauzer yopilgan bo‘lsa ham, sessiya muddati tugamaguncha server uchun amalda bo‘lib turadi. Joylashuv va qurilma modeli aniqlanmaydi."
+msgstr "Last activity is shown to within about 5 minutes. Even if the browser was closed, the session stays valid for the server until it expires. Location and device model are not determined."
+
+msgid "Boshqa sessiyalarni yakunlash"
+msgstr "End other sessions"
+
+#, python-format
+msgid "Joriy sessiyadan tashqari barcha sessiyalar yakunlanadi (%(count)s ta ko‘rinadigan). Siz bu qurilmada tizimda qolasiz; boshqa qurilmalarda qayta kirish kerak bo‘ladi."
+msgstr "All sessions except the current one will be ended (%(count)s visible). You stay signed in on this device; on the others you will have to sign in again."
+
+msgid "Ha, hammasini yakunlayman"
+msgstr "Yes, end them all"
 
 msgid "Zaxira kodlar"
 msgstr "Backup codes"
@@ -2182,6 +2264,7 @@ msgstr "All results"
 msgid "Boshqa so‘z bilan urinib ko‘ring yoki so‘zni qisqartiring."
 msgstr "Try another word or shorten the query."
 
+#, python-format
 msgid "Barchasini ko‘rsatish (%(n)s)"
 msgstr "Show all (%(n)s)"
 

@@ -1,0 +1,25 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Faol sessiyalar" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Faol sessiyalar" %}</h1><p>{% translate "Hisobingizga kirilgan va server hali qabul qilayotgan sessiyalar. Tanimagan sessiya bo‘lsa, uni yakunlang va parolni almashtiring." %}</p></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% url 'accounts:security' %}">{% translate "Xavfsizlik" %}</a>{% if others %}<a class="btn btn-danger" href="{% url 'accounts:sessions_end_others' %}">{% translate "Boshqa barcha sessiyalarni yakunlash" %}</a>{% endif %}</div></div>
+<div class="stack" style="max-width:820px">
+{% for item in sessions %}
+  <section class="card card-pad">
+    <div class="row wrap" style="justify-content:space-between;gap:12px">
+      <div><b>{{ item.row.browser|default:_("Noma’lum brauzer") }}{% if item.row.os %} · {{ item.row.os }}{% endif %}</b>
+        {% if item.current %}<span class="badge b-ok plain" style="margin-left:6px">{% translate "Joriy sessiya" %}</span>{% endif %}</div>
+      {% if not item.current %}<a class="btn btn-secondary btn-sm" href="{% url 'accounts:session_end' item.row.pk %}">{% translate "Yakunlash" %}</a>{% endif %}
+    </div>
+    <dl class="small muted" style="margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px">
+      <dt>{% translate "Birinchi faollik" %}</dt><dd style="margin:0">{{ item.row.first_seen_at|date:"d.m.Y H:i" }}</dd>
+      <dt>{% translate "Oxirgi faollik" %}</dt><dd style="margin:0">{{ item.row.last_seen_at|date:"d.m.Y H:i" }}</dd>
+      <dt>{% translate "Amal qilish muddati" %}</dt><dd style="margin:0">{{ item.expires|date:"d.m.Y H:i" }}</dd>
+      {% if item.row.ip %}<dt>{% translate "IP-manzil" %}</dt><dd style="margin:0">{{ item.row.ip }}</dd>{% endif %}
+    </dl>
+  </section>
+{% empty %}<div class="card empty"><h3>{% translate "Faol sessiyalar topilmadi" %}</h3></div>{% endfor %}
+<p class="muted small">{% translate "Oxirgi faollik taxminan 5 daqiqa aniqlikda ko‘rsatiladi. Brauzer yopilgan bo‘lsa ham, sessiya muddati tugamaguncha server uchun amalda bo‘lib turadi. Joylashuv va qurilma modeli aniqlanmaydi." %}</p>
+</div>
+{% endblock %}

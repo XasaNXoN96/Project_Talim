@@ -74,6 +74,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "apps.accounts.middleware.TwoFactorEnforcementMiddleware",  # needs auth + messages above
     "apps.accounts.middleware.MustChangePasswordMiddleware",  # after 2FA: first prove identity, then change the password
+    "apps.accounts.middleware.SessionActivityMiddleware",  # first/last activity per session, for the active-sessions page
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 

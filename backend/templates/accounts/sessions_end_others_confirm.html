@@ -1,0 +1,10 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Boshqa sessiyalarni yakunlash" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Boshqa sessiyalarni yakunlash" %}</h1></div></div>
+<form method="post" action="{% url 'accounts:sessions_end_others' %}" class="card card-pad" style="display:grid;gap:16px;max-width:620px">{% csrf_token %}
+  <p>{% blocktranslate %}Joriy sessiyadan tashqari barcha sessiyalar yakunlanadi ({{ count }} ta ko‘rinadigan). Siz bu qurilmada tizimda qolasiz; boshqa qurilmalarda qayta kirish kerak bo‘ladi.{% endblocktranslate %}</p>
+  <div class="row wrap"><button class="btn btn-danger" type="submit">{% translate "Ha, hammasini yakunlayman" %}</button><a class="btn btn-secondary" href="{% url 'accounts:sessions' %}">{% translate "Bekor qilish" %}</a></div>
+</form>
+{% endblock %}

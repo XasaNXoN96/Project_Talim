@@ -50,3 +50,20 @@ class MustChangePasswordMiddleware:
                 messages.warning(request, _("Davom etishdan oldin parolingizni almashtiring."))
                 return redirect("accounts:password_change")
         return self.get_response(request)
+
+
+class SessionActivityMiddleware:
+    """Keeps the "active sessions" list honest: remembers when a signed-in session was first and last seen.
+    One indexed lookup per authenticated request and at most one UPDATE per session per five minutes."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        user = getattr(request, "user", None)
+        if user is not None and user.is_authenticated and not request.path.startswith("/static/"):
+            from .sessions import track
+
+            track(request, user)
+        return response

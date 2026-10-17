@@ -80,6 +80,8 @@ class AuditLog(models.Model):
         EMPLOYEE_IMPORT_COMPLETED = "employee_import_completed", _("Xodimlar importi bajarildi")
         EMPLOYEE_IMPORT_CANCELLED = "employee_import_cancelled", _("Xodimlar importi bekor qilindi")
         EMPLOYEE_IMPORT_FAILED = "employee_import_failed", _("Xodimlar importi xatolik bilan to‘xtadi")
+        SESSION_ENDED = "session_ended", _("Sessiya yakunlandi")
+        SESSIONS_ENDED_OTHERS = "sessions_ended_others", _("Boshqa sessiyalar yakunlandi")
         NEWS_CREATED = "news_created", _("Yangilik yaratildi")
         NEWS_UPDATED = "news_updated", _("Yangilik o‘zgartirildi")
         NEWS_PUBLISHED = "news_published", _("Yangilik nashr etildi")

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 17:11+0500\n"
+"POT-Creation-Date: 2026-10-17 17:43+0500\n"
 "Language: uz\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -360,6 +360,21 @@ msgstr "Hisob faqat parol bilan himoyalanadi."
 msgid "2FA o‘chirildi."
 msgstr "2FA o‘chirildi."
 
+msgid "Joriy sessiyani yakunlash uchun tizimdan chiqing."
+msgstr "Joriy sessiyani yakunlash uchun tizimdan chiqing."
+
+msgid "Bu sessiya allaqachon yakunlangan."
+msgstr "Bu sessiya allaqachon yakunlangan."
+
+msgid "Sessiya yakunlandi."
+msgstr "Sessiya yakunlandi."
+
+msgid "Boshqa sessiyalar yakunlandi."
+msgstr "Boshqa sessiyalar yakunlandi."
+
+msgid "Yakunlash uchun boshqa sessiya yo‘q."
+msgstr "Yakunlash uchun boshqa sessiya yo‘q."
+
 msgid "Audit jurnali"
 msgstr "Audit jurnali"
 
@@ -512,6 +527,12 @@ msgstr "Xodimlar importi bekor qilindi"
 
 msgid "Xodimlar importi xatolik bilan to‘xtadi"
 msgstr "Xodimlar importi xatolik bilan to‘xtadi"
+
+msgid "Sessiya yakunlandi"
+msgstr "Sessiya yakunlandi"
+
+msgid "Boshqa sessiyalar yakunlandi"
+msgstr "Boshqa sessiyalar yakunlandi"
 
 msgid "Yangilik yaratildi"
 msgstr "Yangilik yaratildi"
@@ -1549,6 +1570,15 @@ msgstr "Parol va ikki bosqichli himoya"
 msgid "Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi."
 msgstr "Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi."
 
+msgid "Faol sessiyalar"
+msgstr "Faol sessiyalar"
+
+msgid "Qaysi qurilmalardan kirilganini ko‘ring va keraksiz sessiyalarni yakunlang."
+msgstr "Qaysi qurilmalardan kirilganini ko‘ring va keraksiz sessiyalarni yakunlang."
+
+msgid "Sessiyalarni ko‘rish"
+msgstr "Sessiyalarni ko‘rish"
+
 msgid "Ikki bosqichli himoya (2FA)"
 msgstr "Ikki bosqichli himoya (2FA)"
 
@@ -1567,6 +1597,58 @@ msgstr "Yoqilmagan"
 
 msgid "2FA ni yoqish"
 msgstr "2FA ni yoqish"
+
+msgid "Sessiyani yakunlash"
+msgstr "Sessiyani yakunlash"
+
+msgid "Noma’lum brauzer"
+msgstr "Noma’lum brauzer"
+
+msgid "Oxirgi faollik"
+msgstr "Oxirgi faollik"
+
+msgid "Bu sessiya yakunlansa, o‘sha qurilmada qayta kirish kerak bo‘ladi."
+msgstr "Bu sessiya yakunlansa, o‘sha qurilmada qayta kirish kerak bo‘ladi."
+
+msgid "Ha, yakunlayman"
+msgstr "Ha, yakunlayman"
+
+msgid "Hisobingizga kirilgan va server hali qabul qilayotgan sessiyalar. Tanimagan sessiya bo‘lsa, uni yakunlang va parolni almashtiring."
+msgstr "Hisobingizga kirilgan va server hali qabul qilayotgan sessiyalar. Tanimagan sessiya bo‘lsa, uni yakunlang va parolni almashtiring."
+
+msgid "Boshqa barcha sessiyalarni yakunlash"
+msgstr "Boshqa barcha sessiyalarni yakunlash"
+
+msgid "Joriy sessiya"
+msgstr "Joriy sessiya"
+
+msgid "Yakunlash"
+msgstr "Yakunlash"
+
+msgid "Birinchi faollik"
+msgstr "Birinchi faollik"
+
+msgid "Amal qilish muddati"
+msgstr "Amal qilish muddati"
+
+msgid "IP-manzil"
+msgstr "IP-manzil"
+
+msgid "Faol sessiyalar topilmadi"
+msgstr "Faol sessiyalar topilmadi"
+
+msgid "Oxirgi faollik taxminan 5 daqiqa aniqlikda ko‘rsatiladi. Brauzer yopilgan bo‘lsa ham, sessiya muddati tugamaguncha server uchun amalda bo‘lib turadi. Joylashuv va qurilma modeli aniqlanmaydi."
+msgstr "Oxirgi faollik taxminan 5 daqiqa aniqlikda ko‘rsatiladi. Brauzer yopilgan bo‘lsa ham, sessiya muddati tugamaguncha server uchun amalda bo‘lib turadi. Joylashuv va qurilma modeli aniqlanmaydi."
+
+msgid "Boshqa sessiyalarni yakunlash"
+msgstr "Boshqa sessiyalarni yakunlash"
+
+#, python-format
+msgid "Joriy sessiyadan tashqari barcha sessiyalar yakunlanadi (%(count)s ta ko‘rinadigan). Siz bu qurilmada tizimda qolasiz; boshqa qurilmalarda qayta kirish kerak bo‘ladi."
+msgstr "Joriy sessiyadan tashqari barcha sessiyalar yakunlanadi (%(count)s ta ko‘rinadigan). Siz bu qurilmada tizimda qolasiz; boshqa qurilmalarda qayta kirish kerak bo‘ladi."
+
+msgid "Ha, hammasini yakunlayman"
+msgstr "Ha, hammasini yakunlayman"
 
 msgid "Zaxira kodlar"
 msgstr "Zaxira kodlar"
@@ -2182,6 +2264,7 @@ msgstr "Barcha natijalar"
 msgid "Boshqa so‘z bilan urinib ko‘ring yoki so‘zni qisqartiring."
 msgstr "Boshqa so‘z bilan urinib ko‘ring yoki so‘zni qisqartiring."
 
+#, python-format
 msgid "Barchasini ko‘rsatish (%(n)s)"
 msgstr "Barchasini ko‘rsatish (%(n)s)"
 

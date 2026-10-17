@@ -29,6 +29,7 @@ WRITE_METHODS = ("put", "patch", "delete")
 
 
 def snapshot():
+    # UserSession is deliberately absent: it is bookkeeping that signing in and any authenticated request refresh (see apps.accounts.sessions)
     from django.contrib.auth import get_user_model
 
     U = get_user_model()

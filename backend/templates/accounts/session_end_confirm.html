@@ -1,0 +1,11 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Sessiyani yakunlash" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Sessiyani yakunlash" %}</h1></div></div>
+<form method="post" action="{% url 'accounts:session_end' item.row.pk %}" class="card card-pad" style="display:grid;gap:16px;max-width:620px">{% csrf_token %}
+  <p><b>{{ item.row.browser|default:_("Noma’lum brauzer") }}{% if item.row.os %} · {{ item.row.os }}{% endif %}</b><br><span class="muted small">{% translate "Oxirgi faollik" %}: {{ item.row.last_seen_at|date:"d.m.Y H:i" }}</span></p>
+  <p>{% translate "Bu sessiya yakunlansa, o‘sha qurilmada qayta kirish kerak bo‘ladi." %}</p>
+  <div class="row wrap"><button class="btn btn-danger" type="submit">{% translate "Ha, yakunlayman" %}</button><a class="btn btn-secondary" href="{% url 'accounts:sessions' %}">{% translate "Bekor qilish" %}</a></div>
+</form>
+{% endblock %}

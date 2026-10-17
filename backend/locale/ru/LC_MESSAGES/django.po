@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 17:11+0500\n"
+"POT-Creation-Date: 2026-10-17 17:43+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -360,6 +360,21 @@ msgstr "Учётная запись будет защищена только п�
 msgid "2FA o‘chirildi."
 msgstr "2FA отключена."
 
+msgid "Joriy sessiyani yakunlash uchun tizimdan chiqing."
+msgstr "Чтобы завершить текущую сессию, выйдите из системы."
+
+msgid "Bu sessiya allaqachon yakunlangan."
+msgstr "Эта сессия уже завершена."
+
+msgid "Sessiya yakunlandi."
+msgstr "Сессия завершена."
+
+msgid "Boshqa sessiyalar yakunlandi."
+msgstr "Остальные сессии завершены."
+
+msgid "Yakunlash uchun boshqa sessiya yo‘q."
+msgstr "Других сессий для завершения нет."
+
 msgid "Audit jurnali"
 msgstr "Журнал аудита"
 
@@ -512,6 +527,12 @@ msgstr "Импорт сотрудников отменён"
 
 msgid "Xodimlar importi xatolik bilan to‘xtadi"
 msgstr "Импорт сотрудников остановлен из-за ошибки"
+
+msgid "Sessiya yakunlandi"
+msgstr "Сессия завершена"
+
+msgid "Boshqa sessiyalar yakunlandi"
+msgstr "Остальные сессии завершены"
 
 msgid "Yangilik yaratildi"
 msgstr "Новость создана"
@@ -1549,6 +1570,15 @@ msgstr "Пароль и двухэтапная защита"
 msgid "Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi."
 msgstr "После смены пароля сеансы на других устройствах будут завершены."
 
+msgid "Faol sessiyalar"
+msgstr "Активные сессии"
+
+msgid "Qaysi qurilmalardan kirilganini ko‘ring va keraksiz sessiyalarni yakunlang."
+msgstr "Посмотрите, с каких устройств выполнен вход, и завершите ненужные сессии."
+
+msgid "Sessiyalarni ko‘rish"
+msgstr "Посмотреть сессии"
+
 msgid "Ikki bosqichli himoya (2FA)"
 msgstr "Двухэтапная защита (2FA)"
 
@@ -1567,6 +1597,58 @@ msgstr "Не включена"
 
 msgid "2FA ni yoqish"
 msgstr "Включить 2FA"
+
+msgid "Sessiyani yakunlash"
+msgstr "Завершить сессию"
+
+msgid "Noma’lum brauzer"
+msgstr "Неизвестный браузер"
+
+msgid "Oxirgi faollik"
+msgstr "Последняя активность"
+
+msgid "Bu sessiya yakunlansa, o‘sha qurilmada qayta kirish kerak bo‘ladi."
+msgstr "После завершения этой сессии на том устройстве нужно будет войти заново."
+
+msgid "Ha, yakunlayman"
+msgstr "Да, завершить"
+
+msgid "Hisobingizga kirilgan va server hali qabul qilayotgan sessiyalar. Tanimagan sessiya bo‘lsa, uni yakunlang va parolni almashtiring."
+msgstr "Сессии, в которых выполнен вход в вашу учётную запись и которые сервер ещё принимает. Если видите незнакомую сессию — завершите её и смените пароль."
+
+msgid "Boshqa barcha sessiyalarni yakunlash"
+msgstr "Завершить все остальные сессии"
+
+msgid "Joriy sessiya"
+msgstr "Текущая сессия"
+
+msgid "Yakunlash"
+msgstr "Завершить"
+
+msgid "Birinchi faollik"
+msgstr "Первая активность"
+
+msgid "Amal qilish muddati"
+msgstr "Действует до"
+
+msgid "IP-manzil"
+msgstr "IP-адрес"
+
+msgid "Faol sessiyalar topilmadi"
+msgstr "Активных сессий не найдено"
+
+msgid "Oxirgi faollik taxminan 5 daqiqa aniqlikda ko‘rsatiladi. Brauzer yopilgan bo‘lsa ham, sessiya muddati tugamaguncha server uchun amalda bo‘lib turadi. Joylashuv va qurilma modeli aniqlanmaydi."
+msgstr "Последняя активность показана с точностью около 5 минут. Даже если браузер закрыт, сессия остаётся действующей для сервера до истечения срока. Местоположение и модель устройства не определяются."
+
+msgid "Boshqa sessiyalarni yakunlash"
+msgstr "Завершить остальные сессии"
+
+#, python-format
+msgid "Joriy sessiyadan tashqari barcha sessiyalar yakunlanadi (%(count)s ta ko‘rinadigan). Siz bu qurilmada tizimda qolasiz; boshqa qurilmalarda qayta kirish kerak bo‘ladi."
+msgstr "Все сессии, кроме текущей, будут завершены (видимых: %(count)s). На этом устройстве вы останетесь в системе; на других нужно будет войти заново."
+
+msgid "Ha, hammasini yakunlayman"
+msgstr "Да, завершить все"
 
 msgid "Zaxira kodlar"
 msgstr "Резервные коды"
@@ -2182,6 +2264,7 @@ msgstr "Все результаты"
 msgid "Boshqa so‘z bilan urinib ko‘ring yoki so‘zni qisqartiring."
 msgstr "Попробуйте другое слово или сократите запрос."
 
+#, python-format
 msgid "Barchasini ko‘rsatish (%(n)s)"
 msgstr "Показать все (%(n)s)"
 

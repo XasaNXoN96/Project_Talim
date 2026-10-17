@@ -10,6 +10,11 @@
     <a class="btn btn-secondary" href="{% url 'accounts:password_change' %}">{% translate "Parolni almashtirish" %}</a>
   </section>
   <section class="card card-pad">
+    <h2 style="font-size:17px;margin-bottom:8px">{% translate "Faol sessiyalar" %}</h2>
+    <p class="muted small" style="margin-bottom:12px">{% translate "Qaysi qurilmalardan kirilganini ko‘ring va keraksiz sessiyalarni yakunlang." %}</p>
+    <a class="btn btn-secondary" href="{% url 'accounts:sessions' %}">{% translate "Sessiyalarni ko‘rish" %}</a>
+  </section>
+  <section class="card card-pad">
     <h2 style="font-size:17px;margin-bottom:8px">{% translate "Ikki bosqichli himoya (2FA)" %}</h2>
     {% if has_device %}
       <p><span class="badge b-ok">{% translate "Yoqilgan" %}</span> <span class="muted small">{% blocktranslate with n=remaining %}Qolgan zaxira kodlar: {{ n }}{% endblocktranslate %}</span></p>

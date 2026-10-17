@@ -298,6 +298,7 @@ class EveryPageInEveryLanguage(DataFixtureMixin, TestCase):
             ("admin", "news_admin:edit", (self.news.pk,)), ("admin", "news_admin:categories", ()), ("admin", "news_admin:category_create", ()),
             ("admin", "news_admin:category_edit", (self.news_cat.pk,)), ("admin", "news_admin:status", (self.news.pk, "publish")),
             ("admin", "employees:import", ()), ("admin", "portal:search", ()), ("emp", "portal:search", ()),
+            ("admin", "accounts:sessions", ()), ("admin", "accounts:sessions_end_others", ()), ("emp", "accounts:sessions", ()),
         ]
 
     def test_pages_render_in_each_language_with_the_right_script(self):

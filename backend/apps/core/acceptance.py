@@ -12,6 +12,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
 from apps.access.models import RoleAssignment
+from apps.accounts.models import UserSession
 from apps.accounts.testing import login_with_two_factor, make_user
 from apps.content.models import News, NewsCategory
 from apps.documents.models import Document, DocumentCategory
@@ -61,6 +62,7 @@ class World:
         self.secret_doc = Document.objects.create(title="Maxfiy", category=cat, created_by=self.users["hr"], access_level="confidential")
         add_version(self.secret_doc, validate_upload(upload("s.pdf")), actor=self.users["hr"])
         self.emp_import = EmployeeImport.objects.create(user=self.users["hr"], file_sha256="0" * 64, rows=[{"n": 2, "raw": {"last_name": "Sinov", "first_name": "Rasul", "department": "A"}}])
+        self.user_session = UserSession.objects.create(user=self.users["emp"], session_key="k" * 32)
         self.notification = Notification.objects.create(user=self.users["emp"], kind="task_assigned", task=self.task, title="Hisobot")
         self.news_category = NewsCategory.objects.create(name="Umumiy", slug="umumiy")
         self.news = News.objects.create(title="Yangilik", slug="yangilik", body="Matn", excerpt="Q", status="published", publish_at=timezone.now(), category=self.news_category)
@@ -89,6 +91,7 @@ class World:
             "documents:inline": {"pk": d}, "documents:inline_version": {"pk": d, "number": 1}, "documents:archive": {"pk": d}, "documents:restore": {"pk": d},
             "notifications:open": {"pk": self.notification.pk}, "notifications:read": {"pk": self.notification.pk},
             "employees:import_detail": {"pk": self.emp_import.pk}, "employees:import_confirm": {"pk": self.emp_import.pk}, "employees:import_cancel": {"pk": self.emp_import.pk},
+            "accounts:session_end": {"pk": self.user_session.pk},
             "news_admin:preview": {"pk": self.news.pk}, "news_admin:edit": {"pk": self.news.pk}, "news_admin:status": {"pk": self.news.pk, "action": "archive"},
             "news_admin:category_edit": {"pk": self.news_category.pk},
             "reports:export": {"fmt": "xlsx"}, "content:news_detail": {"slug": self.news.slug},

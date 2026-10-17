@@ -13,13 +13,14 @@ from django.contrib.auth.views import (
     PasswordResetDoneView,
     PasswordResetView,
 )
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.views.decorators.cache import never_cache
+from django.views import View
 from django.views.generic import FormView, TemplateView
 from django.utils.translation import gettext_lazy as _
 
@@ -39,6 +40,7 @@ from .forms import (
     TotpSetupForm,
 )
 from .notifications import notify_security_event
+from . import sessions as login_sessions
 from .sessions import invalidate_user_sessions
 from .twofactor import (
     clear_pending,
@@ -362,3 +364,64 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 
 class PasswordResetComplete(PasswordResetCompleteView):
     template_name = "accounts/password_reset_complete.html"
+
+
+class SessionsView(LoginRequiredMixin, TemplateView):
+    """The signed-in user's own sessions only; nothing here takes another user's identifier."""
+
+    template_name = "accounts/sessions.html"
+
+    def get_context_data(self, **kwargs):
+        items = login_sessions.active_sessions(self.request.user, self.request.session.session_key)
+        return super().get_context_data(sessions=items, others=sum(1 for i in items if not i["current"]), **kwargs)
+
+
+class SessionEndView(LoginRequiredMixin, View):
+    """GET asks for confirmation, POST ends one OTHER session of the signed-in user. The id is looked up among this user's own
+    rows only, so another person's id and an id that does not exist look the same: 404."""
+
+    def _own(self, request, pk):
+        row = login_sessions.UserSession.objects.filter(pk=pk, user=request.user).first()
+        if row is None:
+            raise Http404
+        return row
+
+    def _is_current(self, request, row):
+        return row.session_key == request.session.session_key
+
+    def get(self, request, pk):
+        row = self._own(request, pk)
+        if self._is_current(request, row):
+            messages.info(request, _("Joriy sessiyani yakunlash uchun tizimdan chiqing."))
+            return redirect("accounts:sessions")
+        item = next((i for i in login_sessions.active_sessions(request.user, request.session.session_key) if i["row"].pk == row.pk), None)
+        if item is None:
+            raise Http404
+        return render(request, "accounts/session_end_confirm.html", {"item": item})
+
+    def post(self, request, pk):
+        row = self._own(request, pk)
+        if self._is_current(request, row):
+            messages.info(request, _("Joriy sessiyani yakunlash uchun tizimdan chiqing."))
+            return redirect("accounts:sessions")
+        if not login_sessions.end_session(row):
+            messages.error(request, _("Bu sessiya allaqachon yakunlangan."))
+            return redirect("accounts:sessions")
+        record(AuditLog.Action.SESSION_ENDED, request=request, user=request.user, object_type="UserSession", object_id=pk)
+        messages.success(request, _("Sessiya yakunlandi."))
+        return redirect("accounts:sessions")
+
+
+class SessionsEndOthersView(LoginRequiredMixin, View):
+    def get(self, request):
+        n = sum(1 for i in login_sessions.active_sessions(request.user, request.session.session_key) if not i["current"])
+        return render(request, "accounts/sessions_end_others_confirm.html", {"count": n})
+
+    def post(self, request):
+        closed = login_sessions.end_other_sessions(request.user, request.session.session_key)
+        record(AuditLog.Action.SESSIONS_ENDED_OTHERS, request=request, user=request.user, object_type="User", object_id=request.user.pk, meta={"closed": closed})
+        if closed:
+            messages.success(request, _("Boshqa sessiyalar yakunlandi."))
+        else:
+            messages.info(request, _("Yakunlash uchun boshqa sessiya yo‘q."))
+        return redirect("accounts:sessions")

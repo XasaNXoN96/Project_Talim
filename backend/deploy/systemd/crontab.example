@@ -1,3 +1,9 @@
 # Alternative to the systemd timer. Install with `crontab -e` as the application user.
 # flock -n: if the previous run is somehow still going, skip instead of piling up.
 7 * * * * cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && flock -n /tmp/talim-reminders.lock .venv/bin/python manage.py send_task_reminders >> /var/log/talim/reminders.log 2>&1
+
+# Housekeeping (not installed anywhere yet — see docs/SCHEDULER.md "Служебная очистка"):
+# parsed employee-import previews hold personal data for at most 60 minutes; this wipes the ones nobody confirmed.
+*/15 * * * * cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && flock -n /tmp/talim-purge-imports.lock .venv/bin/python manage.py purge_employee_imports >> /var/log/talim/housekeeping.log 2>&1
+# expired Django sessions (and, through them, the "active sessions" index) — once a day
+23 3 * * * cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && flock -n /tmp/talim-clearsessions.lock .venv/bin/python manage.py clearsessions >> /var/log/talim/housekeeping.log 2>&1
