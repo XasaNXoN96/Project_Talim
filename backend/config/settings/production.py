@@ -20,8 +20,8 @@ CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = int(env("DJANGO_HSTS_SECONDS", "0") or 0)  # noqa: F405
 SECURE_HSTS_INCLUDE_SUBDOMAINS = SECURE_HSTS_SECONDS > 0
 SECURE_HSTS_PRELOAD = False
-if env_bool("DJANGO_BEHIND_TLS_PROXY", False):  # noqa: F405
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# NOTE: SECURE_PROXY_SSL_HEADER is deliberately NOT used: it believes the header from any client. HTTPS detection
+# behind a proxy is done by apps.core.network.TrustedProxyMiddleware, only for peers listed in DJANGO_TRUSTED_PROXIES.
 CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")  # noqa: F405
 # __Host- cookies are only accepted over HTTPS, without a Domain, for path "/": prevents subdomain cookie injection.
 SESSION_COOKIE_NAME = "__Host-sessionid"

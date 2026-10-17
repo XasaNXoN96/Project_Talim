@@ -57,6 +57,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "apps.core.network.TrustedProxyMiddleware",  # first: decides is_secure() from a TRUSTED proxy only
     "django.middleware.security.SecurityMiddleware",
     "apps.core.middleware.SecurityHeadersMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -65,8 +66,17 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "apps.accounts.middleware.TwoFactorEnforcementMiddleware",  # needs auth + messages above
+    "apps.accounts.middleware.MustChangePasswordMiddleware",  # after 2FA: first prove identity, then change the password
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+# --- Reverse proxy. Forwarded headers (client IP, scheme) are believed ONLY from these addresses/networks.
+# Empty = direct connections only (safe default). Set to the proxy's address(es) when deployed behind Nginx, e.g.
+# DJANGO_TRUSTED_PROXIES=127.0.0.1,::1   (see docs/PRODUCTION_SECURITY_REQUIREMENTS.md, B-1)
+from apps.core.network import parse_trusted_proxies  # noqa: E402
+
+TRUSTED_PROXIES = env_list("DJANGO_TRUSTED_PROXIES")
+TRUSTED_PROXY_NETWORKS = parse_trusted_proxies(TRUSTED_PROXIES)
 
 ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = "config.wsgi.application"
@@ -136,6 +146,7 @@ THROTTLE_POLICIES = {
     "reset:ip": {"max": 5, "window": 3600, "lock": 3600},
     "reset:email": {"max": 3, "window": 3600, "lock": 3600},
     "csp:ip": {"max": 60, "window": 3600, "lock": 3600},
+    "invite:user": {"max": 5, "window": 3600, "lock": 3600},  # invitation e-mails per account per hour
 }
 
 # --- Two-factor authentication (TOTP)

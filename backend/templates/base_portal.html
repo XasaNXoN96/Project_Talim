@@ -13,6 +13,15 @@
     <a class="sb-brand" href="{% url 'portal:dashboard' %}" title="{{ SITE_NAME }}"><span data-logo style="display:block;width:40px;height:40px;flex:none"></span><div><b>{{ SITE_SHORT }}<br>{{ SITE_DISTRICT }}</b><small>{% translate "Xodimlar portali" %}</small></div></a>
     <nav class="sb-nav" aria-label="{% translate 'Bo‘limlar' %}">
       <a href="{% url 'portal:dashboard' %}" title="{% translate 'Bosh sahifa' %}" {% if request.resolver_match.url_name == 'dashboard' %}class="active" aria-current="page"{% endif %}><i data-i="home" style="display:contents"></i><span>{% translate "Bosh sahifa" %}</span></a>
+      {% if perms.organization.view_employee_directory %}
+      <a href="{% url 'employees:list' %}" title="{% translate 'Xodimlar' %}" {% if request.resolver_match.namespace == 'employees' %}class="active" aria-current="page"{% endif %}><i data-i="users" style="display:contents"></i><span>{% translate "Xodimlar" %}</span></a>
+      {% endif %}
+      {% if perms.organization.view_department %}
+      <a href="{% url 'employees:structure' %}" title="{% translate 'Tuzilma' %}" {% if request.resolver_match.url_name == 'structure' %}class="active" aria-current="page"{% endif %}><i data-i="building" style="display:contents"></i><span>{% translate "Tuzilma" %}</span></a>
+      {% endif %}
+      {% if perms.accounts.view_user %}
+      <a href="{% url 'users:list' %}" title="{% translate 'Foydalanuvchilar' %}" {% if request.resolver_match.namespace == 'users' %}class="active" aria-current="page"{% endif %}><i data-i="users" style="display:contents"></i><span>{% translate "Foydalanuvchilar" %}</span></a>
+      {% endif %}
       {% if perms.audit.view_auditlog %}
       <a href="{% url 'portal:audit' %}" title="{% translate 'Audit jurnali' %}" {% if request.resolver_match.url_name == 'audit' %}class="active" aria-current="page"{% endif %}><i data-i="shield" style="display:contents"></i><span>{% translate "Audit jurnali" %}</span></a>
       {% endif %}

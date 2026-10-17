@@ -1,0 +1,21 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Xodimlar" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Xodimlar" %}</h1><p>{% translate "Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi." %}</p></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% url 'employees:me' %}">{% translate "Mening kartam" %}</a>{% if can_add %}<a class="btn btn-primary" href="{% url 'employees:create' %}">{% translate "Xodim qo‘shish" %}</a>{% endif %}</div></div>
+<form method="get" class="row wrap" style="margin-bottom:16px">
+  <input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Qidirish: ism, lavozim' %}" style="max-width:260px" maxlength="100">
+  <select class="input" name="department" style="max-width:240px"><option value="">{% translate "Barcha bo‘limlar" %}</option>{% for d in departments %}<option value="{{ d.pk }}" {% if department == d.pk|stringformat:"s" %}selected{% endif %}>{{ d.name }}</option>{% endfor %}</select>
+  <select class="input" name="status" style="max-width:160px"><option value="">{% translate "Barcha holatlar" %}</option>{% for code, label in statuses %}<option value="{{ code }}" {% if status == code %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+  <button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button>
+</form>
+{% if employees %}
+<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "F.I.Sh." %}</th><th>{% translate "Bo‘lim" %}</th><th>{% translate "Lavozim" %}</th><th>{% translate "Holat" %}</th></tr></thead><tbody>
+{% for e in employees %}<tr><td><a href="{% url 'employees:detail' e.pk %}">{{ e.last_name }} {{ e.first_name }} {{ e.middle_name }}</a></td><td>{{ e.department.name }}</td><td>{{ e.position.name|default:"—" }}</td><td><span class="badge {% if e.status == 'active' %}b-ok{% elif e.status == 'archived' %}b-err{% else %}b-info{% endif %}">{{ e.get_status_display }}</span></td></tr>{% endfor %}
+</tbody></table></div>
+{% include "includes/pagination.html" %}
+{% else %}
+<div class="card empty"><h3>{% translate "Hech narsa topilmadi" %}</h3></div>
+{% endif %}
+{% endblock %}

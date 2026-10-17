@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import Resolver404, resolve, reverse
 from django.utils.http import urlencode
 
 from apps.audit.models import AuditLog
@@ -26,4 +26,26 @@ class TwoFactorEnforcementMiddleware:
             logout(request)
             messages.error(request, "Xavfsizlik uchun qayta kiring: ikki bosqichli tasdiqlash talab qilinadi.")
             return redirect(f"{reverse('accounts:login')}?{urlencode({'next': request.get_full_path()})}")
+        return self.get_response(request)
+
+
+class MustChangePasswordMiddleware:
+    """A signed-in user flagged `must_change_password` can do nothing but change the password (or sign out)."""
+
+    ALLOWED_URL_NAMES = {"accounts:password_change", "accounts:password_change_done", "accounts:logout", "healthz", "csp_report"}
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        user = request.user
+        if user.is_authenticated and user.must_change_password and not request.path.startswith("/static/"):
+            try:
+                match = resolve(request.path_info)
+                name = f"{match.namespace}:{match.url_name}" if match.namespace else match.url_name
+            except Resolver404:
+                name = None
+            if name not in self.ALLOWED_URL_NAMES:
+                messages.warning(request, "Davom etishdan oldin parolingizni almashtiring.")
+                return redirect("accounts:password_change")
         return self.get_response(request)

@@ -1,0 +1,48 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{{ target.get_username }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{{ target.get_full_name|default:target.get_username }}</h1><p>{{ target.get_username }} · {{ target.email }}</p></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% url 'users:list' %}">{% translate "Ro‘yxat" %}</a>{% if can_manage %}<a class="btn btn-secondary" href="{% url 'users:edit' target.pk %}">{% translate "Tahrirlash" %}</a>{% endif %}</div></div>
+<div class="stack" style="max-width:820px">
+  <section class="card card-pad">
+    <h2 style="font-size:17px;margin-bottom:8px">{% translate "Holat" %}</h2>
+    <p class="row wrap">
+      {% if target.is_active %}<span class="badge b-ok">{% translate "Faol" %}</span>{% else %}<span class="badge b-err">{% translate "Faol emas" %}</span>{% endif %}
+      {% if locked %}<span class="badge b-warn">{% translate "Vaqtincha bloklangan" %}</span>{% endif %}
+      {% if target.must_change_password %}<span class="badge b-warn">{% translate "Parolni almashtirishi shart" %}</span>{% endif %}
+      {% if has_2fa %}<span class="badge b-ok">2FA</span>{% elif twofa_required %}<span class="badge b-warn">{% translate "2FA majburiy, hali yoqilmagan" %}</span>{% else %}<span class="badge plain">{% translate "2FA yoqilmagan" %}</span>{% endif %}
+    </p>
+    {% if can_manage or can_unlock %}
+    <div class="row wrap" style="margin-top:12px">
+      {% if can_manage and target.is_active %}
+        <form method="post" action="{% url 'users:action' target.pk 'invite' %}">{% csrf_token %}<button class="btn btn-secondary btn-sm" type="submit">{% translate "Taklifnoma yuborish" %}</button></form>
+        <form method="post" action="{% url 'users:action' target.pk 'force_password' %}">{% csrf_token %}<button class="btn btn-secondary btn-sm" type="submit">{% translate "Parolni almashtirishni talab qilish" %}</button></form>
+      {% endif %}
+      {% if can_unlock %}<form method="post" action="{% url 'users:action' target.pk 'unlock' %}">{% csrf_token %}<button class="btn btn-secondary btn-sm" type="submit">{% translate "Blokdan chiqarish" %}</button></form>{% endif %}
+      {% if can_manage and not is_self %}
+        {% if target.is_active %}<form method="post" action="{% url 'users:action' target.pk 'deactivate' %}">{% csrf_token %}<button class="btn btn-danger btn-sm" type="submit">{% translate "O‘chirish (faolsizlantirish)" %}</button></form>
+        {% else %}<form method="post" action="{% url 'users:action' target.pk 'reactivate' %}">{% csrf_token %}<button class="btn btn-secondary btn-sm" type="submit">{% translate "Qayta faollashtirish" %}</button></form>{% endif %}
+      {% endif %}
+    </div>
+    {% endif %}
+  </section>
+  <section class="card card-pad">
+    <h2 style="font-size:17px;margin-bottom:8px">{% translate "Rollar" %}</h2>
+    {% if assignments %}
+    <div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Rol" %}</th><th>{% translate "Doira" %}</th><th>{% translate "Bo‘lim" %}</th><th></th></tr></thead><tbody>
+    {% for a in assignments %}<tr><td>{{ a.role.name }}</td><td>{{ a.get_scope_display }}</td><td>{{ a.department|default:"—" }}</td>
+      <td>{% if can_assign %}<form method="post" action="{% url 'users:role_remove' target.pk a.pk %}">{% csrf_token %}<button class="btn btn-ghost btn-sm" type="submit">{% translate "Olib tashlash" %}</button></form>{% endif %}</td></tr>{% endfor %}
+    </tbody></table></div>
+    {% else %}<p class="muted">{% translate "Rol biriktirilmagan: foydalanuvchi hech narsaga kira olmaydi." %}</p>{% endif %}
+    {% if can_assign %}
+    <form method="post" action="{% url 'users:role_add' target.pk %}" class="row wrap" style="margin-top:16px;align-items:flex-end">
+      {% csrf_token %}
+      {% include "includes/field.html" with field=assign_form.role %}
+      {% include "includes/field.html" with field=assign_form.department %}
+      <button class="btn btn-primary" type="submit">{% translate "Rol biriktirish" %}</button>
+    </form>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

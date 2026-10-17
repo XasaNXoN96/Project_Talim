@@ -56,6 +56,7 @@ def csp_report(request):
     """Receives Content-Security-Policy violation reports. Size-limited, rate-limited per IP, logged without secrets."""
     from apps.accounts import throttle
     from apps.audit.services import client_ip
+    from apps.core.network import throttle_ip_key
 
     try:
         length = int(request.META.get("CONTENT_LENGTH") or 0)
@@ -63,7 +64,7 @@ def csp_report(request):
         length = MAX_CSP_REPORT_BYTES + 1
     if length > MAX_CSP_REPORT_BYTES:
         return HttpResponse(status=413)
-    reservation = throttle.reserve([throttle.Key("csp:ip", client_ip(request) or "unknown", "keep")])
+    reservation = throttle.reserve([throttle.Key("csp:ip", throttle_ip_key(client_ip(request)), "keep")])
     if reservation.allowed:
         try:
             data = json.loads(request.body[:MAX_CSP_REPORT_BYTES] or b"{}")

@@ -9,6 +9,8 @@ urlpatterns = [
     path("healthz/", core_views.healthz, name="healthz"),
     path("csp-report/", core_views.csp_report, name="csp_report"),
     path("accounts/", include("apps.accounts.urls")),
+    path("portal/users/", include("apps.accounts.manage_urls")),
+    path("portal/employees/", include("apps.organization.urls")),
     path("portal/", include("apps.portal.urls")),
     path("", include("apps.content.urls")),
 ]

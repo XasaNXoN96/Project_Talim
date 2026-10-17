@@ -1,0 +1,22 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{{ e.last_name }} {{ e.first_name }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{{ e.last_name }} {{ e.first_name }} {{ e.middle_name }}</h1><p>{{ e.position.name|default:"—" }} · {{ e.department.name }}</p></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% url 'employees:list' %}">{% translate "Ro‘yxat" %}</a>{% if can_edit %}<a class="btn btn-secondary" href="{% url 'employees:edit' e.pk %}">{% translate "Tahrirlash" %}</a>
+{% if e.status == 'archived' %}<form method="post" action="{% url 'employees:restore' e.pk %}">{% csrf_token %}<button class="btn btn-secondary" type="submit">{% translate "Arxivdan qaytarish" %}</button></form>
+{% else %}<form method="post" action="{% url 'employees:archive' e.pk %}">{% csrf_token %}<button class="btn btn-danger" type="submit">{% translate "Arxivlash" %}</button></form>{% endif %}{% endif %}</div></div>
+<div class="stack" style="max-width:720px">
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Asosiy" %}</h2>
+    <p><span class="badge {% if e.status == 'active' %}b-ok{% elif e.status == 'archived' %}b-err{% else %}b-info{% endif %}">{{ e.get_status_display }}</span></p></section>
+  {% if "contacts" in tiers %}
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Aloqa" %}</h2>
+    <dl><dt class="muted small">{% translate "Ish telefoni" %}</dt><dd>{{ e.work_phone|default:"—" }}</dd><dt class="muted small">{% translate "Ish e-pochtasi" %}</dt><dd>{{ e.work_email|default:"—" }}</dd></dl></section>
+  {% endif %}
+  {% if "private" in tiers %}
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Shaxsiy ma’lumotlar" %}</h2>
+    {% if not own %}<p class="muted small">{% translate "Bu ma’lumotlarni ko‘rish jurnalga yoziladi." %}</p>{% endif %}
+    <dl><dt class="muted small">{% translate "Ishga qabul sanasi" %}</dt><dd>{{ e.hired_at|date:"d.m.Y"|default:"—" }}</dd><dt class="muted small">{% translate "Tug‘ilgan sana" %}</dt><dd>{{ e.birth_date|date:"d.m.Y"|default:"—" }}</dd><dt class="muted small">{% translate "Shaxsiy telefon" %}</dt><dd>{{ e.personal_phone|default:"—" }}</dd></dl></section>
+  {% endif %}
+</div>
+{% endblock %}

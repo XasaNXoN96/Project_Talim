@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 
 from apps.accounts.models import BackupCode, TotpDevice
+from apps.accounts.notifications import notify_security_event
 from apps.accounts.sessions import invalidate_user_sessions
 from apps.accounts.twofactor import requires_two_factor
 from apps.audit.models import AuditLog
@@ -33,5 +34,6 @@ class Command(BaseCommand):
         TotpDevice.objects.filter(user=user).delete()
         closed = invalidate_user_sessions(user)
         record(AuditLog.Action.TWO_FACTOR_RESET, user=user, meta={"via": "management_command", "sessions_closed": closed})
+        notify_security_event(user, "two_factor_reset")
         enrol = "must enrol again at next sign-in" if requires_two_factor(user) else "may enable it again from the security page"
         self.stdout.write(f"2FA reset for {user.get_username()}; {closed} session(s) closed; the user {enrol}.")

@@ -25,6 +25,11 @@ class User(UUIDModel, AbstractUser):
     class Meta:
         verbose_name = "foydalanuvchi"
         verbose_name_plural = "foydalanuvchilar"
+        permissions = [
+            ("manage_users", "Foydalanuvchilarni yaratish va boshqarish"),
+            ("assign_roles", "Rollarni biriktirish va olib tashlash"),
+            ("unlock_accounts", "Hisoblarni blokdan chiqarish"),
+        ]
         constraints = [
             models.UniqueConstraint(Lower("email"), name="accounts_user_email_ci_unique"),
             models.UniqueConstraint(Lower("username"), name="accounts_user_username_ci_unique"),

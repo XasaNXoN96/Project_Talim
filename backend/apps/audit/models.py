@@ -47,6 +47,19 @@ class AuditLog(models.Model):
         TWO_FACTOR_BACKUP_REGENERATED = "two_factor_backup_regenerated", "Zaxira kodlar yangilandi"
         TWO_FACTOR_RESET = "two_factor_reset", "2FA administrator tomonidan tiklandi"
         TWO_FACTOR_REQUIRED_LOGOUT = "two_factor_required_logout", "2FA talab qilingani uchun sessiya yopildi"
+        USER_CREATED = "user_created", "Foydalanuvchi yaratildi"
+        USER_UPDATED = "user_updated", "Foydalanuvchi o‘zgartirildi"
+        USER_DEACTIVATED = "user_deactivated", "Foydalanuvchi o‘chirildi (faolsizlantirildi)"
+        USER_REACTIVATED = "user_reactivated", "Foydalanuvchi qayta faollashtirildi"
+        USER_INVITED = "user_invited", "Taklifnoma yuborildi"
+        ACCOUNT_UNLOCKED = "account_unlocked", "Hisob blokdan chiqarildi"
+        PASSWORD_CHANGE_FORCED = "password_change_forced", "Parolni almashtirish majburiy qilindi"
+        EMPLOYEE_VIEWED = "employee_viewed", "Xodim kartasi ko‘rildi (shaxsiy ma’lumotlar)"
+        EMPLOYEE_CREATED = "employee_created", "Xodim qo‘shildi"
+        EMPLOYEE_UPDATED = "employee_updated", "Xodim o‘zgartirildi"
+        EMPLOYEE_ARCHIVED = "employee_archived", "Xodim arxivlandi"
+        EMPLOYEE_RESTORED = "employee_restored", "Xodim arxivdan qaytarildi"
+        ORG_CHANGED = "org_changed", "Tashkiliy tuzilma o‘zgartirildi"
 
     at = models.DateTimeField(default=timezone.now, db_index=True, editable=False)
     user = models.ForeignKey(

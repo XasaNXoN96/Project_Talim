@@ -53,12 +53,19 @@ class Employee(TimeStampedModel):
     work_phone = models.CharField("ish telefoni", max_length=32, blank=True)
     work_email = models.EmailField("ish e-pochtasi", blank=True)
     hired_at = models.DateField("ishga qabul sanasi", null=True, blank=True)
+    personal_phone = models.CharField("shaxsiy telefon", max_length=32, blank=True)
+    birth_date = models.DateField("tug‘ilgan sana", null=True, blank=True)
     status = models.CharField("holat", max_length=16, choices=Status.choices, default=Status.NEW)
 
     class Meta:
         verbose_name = "xodim"
         verbose_name_plural = "xodimlar"
         ordering = ["last_name", "first_name"]
+        permissions = [
+            ("view_employee_directory", "Xodimlar ro‘yxatini ko‘rish (ism, lavozim, bo‘lim, holat)"),
+            ("view_employee_contacts", "Xodimlarning aloqa ma’lumotlarini ko‘rish"),
+            ("view_employee_private", "Xodimlarning shaxsiy ma’lumotlarini ko‘rish"),
+        ]
 
     def __str__(self):
         return f"{self.last_name} {self.first_name}"

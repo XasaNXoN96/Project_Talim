@@ -14,6 +14,8 @@ def sync_group_on_save(sender, instance, created, **kwargs):
     if created:
         record(
             AuditLog.Action.ROLE_ASSIGNED,
+            request=getattr(instance, "_audit_request", None),
+            user=getattr(instance, "_audit_actor", None),  # who did it (None when done from the shell/admin without context)
             object_type="RoleAssignment",
             object_id=instance.pk,
             meta={"user_id": str(instance.user_id), "role": instance.role.name, "scope": instance.scope},
@@ -27,6 +29,8 @@ def sync_group_on_delete(sender, instance, **kwargs):
         get_user_model().groups.through.objects.filter(user_id=instance.user_id, group_id=instance.role_id).delete()
     record(
         AuditLog.Action.ROLE_REVOKED,
+        request=getattr(instance, "_audit_request", None),
+        user=getattr(instance, "_audit_actor", None),
         object_type="RoleAssignment",
         object_id=instance.pk,
         meta={"user_id": str(instance.user_id), "role_id": instance.role_id, "scope": instance.scope},

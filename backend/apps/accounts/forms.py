@@ -10,6 +10,7 @@ from django.template import loader
 
 from apps.audit.models import AuditLog
 from apps.audit.services import client_ip, record
+from apps.core.network import throttle_ip_key
 
 from . import throttle
 from .backends import find_login_user
@@ -31,7 +32,7 @@ def short_hash(value: str) -> str:
 def login_keys(request, identifier, user):
     keys = [
         throttle.Key("login:identifier", str(identifier).strip().lower()[:254], "clear"),
-        throttle.Key("login:ip", client_ip(request) or "unknown", "refund"),
+        throttle.Key("login:ip", throttle_ip_key(client_ip(request)), "refund"),
     ]
     if user is not None:
         keys.append(throttle.Key("login:user", str(user.pk), "clear"))
@@ -100,13 +101,20 @@ class ThrottledPasswordChangeForm(PasswordChangeForm):
         throttle.succeed(keys, reservation)
         return old_password
 
+    def clean(self):
+        cleaned = super().clean()
+        password = cleaned.get("new_password1")
+        if password and "new_password1" not in self.errors and self.user.check_password(password):
+            self.add_error("new_password1", ValidationError("Yangi parol joriy paroldan farq qilishi kerak.", code="password_unchanged"))
+        return cleaned
+
 
 class ThrottledPasswordResetForm(PasswordResetForm):
     """Same visible result whether or not the e-mail exists, and whether or not the request was rate limited."""
 
     def save(self, request=None, **kwargs):
         email = self.cleaned_data["email"].strip().lower()
-        keys = [throttle.Key("reset:ip", client_ip(request) or "unknown", "keep"), throttle.Key("reset:email", email, "keep")]
+        keys = [throttle.Key("reset:ip", throttle_ip_key(client_ip(request)), "keep"), throttle.Key("reset:email", email, "keep")]
         reservation = throttle.reserve(keys)
         fingerprint = short_hash(email)
         if not reservation.allowed:

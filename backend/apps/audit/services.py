@@ -1,11 +1,13 @@
+from apps.core import network
+
 from .models import AuditLog
 
 
 def client_ip(request):
-    """REMOTE_ADDR only. X-Forwarded-For is attacker-controlled; trust it only once a proxy is configured."""
+    """Real client address; forwarded headers are honoured only from configured trusted proxies (apps.core.network)."""
     if request is None:
         return None
-    return request.META.get("REMOTE_ADDR") or None
+    return network.client_ip(request)
 
 
 def record(action, *, request=None, user=None, object_type="", object_id="", meta=None):

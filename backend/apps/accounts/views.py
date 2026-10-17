@@ -24,6 +24,7 @@ from django.views.generic import FormView, TemplateView
 
 from apps.audit.models import AuditLog
 from apps.audit.services import client_ip, record
+from apps.core.network import throttle_ip_key
 
 from . import otp, throttle
 from .forms import (
@@ -36,6 +37,7 @@ from .forms import (
     ThrottledPasswordResetForm,
     TotpSetupForm,
 )
+from .notifications import notify_security_event
 from .sessions import invalidate_user_sessions
 from .twofactor import (
     clear_pending,
@@ -71,7 +73,7 @@ class LoginView(DjangoLoginView):
 
 # ------------------------------------------------------- two-factor helpers
 def _otp_keys(request, user):
-    return [throttle.Key("otp:user", str(user.pk), "clear"), throttle.Key("otp:ip", client_ip(request) or "unknown", "refund")]
+    return [throttle.Key("otp:user", str(user.pk), "clear"), throttle.Key("otp:ip", throttle_ip_key(client_ip(request)), "refund")]
 
 
 def qr_svg(uri: str):
@@ -202,6 +204,7 @@ class TwoFactorSetupView(PendingOrSignedInMixin, FormView):
         otp.confirm_device(device)
         codes = otp.generate_backup_codes(self.user)
         record(AuditLog.Action.TWO_FACTOR_ENABLED, request=self.request, user=self.user)
+        notify_security_event(self.user, "two_factor_enabled", self.request)
         next_url = reverse("portal:dashboard")
         if self.pending:
             next_url = self.pending["next"]
@@ -258,6 +261,7 @@ class BackupCodesRegenerateView(_PasswordConfirmedAction):
             return self.form_invalid(form)
         codes = otp.generate_backup_codes(self.request.user)
         record(AuditLog.Action.TWO_FACTOR_BACKUP_REGENERATED, request=self.request, user=self.request.user)
+        notify_security_event(self.request.user, "backup_codes_regenerated", self.request)
         return self.response_class(self.request, "accounts/two_factor_backup_codes.html", {"codes": codes, "next": reverse("accounts:security")}, status=200)
 
 
@@ -282,6 +286,7 @@ class TwoFactorDisableView(_PasswordConfirmedAction):
         user.backup_codes.all().delete()
         user.totp_device.delete()
         record(AuditLog.Action.TWO_FACTOR_DISABLED, request=self.request, user=user)
+        notify_security_event(user, "two_factor_disabled", self.request)
         messages.success(self.request, "2FA o‘chirildi.")
         return redirect("accounts:security")
 
@@ -306,6 +311,7 @@ class PasswordChangeView(DjangoPasswordChangeView):
             user.must_change_password = False
             user.save(update_fields=["must_change_password"])
         record(AuditLog.Action.PASSWORD_CHANGED, request=self.request, user=user, meta={"other_sessions_closed": removed})
+        notify_security_event(user, "password_changed", self.request)
         return response
 
 
@@ -349,6 +355,7 @@ class PasswordResetConfirm(PasswordResetConfirmView):
             throttle.Key("pwchange:user", str(user.pk)),
         ])
         record(AuditLog.Action.PASSWORD_RESET_COMPLETED, request=self.request, user=user, meta={"sessions_closed": removed})
+        notify_security_event(user, "password_reset", self.request)
         return response
 
 
