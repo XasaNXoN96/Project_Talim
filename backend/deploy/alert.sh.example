@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Example alert hook for talim-job-failed@.service. Install as /etc/talim/alert.sh (root:talim, mode 0750); not enabled by default.
+# It contains NO credentials and NO recipient: the address comes from /etc/talim/alert.address (one line, root:talim 0640) and mail is sent
+# by the machine's own MTA configuration. The message names the failed unit only: no logs, no data, no paths.
+set -euo pipefail
+unit="${1:?unit name}"
+to="$(head -n1 /etc/talim/alert.address)"
+printf 'The scheduled job %s failed on %s at %s.\nCheck: journalctl -u %s -n 50   and   manage.py job_status\n' "$unit" "$(hostname -s)" "$(date -u +%FT%TZ)" "$unit" \
+  | mail -s "Talim portal: job failed ($unit)" "$to"

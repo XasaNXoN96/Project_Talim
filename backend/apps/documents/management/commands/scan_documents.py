@@ -17,6 +17,7 @@ class Command(TrackedCommand):
     )
 
     def add_arguments(self, parser):
+        super().add_arguments(parser)
         parser.add_argument("--all", action="store_true", help="re-scan versions already marked clean as well")
 
     job_name = "scan_documents"

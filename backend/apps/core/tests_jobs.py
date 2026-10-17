@@ -305,7 +305,7 @@ class ParallelRuns(TransactionTestCase):
             t.start()
             holder_ready.wait(10)
             try:
-                out = run(name)  # must neither raise nor do anything
+                out = run(jobs.command_of(name))  # must neither raise nor do anything
             finally:
                 release.set()
                 t.join(10)

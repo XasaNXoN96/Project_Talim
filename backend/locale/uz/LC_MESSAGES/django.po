@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:09+0500\n"
+"POT-Creation-Date: 2026-10-17 18:32+0500\n"
 "Language: uz\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -724,6 +724,12 @@ msgstr "Hujjat fayllari yaxlitligini tekshirish"
 
 msgid "Hujjatlarni antivirus bilan qayta tekshirish"
 msgstr "Hujjatlarni antivirus bilan qayta tekshirish"
+
+msgid "Zaxira nusxa yaratildi (arxiv o‘qiladi)"
+msgstr "Zaxira nusxa yaratildi (arxiv o‘qiladi)"
+
+msgid "Zaxira nusxadan tiklash tekshirildi"
+msgstr "Zaxira nusxadan tiklash tekshirildi"
 
 msgid "Hujjatlar"
 msgstr "Hujjatlar"
@@ -2178,8 +2184,11 @@ msgstr "Hali ishga tushmagan"
 msgid "Kechikmoqda"
 msgstr "Kechikmoqda"
 
-msgid "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin. Zaxira nusxalash bu jadvalga kirmaydi: u alohida skript."
-msgstr "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin. Zaxira nusxalash bu jadvalga kirmaydi: u alohida skript."
+msgid "Zaxira nusxa: “yaratildi” — arxiv yozildi va o‘qib chiqildi; “tiklash tekshirildi” — eng yangi nusxa alohida baza va katalogga haqiqatan tiklab ko‘rildi. Ikkalasi ham nusxa SHU serverdan tashqarida saqlanayotganini tasdiqlamaydi: bir serverdagi nusxa serverning yo‘qolishidan himoya qilmaydi."
+msgstr "Zaxira nusxa: “yaratildi” — arxiv yozildi va o‘qib chiqildi; “tiklash tekshirildi” — eng yangi nusxa alohida baza va katalogga haqiqatan tiklab ko‘rildi. Ikkalasi ham nusxa SHU serverdan tashqarida saqlanayotganini tasdiqlamaydi: bir serverdagi nusxa serverning yo‘qolishidan himoya qilmaydi."
+
+msgid "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin."
+msgstr "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin."
 
 msgid "Kategoriyalar"
 msgstr "Kategoriyalar"

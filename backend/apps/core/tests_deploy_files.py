@@ -27,11 +27,12 @@ class Files(SimpleTestCase):
             timer = SYSTEMD / f"talim-{name}.timer"
             if name in PERIODIC:
                 self.assertTrue(timer.exists(), name)
-                self.assertIn(f"Unit=talim-job@{name}.service", text(timer))
-                self.assertEqual(len(re.findall(rf"manage\.py {name} ", cron)), 1, name)
+                cmd = jobs.command_of(name)
+                self.assertIn(f"Unit=talim-job@{cmd}.service", text(timer))
+                self.assertEqual(len(re.findall(rf"manage\.py {cmd} ", cron)), 1, name)
             else:
                 self.assertFalse(timer.exists(), f"{name} is on demand: no timer")
-                self.assertNotIn(f"manage.py {name} ", cron)
+                self.assertNotIn(f"manage.py {jobs.command_of(name)} ", cron)
             self.assertIn(name, doc, name)
         extra = {p.name[len("talim-"):-len(".timer")] for p in SYSTEMD.glob("talim-*.timer")} - PERIODIC
         self.assertEqual(extra, set())  # no timer for a job the application does not know
@@ -39,7 +40,8 @@ class Files(SimpleTestCase):
     def test_the_timer_schedule_matches_the_interval_the_status_page_expects(self):
         # a job is "overdue" after 2 x its interval: the schedule must run at least that often
         every = {"send_task_reminders": "*:07:00", "purge_employee_imports": "*:00/15:00", "purge_throttles": "*:37:00", "check_scanner": "*:00/5:00",
-                 "clear_expired_sessions": "03:23:00", "verify_document_files": "Sun *-*-* 04:11:00"}
+                 "clear_expired_sessions": "03:23:00", "verify_document_files": "Sun *-*-* 04:11:00",
+                 "backup_create": "*-*-* 02:15:00", "backup_restore_check": "Sun *-*-* 05:40:00"}
         for name, fragment in every.items():
             self.assertIn(fragment, text(SYSTEMD / f"talim-{name}.timer"), name)
         self.assertEqual({n for n in PERIODIC}, set(every))
@@ -58,7 +60,7 @@ class Files(SimpleTestCase):
         self.assertIn("Type=oneshot", unit)
 
     def test_nothing_in_the_deploy_files_looks_like_a_secret_value(self):
-        files = [*SYSTEMD.glob("*"), *(DEPLOY / "tmpfiles.d").glob("*"), *(DEPLOY / "logrotate").glob("*")]
+        files = [f for d in (SYSTEMD, DEPLOY / "tmpfiles.d", DEPLOY / "logrotate") for f in d.rglob("*") if f.is_file()] + [DEPLOY / "alert.sh.example"]
         self.assertGreaterEqual(len(files), 10)
         pattern = re.compile(r"(?i)(password|passwd|secret|token|api[_-]?key|private[_-]?key)\s*[=:]\s*['\"]?[A-Za-z0-9+/_\-]{6,}")
         for f in files:
@@ -94,3 +96,21 @@ class Files(SimpleTestCase):
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
         self.assertIn("clean", r.stdout)
         self.assertIn("ok", r.stdout)
+
+    def test_backup_jobs_get_their_own_writable_path_and_environment_file_and_nothing_secret(self):
+        for cmd in ("run_backup", "run_restore_check"):
+            drop = text(SYSTEMD / f"talim-job@{cmd}.service.d" / "backup.conf")
+            self.assertIn("EnvironmentFile=-/etc/talim/backup.env", drop)
+            self.assertRegex(drop, r"(?m)^ReadWritePaths=/var/backups/talim$")
+            self.assertRegex(drop, r"(?m)^TimeoutStartSec=3h$")
+        cron = text(SYSTEMD / "crontab.example")
+        for line in [l for l in cron.splitlines() if "run_backup" in l or "run_restore_check" in l]:
+            self.assertIn(". /etc/talim/backup.env", line)
+
+    def test_the_alert_hook_is_optional_and_the_example_holds_no_recipient_or_credentials(self):
+        failed = text(SYSTEMD / "talim-job-failed@.service")
+        self.assertIn("ExecStart=-/etc/talim/alert.sh %i", failed)  # the dash: a missing script is not an error
+        example = text(DEPLOY / "alert.sh.example")
+        self.assertIn("/etc/talim/alert.address", example)
+        self.assertNotRegex(example, r"[\w.+-]+@[\w-]+\.[\w.]+")
+        self.assertNotRegex(example, r"(?i)password|secret|token")

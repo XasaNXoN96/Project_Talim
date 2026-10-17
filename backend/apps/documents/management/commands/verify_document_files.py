@@ -14,6 +14,26 @@ class Command(TrackedCommand):
 
     job_name = "verify_document_files"
 
+    def add_arguments(self, parser):
+        super().add_arguments(parser)
+        parser.add_argument("--report-orphans", action="store_true", help="also count stored files that no row refers to (informational: never an error)")
+
+    @staticmethod
+    def count_orphans(rows):
+        import os
+
+        from django.conf import settings
+
+        known = {r.file.name for r in rows}
+        root = str(settings.PRIVATE_MEDIA_ROOT)
+        orphans = 0
+        for base, _dirs, names in os.walk(root):
+            for n in names:
+                rel = os.path.relpath(os.path.join(base, n), root)
+                if rel not in known and not n.startswith("."):
+                    orphans += 1
+        return orphans
+
     def run_job(self, run, *args, **options):
         total = missing = bad = 0
         rows = [*DocumentVersion.objects.iterator(), *TaskAttachment.objects.iterator()]  # removed attachments keep their files
@@ -30,4 +50,5 @@ class Command(TrackedCommand):
                 bad += 1
                 self.stderr.write(f"MISMATCH size/sha256 for version {v.pk}")
         run.processed, run.errors = total, missing + bad
-        self.stdout.write(f"versions={total} missing={missing} mismatched={bad}")
+        extra = f" orphans={self.count_orphans(rows)}" if options.get("report_orphans") else ""
+        self.stdout.write(f"versions={total} missing={missing} mismatched={bad}{extra}")

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:09+0500\n"
+"POT-Creation-Date: 2026-10-17 18:32+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -724,6 +724,12 @@ msgstr "Document file integrity check"
 
 msgid "Hujjatlarni antivirus bilan qayta tekshirish"
 msgstr "Re-scanning documents with the antivirus"
+
+msgid "Zaxira nusxa yaratildi (arxiv o‘qiladi)"
+msgstr "Backup created (the archive can be read)"
+
+msgid "Zaxira nusxadan tiklash tekshirildi"
+msgstr "Restore from a backup verified"
 
 msgid "Hujjatlar"
 msgstr "Documents"
@@ -2178,8 +2184,11 @@ msgstr "Not run yet"
 msgid "Kechikmoqda"
 msgstr "Overdue"
 
-msgid "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin. Zaxira nusxalash bu jadvalga kirmaydi: u alohida skript."
-msgstr "“Result unknown” — the job started but has not finished for a long time (the process may have been stopped). “Overdue” — the last successful run of a periodic job is much older than expected. Backups are not in this table: they are a separate script."
+msgid "Zaxira nusxa: “yaratildi” — arxiv yozildi va o‘qib chiqildi; “tiklash tekshirildi” — eng yangi nusxa alohida baza va katalogga haqiqatan tiklab ko‘rildi. Ikkalasi ham nusxa SHU serverdan tashqarida saqlanayotganini tasdiqlamaydi: bir serverdagi nusxa serverning yo‘qolishidan himoya qilmaydi."
+msgstr "Backups: “created” — the archive was written and read back; “restore verified” — the newest backup was really restored into a separate database and directory. Neither confirms that the copy is stored away from THIS server: a copy on the same server does not protect against losing it."
+
+msgid "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin."
+msgstr "“Result unknown” — the job started but has not finished for a long time (the process may have been stopped). “Overdue” — the last successful run of a periodic job is much older than expected."
 
 msgid "Kategoriyalar"
 msgstr "Categories"

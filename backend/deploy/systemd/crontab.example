@@ -1,5 +1,6 @@
 # CRON VARIANT of the schedule (the systemd timers in this directory are preferred, see docs/SCHEDULER.md).
 # Install as the unprivileged application user, never root:   sudo crontab -u talim crontab.example
+# The two backup lines also read /etc/talim/backup.env (names and paths only; the passphrase and DB password are in separate 0600 files).
 # Needs /run/talim (lock files) and /var/log/talim (logs): deploy/tmpfiles.d/talim.conf creates both, owned by talim.
 # Secrets are NOT here: the environment file is read at run time (root:talim, mode 0640).
 # flock -n: if the same job is still running, skip instead of piling up (the jobs also take a database lock of their own).
@@ -14,3 +15,5 @@ MAILTO=
 23 3 * * *    umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && /usr/bin/flock -n /run/talim/clear_expired_sessions.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py clear_expired_sessions >> /var/log/talim/clear_expired_sessions.log 2>&1
 */5 * * * *  umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && /usr/bin/flock -n /run/talim/check_scanner.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py check_scanner >> /var/log/talim/check_scanner.log 2>&1
 11 4 * * 0   umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && /usr/bin/flock -n /run/talim/verify_document_files.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py verify_document_files >> /var/log/talim/verify_document_files.log 2>&1
+15 2 * * *   umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && . /etc/talim/backup.env && set +a && /usr/bin/flock -n /run/talim/backup_create.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py run_backup >> /var/log/talim/backup_create.log 2>&1
+40 5 * * 0   umask 077; cd /srv/talim/backend && set -a && . /etc/talim/talim.env && . /etc/talim/backup.env && set +a && /usr/bin/flock -n /run/talim/backup_restore_check.lock /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py run_restore_check >> /var/log/talim/backup_restore_check.log 2>&1

@@ -37,6 +37,7 @@ class JobRun(models.Model):
     processed = models.PositiveIntegerField(default=0)
     errors = models.PositiveIntegerField(default=0)
     error_class = models.CharField(max_length=60, blank=True)
+    note = models.CharField(max_length=80, blank=True)  # a non-sensitive label of what a successful run produced (e.g. the backup folder name)
 
     class Meta:
         indexes = [models.Index(fields=["name", "-started_at"])]

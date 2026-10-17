@@ -1,0 +1,13 @@
+# Daily encrypted backup (archive written + read back). Persistent: a backup missed while the server was down is made up after boot.
+# Whether it is stored AWAY from this server is a separate matter (docs/BACKUP_AND_RESTORE.md): this timer does not ship anything.
+[Unit]
+Description=Talim portal schedule: backup_create
+
+[Timer]
+OnCalendar=*-*-* 02:15:00
+Persistent=true
+RandomizedDelaySec=300
+Unit=talim-job@run_backup.service
+
+[Install]
+WantedBy=timers.target

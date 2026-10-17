@@ -6,3 +6,7 @@ Description=Talim portal job failed: %i
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/logger --priority user.err --tag talim-jobs "unit %i failed; see: journalctl -u %i -n 50"
+# Optional second step (the leading "-" makes it optional): YOUR alert script, installed by root outside the repository (mode 0750,
+# owned by root:talim), e.g. one that mails the address in /etc/talim/alert.address. deploy/alert.sh.example shows the shape: it holds no
+# credentials and no recipient. Without it, the journal entry above and `job_status` are the only signals.
+ExecStart=-/etc/talim/alert.sh %i

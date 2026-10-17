@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:09+0500\n"
+"POT-Creation-Date: 2026-10-17 18:32+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -724,6 +724,12 @@ msgstr "Проверка целостности файлов документо�
 
 msgid "Hujjatlarni antivirus bilan qayta tekshirish"
 msgstr "Повторная проверка документов антивирусом"
+
+msgid "Zaxira nusxa yaratildi (arxiv o‘qiladi)"
+msgstr "Резервная копия создана (архив читается)"
+
+msgid "Zaxira nusxadan tiklash tekshirildi"
+msgstr "Восстановление из резервной копии проверено"
 
 msgid "Hujjatlar"
 msgstr "Документы"
@@ -2178,8 +2184,11 @@ msgstr "Ещё не запускалась"
 msgid "Kechikmoqda"
 msgstr "Опаздывает"
 
-msgid "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin. Zaxira nusxalash bu jadvalga kirmaydi: u alohida skript."
-msgstr "«Результат неизвестен» — задача началась, но давно не завершилась (процесс мог быть остановлен). «Опаздывает» — последний успешный запуск периодической задачи был намного раньше ожидаемого. Резервное копирование в эту таблицу не входит: это отдельный скрипт."
+msgid "Zaxira nusxa: “yaratildi” — arxiv yozildi va o‘qib chiqildi; “tiklash tekshirildi” — eng yangi nusxa alohida baza va katalogga haqiqatan tiklab ko‘rildi. Ikkalasi ham nusxa SHU serverdan tashqarida saqlanayotganini tasdiqlamaydi: bir serverdagi nusxa serverning yo‘qolishidan himoya qilmaydi."
+msgstr "Резервные копии: «создана» — архив записан и прочитан обратно; «восстановление проверено» — самая новая копия действительно восстановлена в отдельную базу и каталог. Ни то, ни другое не подтверждает, что копия хранится вне ЭТОГО сервера: копия на том же сервере не защищает от его потери."
+
+msgid "“Natija noma’lum” — vazifa boshlangan, lekin uzoq vaqt tugamagan (jarayon to‘xtatilgan bo‘lishi mumkin). “Kechikmoqda” — davriy vazifaning oxirgi muvaffaqiyatli ishga tushirilishi kutilganidan ancha oldin."
+msgstr "«Результат неизвестен» — задача началась, но давно не завершилась (процесс мог быть остановлен). «Опаздывает» — последний успешный запуск периодической задачи был намного раньше ожидаемого."
 
 msgid "Kategoriyalar"
 msgstr "Категории"

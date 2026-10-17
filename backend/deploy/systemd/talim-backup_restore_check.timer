@@ -1,0 +1,12 @@
+# Weekly proof that the NEWEST backup really restores (into a scratch database and directory, never the live ones). Off-peak.
+[Unit]
+Description=Talim portal schedule: backup_restore_check
+
+[Timer]
+OnCalendar=Sun *-*-* 05:40:00
+Persistent=true
+RandomizedDelaySec=600
+Unit=talim-job@run_restore_check.service
+
+[Install]
+WantedBy=timers.target
