@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 13:40+0500\n"
+"POT-Creation-Date: 2026-10-17 17:11+0500\n"
 "Language: uz\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -927,6 +927,7 @@ msgstr "Import bekor qilindi. Yuklangan ma’lumotlar o‘chirildi."
 msgid "Majburiy maydon bo‘sh."
 msgstr "Majburiy maydon bo‘sh."
 
+#, python-format
 msgid "Qiymat juda uzun (ko‘pi bilan %(max)d belgi)."
 msgstr "Qiymat juda uzun (ko‘pi bilan %(max)d belgi)."
 
@@ -1003,6 +1004,7 @@ msgstr "Noma’lum ustunlar: %(columns)s. Shablondagi ustunlardan foydalaning."
 msgid "Ustun nomi takrorlangan: %(columns)s."
 msgstr "Ustun nomi takrorlangan: %(columns)s."
 
+#, python-format
 msgid "Qatorlar soni %(max)d dan oshmasligi kerak."
 msgstr "Qatorlar soni %(max)d dan oshmasligi kerak."
 
@@ -1125,6 +1127,18 @@ msgstr "Lavozim"
 
 msgid "Portal"
 msgstr "Portal"
+
+msgid "Xodimlar"
+msgstr "Xodimlar"
+
+msgid "Bo‘limlar"
+msgstr "Bo‘limlar"
+
+msgid "Topshiriqlar"
+msgstr "Topshiriqlar"
+
+msgid "Yangiliklar"
+msgstr "Yangiliklar"
 
 msgid "Faol xodimlar"
 msgstr "Faol xodimlar"
@@ -1284,9 +1298,6 @@ msgstr "sizning doirangiz"
 msgid "Xodimlar: bo‘limlar bo‘yicha"
 msgstr "Xodimlar: bo‘limlar bo‘yicha"
 
-msgid "Xodimlar"
-msgstr "Xodimlar"
-
 msgid "— (lavozim ko‘rsatilmagan)"
 msgstr "— (lavozim ko‘rsatilmagan)"
 
@@ -1347,9 +1358,6 @@ msgstr "Faqat hujjat yuklangan davrlar ko‘rsatiladi."
 #, python-format
 msgid "Filtrlar noto‘g‘ri: %(errors)s"
 msgstr "Filtrlar noto‘g‘ri: %(errors)s"
-
-msgid "Topshiriqlar"
-msgstr "Topshiriqlar"
 
 msgid "Ijrochilar"
 msgstr "Ijrochilar"
@@ -1617,14 +1625,8 @@ msgstr "Asosiy navigatsiya"
 msgid "Xodimlar portali"
 msgstr "Xodimlar portali"
 
-msgid "Bo‘limlar"
-msgstr "Bo‘limlar"
-
 msgid "Bosh sahifa"
 msgstr "Bosh sahifa"
-
-msgid "Yangiliklar"
-msgstr "Yangiliklar"
 
 msgid "Tuzilma"
 msgstr "Tuzilma"
@@ -1634,6 +1636,12 @@ msgstr "Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘sh
 
 msgid "Menyuni ochish yoki yig‘ish"
 msgstr "Menyuni ochish yoki yig‘ish"
+
+msgid "Qidirish"
+msgstr "Qidirish"
+
+msgid "Portal bo‘yicha qidirish"
+msgstr "Portal bo‘yicha qidirish"
 
 msgid "Sayt"
 msgstr "Sayt"
@@ -1815,9 +1823,6 @@ msgstr "Qidirish: sarlavha, raqam"
 
 msgid "Barcha darajalar"
 msgstr "Barcha darajalar"
-
-msgid "Qidirish"
-msgstr "Qidirish"
 
 msgid "Raqam"
 msgstr "Raqam"
@@ -2155,6 +2160,30 @@ msgstr "Davr: %(a)s – %(b)s · Doira: %(scope)s"
 #, python-format
 msgid "Bajarilgan (%(r)s%%)"
 msgstr "Bajarilgan (%(r)s%%)"
+
+msgid "Qidiruv"
+msgstr "Qidiruv"
+
+msgid "Xodimlar, bo‘limlar, topshiriqlar, hujjatlar va yangiliklar nomlari bo‘yicha qidiradi. Faqat sizga ochiq ma’lumotlar ko‘rsatiladi. Bu to‘liq matnli qidiruv emas: faqat nom va tavsif maydonlaridagi so‘zlar."
+msgstr "Xodimlar, bo‘limlar, topshiriqlar, hujjatlar va yangiliklar nomlari bo‘yicha qidiradi. Faqat sizga ochiq ma’lumotlar ko‘rsatiladi. Bu to‘liq matnli qidiruv emas: faqat nom va tavsif maydonlaridagi so‘zlar."
+
+msgid "So‘z yoki ism"
+msgstr "So‘z yoki ism"
+
+msgid "Qidiruv so‘rovi"
+msgstr "Qidiruv so‘rovi"
+
+msgid "Kamida 2 ta belgi kiriting."
+msgstr "Kamida 2 ta belgi kiriting."
+
+msgid "Barcha natijalar"
+msgstr "Barcha natijalar"
+
+msgid "Boshqa so‘z bilan urinib ko‘ring yoki so‘zni qisqartiring."
+msgstr "Boshqa so‘z bilan urinib ko‘ring yoki so‘zni qisqartiring."
+
+msgid "Barchasini ko‘rsatish (%(n)s)"
+msgstr "Barchasini ko‘rsatish (%(n)s)"
 
 msgid "Tashkiliy tuzilma"
 msgstr "Tashkiliy tuzilma"

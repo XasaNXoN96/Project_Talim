@@ -47,3 +47,12 @@
   .pub-actions .btn [data-i] { display: none; }
   .pub-actions .btn { padding-inline: 12px; }
 }
+
+/* Day 10: global search in the portal top bar — an input on wide screens, an icon link on narrow ones */
+.topsearch { flex: 0 1 260px; margin: 0; }
+.topsearch .input { width: 100%; }
+.topsearch-link { display: none; }
+@media (max-width: 720px) {
+  .topsearch { display: none; }
+  .topsearch-link { display: inline-flex; }
+}

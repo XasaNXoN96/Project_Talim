@@ -43,6 +43,8 @@
   <div class="main">
     <header class="topbar">
       <button class="btn btn-secondary btn-icon" id="sbToggle" type="button" aria-label="{% translate 'Menyuni ochish yoki yig‘ish' %}"><i data-i="menu" style="display:contents"></i></button>
+      <form class="topsearch" method="get" action="{% url 'portal:search' %}" role="search"><input class="input" type="search" name="q" value="{{ request.GET.q|default:'' }}" placeholder="{% translate 'Qidirish' %}" aria-label="{% translate 'Portal bo‘yicha qidirish' %}" minlength="2" maxlength="100"></form>
+      <a class="btn btn-secondary btn-icon topsearch-link" href="{% url 'portal:search' %}" aria-label="{% translate 'Portal bo‘yicha qidirish' %}"><i data-i="search" style="display:contents"></i></a>
       <div class="grow"></div>
       {% if perms.tasks.view_task %}<a class="btn btn-secondary btn-sm" href="{% url 'notifications:list' %}" aria-label="{% translate 'Bildirishnomalar' %}"><i data-i="bell" data-c="sm" style="display:contents"></i>{% if unread_notifications %} <span class="badge b-err plain" id="unreadCount">{{ unread_notifications }}</span>{% endif %}</a>{% endif %}
       {% include "includes/language_switcher.html" %}

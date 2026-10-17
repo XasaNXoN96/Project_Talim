@@ -109,7 +109,7 @@ def read_rows(data: bytes):
         ws = wb.worksheets[0]
     except Exception as exc:  # openpyxl raises many types for broken packages
         raise ImportFileError("not_xlsx") from exc
-    header, header_row, out, scanned = None, 0, [], 0
+    header, out, scanned = None, [], 0
     try:
         for number, cells in enumerate(ws.iter_rows(values_only=True), start=1):
             scanned += 1
@@ -121,7 +121,7 @@ def read_rows(data: bytes):
             if not cells:
                 continue
             if header is None:
-                header, header_row = [_header(c) for c in cells], number
+                header = [_header(c) for c in cells]
                 _check_header(header)
                 continue
             if len(cells) > len(header):

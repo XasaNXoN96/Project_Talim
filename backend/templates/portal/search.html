@@ -1,0 +1,27 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Qidiruv" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Qidiruv" %}</h1><p>{% translate "Xodimlar, bo‘limlar, topshiriqlar, hujjatlar va yangiliklar nomlari bo‘yicha qidiradi. Faqat sizga ochiq ma’lumotlar ko‘rsatiladi. Bu to‘liq matnli qidiruv emas: faqat nom va tavsif maydonlaridagi so‘zlar." %}</p></div></div>
+<form method="get" class="row wrap" style="margin-bottom:16px" role="search">
+  <input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'So‘z yoki ism' %}" aria-label="{% translate 'Qidiruv so‘rovi' %}" style="max-width:360px;flex:1 1 220px" maxlength="100" autofocus>
+  <button class="btn btn-primary" type="submit">{% translate "Qidirish" %}</button>
+</form>
+{% if too_short %}<div class="alert warn" role="status"><span>{% translate "Kamida 2 ta belgi kiriting." %}</span></div>
+{% elif searched %}
+  {% if kind %}<p><a href="?q={{ q|urlencode }}">&larr; {% translate "Barcha natijalar" %}</a></p>{% endif %}
+  {% if not total %}<div class="card empty"><h3>{% translate "Hech narsa topilmadi" %}</h3><p>{% translate "Boshqa so‘z bilan urinib ko‘ring yoki so‘zni qisqartiring." %}</p></div>{% endif %}
+  {% for s in sections %}{% if s.items %}
+  <section class="card card-pad" style="margin-bottom:16px"><h2 style="font-size:17px;margin-bottom:8px">{{ s.label }} <span class="badge b-info plain">{{ s.count }}</span></h2>
+    <ul style="list-style:none;margin:0;padding:0;display:grid;gap:10px">
+    {% for i in s.items %}<li>{% if i.url %}<a href="{{ i.url }}"><b>{{ i.title }}</b></a>{% else %}<b>{{ i.title }}</b>{% endif %}{% if i.subtitle %}<div class="muted small">{{ i.subtitle }}</div>{% endif %}</li>{% endfor %}
+    </ul>
+    {% if s.more %}<p style="margin-top:10px"><a href="?q={{ q|urlencode }}&amp;type={{ s.kind }}">{% blocktranslate with n=s.count %}Barchasini ko‘rsatish ({{ n }}){% endblocktranslate %}</a></p>{% endif %}
+  </section>{% endif %}{% endfor %}
+  {% if page_obj and page_obj.has_other_pages %}
+  <nav class="pager" aria-label="{% translate 'Sahifalar' %}"><span>{{ page_obj.start_index }}–{{ page_obj.end_index }} / {{ paginator.count }}</span><div class="pages">
+    {% if page_obj.has_previous %}<a class="btn btn-secondary btn-sm" href="?q={{ q|urlencode }}&amp;type={{ kind }}&amp;page={{ page_obj.previous_page_number }}">‹</a>{% endif %}
+    <button class="active" type="button" aria-current="page">{{ page_obj.number }}</button>
+    {% if page_obj.has_next %}<a class="btn btn-secondary btn-sm" href="?q={{ q|urlencode }}&amp;type={{ kind }}&amp;page={{ page_obj.next_page_number }}">›</a>{% endif %}</div></nav>{% endif %}
+{% endif %}
+{% endblock %}

@@ -112,6 +112,8 @@ python manage.py test --settings=config.settings.test --noinput
 * `objects` — точная таблица «кто какой объект видит»; `security` — XSS, открытые перенаправления, прямые ссылки на файлы, утечки личных данных;
 * `journeys` — сквозные сценарии (задание, вложения, документ, онбординг, блокировка, смена языка).
 
+Импорт сотрудников из Excel — `/portal/employees/import/` (формат и правила дубликатов: [../docs/EMPLOYEE_IMPORT.md](../docs/EMPLOYEE_IMPORT.md)); команда `python manage.py purge_employee_imports` очищает непотверждённые предпросмотры. Глобальный поиск — `/portal/search/` (подстрока по названиям, не полнотекстовый; охват в `docs/FUNCTIONAL_MAP.md` §8).
+
 Портал новостей — `/portal/news/` (роли «контент-менеджер» и «администратор»; право `content.publish_news` нужно для публикации, снятия, архива и правки опубликованного). Просмотр документов — `/portal/documents/<id>/view/`. Эти разделы не дают доступа к Django Admin: он остаётся только у superuser.
 
 `AllowedMethodsMiddleware` (`apps/core/middleware.py`) пропускает только GET/HEAD/OPTIONS/POST: приложению не нужны PUT/PATCH/DELETE, а часть представлений Django иначе отвечала бы на них как на POST.

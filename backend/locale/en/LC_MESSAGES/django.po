@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 13:40+0500\n"
+"POT-Creation-Date: 2026-10-17 17:11+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -927,6 +927,7 @@ msgstr "Import cancelled. The uploaded data was deleted."
 msgid "Majburiy maydon bo‘sh."
 msgstr "Required field is empty."
 
+#, python-format
 msgid "Qiymat juda uzun (ko‘pi bilan %(max)d belgi)."
 msgstr "The value is too long (at most %(max)d characters)."
 
@@ -1003,6 +1004,7 @@ msgstr "Unknown columns: %(columns)s. Use the columns of the template."
 msgid "Ustun nomi takrorlangan: %(columns)s."
 msgstr "Duplicate column name: %(columns)s."
 
+#, python-format
 msgid "Qatorlar soni %(max)d dan oshmasligi kerak."
 msgstr "The number of rows must not exceed %(max)d."
 
@@ -1125,6 +1127,18 @@ msgstr "Position"
 
 msgid "Portal"
 msgstr "Portal"
+
+msgid "Xodimlar"
+msgstr "Employees"
+
+msgid "Bo‘limlar"
+msgstr "Sections"
+
+msgid "Topshiriqlar"
+msgstr "Tasks"
+
+msgid "Yangiliklar"
+msgstr "News"
 
 msgid "Faol xodimlar"
 msgstr "Active employees"
@@ -1284,9 +1298,6 @@ msgstr "your scope"
 msgid "Xodimlar: bo‘limlar bo‘yicha"
 msgstr "Employees: by department"
 
-msgid "Xodimlar"
-msgstr "Employees"
-
 msgid "— (lavozim ko‘rsatilmagan)"
 msgstr "— (no position set)"
 
@@ -1347,9 +1358,6 @@ msgstr "Only periods in which documents were uploaded are shown."
 #, python-format
 msgid "Filtrlar noto‘g‘ri: %(errors)s"
 msgstr "The filters are invalid: %(errors)s"
-
-msgid "Topshiriqlar"
-msgstr "Tasks"
 
 msgid "Ijrochilar"
 msgstr "Assignees"
@@ -1617,14 +1625,8 @@ msgstr "Main navigation"
 msgid "Xodimlar portali"
 msgstr "Staff portal"
 
-msgid "Bo‘limlar"
-msgstr "Sections"
-
 msgid "Bosh sahifa"
 msgstr "Home"
-
-msgid "Yangiliklar"
-msgstr "News"
 
 msgid "Tuzilma"
 msgstr "Structure"
@@ -1634,6 +1636,12 @@ msgstr "Development stage: the remaining sections will be added later"
 
 msgid "Menyuni ochish yoki yig‘ish"
 msgstr "Open or collapse the menu"
+
+msgid "Qidirish"
+msgstr "Search"
+
+msgid "Portal bo‘yicha qidirish"
+msgstr "Search the portal"
 
 msgid "Sayt"
 msgstr "Site"
@@ -1815,9 +1823,6 @@ msgstr "Search: title, number"
 
 msgid "Barcha darajalar"
 msgstr "All levels"
-
-msgid "Qidirish"
-msgstr "Search"
 
 msgid "Raqam"
 msgstr "Number"
@@ -2155,6 +2160,30 @@ msgstr "Period: %(a)s – %(b)s · Scope: %(scope)s"
 #, python-format
 msgid "Bajarilgan (%(r)s%%)"
 msgstr "Completed (%(r)s%%)"
+
+msgid "Qidiruv"
+msgstr "Search"
+
+msgid "Xodimlar, bo‘limlar, topshiriqlar, hujjatlar va yangiliklar nomlari bo‘yicha qidiradi. Faqat sizga ochiq ma’lumotlar ko‘rsatiladi. Bu to‘liq matnli qidiruv emas: faqat nom va tavsif maydonlaridagi so‘zlar."
+msgstr "Searches the names of employees, departments, tasks, documents and news. Only data you may access is shown. This is not full-text search: only words in name and description fields are matched."
+
+msgid "So‘z yoki ism"
+msgstr "A word or a name"
+
+msgid "Qidiruv so‘rovi"
+msgstr "Search query"
+
+msgid "Kamida 2 ta belgi kiriting."
+msgstr "Enter at least 2 characters."
+
+msgid "Barcha natijalar"
+msgstr "All results"
+
+msgid "Boshqa so‘z bilan urinib ko‘ring yoki so‘zni qisqartiring."
+msgstr "Try another word or shorten the query."
+
+msgid "Barchasini ko‘rsatish (%(n)s)"
+msgstr "Show all (%(n)s)"
 
 msgid "Tashkiliy tuzilma"
 msgstr "Organization structure"

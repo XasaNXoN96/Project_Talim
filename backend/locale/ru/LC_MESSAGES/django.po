@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 13:40+0500\n"
+"POT-Creation-Date: 2026-10-17 17:11+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -927,6 +927,7 @@ msgstr "Импорт отменён. Загруженные данные уда�
 msgid "Majburiy maydon bo‘sh."
 msgstr "Обязательное поле не заполнено."
 
+#, python-format
 msgid "Qiymat juda uzun (ko‘pi bilan %(max)d belgi)."
 msgstr "Значение слишком длинное (не более %(max)d символов)."
 
@@ -1003,6 +1004,7 @@ msgstr "Неизвестные столбцы: %(columns)s. Используйт
 msgid "Ustun nomi takrorlangan: %(columns)s."
 msgstr "Название столбца повторяется: %(columns)s."
 
+#, python-format
 msgid "Qatorlar soni %(max)d dan oshmasligi kerak."
 msgstr "Число строк не должно превышать %(max)d."
 
@@ -1125,6 +1127,18 @@ msgstr "Должность"
 
 msgid "Portal"
 msgstr "Портал"
+
+msgid "Xodimlar"
+msgstr "Сотрудники"
+
+msgid "Bo‘limlar"
+msgstr "Разделы"
+
+msgid "Topshiriqlar"
+msgstr "Задания"
+
+msgid "Yangiliklar"
+msgstr "Новости"
 
 msgid "Faol xodimlar"
 msgstr "Активные сотрудники"
@@ -1284,9 +1298,6 @@ msgstr "ваша область"
 msgid "Xodimlar: bo‘limlar bo‘yicha"
 msgstr "Сотрудники: по подразделениям"
 
-msgid "Xodimlar"
-msgstr "Сотрудники"
-
 msgid "— (lavozim ko‘rsatilmagan)"
 msgstr "— (должность не указана)"
 
@@ -1347,9 +1358,6 @@ msgstr "Показаны только периоды, в которые загр
 #, python-format
 msgid "Filtrlar noto‘g‘ri: %(errors)s"
 msgstr "Фильтры указаны неверно: %(errors)s"
-
-msgid "Topshiriqlar"
-msgstr "Задания"
 
 msgid "Ijrochilar"
 msgstr "Исполнители"
@@ -1617,14 +1625,8 @@ msgstr "Основная навигация"
 msgid "Xodimlar portali"
 msgstr "Портал сотрудников"
 
-msgid "Bo‘limlar"
-msgstr "Разделы"
-
 msgid "Bosh sahifa"
 msgstr "Главная"
-
-msgid "Yangiliklar"
-msgstr "Новости"
 
 msgid "Tuzilma"
 msgstr "Структура"
@@ -1634,6 +1636,12 @@ msgstr "Этап разработки: остальные разделы буд�
 
 msgid "Menyuni ochish yoki yig‘ish"
 msgstr "Открыть или свернуть меню"
+
+msgid "Qidirish"
+msgstr "Найти"
+
+msgid "Portal bo‘yicha qidirish"
+msgstr "Поиск по порталу"
 
 msgid "Sayt"
 msgstr "Сайт"
@@ -1815,9 +1823,6 @@ msgstr "Поиск: название, номер"
 
 msgid "Barcha darajalar"
 msgstr "Все уровни"
-
-msgid "Qidirish"
-msgstr "Найти"
 
 msgid "Raqam"
 msgstr "Номер"
@@ -2155,6 +2160,30 @@ msgstr "Период: %(a)s – %(b)s · Область: %(scope)s"
 #, python-format
 msgid "Bajarilgan (%(r)s%%)"
 msgstr "Выполнено (%(r)s%%)"
+
+msgid "Qidiruv"
+msgstr "Поиск"
+
+msgid "Xodimlar, bo‘limlar, topshiriqlar, hujjatlar va yangiliklar nomlari bo‘yicha qidiradi. Faqat sizga ochiq ma’lumotlar ko‘rsatiladi. Bu to‘liq matnli qidiruv emas: faqat nom va tavsif maydonlaridagi so‘zlar."
+msgstr "Ищет по названиям сотрудников, подразделений, заданий, документов и новостей. Показываются только доступные вам данные. Это не полнотекстовый поиск: учитываются только слова в полях названия и описания."
+
+msgid "So‘z yoki ism"
+msgstr "Слово или имя"
+
+msgid "Qidiruv so‘rovi"
+msgstr "Поисковый запрос"
+
+msgid "Kamida 2 ta belgi kiriting."
+msgstr "Введите не менее 2 символов."
+
+msgid "Barcha natijalar"
+msgstr "Все результаты"
+
+msgid "Boshqa so‘z bilan urinib ko‘ring yoki so‘zni qisqartiring."
+msgstr "Попробуйте другое слово или сократите запрос."
+
+msgid "Barchasini ko‘rsatish (%(n)s)"
+msgstr "Показать все (%(n)s)"
 
 msgid "Tashkiliy tuzilma"
 msgstr "Организационная структура"

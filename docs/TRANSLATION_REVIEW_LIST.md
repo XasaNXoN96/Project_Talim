@@ -12,10 +12,10 @@
 5. Узбекская латиница: апострофы `‘ ’` и термины источника.
 6. Длинные подписи в RU на узких экранах (проверено визуально на 390 px: горизонтальной прокрутки нет, но читаемость оценивает дизайнер).
 
-Всего строк в каталогах: 650.
+Всего строк в каталогах: 739.
 
 
-## A. E-mail texts (sent to real people; tone and formality matter) — 37
+## A. E-mail texts (sent to real people; tone and formality matter) — 41
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -36,26 +36,30 @@
 | 15 | Topshiriq muddati yaqin | Срок задания близко | A task is due soon |
 | 16 | Topshiriq muddati o‘tdi | Срок задания истёк | A task is overdue |
 | 17 | %(kind)s: %(title)s ⏎  ⏎ Batafsil ma’lumot uchun xodimlar portaliga kiring. | %(kind)s: %(title)s ⏎  ⏎ Подробности — на портале сотрудников. | %(kind)s: %(title)s ⏎  ⏎ See the staff portal for details. |
-| 18 | Muddati o‘tgan (ochiq) | Просрочено (открытые) | Overdue (open) |
-| 19 | Havola yaroqsiz | Ссылка недействительна | The link is not valid |
-| 20 | Havola muddati tugagan, allaqachon ishlatilgan yoki noto‘g‘ri. Yangi havola so‘rang. | Срок действия ссылки истёк, она уже использована или неверна. Запросите новую ссылку. | The link has expired, was already used, or is incorrect. Request a new link. |
-| 21 | Yangi havola so‘rash | Запросить новую ссылку | Request a new link |
-| 22 | Havola yuborildi | Ссылка отправлена | Link sent |
-| 23 | Agar kiritilgan e-pochta tizimda mavjud bo‘lsa, parolni tiklash havolasi yuborildi. Havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi. | Если указанный адрес есть в системе, на него отправлена ссылка для восстановления пароля. Ссылка действует 30 минут и работает только один раз. | If the address you entered exists in the system, a password-reset link was sent to it. The link is valid for 30 minutes and works only once. |
-| 24 | %(site_name)s xodimlar portalida parolni tiklash so‘raldi. | На портале сотрудников «%(site_name)s» запрошено восстановление пароля. | A password reset was requested on the “%(site_name)s” staff portal. |
-| 25 | Yangi parol o‘rnatish uchun havolaga o‘ting (havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi): | Чтобы задать новый пароль, перейдите по ссылке (действует 30 минут и работает только один раз): | To set a new password, open this link (valid for 30 minutes and works only once): |
-| 26 | Parolni tiklash | Восстановление пароля | Password reset |
-| 27 | Hisobingizga biriktirilgan e-pochta manzilini kiriting. Agar u tizimda bo‘lsa, parolni tiklash havolasi yuboriladi. | Введите адрес электронной почты вашей учётной записи. Если он есть в системе, мы отправим ссылку для восстановления пароля. | Enter the e-mail address of your account. If it exists in the system, we will send a password-reset link. |
-| 28 | Havola yuborish | Отправить ссылку | Send link |
-| 29 | %(site_name)s: parolni tiklash | %(site_name)s: восстановление пароля | %(site_name)s: password reset |
-| 30 | Xodimlar portali | Портал сотрудников | Staff portal |
-| 31 | Foydali havolalar | Полезные ссылки | Useful links |
-| 32 | Bu sahifani ko‘rish uchun huquqingiz yetarli emas. | У вас недостаточно прав для просмотра этой страницы. | You do not have permission to view this page. |
-| 33 | muddati o‘tgan | просрочено | overdue |
-| 34 | Muddati o‘tgan | Просрочено | Overdue |
-| 35 | Taklifnoma yuborish | Отправить приглашение | Send an invitation |
-| 36 | Parol kiritilmaydi: foydalanuvchi o‘z parolini taklifnoma havolasi orqali o‘rnatadi. | Пароль не вводится: пользователь задаёт пароль сам по ссылке из приглашения. | No password is entered: the user sets their own password using the link in the invitation. |
-| 37 | Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting. | Введите свои данные для входа на портал сотрудников. | Enter your details to sign in to the staff portal. |
+| 18 | Bu import allaqachon bajarilgan, bekor qilingan yoki muddati o‘tgan. | Этот импорт уже выполнен, отменён или просрочен. | This import has already been completed, cancelled or has expired. |
+| 19 | Muddati o‘tdi | Срок истёк | Expired |
+| 20 | Muddati o‘tgan (ochiq) | Просрочено (открытые) | Overdue (open) |
+| 21 | Havola yaroqsiz | Ссылка недействительна | The link is not valid |
+| 22 | Havola muddati tugagan, allaqachon ishlatilgan yoki noto‘g‘ri. Yangi havola so‘rang. | Срок действия ссылки истёк, она уже использована или неверна. Запросите новую ссылку. | The link has expired, was already used, or is incorrect. Request a new link. |
+| 23 | Yangi havola so‘rash | Запросить новую ссылку | Request a new link |
+| 24 | Havola yuborildi | Ссылка отправлена | Link sent |
+| 25 | Agar kiritilgan e-pochta tizimda mavjud bo‘lsa, parolni tiklash havolasi yuborildi. Havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi. | Если указанный адрес есть в системе, на него отправлена ссылка для восстановления пароля. Ссылка действует 30 минут и работает только один раз. | If the address you entered exists in the system, a password-reset link was sent to it. The link is valid for 30 minutes and works only once. |
+| 26 | %(site_name)s xodimlar portalida parolni tiklash so‘raldi. | На портале сотрудников «%(site_name)s» запрошено восстановление пароля. | A password reset was requested on the “%(site_name)s” staff portal. |
+| 27 | Yangi parol o‘rnatish uchun havolaga o‘ting (havola 30 daqiqa amal qiladi va faqat bir marta ishlaydi): | Чтобы задать новый пароль, перейдите по ссылке (действует 30 минут и работает только один раз): | To set a new password, open this link (valid for 30 minutes and works only once): |
+| 28 | Parolni tiklash | Восстановление пароля | Password reset |
+| 29 | Hisobingizga biriktirilgan e-pochta manzilini kiriting. Agar u tizimda bo‘lsa, parolni tiklash havolasi yuboriladi. | Введите адрес электронной почты вашей учётной записи. Если он есть в системе, мы отправим ссылку для восстановления пароля. | Enter the e-mail address of your account. If it exists in the system, we will send a password-reset link. |
+| 30 | Havola yuborish | Отправить ссылку | Send link |
+| 31 | %(site_name)s: parolni tiklash | %(site_name)s: восстановление пароля | %(site_name)s: password reset |
+| 32 | Xodimlar portali | Портал сотрудников | Staff portal |
+| 33 | Foydali havolalar | Полезные ссылки | Useful links |
+| 34 | Bu sahifani ko‘rish uchun huquqingiz yetarli emas. | У вас недостаточно прав для просмотра этой страницы. | You do not have permission to view this page. |
+| 35 | Ko‘rib chiqish muddati o‘tdi, yuklangan qatorlar o‘chirildi. Faylni qayta yuklang. | Срок проверки истёк, загруженные строки удалены. Загрузите файл заново. | The review period has expired and the uploaded rows were deleted. Upload the file again. |
+| 36 | Sanalar: YYYY-MM-DD yoki DD.MM.YYYY. Formulalar, makroslar va havolalar qabul qilinmaydi. | Даты: YYYY-MM-DD или DD.MM.YYYY. Формулы, макросы и ссылки не принимаются. | Dates: YYYY-MM-DD or DD.MM.YYYY. Formulas, macros and links are not accepted. |
+| 37 | muddati o‘tgan | просрочено | overdue |
+| 38 | Muddati o‘tgan | Просрочено | Overdue |
+| 39 | Taklifnoma yuborish | Отправить приглашение | Send an invitation |
+| 40 | Parol kiritilmaydi: foydalanuvchi o‘z parolini taklifnoma havolasi orqali o‘rnatadi. | Пароль не вводится: пользователь задаёт пароль сам по ссылке из приглашения. | No password is entered: the user sets their own password using the link in the invitation. |
+| 41 | Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting. | Введите свои данные для входа на портал сотрудников. | Enter your details to sign in to the staff portal. |
 
 ## B. Security, login and 2FA messages (must be unambiguous) — 82
 
@@ -144,7 +148,7 @@
 | 81 | Parolni ko‘rsatish | Показать пароль | Show password |
 | 82 | Parolni unutdingizmi? | Забыли пароль? | Forgot your password? |
 
-## C. Personal-data, privacy and access wording (legal weight) — 41
+## C. Personal-data, privacy and access wording (legal weight) — 50
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -163,34 +167,43 @@
 | 13 | Maxfiy hujjatlarni ko‘rish | Просмотр конфиденциальных документов | View confidential documents |
 | 14 | Bu fayl turi ruxsat etilmagan. Ruxsat etilgan: %(types)s. | Этот тип файла не разрешён. Разрешены: %(types)s. | This file type is not allowed. Allowed: %(types)s. |
 | 15 | Bu topshiriqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan. | У вас нет доступа к этому заданию, либо оно удалено. | You do not have access to this task, or it was deleted. |
-| 16 | ish telefoni | рабочий телефон | work phone |
-| 17 | shaxsiy telefon | личный телефон | personal phone |
-| 18 | tug‘ilgan sana | дата рождения | date of birth |
-| 19 | Xodimlarning aloqa ma’lumotlarini ko‘rish | Просмотр контактных данных сотрудников | View employees’ contact details |
-| 20 | Xodimlarning shaxsiy ma’lumotlarini ko‘rish | Просмотр личных данных сотрудников | View employees’ personal data |
-| 21 | Ma’lumot yo‘q. | Нет данных. | No data. |
-| 22 | Hisobotda ijrochilar kesimini ko‘rish (shaxsiy natijalar) | Просмотр отчёта в разрезе исполнителей (личные результаты) | View the report broken down by assignee (personal results) |
-| 23 | Shaxsiy natijalar: faqat ruxsati bor foydalanuvchilarga ko‘rinadi. | Личные результаты: видны только пользователям с соответствующим правом. | Personal results: visible only to users with the corresponding permission. |
-| 24 | Faqat siz ko‘rishga ruxsat etilgan, faol hujjatlar hisoblanadi. | Учитываются только активные документы, которые вам разрешено просматривать. | Only active documents you are allowed to view are counted. |
-| 25 | Manzil: tasdiqlangan ma’lumot kiritiladi | Адрес: будут указаны подтверждённые данные | Address: verified information will be added |
-| 26 | Telefon: tasdiqlangan ma’lumot kiritiladi | Телефон: будут указаны подтверждённые данные | Phone: verified information will be added |
-| 27 | E-pochta: tasdiqlangan ma’lumot kiritiladi | Эл. почта: будут указаны подтверждённые данные | E-mail: verified information will be added |
-| 28 | Ruxsat yo‘q | Доступ запрещён | Access denied |
-| 29 | Ruxsat etilgan: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Makroli va faol tarkibli fayllar qabul qilinmaydi. Yuklangan fayl antivirus bilan tekshiriladi; tekshiruv bajarilmasa, fayl qabul qilinmaydi. | Разрешены: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Файлы с макросами и активным содержимым не принимаются. Загружаемый файл проверяется антивирусом; если проверку выполнить не удалось, файл не принимается. | Allowed: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Files with macros or active content are not accepted. Uploaded files are scanned by an antivirus; if the scan cannot be completed, the file is not accepted. |
-| 30 | Fayllar xavfsiz saqlanadi va faqat huquqingiz bo‘lsa yuklab olinadi. | Файлы хранятся в защищённом хранилище и скачиваются только при наличии прав. | Files are stored securely and can be downloaded only if you have permission. |
-| 31 | Ish telefoni | Рабочий телефон | Work phone |
-| 32 | Shaxsiy ma’lumotlar | Личные данные | Personal data |
-| 33 | Bu ma’lumotlarni ko‘rish jurnalga yoziladi. | Просмотр этих данных фиксируется в журнале. | Viewing this data is recorded in the log. |
-| 34 | Tug‘ilgan sana | Дата рождения | Date of birth |
-| 35 | Shaxsiy telefon | Личный телефон | Personal phone |
-| 36 | Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak. | Перед внесением реальных личных данных должна быть завершена юридическая проверка. | A legal review must be completed before real personal data is entered. |
-| 37 | Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi. | Имя, подразделение, должность и статус. Контактные данные — на карточке сотрудника, если у вас есть право. | Name, department, position and status. Contact details are on the employee card, if you have permission. |
-| 38 | Topshiriq mavjud emas yoki ruxsat yo‘q | Задание не существует или нет доступа | The task does not exist or you have no access |
-| 39 | Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q. | Нет данных за выбранный период и по выбранным фильтрам. | No data for the selected period and filters. |
-| 40 | Ma’lumotlar bazasidagi joriy ma’lumotlar. Siz faqat o‘z doirangizdagi ma’lumotlarni ko‘rasiz. | Актуальные данные из базы данных. Вы видите только данные в пределах своей области. | Current data from the database. You only see data within your own scope. |
-| 41 | Sizga berilgan, siz bergan va ko‘rishga ruxsat etilgan topshiriqlar. | Задания, назначенные вам, поручённые вами и те, которые вам разрешено просматривать. | Tasks assigned to you, assigned by you, and those you are allowed to view. |
+| 16 | Import bekor qilindi. Yuklangan ma’lumotlar o‘chirildi. | Импорт отменён. Загруженные данные удалены. | Import cancelled. The uploaded data was deleted. |
+| 17 | Qiymatda ruxsat etilmagan belgilar bor. | В значении есть недопустимые символы. | The value contains characters that are not allowed. |
+| 18 | Noma’lum holat: “%(value)s”. Ruxsat etilgan: %(allowed)s. | Неизвестный статус: «%(value)s». Допустимо: %(allowed)s. | Unknown status: “%(value)s”. Allowed: %(allowed)s. |
+| 19 | Telefon raqami noto‘g‘ri formatda. | Неверный формат телефона. | The phone number has an invalid format. |
+| 20 | Sana ruxsat etilgan oraliqdan tashqarida. | Дата вне допустимого диапазона. | The date is outside the allowed range. |
+| 21 | Faylda ma’lumotli varaq yo‘q. | В файле нет листа с данными. | The file has no sheet with data. |
+| 22 | ish telefoni | рабочий телефон | work phone |
+| 23 | shaxsiy telefon | личный телефон | personal phone |
+| 24 | tug‘ilgan sana | дата рождения | date of birth |
+| 25 | Xodimlarning aloqa ma’lumotlarini ko‘rish | Просмотр контактных данных сотрудников | View employees’ contact details |
+| 26 | Xodimlarning shaxsiy ma’lumotlarini ko‘rish | Просмотр личных данных сотрудников | View employees’ personal data |
+| 27 | Ma’lumot yo‘q. | Нет данных. | No data. |
+| 28 | Hisobotda ijrochilar kesimini ko‘rish (shaxsiy natijalar) | Просмотр отчёта в разрезе исполнителей (личные результаты) | View the report broken down by assignee (personal results) |
+| 29 | Shaxsiy natijalar: faqat ruxsati bor foydalanuvchilarga ko‘rinadi. | Личные результаты: видны только пользователям с соответствующим правом. | Personal results: visible only to users with the corresponding permission. |
+| 30 | Faqat siz ko‘rishga ruxsat etilgan, faol hujjatlar hisoblanadi. | Учитываются только активные документы, которые вам разрешено просматривать. | Only active documents you are allowed to view are counted. |
+| 31 | Manzil: tasdiqlangan ma’lumot kiritiladi | Адрес: будут указаны подтверждённые данные | Address: verified information will be added |
+| 32 | Telefon: tasdiqlangan ma’lumot kiritiladi | Телефон: будут указаны подтверждённые данные | Phone: verified information will be added |
+| 33 | E-pochta: tasdiqlangan ma’lumot kiritiladi | Эл. почта: будут указаны подтверждённые данные | E-mail: verified information will be added |
+| 34 | Ruxsat yo‘q | Доступ запрещён | Access denied |
+| 35 | Ruxsat etilgan: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Makroli va faol tarkibli fayllar qabul qilinmaydi. Yuklangan fayl antivirus bilan tekshiriladi; tekshiruv bajarilmasa, fayl qabul qilinmaydi. | Разрешены: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Файлы с макросами и активным содержимым не принимаются. Загружаемый файл проверяется антивирусом; если проверку выполнить не удалось, файл не принимается. | Allowed: PDF, DOCX, XLSX, PPTX, ODT, ODS, PNG, JPG, TXT. Files with macros or active content are not accepted. Uploaded files are scanned by an antivirus; if the scan cannot be completed, the file is not accepted. |
+| 36 | Fayllar xavfsiz saqlanadi va faqat huquqingiz bo‘lsa yuklab olinadi. | Файлы хранятся в защищённом хранилище и скачиваются только при наличии прав. | Files are stored securely and can be downloaded only if you have permission. |
+| 37 | Ish telefoni | Рабочий телефон | Work phone |
+| 38 | Shaxsiy ma’lumotlar | Личные данные | Personal data |
+| 39 | Bu ma’lumotlarni ko‘rish jurnalga yoziladi. | Просмотр этих данных фиксируется в журнале. | Viewing this data is recorded in the log. |
+| 40 | Tug‘ilgan sana | Дата рождения | Date of birth |
+| 41 | Shaxsiy telefon | Личный телефон | Personal phone |
+| 42 | Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak. | Перед внесением реальных личных данных должна быть завершена юридическая проверка. | A legal review must be completed before real personal data is entered. |
+| 43 | Bekor qilish va ma’lumotlarni o‘chirish | Отменить и удалить данные | Cancel and delete the data |
+| 44 | Yuklangan fayl va qatorlar saqlanmagan. Bu hisobotda shaxsiy ma’lumotlar yo‘q — faqat qator raqamlari. | Загруженный файл и строки не сохранены. В этом отчёте нет персональных данных — только номера строк. | The uploaded file and rows are not stored. This report contains no personal data — only row numbers. |
+| 45 | Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi. | Имя, подразделение, должность и статус. Контактные данные — на карточке сотрудника, если у вас есть право. | Name, department, position and status. Contact details are on the employee card, if you have permission. |
+| 46 | Topshiriq mavjud emas yoki ruxsat yo‘q | Задание не существует или нет доступа | The task does not exist or you have no access |
+| 47 | Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q. | Нет данных за выбранный период и по выбранным фильтрам. | No data for the selected period and filters. |
+| 48 | Ma’lumotlar bazasidagi joriy ma’lumotlar. Siz faqat o‘z doirangizdagi ma’lumotlarni ko‘rasiz. | Актуальные данные из базы данных. Вы видите только данные в пределах своей области. | Current data from the database. You only see data within your own scope. |
+| 49 | Xodimlar, bo‘limlar, topshiriqlar, hujjatlar va yangiliklar nomlari bo‘yicha qidiradi. Faqat sizga ochiq ma’lumotlar ko‘rsatiladi. Bu to‘liq matnli qidiruv emas: faqat nom va tavsif maydonlaridagi so‘zlar. | Ищет по названиям сотрудников, подразделений, заданий, документов и новостей. Показываются только доступные вам данные. Это не полнотекстовый поиск: учитываются только слова в полях названия и описания. | Searches the names of employees, departments, tasks, documents and news. Only data you may access is shown. This is not full-text search: only words in name and description fields are matched. |
+| 50 | Sizga berilgan, siz bergan va ko‘rishga ruxsat etilgan topshiriqlar. | Задания, назначенные вам, поручённые вами и те, которые вам разрешено просматривать. | Tasks assigned to you, assigned by you, and those you are allowed to view. |
 
-## D. Statuses, roles and organisational terms (official terminology) — 94
+## D. Statuses, roles and organisational terms (official terminology) — 111
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
@@ -225,69 +238,86 @@
 | 29 | Xodim arxivlandi | Сотрудник архивирован | Employee archived |
 | 30 | Xodim arxivdan qaytarildi | Сотрудник восстановлен из архива | Employee restored from the archive |
 | 31 | Tashkiliy tuzilma o‘zgartirildi | Организационная структура изменена | Organization structure changed |
-| 32 | Kontent | Контент | Content |
-| 33 | Tekshiruvda | На проверке | In review |
-| 34 | Mirzacho‘l tumani Xalq ta’limi bo‘limi | Отдел народного образования Мирзачульского района | Mirzachul District Public Education Department |
-| 35 | Xalq ta’limi bo‘limi | Отдел народного образования | Public Education Department |
-| 36 | Faqat «Faqat bo‘lim» darajasi uchun. | Только для уровня «Только подразделение». | Only for the “Department only” level. |
-| 37 | Bo‘lim darajasi uchun bo‘lim tanlang. | Для уровня «Подразделение» выберите подразделение. | Choose a department for the “Department” level. |
-| 38 | faol | активно | active |
-| 39 | Faol | Активен | Active |
-| 40 | Arxivda | В архиве | Archived |
-| 41 | Barcha xodimlar | Все сотрудники | All employees |
-| 42 | Faqat bo‘lim | Только подразделение | Department only |
-| 43 | bo‘lim | подразделение | department |
-| 44 | Bu hisob boshqa xodimga biriktirilgan. | Эта учётная запись уже привязана к другому сотруднику. | This account is already linked to another employee. |
-| 45 | Bu nomdagi bo‘lim shu joyda allaqachon bor. | Подразделение с таким названием здесь уже есть. | A department with this name already exists here. |
-| 46 | Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo‘lmaydi. | Нельзя отключить подразделение, в котором есть активные сотрудники или активные дочерние подразделения. | A department with active employees or active sub-departments cannot be deactivated. |
-| 47 | bo‘limlar | подразделения | departments |
-| 48 | lavozim | должность | position |
-| 49 | lavozimlar | должности | positions |
-| 50 | Yangi | Новое | New |
-| 51 | xodim | сотрудник | employee |
-| 52 | xodimlar | сотрудники | employees |
-| 53 | Xodimlar ro‘yxatini ko‘rish (ism, lavozim, bo‘lim, holat) | Просмотр списка сотрудников (имя, должность, подразделение, статус) | View the employee list (name, position, department, status) |
-| 54 | Sizning hisobingizga xodim kartasi biriktirilmagan. | К вашей учётной записи не привязана карточка сотрудника. | No employee card is linked to your account. |
-| 55 | Xodim qo‘shildi. | Сотрудник добавлен. | The employee was added. |
-| 56 | Xodim arxivdan qaytarildi. | Сотрудник восстановлен из архива. | The employee was restored from the archive. |
-| 57 | Xodim arxivlandi. | Сотрудник архивирован. | The employee was archived. |
-| 58 | Lavozim | Должность | Position |
-| 59 | Faol xodimlar | Активные сотрудники | Active employees |
-| 60 | Xodimlar (arxivdan tashqari) | Сотрудники (без архива) | Employees (excluding archived) |
-| 61 | Bo‘lim filtri: %(v)s | Фильтр по подразделению: %(v)s | Department filter: %(v)s |
-| 62 | Hisobotlar sahifasini ko‘rish (doira rol bo‘yicha) | Просмотр страницы отчётов (область определяется ролью) | View the reports page (scope depends on the role) |
-| 63 | Barcha bo‘limlar | Все подразделения | All departments |
-| 64 | Bo‘lim: %(name)s | Подразделение: %(name)s | Department: %(name)s |
-| 65 | Xodimlar: bo‘limlar bo‘yicha | Сотрудники: по подразделениям | Employees: by department |
-| 66 | Xodimlar | Сотрудники | Employees |
-| 67 | — (lavozim ko‘rsatilmagan) | — (должность не указана) | — (no position set) |
-| 68 | Xodimlar: lavozimlar bo‘yicha | Сотрудники: по должностям | Employees: by position |
-| 69 | — (bo‘limsiz) | — (без подразделения) | — (no department) |
-| 70 | Bajarilish: bo‘limlar bo‘yicha | Выполнение: по подразделениям | Completion: by department |
-| 71 | Bir nechta ijrochili topshiriq har bir ijrochining bo‘limida hisoblanadi. | Задание с несколькими исполнителями учитывается в подразделении каждого исполнителя. | A task with several assignees is counted in each assignee’s department. |
-| 72 | Jarayonda | В работе | In progress |
-| 73 | Bajarildi | Выполнено | Done |
-| 74 | Bekor qilindi | Отменено | Cancelled |
-| 75 | Bo‘lim (yoki butun tashkilot) topshiriqlarini ko‘rish | Просмотр заданий подразделения (или всей организации) | View tasks of a department (or the whole organization) |
-| 76 | Sizning rolingiz uchun bu majburiy. Sozlashni tugatmaguncha tizimga kira olmaysiz. | Для вашей роли это обязательно. Пока вы не завершите настройку, войти в систему нельзя. | This is mandatory for your role. You cannot use the system until the setup is finished. |
-| 77 | Bo‘limlar | Разделы | Sections |
-| 78 | Tuzilma | Структура | Structure |
-| 79 | Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘shiladi | Этап разработки: остальные разделы будут добавлены позже | Development stage: the remaining sections will be added later |
-| 80 | Rollar | Роли | Roles |
-| 81 | rol biriktirilmagan | роль не назначена | no role assigned |
-| 82 | Xodim qo‘shish | Добавить сотрудника | Add an employee |
-| 83 | Qidirish: ism, lavozim | Поиск: имя, должность | Search: name, position |
-| 84 | Xatolik yuz berdi. Keyinroq qayta urinib ko‘ring; muammo davom etsa, administratorga murojaat qiling. | Произошла ошибка. Повторите попытку позже; если проблема сохраняется, обратитесь к администратору. | An error occurred. Try again later; if the problem persists, contact an administrator. |
-| 85 | Tashkiliy tuzilma | Организационная структура | Organization structure |
-| 86 | Bo‘limlar daraxti va lavozimlar. Bo‘limlar o‘chirilmaydi, faqat faol emas qilinadi. | Дерево подразделений и должности. Подразделения не удаляются, а только отключаются. | Department tree and positions. Departments are never deleted, only deactivated. |
-| 87 | Bo‘lim qo‘shish | Добавить подразделение | Add a department |
-| 88 | Lavozim qo‘shish | Добавить должность | Add a position |
-| 89 | Bo‘limlar hali kiritilmagan. | Подразделения ещё не внесены. | No departments have been entered yet. |
-| 90 | Lavozimlar | Должности | Positions |
-| 91 | Lavozimlar hali kiritilmagan. | Должности ещё не внесены. | No positions have been entered yet. |
-| 92 | Rol biriktirilmagan: foydalanuvchi hech narsaga kira olmaydi. | Роль не назначена: пользователь ни к чему не имеет доступа. | No role assigned: the user cannot access anything. |
-| 93 | Rol biriktirish | Назначить роль | Assign a role |
-| 94 | Barcha rollar | Все роли | All roles |
+| 32 | Xodimlar importi: ko‘rib chiqish | Импорт сотрудников: предварительный просмотр | Employee import: preview |
+| 33 | Xodimlar importi: fayl rad etildi | Импорт сотрудников: файл отклонён | Employee import: file rejected |
+| 34 | Xodimlar importi bajarildi | Импорт сотрудников выполнен | Employee import completed |
+| 35 | Xodimlar importi bekor qilindi | Импорт сотрудников отменён | Employee import cancelled |
+| 36 | Xodimlar importi xatolik bilan to‘xtadi | Импорт сотрудников остановлен из-за ошибки | Employee import stopped by an error |
+| 37 | Kontent | Контент | Content |
+| 38 | Tekshiruvda | На проверке | In review |
+| 39 | Mirzacho‘l tumani Xalq ta’limi bo‘limi | Отдел народного образования Мирзачульского района | Mirzachul District Public Education Department |
+| 40 | Xalq ta’limi bo‘limi | Отдел народного образования | Public Education Department |
+| 41 | Faqat «Faqat bo‘lim» darajasi uchun. | Только для уровня «Только подразделение». | Only for the “Department only” level. |
+| 42 | Bo‘lim darajasi uchun bo‘lim tanlang. | Для уровня «Подразделение» выберите подразделение. | Choose a department for the “Department” level. |
+| 43 | faol | активно | active |
+| 44 | Faol | Активен | Active |
+| 45 | Arxivda | В архиве | Archived |
+| 46 | Barcha xodimlar | Все сотрудники | All employees |
+| 47 | Faqat bo‘lim | Только подразделение | Department only |
+| 48 | bo‘lim | подразделение | department |
+| 49 | Bu hisob boshqa xodimga biriktirilgan. | Эта учётная запись уже привязана к другому сотруднику. | This account is already linked to another employee. |
+| 50 | Bu nomdagi bo‘lim shu joyda allaqachon bor. | Подразделение с таким названием здесь уже есть. | A department with this name already exists here. |
+| 51 | Faol xodimlari yoki faol quyi bo‘limlari bor bo‘limni o‘chirib bo‘lmaydi. | Нельзя отключить подразделение, в котором есть активные сотрудники или активные дочерние подразделения. | A department with active employees or active sub-departments cannot be deactivated. |
+| 52 | Bunday faol bo‘lim topilmadi: “%(value)s”. Import yangi bo‘lim yaratmaydi. | Активное подразделение не найдено: «%(value)s». Импорт не создаёт новые подразделения. | No active department found: “%(value)s”. The import does not create new departments. |
+| 53 | Bo‘lim nomi bir necha joyda uchraydi: “%(value)s”. To‘liq yo‘lni yozing (masalan, “Yuqori bo‘lim / Quyi bo‘lim”). | Название подразделения встречается в нескольких местах: «%(value)s». Укажите полный путь (например, «Верхнее / Нижнее»). | The department name appears in several places: “%(value)s”. Write the full path (for example “Parent / Child”). |
+| 54 | Bunday lavozim topilmadi: “%(value)s”. Import yangi lavozim yaratmaydi. | Должность не найдена: «%(value)s». Импорт не создаёт новые должности. | Position not found: “%(value)s”. The import does not create new positions. |
+| 55 | Bunday F.I.Sh. bilan xodim allaqachon mavjud (mumkin bo‘lgan dublikat). Mavjud xodim o‘zgartirilmaydi. | Сотрудник с таким ФИО уже есть (возможный дубликат). Существующий сотрудник не изменяется. | An employee with this full name already exists (possible duplicate). The existing employee is not changed. |
+| 56 | Bu ish e-pochtasi boshqa xodimda bor (mumkin bo‘lgan dublikat). | Эта рабочая почта уже есть у другого сотрудника (возможный дубликат). | This work e-mail already belongs to another employee (possible duplicate). |
+| 57 | bo‘limlar | подразделения | departments |
+| 58 | lavozim | должность | position |
+| 59 | lavozimlar | должности | positions |
+| 60 | Yangi | Новое | New |
+| 61 | xodim | сотрудник | employee |
+| 62 | xodimlar | сотрудники | employees |
+| 63 | Xodimlar ro‘yxatini ko‘rish (ism, lavozim, bo‘lim, holat) | Просмотр списка сотрудников (имя, должность, подразделение, статус) | View the employee list (name, position, department, status) |
+| 64 | Bajarildi | Выполнено | Done |
+| 65 | Bekor qilindi | Отменено | Cancelled |
+| 66 | Sizning hisobingizga xodim kartasi biriktirilmagan. | К вашей учётной записи не привязана карточка сотрудника. | No employee card is linked to your account. |
+| 67 | Xodim qo‘shildi. | Сотрудник добавлен. | The employee was added. |
+| 68 | Xodim arxivdan qaytarildi. | Сотрудник восстановлен из архива. | The employee was restored from the archive. |
+| 69 | Xodim arxivlandi. | Сотрудник архивирован. | The employee was archived. |
+| 70 | Lavozim | Должность | Position |
+| 71 | Xodimlar | Сотрудники | Employees |
+| 72 | Bo‘limlar | Разделы | Sections |
+| 73 | Faol xodimlar | Активные сотрудники | Active employees |
+| 74 | Xodimlar (arxivdan tashqari) | Сотрудники (без архива) | Employees (excluding archived) |
+| 75 | Bo‘lim filtri: %(v)s | Фильтр по подразделению: %(v)s | Department filter: %(v)s |
+| 76 | Hisobotlar sahifasini ko‘rish (doira rol bo‘yicha) | Просмотр страницы отчётов (область определяется ролью) | View the reports page (scope depends on the role) |
+| 77 | Barcha bo‘limlar | Все подразделения | All departments |
+| 78 | Bo‘lim: %(name)s | Подразделение: %(name)s | Department: %(name)s |
+| 79 | Xodimlar: bo‘limlar bo‘yicha | Сотрудники: по подразделениям | Employees: by department |
+| 80 | — (lavozim ko‘rsatilmagan) | — (должность не указана) | — (no position set) |
+| 81 | Xodimlar: lavozimlar bo‘yicha | Сотрудники: по должностям | Employees: by position |
+| 82 | — (bo‘limsiz) | — (без подразделения) | — (no department) |
+| 83 | Bajarilish: bo‘limlar bo‘yicha | Выполнение: по подразделениям | Completion: by department |
+| 84 | Bir nechta ijrochili topshiriq har bir ijrochining bo‘limida hisoblanadi. | Задание с несколькими исполнителями учитывается в подразделении каждого исполнителя. | A task with several assignees is counted in each assignee’s department. |
+| 85 | Jarayonda | В работе | In progress |
+| 86 | Bo‘lim (yoki butun tashkilot) topshiriqlarini ko‘rish | Просмотр заданий подразделения (или всей организации) | View tasks of a department (or the whole organization) |
+| 87 | Sizning rolingiz uchun bu majburiy. Sozlashni tugatmaguncha tizimga kira olmaysiz. | Для вашей роли это обязательно. Пока вы не завершите настройку, войти в систему нельзя. | This is mandatory for your role. You cannot use the system until the setup is finished. |
+| 88 | Tuzilma | Структура | Structure |
+| 89 | Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘shiladi | Этап разработки: остальные разделы будут добавлены позже | Development stage: the remaining sections will be added later |
+| 90 | Rollar | Роли | Roles |
+| 91 | rol biriktirilmagan | роль не назначена | no role assigned |
+| 92 | Xodim qo‘shish | Добавить сотрудника | Add an employee |
+| 93 | %(ok)s ta yangi xodim qo‘shiladi. Xatoli qatorlar (%(skipped)s) o‘tkazib yuboriladi. Mavjud xodimlar o‘zgartirilmaydi. | Будет добавлено новых сотрудников: %(ok)s. Строки с ошибками (%(skipped)s) будут пропущены. Существующие сотрудники не изменяются. | New employees to be added: %(ok)s. Rows with errors (%(skipped)s) will be skipped. Existing employees are not changed. |
+| 94 | Xodimlar ro‘yxati | Список сотрудников | Employee list |
+| 95 | Xodimlarni import qilish | Импорт сотрудников | Import employees |
+| 96 | Xodimlarni Excel’dan import qilish | Импорт сотрудников из Excel | Import employees from Excel |
+| 97 | Import faqat yangi xodimlar qo‘shadi. Mavjud xodimlar o‘zgartirilmaydi va birlashtirilmaydi. Avval ko‘rib chiqasiz, so‘ng tasdiqlaysiz. | Импорт только добавляет новых сотрудников. Существующие не изменяются и не объединяются. Сначала вы просматриваете результат, затем подтверждаете. | The import only adds new employees. Existing ones are neither changed nor merged. You review first, then confirm. |
+| 98 | department — bo‘lim nomi; nom takrorlansa to‘liq yo‘l: “Yuqori / Quyi”. Bo‘lim va lavozim oldindan yaratilgan bo‘lishi kerak. | department — название подразделения; если названия повторяются — полный путь: «Верхнее / Нижнее». Подразделения и должности должны быть созданы заранее. | department — the department name; if names repeat, the full path: “Parent / Child”. Departments and positions must be created beforehand. |
+| 99 | F.I.Sh. yoki ish e-pochtasi mavjud xodim bilan mos kelsa — qator “mumkin bo‘lgan dublikat” deb belgilanadi va sukut bo‘yicha o‘tkazib yuboriladi. | Если ФИО или рабочая почта совпадают с существующим сотрудником, строка помечается как «возможный дубликат» и по умолчанию пропускается. | If the full name or work e-mail matches an existing employee, the row is flagged as a “possible duplicate” and skipped by default. |
+| 100 | Qidirish: ism, lavozim | Поиск: имя, должность | Search: name, position |
+| 101 | Xatolik yuz berdi. Keyinroq qayta urinib ko‘ring; muammo davom etsa, administratorga murojaat qiling. | Произошла ошибка. Повторите попытку позже; если проблема сохраняется, обратитесь к администратору. | An error occurred. Try again later; if the problem persists, contact an administrator. |
+| 102 | Tashkiliy tuzilma | Организационная структура | Organization structure |
+| 103 | Bo‘limlar daraxti va lavozimlar. Bo‘limlar o‘chirilmaydi, faqat faol emas qilinadi. | Дерево подразделений и должности. Подразделения не удаляются, а только отключаются. | Department tree and positions. Departments are never deleted, only deactivated. |
+| 104 | Bo‘lim qo‘shish | Добавить подразделение | Add a department |
+| 105 | Lavozim qo‘shish | Добавить должность | Add a position |
+| 106 | Bo‘limlar hali kiritilmagan. | Подразделения ещё не внесены. | No departments have been entered yet. |
+| 107 | Lavozimlar | Должности | Positions |
+| 108 | Lavozimlar hali kiritilmagan. | Должности ещё не внесены. | No positions have been entered yet. |
+| 109 | Rol biriktirilmagan: foydalanuvchi hech narsaga kira olmaydi. | Роль не назначена: пользователь ни к чему не имеет доступа. | No role assigned: the user cannot access anything. |
+| 110 | Rol biriktirish | Назначить роль | Assign a role |
+| 111 | Barcha rollar | Все роли | All roles |
 
 ## E. Task and document workflow wording — 69
 
@@ -323,25 +353,25 @@
 | 28 | Topshiriq qabul qilindi | Задание принято | A task was accepted |
 | 29 | Topshiriq qaytarildi | Задание возвращено на доработку | A task was returned for rework |
 | 30 | Topshiriq bekor qilindi | Задание отменено | A task was cancelled |
-| 31 | Davrda yaratilgan topshiriqlar | Заданий создано за период | Tasks created in the period |
-| 32 | Davrda yakunlangan topshiriqlar | Заданий завершено за период | Tasks completed in the period |
-| 33 | Davrda yuklangan hujjatlar | Документов загружено за период | Documents uploaded in the period |
-| 34 | Topshiriq holati: %(v)s | Статус задания: %(v)s | Task status: %(v)s |
-| 35 | Hujjat turkumi: %(v)s | Категория документов: %(v)s | Document category: %(v)s |
-| 36 | Hisobot | Отчёт | Report |
-| 37 | Topshiriqlar dinamikasi | Динамика заданий | Task trend |
-| 38 | Hisobotlarni Excel/PDF ga yuklab olish | Скачивание отчётов в Excel/PDF | Download reports as Excel/PDF |
-| 39 | Topshiriq holati | Статус задания | Task status |
-| 40 | Hujjat turkumi | Категория документов | Document category |
-| 41 | Barcha turkumlar | Все категории | All categories |
-| 42 | Topshiriqlar: holatlar bo‘yicha | Задания: по статусам | Tasks: by status |
-| 43 | Bajarilish: ijrochilar bo‘yicha | Выполнение: по исполнителям | Completion: by assignee |
-| 44 | Ijrochi | Исполнитель | Assignee |
-| 45 | Hujjatlar: turkumlar bo‘yicha | Документы: по категориям | Documents: by category |
-| 46 | Turkum | Категория | Category |
-| 47 | Hujjatlar: davrlar bo‘yicha | Документы: по периодам | Documents: by period |
-| 48 | Faqat hujjat yuklangan davrlar ko‘rsatiladi. | Показаны только периоды, в которые загружались документы. | Only periods in which documents were uploaded are shown. |
-| 49 | Topshiriqlar | Задания | Tasks |
+| 31 | Topshiriqlar | Задания | Tasks |
+| 32 | Davrda yaratilgan topshiriqlar | Заданий создано за период | Tasks created in the period |
+| 33 | Davrda yakunlangan topshiriqlar | Заданий завершено за период | Tasks completed in the period |
+| 34 | Davrda yuklangan hujjatlar | Документов загружено за период | Documents uploaded in the period |
+| 35 | Topshiriq holati: %(v)s | Статус задания: %(v)s | Task status: %(v)s |
+| 36 | Hujjat turkumi: %(v)s | Категория документов: %(v)s | Document category: %(v)s |
+| 37 | Hisobot | Отчёт | Report |
+| 38 | Topshiriqlar dinamikasi | Динамика заданий | Task trend |
+| 39 | Hisobotlarni Excel/PDF ga yuklab olish | Скачивание отчётов в Excel/PDF | Download reports as Excel/PDF |
+| 40 | Topshiriq holati | Статус задания | Task status |
+| 41 | Hujjat turkumi | Категория документов | Document category |
+| 42 | Barcha turkumlar | Все категории | All categories |
+| 43 | Topshiriqlar: holatlar bo‘yicha | Задания: по статусам | Tasks: by status |
+| 44 | Bajarilish: ijrochilar bo‘yicha | Выполнение: по исполнителям | Completion: by assignee |
+| 45 | Ijrochi | Исполнитель | Assignee |
+| 46 | Hujjatlar: turkumlar bo‘yicha | Документы: по категориям | Documents: by category |
+| 47 | Turkum | Категория | Category |
+| 48 | Hujjatlar: davrlar bo‘yicha | Документы: по периодам | Documents: by period |
+| 49 | Faqat hujjat yuklangan davrlar ko‘rsatiladi. | Показаны только периоды, в которые загружались документы. | Only periods in which documents were uploaded are shown. |
 | 50 | Ijrochilar | Исполнители | Assignees |
 | 51 | Bir nechta ijrochini Ctrl (⌘) bosib tanlang. | Для выбора нескольких исполнителей удерживайте Ctrl (⌘). | Hold Ctrl (⌘) to select several assignees. |
 | 52 | Kamida bitta ijrochi tanlang. | Выберите хотя бы одного исполнителя. | Select at least one assignee. |
@@ -363,7 +393,7 @@
 | 68 | Yangi topshiriq | Новое задание | New task |
 | 69 | Topshiriqlar yo‘q | Заданий нет | No tasks |
 
-## F. Остальные строки — 327
+## F. Остальные строки — 386
 
 Интерфейсные подписи общего назначения (кнопки, заголовки, подсказки). Проверяются выборочно при общей вычитке; полный список — в файлах `.po`.
 
