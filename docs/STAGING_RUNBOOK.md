@@ -8,6 +8,8 @@
 Отдельный сервер/ВМ (не production); имя хоста и DNS-запись; сертификат от доверенного центра (например, ACME) — получает и устанавливает владелец; почтовый шлюз для тестовых писем; доступ к серверам сигнатур ClamAV; письменное подтверждение, что на сервере будут только вымышленные данные. **Файрвол, DNS и сертификаты оператор сам не меняет без подтверждения владельца.**
 
 ## 1. Порядок для оператора
+> **Основной документ оператора — [STAGING_OPERATOR_CHECKLIST.md](STAGING_OPERATOR_CHECKLIST.md)** (14 шагов, критерии остановки). Эта таблица — краткий справочник; при расхождении верен чек-лист. **Первый запуск** выполняется по чек-листу §5 (ручные шаги: checkout, миграции ролью-владельцем, `apply_grants.sql`, `seed_roles`, `preflight.py`); `release.sh deploy` используется для **последующих** релизов (чек-лист §5.11). Разворачивать нужно **кодовый коммит, указанный владельцем в `OWNER_HANDOFF.md` §1** (сейчас RC-5), и сверять его выводом `release_info.sh`.
+
 | Шаг | Действие | Проверка | Отрепетировано в песочнице |
 |---|---|---|---|
 | 1 | Пользователь `talim`, каталоги, права — `DEPLOYMENT_READINESS.md` §4.1 | `preflight.py` (права каталогов) | логика проверки — да |
@@ -24,14 +26,14 @@
 Команды (значения подставляет оператор; пароли не вводить в командной строке, использовать файлы с правами 0600):
 ```
 # предпроверка (от talim)
-/srv/talim/backend/.venv/bin/python /srv/talim/backend/deploy/staging/preflight.py --env-file /etc/talim/talim.env --backend /srv/talim/backend
+/srv/talim/backend/.venv/bin/python /srv/talim/backend/deploy/staging/preflight.py --env-file /etc/talim/talim.env --backend /srv/talim/backend --backup-env /etc/talim/backup.env
 # релиз (от talim); значения — из окружения оператора
 export RELEASES_DIR=/srv/talim/releases CURRENT_LINK=/srv/talim/backend HEALTH_URL=http://127.0.0.1:8000/healthz/
 export HEALTH_HOST=<хост из DJANGO_ALLOWED_HOSTS>     # нужен: проверка идёт на 127.0.0.1 с заголовком X-Forwarded-Proto: https (иначе production-настройки отвечают 301)
 export RESTART_CMD='sudo systemctl restart talim-gunicorn'            # sudoers: только эта команда (пример, не проверялся)
 export PRE_BACKUP_CMD='set -a; . /etc/talim/talim.env; . /etc/talim/backup.env; set +a; /srv/talim/backend/deploy/backup/backup.sh'
 export MIGRATE_CMD_PREFIX='env DB_USER=<роль-владелец> DB_PASSWORD=<вводится оператором на время релиза, не сохраняется>'   # миграции — ролью владельца
-export POST_MIGRATE_SQL_CMD='psql … -f /srv/talim/releases/<тег>/backend/deploy/postgres/apply_grants.sql'
+export POST_MIGRATE_SQL_CMD='psql -h 127.0.0.1 -U <роль-владелец> -d <БД> -v app=<роль-приложения> -v db=<БД> -v backup_role=<роль-копий> -f /srv/talim/releases/<тег>/backend/deploy/postgres/apply_grants.sql'   # пароль владельца — через PGPASSFILE (файл 0600), не в команде
 /srv/talim/backend/deploy/staging/release.sh deploy <тег>
 # снаружи, с другой машины
 python3 smoke_remote.py https://<хост> --admin-path <путь>
