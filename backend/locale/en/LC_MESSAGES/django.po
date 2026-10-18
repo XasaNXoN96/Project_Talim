@@ -2788,3 +2788,30 @@ msgstr "Location"
 
 msgid "Xarita namunasi — manzil tasdiqlangach almashtiriladi."
 msgstr "Sample map — will be replaced once the address is confirmed."
+
+msgid "Sertifikatlar"
+msgstr "Certificates"
+
+msgid "Kirish-chiqish"
+msgstr "Check-in and check-out"
+
+msgid "Geolokatsiya"
+msgstr "Geolocation"
+
+msgid "Chat"
+msgstr "Chat"
+
+msgid "Dizayn maketi."
+msgstr "Design mock-up."
+
+msgid "Bu bo‘lim hali ishlamaydi — namunaviy ma’lumotlar ko‘rsatilgan."
+msgstr "This section does not work yet — sample data is shown."
+
+msgid "Mening topshiriqlarim"
+msgstr "My tasks"
+
+msgid "Sizga biriktirilgan ochiq topshiriqlar yo‘q"
+msgstr "You have no open tasks assigned"
+
+msgid "Oxirgi bildirishnomalar"
+msgstr "Latest notifications"

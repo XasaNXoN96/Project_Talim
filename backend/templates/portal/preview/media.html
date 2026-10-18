@@ -1,0 +1,8 @@
+{% extends "base_portal.html" %}{% load static i18n %}
+{% block title %}Media{% endblock %}
+{% block content %}
+<div class="alert warn" style="margin-bottom:16px"><span data-i="alert"></span><span><b>{% translate "Dizayn maketi." %}</b> {% translate "Bu bo‘lim hali ishlamaydi — namunaviy ma’lumotlar ko‘rsatilgan." %}</span></div>
+<div class="page-head"><div><h1>Media</h1><p>Fotorasmlar va video materiallar kutubxonasi</p></div><button class="btn btn-primary" data-toast="Maket: yuklash ishlamaydi"><span data-i="upload" data-c="sm"></span>Fayl yuklash</button></div>
+<div data-render="media"></div>
+<script src="{% static 'assets/js/data.js' %}"></script><script src="{% static 'assets/js/pages.js' %}"></script>
+{% endblock %}

@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
 from django.views.generic import ListView, TemplateView
 
 from apps.access.services import user_role_names
@@ -7,13 +8,47 @@ from apps.core.mixins import PortalPermissionMixin
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
-    """Protected landing page of the staff portal. Server-side login check; content is a skeleton for now."""
+    """Landing page of the staff portal, laid out like the design mock-up. Every block shows real data and only what the signed-in user may see."""
 
     template_name = "portal/dashboard.html"
 
     def get_context_data(self, **kwargs):
+        from django.utils import timezone
+
+        from apps.content.models import News
+        from apps.notifications.models import Notification
+        from apps.organization.models import Department, Employee
+        from apps.tasks import access as task_access
+        from apps.tasks.models import Task
+
         context = super().get_context_data(**kwargs)
-        context["role_names"] = sorted(user_role_names(self.request.user))
+        user = self.request.user
+        context["role_names"] = sorted(user_role_names(user))
+        context["today"] = timezone.localdate()
+        stats = []
+        if user.has_perm("organization.view_employee_directory"):
+            stats.append(("users", "c-blue", Employee.objects.exclude(status=Employee.Status.ARCHIVED).count(), "Xodimlar"))
+        if user.has_perm("organization.view_department"):
+            stats.append(("building", "c-teal", Department.objects.count(), "Bo‘limlar"))
+        if user.has_perm("content.view_news"):
+            stats.append(("news", "c-red", News.objects.published().count(), "Yangiliklar"))
+        if user.has_perm("tasks.view_task"):
+            open_tasks = task_access.visible_tasks(user).exclude(status__in=Task.FINAL)
+            stats.append(("clipboard", "c-orange", open_tasks.count(), "Topshiriqlar"))
+            context["my_tasks"] = list(
+                Task.objects.filter(assignees=user).exclude(status__in=Task.FINAL).order_by("due_date", "-created_at")[:5]
+            )
+        context["stats"] = stats
+        if user.has_perm("content.view_news"):
+            context["latest_news"] = list(News.objects.published().select_related("category")[:3])
+        if user.has_perm("notifications.view_notification"):
+            recent = list(Notification.objects.filter(user=user).select_related("task", "news")[:4])
+            visible_task_ids = set(
+                task_access.visible_tasks(user).filter(pk__in=[n.task_id for n in recent if n.task_id]).values_list("pk", flat=True)
+            )
+            for n in recent:
+                n.shown = n.task_id in visible_task_ids if n.task_id else bool(n.news_id)
+            context["recent_notifications"] = recent
         return context
 
 
@@ -80,3 +115,16 @@ class JobsView(PortalPermissionMixin, TemplateView):
 
         states = jobs.all_job_states()
         return super().get_context_data(jobs=[{**s, "healthy": jobs.is_healthy(s)} for s in states], **kwargs)
+
+
+PREVIEW_SECTIONS = ("yutuqlar", "sertifikatlar", "media", "kirish-chiqish", "geolokatsiya", "chat")
+
+
+class PreviewView(LoginRequiredMixin, TemplateView):
+    """Design-mock-up sections that are not built yet (sample data, nothing is stored or collected). Same access as the dashboard: a signed-in user."""
+
+    def get_template_names(self):
+        slug = self.kwargs["section"]
+        if slug not in PREVIEW_SECTIONS:
+            raise Http404
+        return [f"portal/preview/{slug}.html"]

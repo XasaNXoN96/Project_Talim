@@ -2788,3 +2788,30 @@ msgstr "Joylashuv"
 
 msgid "Xarita namunasi — manzil tasdiqlangach almashtiriladi."
 msgstr "Xarita namunasi — manzil tasdiqlangach almashtiriladi."
+
+msgid "Sertifikatlar"
+msgstr "Sertifikatlar"
+
+msgid "Kirish-chiqish"
+msgstr "Kirish-chiqish"
+
+msgid "Geolokatsiya"
+msgstr "Geolokatsiya"
+
+msgid "Chat"
+msgstr "Chat"
+
+msgid "Dizayn maketi."
+msgstr "Dizayn maketi."
+
+msgid "Bu bo‘lim hali ishlamaydi — namunaviy ma’lumotlar ko‘rsatilgan."
+msgstr "Bu bo‘lim hali ishlamaydi — namunaviy ma’lumotlar ko‘rsatilgan."
+
+msgid "Mening topshiriqlarim"
+msgstr "Mening topshiriqlarim"
+
+msgid "Sizga biriktirilgan ochiq topshiriqlar yo‘q"
+msgstr "Sizga biriktirilgan ochiq topshiriqlar yo‘q"
+
+msgid "Oxirgi bildirishnomalar"
+msgstr "Oxirgi bildirishnomalar"

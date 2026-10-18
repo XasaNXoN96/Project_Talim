@@ -3,15 +3,48 @@
 {% load i18n %}
 {% block title %}{% translate "Bosh sahifa" %}{% endblock %}
 {% block content %}
-<div class="page-head"><div><h1>{% translate "Bosh sahifa" %}</h1><p>{% blocktranslate with name=user.get_full_name|default:user.get_username %}Xush kelibsiz, {{ name }}.{% endblocktranslate %}</p></div></div>
-<div class="alert info" style="margin-bottom:16px"><i data-i="alert" style="display:contents"></i><span><b>{% translate "Ishlab chiqish bosqichi." %}</b> {% translate "Bu portalning asosiy skeleti: kirish, rollar va audit ishlaydi. Xodimlar, topshiriqlar, hujjatlar va boshqa bo‘limlar keyingi bosqichlarda qo‘shiladi." %}</span></div>
-<section class="card card-pad">
-  <h2 style="font-size:17px;margin-bottom:12px">{% translate "Sizning hisobingiz" %}</h2>
-  <div class="kv" style="margin-top:0">
-    <div><i data-i="user" data-c="sm" style="display:contents"></i>{{ user.get_username }}</div>
-    <div><i data-i="mail" data-c="sm" style="display:contents"></i>{{ user.email }}</div>
-    <div><i data-i="shield" data-c="sm" style="display:contents"></i>{% translate "Rollar" %}:
-      {% for r in role_names %}<span class="badge plain b-info" style="margin-left:4px">{{ r|role_label }}</span>{% empty %}<span class="muted">{% translate "rol biriktirilmagan" %}</span>{% endfor %}</div>
+<section class="banner"><div data-ph="building"></div><div><h2>{{ SITE_SHORT }}</h2><p>{% translate "Ta’lim — kelajak poydevori" %}</p>
+  <a class="btn btn-primary" href="{% if perms.content.view_news %}{% url 'news_admin:list' %}{% else %}{% url 'content:home' %}{% endif %}">{% translate "Batafsil" %}</a></div></section>
+<p class="muted" style="margin:10px 0 0">{% blocktranslate with name=user.get_full_name|default:user.get_username %}Xush kelibsiz, {{ name }}.{% endblocktranslate %}
+  {% for r in role_names %}<span class="badge plain b-info" style="margin-left:4px">{{ r|role_label }}</span>{% endfor %}</p>
+{% if stats %}
+<div class="stat-grid">
+  {% for icon, color, number, label in stats %}
+  <div class="card kpi"><div class="ic-chip {{ color }}" data-i="{{ icon }}"></div><div><div class="n">{{ number }}</div><div class="l">{% trans label %}</div></div></div>
+  {% endfor %}
+</div>
+{% endif %}
+<div class="dash">
+  <div class="stack">
+    {% if perms.content.view_news %}
+    <section class="card"><div class="card-head"><h2>{% translate "So‘nggi yangiliklar" %}</h2><a class="more" href="{% url 'news_admin:list' %}">{% translate "Barchasi" %}</a></div>
+      <div class="card-body news-3">
+        {% for item in latest_news %}
+        <a href="{% url 'content:news_detail' item.slug %}" style="color:inherit;text-decoration:none"><div class="ratio-16-9 ph-none r">{% translate "Rasm yo‘q" %}</div><span class="xs muted">{{ item.publish_at|date:"d.m.Y" }}</span><h3 class="clamp2" style="font-size:14px">{{ item.title }}</h3></a>
+        {% empty %}<p class="muted">{% translate "Hozircha yangiliklar yo‘q" %}</p>{% endfor %}
+      </div></section>
+    {% endif %}
+    {% if perms.tasks.view_task %}
+    <section class="card"><div class="card-head"><h2>{% translate "Mening topshiriqlarim" %}</h2><a class="more" href="{% url 'tasks:list' %}">{% translate "Barchasi" %}</a></div>
+      <div class="card-body">
+        {% for t in my_tasks %}
+        <div class="task-row"><div class="grow"><b>{{ t.title }}</b>
+          <div class="xs muted{% if t.due_date and t.due_date < today %} due{% endif %}">{% if t.due_date %}{% translate "Muddat" %}: {{ t.due_date|date:"d.m.Y" }}{% if t.due_date < today %} · {% translate "Muddati o‘tgan" %}{% endif %}{% else %}—{% endif %}</div></div>
+          <span class="prio {% if t.priority == 'high' %}p-high{% elif t.priority == 'low' %}p-low{% else %}p-mid{% endif %}"><i></i>{{ t.get_priority_display }}</span>
+          <span class="badge {% if t.status == 'review' %}b-warn{% elif t.status == 'new' %}b-violet{% else %}b-info{% endif %}">{{ t.get_status_display }}</span>
+          <a class="btn btn-ghost btn-sm" href="{% url 'tasks:detail' t.pk %}">{% translate "Batafsil" %}</a></div>
+        {% empty %}<p class="muted">{% translate "Sizga biriktirilgan ochiq topshiriqlar yo‘q" %}</p>{% endfor %}
+      </div></section>
+    {% endif %}
   </div>
-</section>
+  <div class="stack">
+    {% if perms.notifications.view_notification %}
+    <section class="card" id="bildirishnomalar"><div class="card-head"><h2>{% translate "Oxirgi bildirishnomalar" %}</h2><a class="more" href="{% url 'notifications:list' %}">{% translate "Barchasi" %}</a></div><div class="card-body list-rows">
+      {% for n in recent_notifications %}
+      <a class="li" href="{% url 'notifications:list' %}" style="text-decoration:none"><span class="ic-chip {% if n.news_id %}c-blue{% else %}c-orange{% endif %}" data-i="{% if n.news_id %}news{% else %}clipboard{% endif %}"></span><div class="grow t1">{{ n.get_kind_display }}{% if n.shown %}<div class="xs muted">{{ n.title }}</div>{% endif %}<div class="date">{{ n.created_at|date:"d.m.Y H:i" }}{% if not n.read_at %} · {% translate "Yangi" %}{% endif %}</div></div></a>
+      {% empty %}<p class="muted">{% translate "Bildirishnomalar yo‘q" %}</p>{% endfor %}
+    </div></section>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

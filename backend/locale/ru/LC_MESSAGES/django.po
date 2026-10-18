@@ -2788,3 +2788,30 @@ msgstr "Расположение"
 
 msgid "Xarita namunasi — manzil tasdiqlangach almashtiriladi."
 msgstr "Образец карты — будет заменён после подтверждения адреса."
+
+msgid "Sertifikatlar"
+msgstr "Сертификаты"
+
+msgid "Kirish-chiqish"
+msgstr "Приход и уход"
+
+msgid "Geolokatsiya"
+msgstr "Геолокация"
+
+msgid "Chat"
+msgstr "Чат"
+
+msgid "Dizayn maketi."
+msgstr "Макет дизайна."
+
+msgid "Bu bo‘lim hali ishlamaydi — namunaviy ma’lumotlar ko‘rsatilgan."
+msgstr "Этот раздел пока не работает — показаны образцовые данные."
+
+msgid "Mening topshiriqlarim"
+msgstr "Мои задания"
+
+msgid "Sizga biriktirilgan ochiq topshiriqlar yo‘q"
+msgstr "Нет открытых заданий, назначенных вам"
+
+msgid "Oxirgi bildirishnomalar"
+msgstr "Последние уведомления"

@@ -1,0 +1,10 @@
+{% extends "base_portal.html" %}{% load static i18n %}
+{% block title %}Yutuqlar{% endblock %}
+{% block content %}
+<div class="alert warn" style="margin-bottom:16px"><span data-i="alert"></span><span><b>{% translate "Dizayn maketi." %}</b> {% translate "Bu bo‘lim hali ishlamaydi — namunaviy ma’lumotlar ko‘rsatilgan." %}</span></div>
+<div class="page-head"><div><h1>Yutuqlar</h1><p>Xodimlarning erishgan natijalari</p></div><a class="btn btn-secondary" href="{% url 'portal:preview' 'sertifikatlar' %}"><span data-i="award" data-c="sm"></span>Sertifikatlar</a></div>
+<div class="toolbar" style="margin-bottom:16px"><div class="search"><span data-i="search" data-c="sm"></span><input placeholder="Yutuq qidirish" aria-label="Yutuq qidirish"></div><select class="select" aria-label="Yil"><option>Yil: Barchasi</option></select></div>
+<div class="auto-grid" data-render="achv"></div>
+</div></div>
+<script src="{% static 'assets/js/data.js' %}"></script><script src="{% static 'assets/js/pages.js' %}"></script>
+{% endblock %}
