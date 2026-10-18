@@ -247,6 +247,14 @@ DOCUMENT_MAX_BYTES = int(env("DOCUMENT_MAX_BYTES", str(10 * 1024 * 1024)))
 FILE_UPLOAD_MAX_MEMORY_SIZE = 2 * 1024 * 1024
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1 * 1024 * 1024
 FILE_UPLOAD_PERMISSIONS = 0o600
+# collectstatic output is PUBLIC (nginx, another user, serves it): the 0600 above must not apply to it. Uploads and documents keep 0600 (PrivateStorage).
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "OPTIONS": {"file_permissions_mode": 0o644, "directory_permissions_mode": 0o755},
+    },
+}
 
 # --- Notifications: e-mail copies are OFF unless explicitly enabled (and SMTP configured).
 NOTIFICATION_EMAILS_ENABLED = env_bool("NOTIFICATION_EMAILS_ENABLED", False)

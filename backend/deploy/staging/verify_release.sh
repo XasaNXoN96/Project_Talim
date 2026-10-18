@@ -77,6 +77,7 @@ rel deploy r1 >"$WORK/o1" 2>&1; rc=$?; ok "r1 deployed (rc=$rc)" "$rc"; ok "r1 i
 ok "a backup was taken before the change" "$([ -n "$(ls "$WORK/backups" 2>/dev/null | grep '^talim-')" ] && echo 0 || echo 1)"
 echo "== 2. normal update"
 rel deploy r2 >"$WORK/o2" 2>&1; rc=$?; ok "r2 deployed (rc=$rc)" "$rc"; ok "r2 is serving" "$(is "$(serving)" r2)"; ok "previous is recorded as r1" "$(is "$(cat "$WORK/releases/.previous")" r1)"
+ok "static files of the new release can be read by the web server (world-readable, directories traversable)" "$(n=$(find "$WORK/releases/r2/backend/staticfiles" \( -type f ! -perm -o=r \) -o \( -type d ! -perm -o=rx \) 2>/dev/null | wc -l); [ "$n" = 0 ] && [ -d "$WORK/releases/r2/backend/staticfiles" ] && echo 0 || echo 1)"
 echo "== 3. release that migrates and then cannot start -> automatic return"
 rel deploy r3 >"$WORK/o3" 2>&1; rc=$?; ok "release reports failure rc=1" "$(is "$rc" 1)"; ok "r2 is serving again" "$(is "$(serving)" r2)"
 ok "health answers 200 after the return" "$(curl -fsS -H "Host: localhost" -H "X-Forwarded-Proto: https" "http://127.0.0.1:$PORT/healthz/" >/dev/null 2>&1; echo $?)"

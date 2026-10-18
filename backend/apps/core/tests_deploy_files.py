@@ -172,3 +172,62 @@ class Day14Files(SimpleTestCase):
         self.assertNotRegex(script, r"[\w.+-]+@(?!host\b)[\w-]+\.[a-z]{2,}")  # no real address
         r = subprocess.run(["bash", "-n", str(DEPLOY / "backup" / "ship_offsite.example.sh")], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stderr)
+
+
+class StaticFilesAreReadableByTheWebServer(SimpleTestCase):
+    """Found while preparing staging: FILE_UPLOAD_PERMISSIONS = 0o600 (right for private documents) also applied to collectstatic, so nginx, which runs as
+    another user, could not read a single stylesheet. Static files are public by nature and must be 0644 / 0755; uploads stay 0600."""
+
+    def test_collectstatic_output_is_world_readable_while_uploads_stay_private(self):
+        import stat
+        import tempfile
+
+        from django.conf import settings
+        from django.core.management import call_command
+        from django.test import override_settings
+
+        with tempfile.TemporaryDirectory() as root:
+            with override_settings(STATIC_ROOT=root):
+                from django.core.files.storage import storages
+                storages._storages.pop("staticfiles", None)          # rebuild the handler's storage with the overridden root
+                call_command("collectstatic", interactive=False, verbosity=0)
+            bad = []
+            count = 0
+            for dirpath, dirnames, filenames in os.walk(root):
+                for name in dirnames:
+                    if os.stat(os.path.join(dirpath, name)).st_mode & (stat.S_IROTH | stat.S_IXOTH) != (stat.S_IROTH | stat.S_IXOTH):
+                        bad.append(os.path.join(dirpath, name))
+                for name in filenames:
+                    count += 1
+                    if not os.stat(os.path.join(dirpath, name)).st_mode & stat.S_IROTH:
+                        bad.append(os.path.join(dirpath, name))
+            self.assertGreater(count, 20)
+            self.assertEqual(bad[:3], [], f"{len(bad)} unreadable entries")
+        storages._storages.pop("staticfiles", None)
+        self.assertEqual(settings.FILE_UPLOAD_PERMISSIONS, 0o600)    # private uploads are unchanged
+
+
+class Day23Files(SimpleTestCase):
+    BACKEND = Path(__file__).resolve().parents[2]
+
+    def test_new_scripts_and_sql_exist_and_are_valid(self):
+        for rel in ("deploy/backup/verify_backup_roles.sh", "deploy/staging/verify_release.sh", "deploy/staging/verify_preflight.sh"):
+            path = self.BACKEND / rel
+            self.assertTrue(os.access(path, os.X_OK), rel)
+            self.assertEqual(subprocess.run(["bash", "-n", str(path)]).returncode, 0, rel)
+        sql = (self.BACKEND / "deploy/postgres/create_backup_role.sql").read_text()
+        self.assertIn("NOSUPERUSER CREATEDB NOCREATEROLE", sql)
+        self.assertIn("pg_read_all_data", sql)
+        self.assertNotRegex(sql, r"PASSWORD\s+'(?!:)", "no literal password")
+        grants = (self.BACKEND / "deploy/postgres/apply_grants.sql").read_text()
+        self.assertIn("backup_role", grants)
+
+    def test_the_restore_check_runs_its_application_steps_as_the_restore_role_not_the_runtime_role(self):
+        text = (self.BACKEND / "deploy/backup/restore_check.sh").read_text()
+        self.assertIn('export DB_USER="${PGUSER:?', text)
+        self.assertLess(text.index('export DB_USER="${PGUSER:?'), text.index("manage.py migrate"))
+
+    def test_release_script_publishes_static_files_readable_by_the_web_server(self):
+        text = (self.BACKEND / "deploy/staging/release.sh").read_text()
+        self.assertIn("umask 022; cd \"$rel\" && $PY manage.py collectstatic", text)
+        self.assertIn('"file_permissions_mode": 0o644', (self.BACKEND / "config/settings/base.py").read_text())

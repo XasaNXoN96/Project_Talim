@@ -59,7 +59,7 @@ deploy)
     echo "release: migrate FAILED; the old release keeps serving (a partly applied migration may need the restore decision)" >&2; exit 1
   fi
   if [ -n "${POST_MIGRATE_SQL_CMD:-}" ]; then bash -c "$POST_MIGRATE_SQL_CMD" || { echo "release: post-migrate step failed" >&2; exit 1; }; fi
-  echo "4/6 static ..."; (cd "$rel" && $PY manage.py collectstatic --noinput -v0) || { echo "release: collectstatic failed" >&2; exit 1; }
+  echo "4/6 static ..."; (umask 022; cd "$rel" && $PY manage.py collectstatic --noinput -v0)  # public files: nginx (another user) must read them; the script's own umask 027 would make them unreadable || { echo "release: collectstatic failed" >&2; exit 1; }
   echo "5/6 switching to $new ..."; prev_before="$(cat "$RELEASES_DIR/.previous" 2>/dev/null || true)"; echo "$old" > "$RELEASES_DIR/.previous"; switch_to "$new"
   echo "6/6 restart and health check ..."
   if restart_and_check; then echo "RELEASE_OK current=$new previous=${old:--}"; exit 0; fi

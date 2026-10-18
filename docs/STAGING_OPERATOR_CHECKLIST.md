@@ -6,6 +6,27 @@
 
 ---
 
+## 0. План оператора в 14 шагов и критерии остановки (День 23)
+Каждый шаг — «выполнено» только после записи (дата, кто, результат) вне Git. **Если критерий остановки сработал — дальше не идти, сообщить ответственному.** Все команды и пути ниже существуют в репозитории; что из них проверено только в песочнице, помечено в `STAGING_BLOCKERS.md`.
+
+| № | Шаг | Где подробно | Остановить, если |
+|---|---|---|---|
+| 1 | Доступность сервера и права: SSH, sudo, письменные разрешения (§3) | §2–3 | нет разрешения владельца или нет доступа |
+| 2 | Подготовка отдельной staging-ВМ: пакеты, пользователь `talim`, каталоги | §1, §5.1 | это не отдельная машина / там есть реальные данные |
+| 3 | Домен, DNS, доверенный сертификат (получает владелец) | §2, §5.9 | сертификат не проходит проверку (`smoke_remote.py` без `--insecure-self-signed`, браузер) |
+| 4 | PostgreSQL и **три** роли: владелец, runtime, резервное копирование (`create_roles.sql`, `create_backup_role.sql`, `apply_grants.sql`) | §5.2, §5.5 | `preflight.py`: роль приложения суперпользователь, создаёт БД/объекты или меняет `audit_auditlog`; роль копий без `CREATEDB` или совпадает с runtime |
+| 5 | Gunicorn и Nginx (`talim-gunicorn.service`, шаблон nginx) | §5.7, §5.9 | `nginx -t` не проходит; статика не читается nginx; 80 не перенаправляет на 443 |
+| 6 | Секреты и права файлов: `talim.env`, `backup.env`, файлы паролей | §4, §5.3 | `preflight.py` FAIL по правам/заглушкам/`DEBUG`/report-only CSP; **секрет виден в журнале, выводе команды или конфигурации** |
+| 7 | Миграции (роль-владелец), `apply_grants.sql`, **`seed_roles --dry-run`**, затем `seed_roles` | §5.5 | миграция завершилась ошибкой (**не повторять вслепую**, §10); `seed_roles` показал неожиданное нестандартное право |
+| 8 | SMTP и **реальное** письмо сброса пароля | §7 | письмо не доходит или ссылка ведёт не на staging-хост; токен виден в журнале |
+| 9 | ClamAV с официальной базой: `freshclam`, **`check_scanner --eicar`**, загрузка тестовой EICAR отклонена | §8 | `check_scanner --eicar` не прошёл (нет пригодной базы), сканер недоступен, загрузка EICAR принята |
+| 10 | systemd: службы и таймеры, `job_status` | §5.10, §9 | `job_status` показывает сбой после ручного запуска |
+| 11 | Резервная копия и **восстановление в отдельном окружении** (не на этой же БД) | §9 | копия не создаётся/не проходит проверку; восстановление не удалось проверить |
+| 12 | Мониторинг, журналы, оповещения об ошибках (внешний опрос `/healthz/`, замена `ExecStart` в `talim-job-failed@.service`, ротация журналов) | §6.15, §11 | нет дежурного/канала оповещений |
+| 13 | Приёмочные сценарии с вымышленными данными | §6–8 | любая проверка §6 не пройдена |
+| 14 | Решение о допуске к ограниченному внутреннему пилоту | §11 | не выполнен хотя бы один пункт §11 |
+Дополнительно останавливаться при любом пункте §12.
+
 ## 1. Минимальные требования к серверу/ВМ
 Отдельная машина, **не production**; Ubuntu 24.04 LTS (на ней сверялись версии); ≥ 2 vCPU, 4 ГБ ОЗУ (ClamAV держит базу 1–2 ГБ), 40 ГБ SSD + место под копии (≥ 3× объёма БД и документов); статический публичный адрес; Python 3.12, PostgreSQL 16, nginx, ClamAV (`clamd`, `freshclam`), `curl`, `openssl`, `systemd`; автоматические обновления безопасности и NTP включены средствами ОС. Для проверки восстановления — **второй** каталог/машина (лучше отдельный сервер).
 
@@ -28,7 +49,7 @@
 Необязательные (есть в `config/settings`): `EMAIL_PORT`, `EMAIL_USE_TLS`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `CLAMAV_HOST`, `CLAMAV_PORT`, `CLAMAV_SOCKET`, `CLAMAV_TIMEOUT`, `DOCUMENT_MAX_BYTES`, `NOTIFICATION_EMAILS_ENABLED`, `DJANGO_LOG_LEVEL`. **Не задавать** `DJANGO_CSP_REPORT_ONLY` (CSP должен блокировать) и `DJANGO_SECURE_SSL_REDIRECT=0`.
 **`/etc/talim/backup.env`** (`root:talim`, `0640`, имена и пути): `BACKUP_DIR`, `BACKUP_PASSPHRASE_FILE`, `PGPASSFILE`; при необходимости `PGHOST PGPORT PGUSER PGDATABASE PRIVATE_MEDIA_ROOT BACKUP_KEEP`.
 **Отдельные секреты-файлы (`0600`, вне Git):** пароль владельца БД, пароль роли приложения, `backup.pass` (≥ 20 символов, вне `BACKUP_DIR`), `backup.pgpass`, приватный ключ TLS. **Копии секретов** (`OTP_ENCRYPTION_KEYS`, `backup.pass`, `talim.env`, ключ TLS) хранить **отдельно от резервных копий данных** (см. DEPLOYMENT_READINESS §6): без `OTP_ENCRYPTION_KEYS` пользователи не войдут после восстановления; без пароля копий копии нечитаемы. Значения не копировать в чаты, тикеты, журналы, Git.
-⚠ **[не проверено]** Роль `PGUSER` в `backup.env` по умолчанию совпадает с рабочей ролью приложения (`DB_USER`), у которой нет `CREATEDB`; для `run_restore_check` нужна отдельная роль с `CREATEDB` и правом чтения всех таблиц — задать её в `backup.env` (`PGUSER`) и `backup.pgpass`. Эта комбинация на настоящем сервере не проверялась.
+Роль копий (`PGUSER` в `backup.env`) — **отдельная** третья роль (`create_backup_role.sql`): `CREATEDB` + `pg_read_all_data`, не суперпользователь, не владелец, не runtime-роль. Проверка восстановления запускает прикладные шаги **от этой роли** (скрипт сам подставляет её в `DB_USER`), потому что runtime-роль не имеет прав ни на временную БД, ни на DDL. Топология из трёх ролей отрепетирована в песочнице (`deploy/backup/verify_backup_roles.sh`); **на сервере не проверялась** — `preflight.py --backup-env` проверит роль и права.
 
 ## 5. Последовательность развёртывания (все команды из репозитория)
 Рабочий каталог — клон репозитория; `<тег>` — каталог релиза.
@@ -45,6 +66,9 @@
 2. **PostgreSQL**: роли и права (§4.2), `listen_addresses` только локально, `scram-sha-256`:
    ```bash
    sudo -u postgres psql -v owner=talim_owner -v app=talim_app -v db=talim -v owner_password="$(cat <файл>)" -v app_password="$(cat <файл>)" -f backend/deploy/postgres/create_roles.sql
+   # третья роль — только для резервного копирования и проверки восстановления (CREATEDB + чтение данных; не суперпользователь, не владелец):
+   sudo -u postgres psql -v backup_role=talim_backup -v backup_password="$(cat <файл 0600>)" -f backend/deploy/postgres/create_backup_role.sql
+   # право подключаться к рабочей БД роль копий получает из apply_grants.sql (шаг 5) при передаче -v backup_role=talim_backup
    ```
 3. **Окружение**: создать `/etc/talim/talim.env` по шаблону (`root:talim`, `0640`) и `backup.env` (§4). Файл не должен принадлежать пользователю `talim`.
 4. **Код и зависимости**: релиз = полный checkout репозитория (нужны `backend/` и `assets/`):
@@ -56,18 +80,18 @@
 5. **Миграции и права** — владелец БД только для миграций (§4.4, §4.2):
    ```bash
    DB_USER=talim_owner DB_PASSWORD=<…> DJANGO_SETTINGS_MODULE=config.settings.production <остальные переменные из talim.env> .venv/bin/python manage.py migrate
-   PGPASSWORD=<…> psql -h 127.0.0.1 -U talim_owner -d talim -v app=talim_app -v db=talim -f deploy/postgres/apply_grants.sql
+   PGPASSWORD=<…> psql -h 127.0.0.1 -U talim_owner -d talim -v app=talim_app -v db=talim -v backup_role=talim_backup -f deploy/postgres/apply_grants.sql
    .venv/bin/python manage.py seed_roles --dry-run    # прочитать план; нестандартные права (=) остаются, удаляет только --prune
    .venv/bin/python manage.py seed_roles && .venv/bin/python manage.py collectstatic --noinput
    ```
 6. **Предпроверка** (от `talim`; **остановиться, если есть FAIL**):
    ```bash
-   sudo -u talim /srv/talim/backend/.venv/bin/python /srv/talim/backend/deploy/staging/preflight.py --env-file /etc/talim/talim.env --backend /srv/talim/backend
+   sudo -u talim /srv/talim/backend/.venv/bin/python /srv/talim/backend/deploy/staging/preflight.py --env-file /etc/talim/talim.env --backend /srv/talim/backend --backup-env /etc/talim/backup.env
    ```
-   Ожидается `PREFLIGHT OK`; SKIP (SMTP, TLS, файрвол) — ручные пункты ниже.
+   Ожидается `PREFLIGHT OK`; SKIP (SMTP, TLS, файрвол) — ручные пункты ниже. С `--backup-env` проверяется и среда копий: файл `backup.env` не открыт всем, заданы `BACKUP_DIR`, `BACKUP_PASSPHRASE_FILE`, `PGUSER`; роль копий **не совпадает** с runtime-ролью и не `postgres`; пароль копий 0600, ≥ 20 символов, вне каталога копий и хранилища документов; каталог копий 0700; `PGPASSFILE` 0600; роль реально имеет `CREATEDB` и не суперпользователь (проверка через `psql`, если он установлен).
 7. **Gunicorn**: `sudo cp backend/deploy/systemd/talim-gunicorn.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl enable --now talim-gunicorn`.
-8. **ClamAV**: по [CLAMAV.md](CLAMAV.md) (`freshclam`, `StreamMaxLength 25M`), `DOCUMENT_SCAN_MODE=clamav`; `sudo -u talim … manage.py check_scanner` → OK.
-9. **Nginx и TLS**: из `backend/deploy/nginx/talim-production.conf.template` подставить плейсхолдеры (`{{SERVER_NAME}}`, `{{TLS_CERT}}`, `{{TLS_KEY}}`, `{{BACKEND_PORT}}`=8000, `{{HTTP_LISTEN}}`, `{{HTTPS_LISTEN}}`, `{{HTTPS_PORT_SUFFIX}}` (пусто для 443), `{{ERROR_DIR}}`, `{{STATIC_DIR}}`, `{{ACCESS_LOG}}`) — образец подстановки в `backend/deploy/nginx/verify/run_tls.sh`; `sudo nginx -t && sudo systemctl reload nginx`. Версия nginx < 1.25.1: `listen … ssl http2;` (как в шаблоне); ≥ 1.25.1 — см. комментарий в шаблоне.
+8. **ClamAV**: по [CLAMAV.md](CLAMAV.md) (`freshclam`, `StreamMaxLength 25M`), `DOCUMENT_SCAN_MODE=clamav`; `sudo -u talim … manage.py check_scanner --eicar` → «clamd OK (… EICAR … DETECTED)» (это доказывает, что загружена пригодная база сигнатур; без `--eicar` проверяется только ответ демона). Регулярный таймер `talim-check_scanner.timer` выполняет обычную проверку.
+9. **Nginx и TLS**: из `backend/deploy/nginx/talim-production.conf.template` подставить плейсхолдеры (`{{SERVER_NAME}}`, `{{TLS_CERT}}`, `{{TLS_KEY}}`, `{{BACKEND_PORT}}`=8000, `{{HTTP_LISTEN}}`, `{{HTTPS_LISTEN}}`, `{{HTTPS_PORT_SUFFIX}}` (пусто для 443), `{{ERROR_DIR}}`, `{{STATIC_DIR}}` (= `/srv/talim/backend/staticfiles`: каталог, который создаёт `collectstatic`), `{{ACCESS_LOG}}`) — образец подстановки в `backend/deploy/nginx/verify/run_tls.sh`; `sudo nginx -t && sudo systemctl reload nginx`. Права на статику: файлы `collectstatic` публичны и создаются 0644/0755 (настроено в `STORAGES`, проверяется тестом); процесс nginx (другой пользователь) должен проходить по каталогам `/srv`, `/srv/talim`, `releases/<тег>/backend` (режим `o+x`); секреты лежат в `/etc/talim`, не здесь. Версия nginx < 1.25.1: `listen … ssl http2;` (как в шаблоне); ≥ 1.25.1 — см. комментарий в шаблоне.
 10. **Таймеры и службы** (SCHEDULER.md §4):
     ```bash
     sudo cp backend/deploy/systemd/talim-job*.service backend/deploy/systemd/talim-*.timer /etc/systemd/system/

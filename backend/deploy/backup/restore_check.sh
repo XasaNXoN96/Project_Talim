@@ -39,6 +39,10 @@ echo "3/6 restore database (decrypted on the fly)"; dec "$SRC/db.dump.enc" | pg_
 echo "4/6 restore files"; dec "$SRC/files.tar.enc" | tar --extract --directory "$RESTORE_FILES"
 echo "5/6 application-level checks against the restored copy"
 cd "$BACKEND_DIR"
+# The application-level steps run as the RESTORE role (PGUSER: it created the scratch database, owns what pg_restore made, and may migrate it), NOT as
+# the runtime role that /etc/talim/talim.env puts in DB_USER: the runtime role has no rights on a scratch database and no DDL. An empty DB_PASSWORD makes
+# libpq fall back to PGPASSFILE / PGPASSWORD of the restore role. The live database is never contacted with these settings (DB_NAME is the scratch name).
+export DB_USER="${PGUSER:?PGUSER (the restore role) is not set}" DB_PASSWORD="${PGPASSWORD:-}" DB_HOST="${PGHOST:-}" DB_PORT="${PGPORT:-}"
 export DB_NAME="$RESTORE_DB" DJANGO_PRIVATE_MEDIA_ROOT="$RESTORE_FILES" DJANGO_SETTINGS_MODULE="${DJANGO_SETTINGS_MODULE:-config.settings.dev}" DOCUMENT_SCAN_MODE=disabled RESTORE_CHECK=1
 # A backup taken before the latest release lacks the newest migrations: that is normal. They are applied to the SCRATCH copy (what a real
 # recovery does), and the number is reported; a migration that fails on restored data fails the check.

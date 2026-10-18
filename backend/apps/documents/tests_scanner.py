@@ -389,3 +389,56 @@ class ProductionGuardTests(SimpleTestCase):
         env["DOCUMENT_SCAN_MODE"] = "clamav"
         proc = subprocess.run([sys.executable, "-c", "import django; django.setup()"], env=env, capture_output=True, text=True, cwd=Path(__file__).resolve().parents[2])
         self.assertEqual(proc.returncode, 0, proc.stderr[-500:])
+
+
+class CheckScannerEicarTests(SimpleTestCase):
+    """`check_scanner --eicar`: a daemon that ANSWERS but has no usable signature database must not pass (it would accept real malware)."""
+
+    EICAR_START = b"X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*"
+
+    def run_check(self, detects, scan_error=None):
+        from io import StringIO
+        from unittest import mock
+
+        from django.core.management import call_command
+        seen = []
+
+        def fake_scan(data):
+            seen.append(data)
+            if scan_error:
+                raise scanner.ScanFailed(scan_error)
+            return scanner.ScanResult(clean=not (detects and b"EICAR-STANDARD" in data), signature="Eicar-Test-Signature" if detects else "")
+
+        with override_settings(DOCUMENT_SCAN_MODE="clamav"), mock.patch.object(scanner, "ping", return_value=True), mock.patch.object(scanner, "scan_bytes", side_effect=fake_scan):
+            out = StringIO()
+            call_command("check_scanner", "--eicar", "--no-record", stdout=out)
+            return out.getvalue(), seen
+
+    def test_passes_when_the_standard_test_string_is_detected(self):
+        out, seen = self.run_check(detects=True)
+        self.assertIn("EICAR test string was DETECTED", out)
+        self.assertEqual(seen[-1], self.EICAR_START)                 # exactly the standard string, nothing else
+
+    def test_fails_when_the_daemon_calls_the_test_string_clean_that_means_no_usable_signatures(self):
+        from django.core.management.base import CommandError
+        with self.assertRaises(CommandError) as ctx:
+            self.run_check(detects=False)
+        self.assertIn("did NOT detect", str(ctx.exception))
+        self.assertIn("freshclam", str(ctx.exception))
+
+    def test_a_scan_that_fails_fails_the_check(self):
+        from django.core.management.base import CommandError
+        with self.assertRaises(CommandError):
+            self.run_check(detects=True, scan_error="scan_unavailable")
+
+    def test_the_plain_check_without_the_flag_is_unchanged(self):
+        from io import StringIO
+        from unittest import mock
+
+        from django.core.management import call_command
+        with override_settings(DOCUMENT_SCAN_MODE="clamav"), mock.patch.object(scanner, "ping", return_value=True), \
+                mock.patch.object(scanner, "scan_bytes", return_value=scanner.ScanResult(clean=True)) as scan:
+            out = StringIO()
+            call_command("check_scanner", "--no-record", stdout=out)
+        self.assertIn("test scan succeeded", out.getvalue())
+        self.assertEqual(scan.call_count, 1)

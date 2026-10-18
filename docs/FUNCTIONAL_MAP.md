@@ -187,3 +187,6 @@
 
 ## 18. День 22: финальная приёмка
 См. [ACCEPTANCE_REPORT.md](ACCEPTANCE_REPORT.md). Сквозные цепочки «сотрудник», «документы», «новости», «отчёты и поиск», «разрешения» пройдены автоматически (8 тестов), проба масштаба на 1500 строках каждого вида — без N+1 (3 теста). Новых дефектов не найдено, функции не добавлялись. Нагрузочное тестирование не проводилось.
+
+## 19. День 23: подготовка к реальному staging
+См. [STAGING_BLOCKERS.md](STAGING_BLOCKERS.md), [STAGING_OPERATOR_CHECKLIST.md](STAGING_OPERATOR_CHECKLIST.md) §0. Staging **не существует**. В песочнице исправлены два дефекта развёртывания (статика 0600; прикладные шаги проверки восстановления от runtime-роли), добавлены `check_scanner --eicar`, `preflight.py --backup-env`, `create_backup_role.sql`, `verify_backup_roles.sh`.

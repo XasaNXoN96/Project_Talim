@@ -144,3 +144,62 @@ class StagingFiles(SimpleTestCase):
         self.assertIn("ssl.create_default_context()", text)
         self.assertEqual(text.count("CERT_NONE"), 1)
         self.assertIn("if insecure:", text)
+
+
+class BackupEnvironmentRules(SimpleTestCase):
+    """preflight.check_backup_env: the files and values that make the restore check possible without giving the runtime role CREATEDB."""
+
+    def setUp(self):
+        import tempfile
+        self.pre = _load("preflight")
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        root = Path(self.tmp.name)
+        (root / "backups").mkdir(mode=0o700)
+        (root / "media").mkdir()
+        self.pass_file = root / "backup.pass"
+        self.pass_file.write_text("x" * 40)
+        os.chmod(self.pass_file, 0o600)
+        self.root = root
+
+    def rows(self, **over):
+        values = {"BACKUP_DIR": str(self.root / "backups"), "BACKUP_PASSPHRASE_FILE": str(self.pass_file), "PGUSER": "talim_backup"} | over
+        envfile = self.root / "backup.env"
+        envfile.write_text("".join(f"{k}={v}\n" for k, v in values.items() if v is not None))
+        os.chmod(envfile, 0o640)
+        report = self.pre.Report()
+        self.pre.check_backup_env(str(envfile), {"DB_USER": "talim_app", "DJANGO_PRIVATE_MEDIA_ROOT": str(self.root / "media")}, report)
+        return {name: status for status, name, _d in report.rows}
+
+    def failed(self, rows):
+        return {n for n, s in rows.items() if s == "FAIL"} - {"backup role can connect", "backup role rights wrong"}   # the live database probe is not part of these unit tests
+
+    def test_a_correct_file_set_passes_every_file_and_value_rule(self):
+        self.assertEqual(self.failed(self.rows()), set())
+
+    def test_the_backup_role_must_not_be_the_runtime_role_or_a_superuser_account(self):
+        self.assertIn("backup role must differ from the runtime role", self.failed(self.rows(PGUSER="talim_app")))
+        self.assertIn("backup role must not be a superuser account", self.failed(self.rows(PGUSER="postgres")))
+
+    def test_the_passphrase_file_rules(self):
+        os.chmod(self.pass_file, 0o644)
+        self.assertIn("passphrase file must be mode 0600", self.failed(self.rows()))
+        os.chmod(self.pass_file, 0o600)
+        self.pass_file.write_text("short")
+        self.assertIn("passphrase file is shorter than 20 characters", self.failed(self.rows()))
+        inside = self.root / "backups" / "p"
+        inside.write_text("x" * 40)
+        os.chmod(inside, 0o600)
+        self.assertIn("passphrase file lies inside the backup directory or the document store", self.failed(self.rows(BACKUP_PASSPHRASE_FILE=str(inside))))
+
+    def test_missing_variables_and_open_directories_fail(self):
+        self.assertIn("backup variables missing", self.failed(self.rows(PGUSER=None)))
+        os.chmod(self.root / "backups", 0o755)
+        self.assertIn("backup directory must be 0700", self.failed(self.rows()))
+
+    def test_a_world_readable_backup_environment_file_fails(self):
+        self.rows()
+        os.chmod(self.root / "backup.env", 0o644)
+        report = self.pre.Report()
+        self.pre.check_backup_env(str(self.root / "backup.env"), {"DB_USER": "talim_app"}, report)
+        self.assertTrue(any(s == "FAIL" and "world-accessible" in n for s, n, _d in report.rows))

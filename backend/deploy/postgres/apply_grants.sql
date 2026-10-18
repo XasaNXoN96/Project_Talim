@@ -1,11 +1,15 @@
 -- Runtime privileges of the application role. Run as the OWNER role (or a superuser) AFTER EVERY `manage.py migrate`; it is idempotent.
---   psql -d <database> -v app=talim_app -v db=<database> -f apply_grants.sql
+--   psql -d <database> -v app=talim_app -v db=<database> [-v backup_role=talim_backup] -f apply_grants.sql
 -- The roles themselves are created once with create_roles.sql. Nothing here contains a password.
 --
 -- Principles: the application role is not a superuser and cannot create databases, roles, tables or schemas; it can read and write rows,
 -- but it cannot rewrite the migration history, and the audit log is APPEND-ONLY for it at the database level (no UPDATE/DELETE/TRUNCATE).
 -- The one UPDATE it keeps on the audit log is the user_id column, because deleting a user sets that column to NULL (ON DELETE SET NULL).
 GRANT CONNECT ON DATABASE :"db" TO :"app";
+-- optional: the backup/restore role (create_backup_role.sql) must be allowed to connect to the live database to dump it. Pass -v backup_role=talim_backup.
+\if :{?backup_role}
+GRANT CONNECT ON DATABASE :"db" TO :"backup_role";
+\endif
 GRANT USAGE ON SCHEMA public TO :"app";
 REVOKE CREATE ON SCHEMA public FROM :"app";
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO :"app";

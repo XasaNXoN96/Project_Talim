@@ -100,6 +100,64 @@ def check_files(env_file, env, report):
     report.passed("running as an unprivileged user") if os.getuid() != 0 else report.failed("running as root")
 
 
+def check_backup_env(path, env, report):
+    """The backup/restore environment file (names, paths; secrets live in separate 0600 files). Pure file and value rules + one optional psql probe."""
+    try:
+        values = parse_env(open(path).read())
+        st = os.stat(path)
+    except OSError:
+        report.failed("backup environment file readable", "cannot read it (create /etc/talim/backup.env: DEPLOYMENT_READINESS §4.11)")
+        return
+    mode = stat.S_IMODE(st.st_mode)
+    report.passed("backup environment file is not world-accessible", oct(mode)) if not mode & 0o007 else report.failed("backup environment file is world-accessible", oct(mode))
+    missing = [k for k in ("BACKUP_DIR", "BACKUP_PASSPHRASE_FILE", "PGUSER") if not values.get(k)]
+    report.passed("BACKUP_DIR, BACKUP_PASSPHRASE_FILE and PGUSER are set") if not missing else report.failed("backup variables missing", ", ".join(missing))
+    if values.get("PGUSER") and values["PGUSER"] == env.get("DB_USER"):
+        report.failed("backup role must differ from the runtime role", "PGUSER equals DB_USER: the restore check needs CREATEDB, which the runtime role must never get (deploy/postgres/create_backup_role.sql)")
+    elif values.get("PGUSER"):
+        report.passed("backup role differs from the runtime role")
+    if values.get("PGUSER") in ("postgres", "root"):
+        report.failed("backup role must not be a superuser account", values["PGUSER"])
+    pf = values.get("BACKUP_PASSPHRASE_FILE")
+    if pf:
+        try:
+            pm = stat.S_IMODE(os.stat(pf).st_mode)
+            size = os.path.getsize(pf)
+            report.passed("passphrase file is mode 0600", oct(pm)) if pm == 0o600 else report.failed("passphrase file must be mode 0600", oct(pm))
+            report.passed("passphrase file holds at least 20 characters") if size >= 20 else report.failed("passphrase file is shorter than 20 characters")
+            inside = [d for d in (values.get("BACKUP_DIR"), env.get("DJANGO_PRIVATE_MEDIA_ROOT")) if d and os.path.realpath(pf).startswith(os.path.realpath(d) + os.sep)]
+            report.passed("passphrase file lies outside the backup directory and the document store") if not inside else report.failed("passphrase file lies inside the backup directory or the document store")
+        except OSError:
+            report.failed("passphrase file readable", "cannot stat it")
+    bd = values.get("BACKUP_DIR")
+    if bd and os.path.isdir(bd):
+        bm = stat.S_IMODE(os.stat(bd).st_mode)
+        report.passed("backup directory is private", oct(bm)) if not bm & 0o077 else report.failed("backup directory must be 0700", oct(bm))
+    elif bd:
+        report.failed("backup directory exists", bd)
+    pg = values.get("PGPASSFILE")
+    if pg:
+        try:
+            gm = stat.S_IMODE(os.stat(pg).st_mode)
+            report.passed("PGPASSFILE is mode 0600", oct(gm)) if gm == 0o600 else report.failed("PGPASSFILE must be mode 0600", oct(gm))
+        except OSError:
+            report.failed("PGPASSFILE readable", "cannot stat it")
+    # does the role really have what the restore check needs? (only when psql is installed and the role can connect)
+    probe_env = {k: v for k, v in os.environ.items() if not k.startswith("PG")}   # ambient PG* settings must not leak in: test the role AS CONFIGURED in backup.env
+    probe_env.update({k: v for k, v in values.items() if k.startswith("PG")}, PGDATABASE="postgres")
+    probe_env.setdefault("PGHOST", env.get("DB_HOST", ""))
+    try:
+        r = subprocess.run(["psql", "-Atc", "select rolcreatedb, rolsuper, rolcreaterole from pg_roles where rolname = current_user"], env=probe_env, capture_output=True, text=True, timeout=30)
+    except FileNotFoundError:
+        report.skipped("backup role rights (CREATEDB, not superuser)", "psql not installed here")
+        return
+    if r.returncode != 0:
+        report.failed("backup role can connect", "psql could not connect with the PG* settings of backup.env: " + (r.stderr.strip().splitlines() or [""])[-1][:120])
+    else:
+        createdb, superuser, createrole = (r.stdout.strip().split("|") + ["", "", ""])[:3]
+        report.passed("backup role has CREATEDB (needed by the restore check) and is not a superuser") if createdb == "t" and superuser == "f" and createrole == "f" else report.failed("backup role rights wrong", f"createdb={createdb} superuser={superuser} createrole={createrole}")
+
+
 def check_tools(backend, report, skip=False):
     if skip:
         report.skipped("nginx / systemd-analyze", "skipped by --skip-tools (rehearsal without those tools)")
@@ -168,6 +226,7 @@ def main(argv=None):
     ap.add_argument("--env-file", default="/etc/talim/talim.env")
     ap.add_argument("--backend", default="/srv/talim/backend")
     ap.add_argument("--skip-tools", action="store_true", help="do not call nginx/systemd-analyze (they are listed as SKIP)")
+    ap.add_argument("--backup-env", default=None, help="also audit the backup/restore environment file (e.g. /etc/talim/backup.env)")
     ap.add_argument("--no-django", action="store_true", help="skip the checks that start Django and connect to the database")
     a = ap.parse_args(argv)
     report = Report()
@@ -178,6 +237,8 @@ def main(argv=None):
         return 1
     check_env_values(env, report)
     check_files(a.env_file, env, report)
+    if a.backup_env:
+        check_backup_env(a.backup_env, env, report)
     check_tools(a.backend, report, a.skip_tools)
     if not a.no_django:
         check_django(a.backend, env, report)
