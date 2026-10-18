@@ -190,3 +190,6 @@
 
 ## 19. День 23: подготовка к реальному staging
 См. [STAGING_BLOCKERS.md](STAGING_BLOCKERS.md), [STAGING_OPERATOR_CHECKLIST.md](STAGING_OPERATOR_CHECKLIST.md) §0. Staging **не существует**. В песочнице исправлены два дефекта развёртывания (статика 0600; прикладные шаги проверки восстановления от runtime-роли), добавлены `check_scanner --eicar`, `preflight.py --backup-env`, `create_backup_role.sql`, `verify_backup_roles.sh`.
+
+## 20. День 24: аудит резервного копирования
+См. [BACKUP_AND_RESTORE.md](BACKUP_AND_RESTORE.md) §12. Исправлено семь дефектов (остатки `*.partial`, `SIGTERM`, неполный манифест, ротация против последней проверенной копии, сбой ротации скрывался, временные каталоги проверки, права восстановленных каталогов); добавлены метка `RESTORE_VERIFIED`, код 4, строгий манифест. Внешняя копия **не реализована** (блокер B-22).

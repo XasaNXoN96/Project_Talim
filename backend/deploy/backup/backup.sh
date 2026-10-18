@@ -21,7 +21,7 @@
 #   PGDATABASE (and PGHOST PGPORT PGUSER, PGPASSFILE or PGPASSWORD) for pg_dump
 # Optional: BACKUP_KEEP=14  (number of newest COMPLETE backups to keep; nothing else is ever deleted)
 #
-# Exit codes: 0 ok; 1 a step failed (nothing is kept); 2 misconfiguration (nothing was started);
+# Exit codes: 0 ok; 1 a step failed (nothing is kept); 2 misconfiguration (nothing was started); 4 the copy was created and kept but old copies could not be deleted;
 #             75 another backup holds the lock (nothing was done; not a failure).
 # stdout: progress lines and one final machine-readable line  BACKUP_OK name=<dir> db_bytes=<n> files=<n>  (no paths of secrets, no data).
 set -euo pipefail
@@ -42,9 +42,18 @@ case "$real_pass" in "$real_backup/"*|"$real_media/"*) die_config "the passphras
 exec 9> "$real_backup/.backup.lock"
 flock -n 9 || { echo "BACKUP_SKIPPED_BUSY: another backup is running"; exit 75; }
 
+# Holding the lock means no other run is working in this directory, so any *.partial left here belongs to a run that was killed (SIGKILL, power
+# cut, OOM) before it could clean up: remove it, otherwise such leftovers pile up until the disk is full. A partial copy is never offered as a backup.
+for stale in "$real_backup"/talim-*.partial; do
+  [ -d "$stale" ] || continue
+  rm -rf -- "$stale" && echo "removed unfinished copy $(basename "$stale") left by an interrupted run"
+done
+
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 while [ -e "$real_backup/talim-$STAMP" ] || [ -e "$real_backup/talim-$STAMP.partial" ]; do sleep 1; STAMP="$(date -u +%Y%m%dT%H%M%SZ)"; done
 FINAL="$real_backup/talim-$STAMP"; OUT="$FINAL.partial"
+# SIGTERM/SIGINT/SIGHUP end the script without running an EXIT trap unless they are turned into an exit: do that so an interrupted run cleans up
+trap 'exit 143' TERM; trap 'exit 130' INT; trap 'exit 129' HUP
 trap 'rc=$?; [ $rc -eq 0 ] || { rm -rf -- "$OUT"; echo "BACKUP_FAILED (exit $rc): nothing was kept" >&2; }' EXIT
 mkdir -m 700 "$OUT"
 enc() { openssl enc -aes-256-cbc -pbkdf2 -iter 600000 -salt -pass "file:$BACKUP_PASSPHRASE_FILE" -out "$1"; }
@@ -64,9 +73,18 @@ echo "4/4 manifest (hashes of the ENCRYPTED files: integrity can be checked with
 mv -- "$OUT" "$FINAL"
 trap - EXIT
 
-# retention: only COMPLETE backups of this naming scheme, newest KEEP are kept; a failed run never reaches this point
+# retention: only COMPLETE backups of this naming scheme, newest KEEP are kept; a failed run never reaches this point.
+# The newest copy that was PROVEN restorable (marked RESTORE_VERIFIED by restore_check.sh) is never deleted, however old it is: while newer copies are
+# only "readable", it is the last copy known to work. A copy that cannot be deleted is counted and reported (exit code 4), never hidden.
 keep="${BACKUP_KEEP:-14}"
 case "$keep" in ''|*[!0-9]*) keep=14;; esac
 [ "$keep" -ge 1 ] || keep=1
-find "$real_backup" -mindepth 1 -maxdepth 1 -type d -name 'talim-[0-9]*Z' -not -name '*.partial' | sort | head -n "-$keep" | while read -r old; do rm -rf -- "$old"; echo "pruned $(basename "$old")"; done
-echo "BACKUP_OK name=talim-$STAMP db_bytes=$db_bytes files=$files_n"
+newest_verified="$(find "$real_backup" -mindepth 2 -maxdepth 2 -name RESTORE_VERIFIED -printf '%h\n' 2>/dev/null | sort | tail -n 1 || true)"
+prune_failed=0
+while read -r old; do
+  [ -n "$old" ] || continue
+  if [ "$old" = "$newest_verified" ]; then echo "kept $(basename "$old") (newest restore-verified copy)"; continue; fi
+  if rm -rf -- "$old"; then echo "pruned $(basename "$old")"; else prune_failed=$((prune_failed + 1)); echo "PRUNE_FAILED: could not delete $(basename "$old")" >&2; fi
+done < <(find "$real_backup" -mindepth 1 -maxdepth 1 -type d -name 'talim-[0-9]*Z' -not -name '*.partial' | sort | head -n "-$keep")
+echo "BACKUP_OK name=talim-$STAMP db_bytes=$db_bytes files=$files_n prune_failed=$prune_failed"
+[ "$prune_failed" -eq 0 ] || exit 4

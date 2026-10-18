@@ -231,3 +231,13 @@ class Day23Files(SimpleTestCase):
         text = (self.BACKEND / "deploy/staging/release.sh").read_text()
         self.assertIn("umask 022; cd \"$rel\" && $PY manage.py collectstatic", text)
         self.assertIn('"file_permissions_mode": 0o644', (self.BACKEND / "config/settings/base.py").read_text())
+
+
+class OffsiteExampleStaysHonest(SimpleTestCase):
+    def test_the_example_never_deletes_never_sends_the_local_verified_marker_and_says_it_is_untested(self):
+        text = (Path(__file__).resolve().parents[2] / "deploy/backup/ship_offsite.example.sh").read_text()
+        self.assertNotIn("--delete", text.replace("no --delete", ""))
+        self.assertIn("--exclude=RESTORE_VERIFIED", text)
+        self.assertIn("NOT TESTED", text)
+        self.assertIn("StrictHostKeyChecking=yes", text)
+        self.assertNotIn("PASSPHRASE", text.replace("the passphrase file is never sent", ""))

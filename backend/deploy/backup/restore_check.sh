@@ -23,20 +23,31 @@ die_config() { echo "configuration error: $1" >&2; exit 2; }
 RESTORE_DB="${RESTORE_DB:-talim_restore_check}"
 [ "$RESTORE_DB" != "${PGDATABASE:-}" ] && [ "$RESTORE_DB" != "${DB_NAME:-}" ] || die_config "RESTORE_DB equals the live database"
 case "$RESTORE_DB" in talim_restore*|*_restore_*|*scratch*|*check*) ;; *) die_config "RESTORE_DB name must contain 'restore', 'scratch' or 'check'";; esac
-RESTORE_FILES="${RESTORE_FILES:-$(mktemp -d "${TMPDIR:-/tmp}/talim-restore-files-XXXXXX")}"
-[ -z "$(ls -A "$RESTORE_FILES" 2>/dev/null)" ] || die_config "RESTORE_FILES must be empty"
+[ -z "${RESTORE_FILES:-}" ] || [ -z "$(ls -A "$RESTORE_FILES" 2>/dev/null)" ] || die_config "RESTORE_FILES must be empty"
 
 exec 9> "$(dirname "$(realpath "$SRC")")/.restore.lock"
 flock -n 9 || { echo "RESTORE_SKIPPED_BUSY: another restore check is running"; exit 75; }
 
+# Holding the lock: no other restore check uses this backup directory. Restored documents of a check that was KILLED (SIGKILL, power cut) would stay in the
+# temporary directory as plaintext; remove such leftovers (older than the 3 hour job limit, so nothing live is touched). Only after the lock, so a busy run
+# creates nothing.
+find "${TMPDIR:-/tmp}" -maxdepth 1 -type d -name 'talim-restore-files-*' -user "$(id -un)" -mmin +240 -exec rm -rf -- {} + 2>/dev/null || true
+RESTORE_FILES="${RESTORE_FILES:-$(mktemp -d "${TMPDIR:-/tmp}/talim-restore-files-XXXXXX")}"
+
 cleanup() { rc=$?; if [ "${KEEP:-0}" != 1 ]; then dropdb --if-exists "$RESTORE_DB" 2>/dev/null || true; rm -rf -- "$RESTORE_FILES"; fi; [ $rc -eq 0 ] || echo "RESTORE_FAILED (exit $rc)" >&2; }
 trap cleanup EXIT
+trap 'exit 143' TERM; trap 'exit 130' INT; trap 'exit 129' HUP   # run the cleanup on termination too
 dec() { openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 -pass "file:$BACKUP_PASSPHRASE_FILE" -in "$1"; }
 
-echo "1/6 manifest (integrity of the encrypted files, no passphrase needed)"; ( cd "$SRC" && sha256sum --check --quiet MANIFEST.sha256 )
+echo "1/6 manifest (integrity of the encrypted files, no passphrase needed)"
+# the manifest must list EXACTLY the three files of a backup (no more, no fewer, no paths): an incomplete or padded manifest would leave an archive unchecked
+[ -s "$SRC/MANIFEST.sha256" ] || { echo "manifest is missing or empty" >&2; exit 1; }
+listed="$(awk 'NF != 2 || length($1) != 64 { bad = 1 } { print $2 } END { if (bad) print "MALFORMED" }' "$SRC/MANIFEST.sha256" | sort | tr '\n' ' ')"
+[ "$listed" = "INFO.txt db.dump.enc files.tar.enc " ] || { echo "manifest does not list exactly db.dump.enc, files.tar.enc and INFO.txt (or is malformed)" >&2; exit 1; }
+( cd "$SRC" && sha256sum --check --quiet MANIFEST.sha256 )
 echo "2/6 scratch database $RESTORE_DB"; dropdb --if-exists "$RESTORE_DB"; createdb "$RESTORE_DB"
 echo "3/6 restore database (decrypted on the fly)"; dec "$SRC/db.dump.enc" | pg_restore --no-owner --exit-on-error --dbname "$RESTORE_DB"
-echo "4/6 restore files"; dec "$SRC/files.tar.enc" | tar --extract --directory "$RESTORE_FILES"
+echo "4/6 restore files"; dec "$SRC/files.tar.enc" | tar --extract --no-same-owner --no-same-permissions --directory "$RESTORE_FILES"
 echo "5/6 application-level checks against the restored copy"
 cd "$BACKEND_DIR"
 # The application-level steps run as the RESTORE role (PGUSER: it created the scratch database, owns what pg_restore made, and may migrate it), NOT as
@@ -56,4 +67,7 @@ tf_out="$("$PYTHON" manage.py verify_restored_two_factor)"; echo "$tf_out"
 echo "6/6 row counts of the restored database (numbers only)"
 counts="$(psql -d "$RESTORE_DB" -Atc "select 'users='||(select count(*) from accounts_user)||' documents='||(select count(*) from documents_document)||' versions='||(select count(*) from documents_documentversion)||' task_attachments='||(select count(*) from tasks_taskattachment)||' audit_rows='||(select count(*) from audit_auditlog)")"
 echo "$counts"
+if [ "${MARK_VERIFIED:-0}" = 1 ]; then  # the newest copy PROVEN restorable is protected from retention (backup.sh)
+  printf 'verified_utc=%s\n' "$(date -u +%Y%m%dT%H%M%SZ)" > "$SRC/RESTORE_VERIFIED" 2>/dev/null || echo "warning: could not mark the copy as restore-verified (directory not writable)" >&2
+fi
 echo "RESTORE_OK name=$(basename "$SRC") $counts $(echo "$verify_out" | grep -o 'orphans=[0-9]*' | head -1) migrations_applied_after_restore=$pending $(echo "$tf_out" | grep -o 'devices=[0-9]*' | sed s/devices=/two_factor_devices=/)"

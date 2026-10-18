@@ -58,11 +58,11 @@ run_pre() { runuser -u "$RUNAS" -- env PATH="$PATH" "$PY" "$HERE/preflight.py" -
 FAIL=0; N=0
 expect() {  # $1 label, $2 expected rc, $3 env file, $4 text that must appear in the output ('' = none)
   out="$(run_pre "$3" 2>&1)"; rc=$?; N=$((N+1))
-  if [ "$rc" = "$2" ] && { [ -z "$4" ] || echo "$out" | grep -q -- "$4"; }; then echo "  [PASS] $1 (rc=$rc)"; else echo "  [FAIL] $1 (rc=$rc, expected $2)"; echo "$out" | grep -E "FAIL|PREFLIGHT" | head -5; FAIL=$((FAIL+1)); fi
+  if [ "$rc" = "$2" ] && { [ -z "$4" ] || grep -q -- "$4" <<<"$out"; }; then echo "  [PASS] $1 (rc=$rc)"; else echo "  [FAIL] $1 (rc=$rc, expected $2)"; echo "$out" | grep -E "FAIL|PREFLIGHT" | head -5; FAIL=$((FAIL+1)); fi
 }
 echo "== correct set-up"
 mkenv "$WORK/good.env"; expect "a correct set-up passes" 0 "$WORK/good.env" "PREFLIGHT OK"
-out="$(run_pre "$WORK/good.env" 2>&1)"; N=$((N+1)); if echo "$out" | grep -q -e "$SECRET" -e "$APP_PW" -e "$FERNET"; then echo "  [FAIL] a secret value was printed"; FAIL=$((FAIL+1)); else echo "  [PASS] no secret value is printed"; fi
+out="$(run_pre "$WORK/good.env" 2>&1)"; N=$((N+1)); if grep -q -e "$SECRET" -e "$APP_PW" -e "$FERNET" <<<"$out"; then echo "  [FAIL] a secret value was printed"; FAIL=$((FAIL+1)); else echo "  [PASS] no secret value is printed"; fi
 echo "== each deliberate mistake must FAIL"
 mkenv "$WORK/e1.env" DJANGO_DEBUG=1;                          expect "DEBUG on" 1 "$WORK/e1.env" "DEBUG"
 mkenv "$WORK/e2.env" DJANGO_ALLOWED_HOSTS='*';                expect "wildcard ALLOWED_HOSTS" 1 "$WORK/e2.env" "wildcard"
@@ -93,7 +93,7 @@ PYEOF
 run_pre_bk() { runuser -u "$RUNAS" -- env PATH="$PATH" "$PY" "$HERE/preflight.py" --env-file "$1" --backup-env "$2" --backend "$WORK/code/backend" --skip-tools; }
 expect_bk() {  # label, expected rc, backup env file, text
   out="$(run_pre_bk "$WORK/good.env" "$3" 2>&1)"; rc=$?; N=$((N+1))
-  if [ "$rc" = "$2" ] && { [ -z "$4" ] || echo "$out" | grep -q -- "$4"; }; then echo "  [PASS] $1 (rc=$rc)"; else echo "  [FAIL] $1 (rc=$rc, expected $2)"; echo "$out" | tail -6; FAIL=$((FAIL+1)); fi
+  if [ "$rc" = "$2" ] && { [ -z "$4" ] || grep -q -- "$4" <<<"$out"; }; then echo "  [PASS] $1 (rc=$rc)"; else echo "  [FAIL] $1 (rc=$rc, expected $2)"; echo "$out" | tail -6; FAIL=$((FAIL+1)); fi
 }
 echo "== backup/restore environment (three separate roles)"
 mkbk "$WORK/bk_good.env"; expect_bk "a correct backup environment passes, the backup role really has CREATEDB" 0 "$WORK/bk_good.env" "backup role has CREATEDB"

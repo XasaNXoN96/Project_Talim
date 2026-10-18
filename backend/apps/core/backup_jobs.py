@@ -22,6 +22,7 @@ from django.core.management.base import CommandError
 from .jobs import JobSkipped, TrackedCommand
 
 EXIT_BUSY = 75
+EXIT_PRUNE_FAILED = 4
 TIMEOUT = 3 * 60 * 60  # seconds; a hung dump is killed and recorded as a failure
 
 
@@ -81,6 +82,9 @@ class BackupCreate(TrackedCommand):
         if code == EXIT_BUSY:
             raise JobSkipped()
         info = summary(out, "BACKUP_OK")
+        if code == EXIT_PRUNE_FAILED and info is not None:
+            raise CommandError(f"backup {info.get('name', '')} was created and is kept, but retention failed: {info.get('prune_failed', '?')} old copy(ies) could not be "
+                               "deleted (permissions or a damaged directory); the disk will fill up until this is fixed.")
         if code != 0 or info is None:
             raise CommandError(f"backup.sh failed (exit code {code}); nothing was kept.")
         run.processed = int(info.get("files", 0))
@@ -100,6 +104,7 @@ class RestoreCheck(TrackedCommand):
         backups = sorted(p for p in Path(env["BACKUP_DIR"]).glob("talim-*Z") if p.is_dir() and (p / "MANIFEST.sha256").is_file())
         if not backups:
             raise CommandError("no complete backup found to check.")
+        env = {**env, "MARK_VERIFIED": "1"}  # a successful check marks THIS copy as proven restorable (retention then never deletes it)
         code, out = run_script("restore_check.sh", [str(backups[-1])], env)
         if code == EXIT_BUSY:
             raise JobSkipped()

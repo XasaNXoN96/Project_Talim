@@ -518,3 +518,219 @@ class AsTrackedJobs(Base):
         s = jobs.job_state("backup_create", now)
         self.assertEqual((s["state"], s["overdue"]), ("failed", True))
         self.assertEqual(s["last_success"], now - datetime.timedelta(days=3))
+
+
+class FailureModes(Base):
+    """Day 24 audit: interruptions, disk problems, a damaged or incomplete manifest, failed retention, and what the latest VERIFIED copy is protected from."""
+
+    def slow_tar_env(self):
+        """A `tar` that hangs, so a run can be interrupted in the middle of creating the archive."""
+        bindir = self.tmp / "slowbin"
+        bindir.mkdir(exist_ok=True)
+        tar = bindir / "tar"
+        tar.write_text("#!/bin/sh\nsleep 60\n")
+        tar.chmod(0o755)
+        return {**self.env, "PATH": str(bindir) + os.pathsep + self.env["PATH"]}
+
+    def interrupted_run(self, sig):
+        import signal
+        import time
+        proc = subprocess.Popen([str(SCRIPTS / "backup.sh")], env=self.slow_tar_env(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
+        for _ in range(100):                                   # wait until the partial directory exists, i.e. the run is in the middle of its work
+            if any(self.backup_dir.glob("talim-*.partial")):
+                break
+            time.sleep(0.1)
+        self.assertTrue(any(self.backup_dir.glob("talim-*.partial")), "the run never got going")
+        os.killpg(proc.pid, sig if isinstance(sig, int) else signal.SIGTERM)
+        proc.wait(timeout=30)
+        return proc
+
+    def partials(self):
+        return sorted(p.name for p in self.backup_dir.glob("talim-*.partial"))
+
+    # -- interruption while creating -------------------------------------------------------------------------------------------------------------------
+    def test_a_terminated_run_leaves_no_partial_copy_and_the_previous_one_stays(self):
+        import signal
+        good = self.make_backup()
+        self.interrupted_run(signal.SIGTERM)
+        self.assertEqual(self.partials(), [])
+        self.assertEqual(self.complete(), [good])
+
+    def test_a_killed_run_leaves_a_partial_directory_that_is_never_offered_and_is_cleaned_by_the_next_run(self):
+        import signal
+        good = self.make_backup()
+        self.interrupted_run(signal.SIGKILL)                  # no trap can run after SIGKILL or a power cut
+        self.assertEqual(len(self.partials()), 1)
+        self.assertEqual(self.complete(), [good])             # never listed as a finished copy
+        r = self.backup()
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertEqual(self.partials(), [], "a stale partial copy was left behind and would pile up until the disk is full")
+        self.assertEqual(len(self.complete()), 2)
+
+    def test_the_restore_check_never_picks_an_unfinished_copy(self):
+        import signal
+        self.make_backup()
+        self.interrupted_run(signal.SIGKILL)
+        env = {**self.env, "RESTORE_DB": self.restore_db}
+        from django.core.management import call_command
+        with mock.patch.dict(os.environ, {k: v for k, v in env.items()}), mock.patch("django.core.management.base.connections.close_all"):
+            call_command("run_restore_check", "--no-record")
+        self.assertFalse(self.db_exists(self.restore_db))
+
+    def test_a_write_failure_such_as_a_full_disk_keeps_nothing_and_costs_no_existing_copy(self):
+        good = self.make_backup()
+        r = subprocess.run(["bash", "-c", f"ulimit -f 4; exec {SCRIPTS / 'backup.sh'}"], env=self.env, capture_output=True, text=True, timeout=120)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertEqual(self.partials(), [])
+        self.assertEqual(self.complete(), [good])
+        self.assertNotIn(self.passphrase, r.stdout + r.stderr)
+
+    # -- manifest and integrity -----------------------------------------------------------------------------------------------------------------------
+    def test_a_manifest_that_does_not_list_every_file_is_refused(self):
+        b = self.make_backup()
+        manifest = b / "MANIFEST.sha256"
+        manifest.chmod(0o600)
+        lines = manifest.read_text().splitlines()
+        manifest.write_text("\n".join(line for line in lines if "INFO.txt" in line) + "\n")      # still valid hashes, but the archives are no longer covered
+        r = self.restore(b)
+        self.assertNotEqual(r.returncode, 0, "an incomplete manifest must not pass: it would leave the encrypted archives unchecked")
+        self.assertIn("manifest", (r.stdout + r.stderr).lower())
+        self.assertFalse(self.db_exists(self.restore_db))
+
+    def test_a_manifest_with_foreign_entries_or_paths_is_refused(self):
+        b = self.make_backup()
+        manifest = b / "MANIFEST.sha256"
+        manifest.chmod(0o600)
+        manifest.write_text(manifest.read_text() + "0" * 64 + "  ../../etc/hostname\n")
+        r = self.restore(b)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("manifest", (r.stdout + r.stderr).lower())
+
+    def test_an_empty_or_missing_manifest_is_refused(self):
+        b = self.make_backup()
+        (b / "MANIFEST.sha256").chmod(0o600)
+        (b / "MANIFEST.sha256").write_text("")
+        self.assertNotEqual(self.restore(b).returncode, 0)
+        (b / "MANIFEST.sha256").unlink()
+        self.assertNotEqual(self.restore(b).returncode, 0)
+
+    def test_every_file_and_directory_of_a_backup_is_private_to_its_owner(self):
+        b = self.make_backup()
+        for path in [self.backup_dir, *self.backup_dir.rglob("*")]:
+            self.assertEqual(stat.S_IMODE(path.stat().st_mode) & 0o077, 0, str(path))
+        names = sorted(p.name for p in b.iterdir())
+        self.assertEqual(names, ["INFO.txt", "MANIFEST.sha256", "db.dump.enc", "files.tar.enc"])
+
+    # -- retention ------------------------------------------------------------------------------------------------------------------------------------
+    def failing_rm_env(self, victim):
+        bindir = self.tmp / "rmbin"
+        bindir.mkdir(exist_ok=True)
+        rm = bindir / "rm"
+        rm.write_text(f'#!/bin/sh\ncase "$*" in *{victim}*) echo "rm: cannot remove: Operation not permitted" >&2; exit 1;; esac\nexec /bin/rm "$@"\n')
+        rm.chmod(0o755)
+        return {**self.env, "PATH": str(bindir) + os.pathsep + self.env["PATH"]}
+
+    def test_when_old_copies_cannot_be_deleted_the_new_copy_is_kept_and_the_failure_is_reported_not_hidden(self):
+        old = self.make_backup()
+        r = run_script("backup.sh", env={**self.failing_rm_env(old.name), "BACKUP_KEEP": "1"})
+        self.assertEqual(r.returncode, 4, r.stdout + r.stderr)          # 4 = copy created, retention failed
+        self.assertIn("BACKUP_OK", r.stdout)                            # the new copy exists and is announced...
+        self.assertIn("prune_failed=1", r.stdout)                       # ...together with the fact that cleaning up failed
+        self.assertIn("PRUNE_FAILED", r.stderr)
+        self.assertEqual(len(self.complete()), 2)                       # nothing lost, nothing half-deleted
+        self.assertEqual(self.partials(), [])
+
+    def test_the_job_wrapper_records_a_failed_retention_as_a_failure_that_names_the_copy(self):
+        old = self.make_backup()
+        from django.core.management import call_command
+        with mock.patch.dict(os.environ, {**self.failing_rm_env(old.name), "BACKUP_KEEP": "1"}), mock.patch("django.core.management.base.connections.close_all"):
+            with self.assertRaises(CommandError) as ctx:
+                call_command("run_backup", "--no-record")
+        self.assertIn("retention", str(ctx.exception).lower())
+        self.assertIn("kept", str(ctx.exception).lower())
+        self.assertEqual(len(self.complete()), 2)
+
+    def verify(self, b):
+        r = self.restore(b, MARK_VERIFIED="1")
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+
+    def test_the_newest_restore_verified_copy_is_never_pruned_even_when_keep_would_delete_it(self):
+        b1 = self.make_backup()
+        self.verify(b1)
+        self.assertTrue((b1 / "RESTORE_VERIFIED").is_file())
+        b2 = self.make_backup()
+        self.backup(BACKUP_KEEP="1")
+        names = [p.name for p in self.complete()]
+        self.assertIn(b1.name, names, "the last copy that was PROVEN restorable must survive while newer ones are unproven")
+        self.assertNotIn(b2.name, names)                                # an unproven middle copy is what KEEP=1 may delete
+        self.assertEqual(len(names), 2)
+
+    def test_a_failed_restore_check_does_not_mark_the_copy_as_verified(self):
+        b = self.make_backup()
+        wrong = self.write_secret(self.pass_file.parent / "wrong2.pass", secrets.token_urlsafe(40))
+        r = self.restore(b, MARK_VERIFIED="1", BACKUP_PASSPHRASE_FILE=str(wrong))
+        self.assertNotEqual(r.returncode, 0)
+        self.assertFalse((b / "RESTORE_VERIFIED").exists())
+
+    # -- the restore side -----------------------------------------------------------------------------------------------------------------------------
+    def test_a_busy_restore_check_leaves_no_temporary_directory_behind(self):
+        b = self.make_backup()
+        tmpdir = self.tmp / "tmpdir"
+        tmpdir.mkdir()
+        lock = open(self.backup_dir / ".restore.lock", "w")
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        try:
+            r = run_script("restore_check.sh", str(b), env={**self.env, "RESTORE_DB": self.restore_db, "TMPDIR": str(tmpdir)})
+        finally:
+            lock.close()
+        self.assertEqual(r.returncode, 75)
+        self.assertEqual(list(tmpdir.iterdir()), [])
+
+    def test_stale_restored_files_of_a_killed_check_are_removed_by_the_next_one_but_a_fresh_directory_is_not(self):
+        import time
+        b = self.make_backup()
+        tmpdir = self.tmp / "tmpdir2"
+        tmpdir.mkdir()
+        stale, fresh = tmpdir / "talim-restore-files-OLD123", tmpdir / "talim-restore-files-NEW123"
+        for d in (stale, fresh):
+            d.mkdir(mode=0o700)
+            (d / "restored-document.pdf").write_text("plaintext of a restored document")
+        old = time.time() - 6 * 3600
+        os.utime(stale, (old, old))
+        r = run_script("restore_check.sh", str(b), env={**self.env, "RESTORE_DB": self.restore_db, "TMPDIR": str(tmpdir)})
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertFalse(stale.exists(), "restored plaintext of a killed earlier check must not stay on disk")
+        self.assertTrue(fresh.exists())
+
+    def test_restored_files_keep_private_permissions(self):
+        b = self.make_backup()
+        r = self.restore(b, KEEP="1")
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        for path in self.restored_files.rglob("*"):
+            self.assertEqual(stat.S_IMODE(path.stat().st_mode) & 0o077, 0, str(path))
+
+    def test_a_restore_check_terminated_in_the_middle_removes_its_scratch_database_and_files(self):
+        import signal
+        import time
+        b = self.make_backup()
+        bindir = self.tmp / "slowrestore"
+        bindir.mkdir()
+        shim = bindir / "pg_restore"
+        shim.write_text("#!/bin/sh\ncat > /dev/null\nsleep 60\n")
+        shim.chmod(0o755)
+        files = self.tmp / "restore-files-term"
+        files.mkdir(mode=0o700)
+        env = {**self.env, "PATH": str(bindir) + os.pathsep + self.env["PATH"], "RESTORE_DB": self.restore_db, "RESTORE_FILES": str(files)}
+        proc = subprocess.Popen([str(SCRIPTS / "restore_check.sh"), str(b)], env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
+        for _ in range(100):
+            if self.db_exists(self.restore_db):
+                break
+            time.sleep(0.1)
+        self.assertTrue(self.db_exists(self.restore_db), "the check never reached the restore step")
+        os.killpg(proc.pid, signal.SIGTERM)
+        proc.wait(timeout=60)
+        time.sleep(0.5)
+        self.assertFalse(self.db_exists(self.restore_db))
+        self.assertFalse(files.exists())
+        self.assertTrue((b / "MANIFEST.sha256").is_file())              # the copy itself is untouched
+        self.assertFalse((b / "RESTORE_VERIFIED").exists())
