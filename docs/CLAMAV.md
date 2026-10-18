@@ -116,14 +116,24 @@ grep -E '^DOCUMENT_MAX_BYTES' /etc/talim/talim.env || echo "по умолчан�
 ```
 Критерий: `StreamMaxLength` **больше** `DOCUMENT_MAX_BYTES` (по умолчанию 25M > 10 МБ); иначе крупные допустимые файлы будут отклоняться. Проверка «данные сверх лимита потока → сбой, а не «чисто»» входит в C-4.
 
-**C-4. Четыре теста `RealClamdTests` (`CLAMAV_REAL_TEST=1`).** Тесты создают временную БД `test_<DB_NAME>`, поэтому роли приложения (без `CREATEDB`) не хватит.
-Вариант: запускать от **отдельного** пользователя в **отдельном** checkout того же кандидата (`release_info.sh` — те же хеши), с роль-копий или специально созданной на staging ролью с `CREATEDB` и **без** доступа к рабочей БД — **[не проверено на staging: достаточно ли для подключения роли копий к служебной БД `postgres`]**. Тест-прогон не должен использовать `talim.env` и рабочую БД.
+**C-4. Четыре теста `RealClamdTests` (`CLAMAV_REAL_TEST=1`) — отдельная тестовая роль.**
+*Что нужно Django.* `manage.py test` подключается к служебной БД `postgres`, выполняет `CREATE DATABASE test_<DB_NAME>`, применяет все миграции в ней и в конце `DROP DATABASE`. Нужны: `LOGIN`, `CREATEDB` и право `CONNECT` на БД `postgres`; права на рабочую БД, `pg_read_all_data`, суперпользователь и `CREATEROLE` **не нужны**. Роль приложения (`DB_USER` из `talim.env`) `CREATEDB` не имеет и **не получает**: при запуске от неё прогон останавливается с «permission denied to create database». Роль копий (`create_backup_role.sql`) формально подходит (есть `CREATEDB`), но **не рекомендуется**: у неё `pg_read_all_data`, и после `apply_grants.sql -v backup_role=…` она может читать рабочую БД — тест не должен работать с учётными данными, способными читать рабочие данные. Минимальный вариант — **отдельная одноразовая роль**:
 ```bash
-cd <checkout>/backend && DB_NAME=<имя тестовой БД> DB_USER=<роль с CREATEDB> DB_PASSWORD=<из файла 0600> \
+# 1. На staging, от суперпользователя PostgreSQL (пароль — из нового файла 0600, создать на сервере, не в Git и не в командной строке):
+umask 077; python3 -c 'import secrets;print(secrets.token_urlsafe(30))' > /root/clamtest.pw
+sudo -u postgres psql -d postgres -v ON_ERROR_STOP=1 -v tr=talim_clamtest -v tp="$(cat /root/clamtest.pw)" \
+  -c "CREATE ROLE :\"tr\" LOGIN PASSWORD :'tp' NOSUPERUSER CREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS"
+# (на хосте, где у PUBLIC отозван CONNECT на БД postgres, дополнительно: GRANT CONNECT ON DATABASE postgres TO talim_clamtest)
+# 2. Прогон — в отдельном checkout того же кандидата (release_info.sh: те же хеши), НЕ с talim.env и НЕ с рабочей БД:
+cd <checkout>/backend && DB_NAME=talim_clamtest_scratch DB_USER=talim_clamtest DB_PASSWORD="$(cat /root/clamtest.pw)" DB_HOST=127.0.0.1 \
   CLAMAV_REAL_TEST=1 CLAMAV_SOCKET=/run/clamav/clamd.ctl \
   .venv/bin/python manage.py test apps.documents.tests_real_clamd --settings=config.settings.test --noinput -v 2
+# 3. Сразу после прогона — удалить роль и пароль:
+sudo -u postgres psql -d postgres -c "DROP ROLE talim_clamtest"   # (если GRANT CONNECT выдавался: сначала REVOKE ALL ON DATABASE postgres FROM talim_clamtest)
+shred -u /root/clamtest.pw; rm -rf /tmp/talim-test-private-*
 ```
-(Значения не набирать в командной строке — `STAGING_OPERATOR_CHECKLIST.md` §5, предупреждение перед шагом 5.) Ожидается `Ran 4 tests … OK` без `skipped`. Критерий: 0 пропусков; иначе прочитать причину пропуска.
+`DB_NAME` может не существовать (подключение идёт к `postgres`); любое имя, кроме имени рабочей БД. Чтение `CLAMAV_SOCKET=/run/clamav/clamd.ctl` требует, чтобы пользователь прогона входил в группу сокета (`LocalSocketGroup`, `clamd.conf`); иначе используйте TCP на `127.0.0.1:3310` только если он включён локально (наружу не открывать). Ожидается `Ran 4 tests … OK` без `skipped`; временная БД `test_<DB_NAME>` удалена (`sudo -u postgres psql -Atc "select datname from pg_database"`). Каталоги `/tmp/talim-test-private-*` тестовые настройки создают на каждый прогон и не удаляют — убрать вручную (команда выше).
+*Статус.* Поведение ролей **проверено в песочнице** (PostgreSQL 16.15, роли созданы скриптами репозитория `create_roles.sql`, `create_backup_role.sql` и приведённым выше `CREATE ROLE`, затем удалены): runtime-роль — отказ «permission denied to create database»; отдельная роль с `CREATEDB` и без доступа к рабочей БД — 4 теста OK, временная БД удалена; роль копий — 4 теста OK (не рекомендуется по причине выше); при отозванном `CONNECT` на `postgres` от `PUBLIC` — отказ, после точечного `GRANT CONNECT` — OK. **На staging не выполнялось**; настройки `pg_hba.conf` и политики сервера владельца могут отличаться (например, запрет `CREATEDB` вообще — тогда тест запускается на другой машине с собственной временной PostgreSQL, а не на сервере).
 
 **C-5. `check_scanner --eicar` в боевых настройках.**
 ```bash
