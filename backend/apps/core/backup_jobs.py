@@ -104,17 +104,18 @@ class BackupCreate(TrackedCommand):
         if code == EXIT_BUSY:
             raise JobSkipped()
         info = summary(out, "BACKUP_OK")
-        if code == EXIT_PRUNE_FAILED and info is not None:
-            raise CommandError(f"backup {info.get('name', '')} was created and is kept, but retention failed: {info.get('prune_failed', '?')} old copy(ies) could not be "
-                               "deleted (permissions or a damaged directory); the disk will fill up until this is fixed.")
-        if code != 0 or info is None:
+        prune_failed = code == EXIT_PRUNE_FAILED and info is not None
+        if code != 0 and not prune_failed or info is None:
             raise CommandError(f"backup.sh failed (exit code {code}); nothing was kept.")
         run.processed = int(info.get("files", 0))
         run.note = info.get("name", "")[:80]
         offsite = (os.environ.get("BACKUP_OFFSITE_COMMAND") or "").strip()
-        if offsite:
+        if offsite:  # a failed retention must not leave the NEW copy without its off-server hand-over
             run_offsite(offsite, info.get("name", ""), env["BACKUP_DIR"])
             run.note = (run.note + " offsite=ok")[:80]
+        if prune_failed:
+            raise CommandError(f"backup {info.get('name', '')} was created and is kept, but retention failed: {info.get('prune_failed', '?')} old copy(ies) could not be "
+                               "deleted (permissions or a damaged directory); the disk will fill up until this is fixed.")
         self.stdout.write(f"backup written: {run.note} files={run.processed}")
 
 

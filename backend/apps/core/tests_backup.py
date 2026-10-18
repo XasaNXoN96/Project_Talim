@@ -787,6 +787,23 @@ class OffsiteHook(Base):
             self.run_job(group_writable)
         self.assertFalse(marker.exists())
 
+    def failing_rm_path(self, victim):
+        bindir = self.tmp / "rmbin"
+        bindir.mkdir(exist_ok=True)
+        rm = bindir / "rm"
+        rm.write_text(f'#!/bin/sh\ncase "$*" in *{victim}*) echo "rm: cannot remove" >&2; exit 1;; esac\nexec /bin/rm "$@"\n')
+        rm.chmod(0o755)
+        return str(bindir) + os.pathsep + os.environ["PATH"]
+
+    def test_a_failed_retention_does_not_stop_the_new_copy_from_being_handed_over(self):
+        old = self.make_backup()
+        seen = self.tmp / "handed.txt"
+        cmd = self.command(f'#!/bin/sh\necho "$1" > "{seen}"\n')
+        with self.assertRaises(CommandError) as ctx:
+            self.run_job(cmd, PATH=self.failing_rm_path(old.name), BACKUP_KEEP="1")
+        self.assertIn("retention failed", str(ctx.exception))
+        self.assertTrue(seen.exists(), "the new copy was never handed over because cleaning up old copies failed")
+
     def test_the_command_is_never_run_through_a_shell(self):
         marker = self.tmp / "injected.txt"
         cmd = self.command()
