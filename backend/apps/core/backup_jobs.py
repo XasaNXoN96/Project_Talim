@@ -12,6 +12,7 @@ Security properties kept on purpose:
     Neither says the copy is stored away from this server."""
 import os
 import re
+import signal
 import subprocess
 import sys
 from pathlib import Path
@@ -83,12 +84,20 @@ def run_offsite(command, name, backup_dir):
         raise CommandError("BACKUP_OFFSITE_COMMAND must not be writable by group or others.")
     child = {"PATH": "/usr/local/bin:/usr/bin:/bin", "BACKUP_DIR": str(backup_dir), "BACKUP_NAME": name}
     child.update({k: v for k, v in os.environ.items() if k.startswith("OFFSITE_")})
+    # Own process group so that a timeout can stop everything the command started; stdout AND stderr are discarded: the command is the owner's code and
+    # may print tokens or file names, so nothing it says reaches our journal (it should log by itself, e.g. with `logger`). Only its exit code is used.
+    proc = subprocess.Popen([str(path), name], env=child, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
     try:
-        done = subprocess.run([str(path), name], env=child, stdout=subprocess.DEVNULL, timeout=OFFSITE_TIMEOUT, check=False)
+        returncode = proc.wait(timeout=OFFSITE_TIMEOUT)
     except subprocess.TimeoutExpired:
-        raise CommandError(f"backup {name} was created locally, but the offsite step did not finish within {OFFSITE_TIMEOUT // 3600} hours.") from None
-    if done.returncode != 0:
-        raise CommandError(f"backup {name} was created locally, but the offsite step failed (exit code {done.returncode}); it is NOT stored away from this server.")
+        try:
+            os.killpg(proc.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        proc.wait()
+        raise CommandError(f"backup {name} was created locally, but the offsite step did not finish within {OFFSITE_TIMEOUT // 3600 or 1} hour(s) and was stopped.") from None
+    if returncode != 0:
+        raise CommandError(f"backup {name} was created locally, but the offsite step failed (exit code {returncode}); it is NOT stored away from this server.")
 
 
 class BackupCreate(TrackedCommand):
@@ -110,12 +119,16 @@ class BackupCreate(TrackedCommand):
         run.processed = int(info.get("files", 0))
         run.note = info.get("name", "")[:80]
         offsite = (os.environ.get("BACKUP_OFFSITE_COMMAND") or "").strip()
-        if offsite:  # a failed retention must not leave the NEW copy without its off-server hand-over
-            run_offsite(offsite, info.get("name", ""), env["BACKUP_DIR"])
+        retention = (f"backup {info.get('name', '')} was created and is kept, but retention failed: {info.get('prune_failed', '?')} old copy(ies) could not be "
+                     "deleted (permissions or a damaged directory); the disk will fill up until this is fixed.")
+        if offsite:  # a failed retention must not leave the NEW copy without its off-server hand-over; "offsite=ok" only means the command exited 0
+            try:
+                run_offsite(offsite, info.get("name", ""), env["BACKUP_DIR"])
+            except CommandError as exc:
+                raise CommandError(f"{exc} Also, retention also failed: {info.get('prune_failed', '?')} old copy(ies) could not be deleted.") if prune_failed else exc
             run.note = (run.note + " offsite=ok")[:80]
         if prune_failed:
-            raise CommandError(f"backup {info.get('name', '')} was created and is kept, but retention failed: {info.get('prune_failed', '?')} old copy(ies) could not be "
-                               "deleted (permissions or a damaged directory); the disk will fill up until this is fixed.")
+            raise CommandError(retention)
         self.stdout.write(f"backup written: {run.note} files={run.processed}")
 
 

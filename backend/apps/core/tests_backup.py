@@ -804,6 +804,56 @@ class OffsiteHook(Base):
         self.assertIn("retention failed", str(ctx.exception))
         self.assertTrue(seen.exists(), "the new copy was never handed over because cleaning up old copies failed")
 
+    def test_the_standard_error_of_the_command_is_not_passed_on_to_the_journal(self):
+        import subprocess, sys
+        cmd = self.command('#!/bin/sh\necho "token=CANARY-STDERR-SECRET" >&2\nexit 3\n')
+        code = ("import os, django; os.environ['DJANGO_SETTINGS_MODULE']='config.settings.test'; django.setup();"
+                "from apps.core.backup_jobs import run_offsite; run_offsite(%r, 'n', %r)" % (str(cmd), str(self.backup_dir)))
+        r = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, cwd=str(Path(__file__).resolve().parents[2]))
+        self.assertIn("exit code 3", r.stderr)
+        self.assertNotIn("CANARY-STDERR-SECRET", r.stdout + r.stderr)
+
+    def test_a_timeout_stops_the_whole_process_group_not_only_the_command(self):
+        import time
+        late = self.tmp / "written-after-timeout.txt"
+        cmd = self.command(f'#!/bin/sh\n(sleep 3; echo late > "{late}") &\nsleep 30\n')
+        with mock.patch("apps.core.backup_jobs.OFFSITE_TIMEOUT", 1):
+            with self.assertRaises(CommandError) as ctx:
+                self.run_job(cmd)
+        self.assertIn("did not finish", str(ctx.exception))
+        time.sleep(4)
+        self.assertFalse(late.exists(), "a process started by the command kept running after the timeout")
+
+    def test_a_failed_retention_and_a_failed_hand_over_are_both_reported(self):
+        old = self.make_backup()
+        with self.assertRaises(CommandError) as ctx:
+            self.run_job(self.command("#!/bin/sh\nexit 7\n"), PATH=self.failing_rm_path(old.name), BACKUP_KEEP="1")
+        self.assertIn("offsite step failed", str(ctx.exception))
+        self.assertIn("retention also failed", str(ctx.exception))
+
+    def test_exit_code_zero_is_all_the_job_can_know_it_does_not_prove_that_anything_was_stored(self):
+        """Documents a limit on purpose: a command that does nothing but exit 0 is accepted (the note then says offsite=ok). Verifying the remote copy is the owner's
+        command and the operator's job (BACKUP_AND_RESTORE.md 12.5), which is why B-22 stays open until a restore from the external copy has been done."""
+        from apps.core.models import JobRun
+        from django.core.management import call_command
+        env = {**os.environ, **self.env, "BACKUP_OFFSITE_COMMAND": str(self.command())}
+        with mock.patch.dict(os.environ, env, clear=False), mock.patch("django.core.management.base.connections.close_all"):
+            call_command("run_backup")
+        run = JobRun.objects.filter(name="backup_create").latest("id")
+        self.assertTrue(run.note.endswith("offsite=ok"))
+
+    def test_a_failed_hand_over_is_recorded_as_a_failed_run_without_the_offsite_mark(self):
+        from apps.core.models import JobRun
+        from django.core.management import call_command
+        env = {**os.environ, **self.env, "BACKUP_OFFSITE_COMMAND": str(self.command("#!/bin/sh\nexit 9\n"))}
+        with mock.patch.dict(os.environ, env, clear=False), mock.patch("django.core.management.base.connections.close_all"):
+            with self.assertRaises(CommandError):
+                call_command("run_backup")
+        run = JobRun.objects.filter(name="backup_create").latest("id")
+        self.assertEqual(run.status, JobRun.Status.FAILED)
+        self.assertNotIn("offsite=ok", run.note)
+        self.assertEqual(run.error_class, "CommandError")  # the run row keeps only the class; the readable message goes to the service journal
+
     def test_the_command_is_never_run_through_a_shell(self):
         marker = self.tmp / "injected.txt"
         cmd = self.command()
