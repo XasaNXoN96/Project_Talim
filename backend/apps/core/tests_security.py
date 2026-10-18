@@ -176,6 +176,7 @@ class ProductionSettingsTests(SimpleTestCase):
         "DJANGO_SETTINGS_MODULE": "config.settings.production",
         "DJANGO_SECRET_KEY": "k3Jx9-Qw2Zr7_Lm5Vb8Nc1Td4Hy6Pf0Sg2Ua9Eo3Ri7Wt5Xq1Yz8Bv4Dn6Mc0Kj2",  # test-only, high variety
         "DJANGO_ALLOWED_HOSTS": "portal.example.test",
+        "DJANGO_ADMIN_URL": "gate-0123456789abcdef/",  # production refuses the default admin path
         "OTP_ENCRYPTION_KEYS": ",".join(settings.OTP_ENCRYPTION_KEYS),  # the test-only key
         "EMAIL_HOST": "smtp.example.test",
         "DEFAULT_FROM_EMAIL": "no-reply@example.test",
@@ -227,3 +228,33 @@ class ProductionSettingsTests(SimpleTestCase):
         )
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertIn("False True True True __Host-sessionid __Host-csrftoken 0 False smtp", result.stdout)
+
+
+class ProductionAdminPathGuard(SimpleTestCase):
+    """Day 25: the Django admin must not sit at the well-known /admin/ in production. A long, unguessable path is not a lock (the admin needs a superuser
+    with a second factor anyway) but it removes the cheapest scanning target and the noise that goes with it."""
+
+    BASE = {"DJANGO_SETTINGS_MODULE": "config.settings.production", "DJANGO_SECRET_KEY": "x" * 80, "DJANGO_ALLOWED_HOSTS": "a.test",
+            "OTP_ENCRYPTION_KEYS": "Vd89ffgaIBKyfs3cTdxx0oY3ExI6vPux7GHTCBdWaTE=", "EMAIL_HOST": "smtp.test", "DEFAULT_FROM_EMAIL": "a@a.test",
+            "DB_NAME": "x", "DB_USER": "x", "DB_PASSWORD": "x", "DOCUMENT_SCAN_MODE": "clamav"}
+
+    def start(self, **extra):
+        import subprocess
+        import sys
+        from pathlib import Path
+        env = {**os.environ, **self.BASE, **extra}
+        env.pop("DJANGO_ADMIN_URL", None) if "DJANGO_ADMIN_URL" not in extra else None
+        return subprocess.run([sys.executable, "-c", "import django; django.setup()"], env=env, capture_output=True, text=True, cwd=Path(__file__).resolve().parents[2])
+
+    def test_the_default_admin_path_is_refused_in_production(self):
+        proc = self.start()
+        self.assertNotEqual(proc.returncode, 0)
+        self.assertIn("DJANGO_ADMIN_URL", proc.stderr)
+
+    def test_well_known_and_short_paths_are_refused(self):
+        for bad in ("admin/", "/admin", "admin", "administrator/", "django-admin/", "secret/", "abc123/"):
+            self.assertNotEqual(self.start(DJANGO_ADMIN_URL=bad).returncode, 0, bad)
+
+    def test_a_long_unguessable_path_is_accepted(self):
+        proc = self.start(DJANGO_ADMIN_URL="gate-7f3a9c1e5b2d4a60/")
+        self.assertEqual(proc.returncode, 0, proc.stderr[-400:])

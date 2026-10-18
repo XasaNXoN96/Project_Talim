@@ -33,6 +33,11 @@ CSRF_COOKIE_NAME = "__Host-csrftoken"
 LANGUAGE_COOKIE_NAME = "__Host-django_language"
 LANGUAGE_COOKIE_SECURE = True
 
+# The Django admin is not served at a guessable address in production: a long random path, never the default or a well-known name.
+_WELL_KNOWN_ADMIN = {"admin", "administrator", "django-admin", "djangoadmin", "manage", "management", "panel", "backend", "login", "dashboard", "secret", "staff", "portal"}
+if ADMIN_URL.strip("/").lower() in _WELL_KNOWN_ADMIN or len(ADMIN_URL.strip("/")) < 12:  # noqa: F405
+    raise ImproperlyConfigured("DJANGO_ADMIN_URL must be a long unguessable path (at least 12 characters, not a well-known name such as admin/).")
+
 # TOTP secrets cannot be stored without an encryption key.
 if not OTP_ENCRYPTION_KEYS:  # noqa: F405
     raise ImproperlyConfigured("OTP_ENCRYPTION_KEYS must be set in production.")

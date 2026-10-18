@@ -65,6 +65,8 @@ def check_env_values(env, report):
     report.passed("ALLOWED_HOSTS has no wildcard") if hosts and not any(h in ("*", ".") or h.startswith("*") for h in hosts) else report.failed("ALLOWED_HOSTS empty or wildcard")
     origins = [o.strip() for o in env.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()]
     report.passed("CSRF trusted origins are https only") if origins and all(o.startswith("https://") and "*" not in o for o in origins) else report.failed("CSRF trusted origins must be explicit https:// origins")
+    admin_path = env.get("DJANGO_ADMIN_URL", "").strip("/")
+    report.passed("Django admin is not at a guessable path") if len(admin_path) >= 12 and admin_path.lower() not in ("administrator", "django-admin", "djangoadmin", "management", "dashboard") else report.failed("DJANGO_ADMIN_URL must be a long unguessable path (>= 12 characters), not admin/")
     report.passed("scanner is fail-closed (clamav)") if env.get("DOCUMENT_SCAN_MODE") == "clamav" else report.failed("DOCUMENT_SCAN_MODE must be clamav (fail-closed)")
     report.passed("CSP is enforcing (report-only not set)") if env.get("DJANGO_CSP_REPORT_ONLY", "0").lower() in ("0", "false", "no", "off", "") else report.failed("DJANGO_CSP_REPORT_ONLY is on: CSP would not block")
     try:

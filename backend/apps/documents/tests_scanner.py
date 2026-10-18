@@ -382,7 +382,7 @@ class ProductionGuardTests(SimpleTestCase):
     def test_production_refuses_to_start_with_scanning_disabled(self):
         env = {**os.environ, "DJANGO_SETTINGS_MODULE": "config.settings.production", "DJANGO_SECRET_KEY": "x" * 80, "DJANGO_ALLOWED_HOSTS": "a.test",
                "OTP_ENCRYPTION_KEYS": "Vd89ffgaIBKyfs3cTdxx0oY3ExI6vPux7GHTCBdWaTE=", "EMAIL_HOST": "smtp.test", "DEFAULT_FROM_EMAIL": "a@a.test",
-               "DB_NAME": "x", "DB_USER": "x", "DB_PASSWORD": "x", "DOCUMENT_SCAN_MODE": "disabled"}
+               "DB_NAME": "x", "DB_USER": "x", "DB_PASSWORD": "x", "DOCUMENT_SCAN_MODE": "disabled", "DJANGO_ADMIN_URL": "gate-0123456789abcdef/"}
         proc = subprocess.run([sys.executable, "-c", "import django; django.setup()"], env=env, capture_output=True, text=True, cwd=Path(__file__).resolve().parents[2])
         self.assertNotEqual(proc.returncode, 0)
         self.assertIn("DOCUMENT_SCAN_MODE", proc.stderr)

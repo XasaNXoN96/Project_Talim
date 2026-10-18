@@ -23,7 +23,7 @@ def _load(name):
 def good_env():
     return {
         "DJANGO_SETTINGS_MODULE": "config.settings.production", "DJANGO_DEBUG": "0", "DJANGO_SECRET_KEY": "k" * 60,
-        "DJANGO_ALLOWED_HOSTS": "staging.invalid", "DJANGO_CSRF_TRUSTED_ORIGINS": "https://staging.invalid", "DJANGO_ADMIN_URL": "gate-abc123/",
+        "DJANGO_ALLOWED_HOSTS": "staging.invalid", "DJANGO_CSRF_TRUSTED_ORIGINS": "https://staging.invalid", "DJANGO_ADMIN_URL": "gate-abc123def456/",
         "DJANGO_TRUSTED_PROXIES": "127.0.0.1", "DJANGO_PRIVATE_MEDIA_ROOT": "/var/lib/talim/private_media", "DB_NAME": "talim_staging",
         "DB_USER": "talim_app", "DB_PASSWORD": "pw-not-a-placeholder", "DB_HOST": "127.0.0.1", "OTP_ENCRYPTION_KEYS": Fernet.generate_key().decode(),
         "DOCUMENT_SCAN_MODE": "clamav", "EMAIL_HOST": "smtp.staging.invalid", "DEFAULT_FROM_EMAIL": "noreply@staging.invalid", "DJANGO_HSTS_SECONDS": "0",
@@ -51,7 +51,7 @@ class PreflightRules(SimpleTestCase):
             "wildcard host": {"DJANGO_ALLOWED_HOSTS": "*"}, "wildcard sub": {"DJANGO_ALLOWED_HOSTS": "*.example.test"}, "http origin": {"DJANGO_CSRF_TRUSTED_ORIGINS": "http://x.invalid"},
             "scanner off": {"DOCUMENT_SCAN_MODE": "disabled"}, "csp report only": {"DJANGO_CSP_REPORT_ONLY": "1"}, "bad otp key": {"OTP_ENCRYPTION_KEYS": "nope"},
             "superuser role": {"DB_USER": "postgres"}, "owner role": {"DB_USER": "talim_owner"}, "placeholder": {"DB_PASSWORD": "CHANGE_ME_x"}, "empty": {"EMAIL_HOST": ""},
-            "hsts garbage": {"DJANGO_HSTS_SECONDS": "soon"},
+            "hsts garbage": {"DJANGO_HSTS_SECONDS": "soon"}, "default admin path": {"DJANGO_ADMIN_URL": "admin/"}, "short admin path": {"DJANGO_ADMIN_URL": "abc/"},
         }
         for label, change in mistakes.items():
             with self.subTest(label):
