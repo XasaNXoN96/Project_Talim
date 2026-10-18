@@ -2815,3 +2815,45 @@ msgstr "You have no open tasks assigned"
 
 msgid "Oxirgi bildirishnomalar"
 msgstr "Latest notifications"
+
+msgid "Admin panel"
+msgstr "Admin panel"
+
+msgid "Boshqaruv bo‘limlari — faqat vakolatli foydalanuvchilar uchun"
+msgstr "Management sections — authorized users only"
+
+msgid "Django admin"
+msgstr "Django admin"
+
+msgid "Texnik boshqaruv"
+msgstr "Technical management"
+
+msgid "Yangi xodimlar"
+msgstr "New employees"
+
+msgid "Qo‘shish, tahrirlash"
+msgstr "Add and edit"
+
+msgid "Nashrlarni boshqarish"
+msgstr "Manage publications"
+
+msgid "Nazorat"
+msgstr "Monitoring"
+
+msgid "Hujjatlar bazasi"
+msgstr "Document base"
+
+msgid "Statistika"
+msgstr "Statistics"
+
+msgid "Tuzilma va lavozimlar"
+msgstr "Structure and positions"
+
+msgid "Hisoblar va rollar"
+msgstr "Accounts and roles"
+
+msgid "Harakatlar tarixi"
+msgstr "Activity history"
+
+msgid "Rejalashtirilgan ishlar"
+msgstr "Scheduled jobs"

@@ -2815,3 +2815,45 @@ msgstr "Sizga biriktirilgan ochiq topshiriqlar yo‘q"
 
 msgid "Oxirgi bildirishnomalar"
 msgstr "Oxirgi bildirishnomalar"
+
+msgid "Admin panel"
+msgstr "Admin panel"
+
+msgid "Boshqaruv bo‘limlari — faqat vakolatli foydalanuvchilar uchun"
+msgstr "Boshqaruv bo‘limlari — faqat vakolatli foydalanuvchilar uchun"
+
+msgid "Django admin"
+msgstr "Django admin"
+
+msgid "Texnik boshqaruv"
+msgstr "Texnik boshqaruv"
+
+msgid "Yangi xodimlar"
+msgstr "Yangi xodimlar"
+
+msgid "Qo‘shish, tahrirlash"
+msgstr "Qo‘shish, tahrirlash"
+
+msgid "Nashrlarni boshqarish"
+msgstr "Nashrlarni boshqarish"
+
+msgid "Nazorat"
+msgstr "Nazorat"
+
+msgid "Hujjatlar bazasi"
+msgstr "Hujjatlar bazasi"
+
+msgid "Statistika"
+msgstr "Statistika"
+
+msgid "Tuzilma va lavozimlar"
+msgstr "Tuzilma va lavozimlar"
+
+msgid "Hisoblar va rollar"
+msgstr "Hisoblar va rollar"
+
+msgid "Harakatlar tarixi"
+msgstr "Harakatlar tarixi"
+
+msgid "Rejalashtirilgan ishlar"
+msgstr "Rejalashtirilgan ishlar"

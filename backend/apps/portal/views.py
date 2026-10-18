@@ -1,10 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.views.generic import ListView, TemplateView
 
 from apps.access.services import user_role_names
 from apps.audit.models import AuditLog
 from apps.core.mixins import PortalPermissionMixin
+
+from .hub import can_open_hub, tiles_for
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -128,3 +131,19 @@ class PreviewView(LoginRequiredMixin, TemplateView):
         if slug not in PREVIEW_SECTIONS:
             raise Http404
         return [f"portal/preview/{slug}.html"]
+
+
+class AdminHubView(LoginRequiredMixin, TemplateView):
+    """Tiles to the management pages the user may open. Not a new permission: users without any management right get 403."""
+
+    template_name = "portal/admin_hub.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and not can_open_hub(request.user):
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tiles"] = tiles_for(self.request.user)
+        return context

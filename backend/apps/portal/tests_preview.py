@@ -82,3 +82,48 @@ class DashboardTests(TestCase):
             self.assertNotIn(hidden, body, hidden)
         self.assertIn('class="banner"', body)
 
+
+class AdminHubAndMenuTests(TestCase):
+    def setUp(self):
+        call_command("seed_roles", verbosity=0)
+
+    def get(self, user, name="portal:admin_hub"):
+        login_with_two_factor(self.client, user)
+        return self.client.get(reverse(name))
+
+    def test_anonymous_goes_to_login_and_users_without_management_rights_get_403(self):
+        self.assertEqual(self.client.get(reverse("portal:admin_hub")).status_code, 302)
+        self.assertEqual(self.get(make_user("plain", role="employee")).status_code, 403)
+
+    def test_an_administrator_sees_tiles_only_for_pages_the_role_may_open(self):
+        response = self.get(make_user("boss3", role="admin"))
+        self.assertEqual(response.status_code, 200)
+        body = response.content.decode()
+        for url in (reverse("employees:list"), reverse("news_admin:list"), reverse("tasks:list"), reverse("documents:list"), reverse("reports:index")):
+            self.assertIn(f'href="{url}"', body, url)
+        self.assertNotIn("Django admin", body)  # only for superusers
+
+    def test_a_superuser_also_gets_the_technical_admin_tile(self):
+        user = make_user("root1", is_superuser=True, is_staff=True)
+        self.assertIn("Django admin", self.get(user).content.decode())
+
+    def test_the_menu_follows_the_design_order_for_an_administrator(self):
+        body = self.get(make_user("boss4", role="admin"), "portal:dashboard").content.decode()
+        order = ["portal:dashboard", "news_admin:list", "employees:list"]
+        positions = [body.index(f'href="{reverse(n)}"') for n in order]
+        self.assertEqual(positions, sorted(positions))
+        sidebar = body[body.index('class="sb-nav"'):body.index("</nav>", body.index('class="sb-nav"'))]
+        for slug in ("yutuqlar", "sertifikatlar", "media", "kirish-chiqish", "geolokatsiya", "chat"):
+            self.assertIn(reverse("portal:preview", args=[slug]), sidebar)
+        for name in ("tasks:list", "documents:list", "employees:structure", "notifications:list", "reports:index", "portal:admin_hub"):
+            self.assertIn(f'href="{reverse(name)}"', sidebar, name)
+        self.assertGreaterEqual(sidebar.count("<a "), 15)
+
+    def test_employee_list_has_the_status_tabs_and_avatars(self):
+        user = make_user("hr1", role="hr")
+        login_with_two_factor(self.client, user)
+        body = self.client.get(reverse("employees:list")).content.decode()
+        for tab in ("Barcha xodimlar", "Faol xodimlar", "Yangi xodimlar"):
+            self.assertIn(tab, body)
+        self.assertIn("?status=active", body)
+

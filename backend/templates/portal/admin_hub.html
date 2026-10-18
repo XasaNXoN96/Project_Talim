@@ -1,0 +1,12 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Admin panel" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Admin panel" %}</h1><p>{% translate "Boshqaruv bo‘limlari — faqat vakolatli foydalanuvchilar uchun" %}</p></div></div>
+<div class="admin-grid">
+  {% for perm, url_name, args, icon, color, title, subtitle in tiles %}
+  <a class="card admin-tile" href="{% url url_name %}"><span class="ic-chip {{ color }}" data-i="{{ icon }}"></span><div><b>{% trans title %}</b><small>{% trans subtitle %}</small></div></a>
+  {% endfor %}
+  {% if user.is_superuser %}<a class="card admin-tile" href="{% url 'admin:index' %}"><span class="ic-chip c-teal" data-i="settings"></span><div><b>{% translate "Django admin" %}</b><small>{% translate "Texnik boshqaruv" %}</small></div></a>{% endif %}
+</div>
+{% endblock %}

@@ -2815,3 +2815,45 @@ msgstr "Нет открытых заданий, назначенных вам"
 
 msgid "Oxirgi bildirishnomalar"
 msgstr "Последние уведомления"
+
+msgid "Admin panel"
+msgstr "Админ-панель"
+
+msgid "Boshqaruv bo‘limlari — faqat vakolatli foydalanuvchilar uchun"
+msgstr "Разделы управления — только для уполномоченных пользователей"
+
+msgid "Django admin"
+msgstr "Админка Django"
+
+msgid "Texnik boshqaruv"
+msgstr "Техническое управление"
+
+msgid "Yangi xodimlar"
+msgstr "Новые сотрудники"
+
+msgid "Qo‘shish, tahrirlash"
+msgstr "Добавление и редактирование"
+
+msgid "Nashrlarni boshqarish"
+msgstr "Управление публикациями"
+
+msgid "Nazorat"
+msgstr "Контроль"
+
+msgid "Hujjatlar bazasi"
+msgstr "База документов"
+
+msgid "Statistika"
+msgstr "Статистика"
+
+msgid "Tuzilma va lavozimlar"
+msgstr "Структура и должности"
+
+msgid "Hisoblar va rollar"
+msgstr "Учётные записи и роли"
+
+msgid "Harakatlar tarixi"
+msgstr "История действий"
+
+msgid "Rejalashtirilgan ishlar"
+msgstr "Запланированные задачи"

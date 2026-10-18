@@ -4,6 +4,12 @@
 {% block content %}
 <div class="page-head"><div><h1>{% translate "Xodimlar" %}</h1><p>{% translate "Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi." %}</p></div>
 <div class="row wrap"><a class="btn btn-secondary" href="{% url 'employees:me' %}">{% translate "Mening kartam" %}</a>{% if can_add %}<a class="btn btn-secondary" href="{% url 'employees:import' %}">{% translate "Excel’dan import" %}</a><a class="btn btn-primary" href="{% url 'employees:create' %}">{% translate "Xodim qo‘shish" %}</a>{% endif %}</div></div>
+<div class="tabs" style="margin-bottom:16px">
+  <a class="tab {% if not status %}active{% endif %}" href="{% url 'employees:list' %}">{% translate "Barcha xodimlar" %}</a>
+  {% if perms.organization.view_department %}<a class="tab" href="{% url 'employees:structure' %}">{% translate "Bo‘limlar" %}</a>{% endif %}
+  <a class="tab {% if status == 'active' %}active{% endif %}" href="?status=active">{% translate "Faol xodimlar" %}</a>
+  <a class="tab {% if status == 'new' %}active{% endif %}" href="?status=new">{% translate "Yangi xodimlar" %}</a>
+</div>
 <form method="get" class="row wrap" style="margin-bottom:16px">
   <input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Qidirish: ism, lavozim' %}" style="max-width:260px" maxlength="100">
   <select class="input" name="department" style="max-width:240px"><option value="">{% translate "Barcha bo‘limlar" %}</option>{% for d in departments %}<option value="{{ d.pk }}" {% if department == d.pk|stringformat:"s" %}selected{% endif %}>{{ d.name }}</option>{% endfor %}</select>
@@ -12,7 +18,7 @@
 </form>
 {% if employees %}
 <div class="table-wrap"><table class="t"><thead><tr><th>{% translate "F.I.Sh." %}</th><th>{% translate "Bo‘lim" %}</th><th>{% translate "Lavozim" %}</th><th>{% translate "Holat" %}</th></tr></thead><tbody>
-{% for e in employees %}<tr><td><a href="{% url 'employees:detail' e.pk %}">{{ e.last_name }} {{ e.first_name }} {{ e.middle_name }}</a></td><td>{{ e.department.name }}</td><td>{{ e.position.name|default:"—" }}</td><td><span class="badge {% if e.status == 'active' %}b-ok{% elif e.status == 'archived' %}b-err{% else %}b-info{% endif %}">{{ e.get_status_display }}</span></td></tr>{% endfor %}
+{% for e in employees %}<tr><td><span class="row" style="gap:10px;flex-wrap:nowrap"><span class="av" data-name="{{ e.last_name }} {{ e.first_name }}" style="flex:none"></span><a href="{% url 'employees:detail' e.pk %}">{{ e.last_name }} {{ e.first_name }} {{ e.middle_name }}</a></span></td><td>{{ e.department.name }}</td><td>{{ e.position.name|default:"—" }}</td><td><span class="badge {% if e.status == 'active' %}b-ok{% elif e.status == 'archived' %}b-err{% else %}b-info{% endif %}">{{ e.get_status_display }}</span></td></tr>{% endfor %}
 </tbody></table></div>
 {% include "includes/pagination.html" %}
 {% else %}

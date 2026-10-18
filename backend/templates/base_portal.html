@@ -13,36 +13,42 @@
     <a class="sb-brand" href="{% url 'portal:dashboard' %}" title="{{ SITE_NAME }}"><span data-logo style="display:block;width:40px;height:40px;flex:none"></span><div><b>{{ SITE_SHORT }}<br>{{ SITE_DISTRICT }}</b><small>{% translate "Xodimlar portali" %}</small></div></a>
     <nav class="sb-nav" aria-label="{% translate 'Bo‘limlar' %}">
       <a href="{% url 'portal:dashboard' %}" title="{% translate 'Bosh sahifa' %}" {% if request.resolver_match.url_name == 'dashboard' %}class="active" aria-current="page"{% endif %}><i data-i="home" style="display:contents"></i><span>{% translate "Bosh sahifa" %}</span></a>
-      {% if perms.tasks.view_task %}
-      <a href="{% url 'tasks:list' %}" title="{% translate 'Topshiriqlar' %}" {% if request.resolver_match.namespace == 'tasks' %}class="active" aria-current="page"{% endif %}><i data-i="clipboard" style="display:contents"></i><span>{% translate "Topshiriqlar" %}</span></a>
-      {% endif %}
-      {% if perms.reports.view_reports %}
-      <a href="{% url 'reports:index' %}" title="{% translate 'Hisobotlar' %}" {% if request.resolver_match.namespace == 'reports' %}class="active" aria-current="page"{% endif %}><i data-i="chart" style="display:contents"></i><span>{% translate "Hisobotlar" %}</span></a>
-      {% endif %}
       {% if perms.content.view_news %}
       <a href="{% url 'news_admin:list' %}" title="{% translate 'Yangiliklar' %}" {% if request.resolver_match.namespace == 'news_admin' %}class="active" aria-current="page"{% endif %}><i data-i="news" style="display:contents"></i><span>{% translate "Yangiliklar" %}</span></a>
+      {% endif %}
+      {% if perms.organization.view_employee_directory %}
+      <a href="{% url 'employees:list' %}" title="{% translate 'Xodimlar' %}" {% if request.resolver_match.namespace == 'employees' and request.resolver_match.url_name != 'structure' %}class="active" aria-current="page"{% endif %}><i data-i="users" style="display:contents"></i><span>{% translate "Xodimlar" %}</span></a>
+      {% endif %}
+      <a href="{% url 'portal:preview' 'yutuqlar' %}" title="{% translate 'Yutuqlar' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'yutuqlar' %}class="active" aria-current="page"{% endif %}><i data-i="trophy" style="display:contents"></i><span>{% translate "Yutuqlar" %}</span></a>
+      <a href="{% url 'portal:preview' 'sertifikatlar' %}" title="{% translate 'Sertifikatlar' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'sertifikatlar' %}class="active" aria-current="page"{% endif %}><i data-i="award" style="display:contents"></i><span>{% translate "Sertifikatlar" %}</span></a>
+      {% if perms.tasks.view_task %}
+      <a href="{% url 'tasks:list' %}" title="{% translate 'Topshiriqlar' %}" {% if request.resolver_match.namespace == 'tasks' %}class="active" aria-current="page"{% endif %}><i data-i="clipboard" style="display:contents"></i><span>{% translate "Topshiriqlar" %}</span></a>
       {% endif %}
       {% if perms.documents.view_document %}
       <a href="{% url 'documents:list' %}" title="{% translate 'Hujjatlar' %}" {% if request.resolver_match.namespace == 'documents' %}class="active" aria-current="page"{% endif %}><i data-i="file" style="display:contents"></i><span>{% translate "Hujjatlar" %}</span></a>
       {% endif %}
-      {% if perms.organization.view_employee_directory %}
-      <a href="{% url 'employees:list' %}" title="{% translate 'Xodimlar' %}" {% if request.resolver_match.namespace == 'employees' %}class="active" aria-current="page"{% endif %}><i data-i="users" style="display:contents"></i><span>{% translate "Xodimlar" %}</span></a>
-      {% endif %}
-      {% if perms.organization.view_department %}
-      <a href="{% url 'employees:structure' %}" title="{% translate 'Tuzilma' %}" {% if request.resolver_match.url_name == 'structure' %}class="active" aria-current="page"{% endif %}><i data-i="building" style="display:contents"></i><span>{% translate "Tuzilma" %}</span></a>
-      {% endif %}
-      <a href="{% url 'portal:preview' 'yutuqlar' %}" title="{% translate 'Yutuqlar' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'yutuqlar' %}class="active" aria-current="page"{% endif %}><i data-i="trophy" style="display:contents"></i><span>{% translate "Yutuqlar" %}</span></a>
-      <a href="{% url 'portal:preview' 'sertifikatlar' %}" title="{% translate 'Sertifikatlar' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'sertifikatlar' %}class="active" aria-current="page"{% endif %}><i data-i="award" style="display:contents"></i><span>{% translate "Sertifikatlar" %}</span></a>
       <a href="{% url 'portal:preview' 'media' %}" title="{% translate 'Media' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'media' %}class="active" aria-current="page"{% endif %}><i data-i="image" style="display:contents"></i><span>{% translate "Media" %}</span></a>
+      {% if perms.organization.view_department %}
+      <a href="{% url 'employees:structure' %}" title="{% translate 'Tashkilot' %}" {% if request.resolver_match.url_name == 'structure' %}class="active" aria-current="page"{% endif %}><i data-i="building" style="display:contents"></i><span>{% translate "Tashkilot" %}</span></a>
+      {% endif %}
       <a href="{% url 'portal:preview' 'kirish-chiqish' %}" title="{% translate 'Kirish-chiqish' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'kirish-chiqish' %}class="active" aria-current="page"{% endif %}><i data-i="login" style="display:contents"></i><span>{% translate "Kirish-chiqish" %}</span></a>
       <a href="{% url 'portal:preview' 'geolokatsiya' %}" title="{% translate 'Geolokatsiya' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'geolokatsiya' %}class="active" aria-current="page"{% endif %}><i data-i="pin" style="display:contents"></i><span>{% translate "Geolokatsiya" %}</span></a>
       <a href="{% url 'portal:preview' 'chat' %}" title="{% translate 'Chat' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'chat' %}class="active" aria-current="page"{% endif %}><i data-i="chat" style="display:contents"></i><span>{% translate "Chat" %}</span></a>
+      {% if perms.notifications.view_notification %}
+      <a href="{% url 'notifications:list' %}" title="{% translate 'Bildirishnomalar' %}" {% if request.resolver_match.namespace == 'notifications' %}class="active" aria-current="page"{% endif %}><i data-i="bell" style="display:contents"></i><span>{% translate "Bildirishnomalar" %}</span></a>
+      {% endif %}
+      {% if perms.reports.view_reports %}
+      <a href="{% url 'reports:index' %}" title="{% translate 'Hisobotlar' %}" {% if request.resolver_match.namespace == 'reports' %}class="active" aria-current="page"{% endif %}><i data-i="chart" style="display:contents"></i><span>{% translate "Hisobotlar" %}</span></a>
+      {% endif %}
+      {% if show_admin_hub %}
+      <a href="{% url 'portal:admin_hub' %}" title="{% translate 'Admin panel' %}" {% if request.resolver_match.url_name == 'admin_hub' %}class="active" aria-current="page"{% endif %}><i data-i="shield" style="display:contents"></i><span>{% translate "Admin panel" %}</span></a>
+      {% endif %}
       {% if perms.accounts.view_user %}
       <a href="{% url 'users:list' %}" title="{% translate 'Foydalanuvchilar' %}" {% if request.resolver_match.namespace == 'users' %}class="active" aria-current="page"{% endif %}><i data-i="users" style="display:contents"></i><span>{% translate "Foydalanuvchilar" %}</span></a>
       {% endif %}
       {% if perms.audit.view_auditlog %}
-      <a href="{% url 'portal:jobs' %}" title="{% translate 'Fon vazifalari' %}" {% if request.resolver_match.url_name == 'jobs' %}class="active" aria-current="page"{% endif %}><i data-i="clock" style="display:contents"></i><span>{% translate "Fon vazifalari" %}</span></a>
-      <a href="{% url 'portal:audit' %}" title="{% translate 'Audit jurnali' %}" {% if request.resolver_match.url_name == 'audit' %}class="active" aria-current="page"{% endif %}><i data-i="shield" style="display:contents"></i><span>{% translate "Audit jurnali" %}</span></a>
+        <a href="{% url 'portal:jobs' %}" title="{% translate 'Fon vazifalari' %}" {% if request.resolver_match.url_name == 'jobs' %}class="active" aria-current="page"{% endif %}><i data-i="clock" style="display:contents"></i><span>{% translate "Fon vazifalari" %}</span></a>
+        <a href="{% url 'portal:audit' %}" title="{% translate 'Audit jurnali' %}" {% if request.resolver_match.url_name == 'audit' %}class="active" aria-current="page"{% endif %}><i data-i="shield" style="display:contents"></i><span>{% translate "Audit jurnali" %}</span></a>
       {% endif %}
     </nav>
     <div class="sb-foot">{% translate "Ishlab chiqish bosqichi: qolgan bo‘limlar keyingi bosqichlarda qo‘shiladi" %}</div>
