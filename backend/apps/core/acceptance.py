@@ -94,7 +94,7 @@ class World:
             "accounts:session_end": {"pk": self.user_session.pk},
             "news_admin:preview": {"pk": self.news.pk}, "news_admin:edit": {"pk": self.news.pk}, "news_admin:status": {"pk": self.news.pk, "action": "archive"},
             "news_admin:category_edit": {"pk": self.news_category.pk},
-            "reports:export": {"fmt": "xlsx"}, "content:news_detail": {"slug": self.news.slug},
+            "reports:export": {"fmt": "xlsx"}, "content:news_detail": {"slug": self.news.slug}, "portal:preview": {"section": "media"},
             "accounts:password_reset_confirm": {"uidb64": self.uid, "token": self.token},
         }
         return table.get(name, {})
