@@ -57,6 +57,10 @@ class Employee(TimeStampedModel):
     personal_phone = models.CharField(_("shaxsiy telefon"), max_length=32, blank=True)
     birth_date = models.DateField(_("tug‘ilgan sana"), null=True, blank=True)
     status = models.CharField(_("holat"), max_length=16, choices=Status.choices, default=Status.NEW)
+    # School/kindergarten the person works at (None = works in the department office).
+    institution = models.ForeignKey(
+        "Institution", null=True, blank=True, on_delete=models.PROTECT, related_name="employees", verbose_name=_("ta’lim muassasasi")
+    )
 
     class Meta:
         verbose_name = _("xodim")
