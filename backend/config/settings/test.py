@@ -17,9 +17,26 @@ LOGGING["loggers"]["django"]["level"] = "ERROR"  # noqa: F405
 LOGGING["loggers"]["django.request"] = {"handlers": [], "level": "CRITICAL", "propagate": False}  # noqa: F405
 LOGGING["loggers"]["apps"]["level"] = "CRITICAL"  # noqa: F405
 
+import atexit  # noqa: E402
+import shutil  # noqa: E402
 import tempfile  # noqa: E402
 
-PRIVATE_MEDIA_ROOT = Path(tempfile.mkdtemp(prefix="talim-test-private-"))  # noqa: F405
+
+def _private_test_directory():
+    """A fresh private document directory for THIS process, removed when this process exits (normally or after an exception). Only the exact path created
+    here is removed, never a pattern, and only by the process that created it: a forked child inherits the exit handler but must not delete its parent's directory."""
+    path = Path(tempfile.mkdtemp(prefix="talim-test-private-"))  # noqa: F405
+    owner = os.getpid()
+
+    def remove():
+        if os.getpid() == owner and path.is_dir() and not path.is_symlink():
+            shutil.rmtree(path, ignore_errors=True)
+
+    atexit.register(remove)
+    return path
+
+
+PRIVATE_MEDIA_ROOT = _private_test_directory()
 
 # Most tests do not talk to an antivirus. Scanner tests switch it on explicitly (stub server or a real clamd).
 DOCUMENT_SCAN_MODE = "disabled"
