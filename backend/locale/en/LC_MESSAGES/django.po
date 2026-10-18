@@ -2653,3 +2653,138 @@ msgstr "Forgot your password?"
 
 #~ msgid "Topshiriqlar bo‘yicha yangiliklar."
 #~ msgstr "News about tasks."
+
+msgid "Batafsil ma’lumot"
+msgstr "Learn more"
+
+msgid "Yaxshi ustoz — yorqin kelajak yo‘lboshchisi."
+msgstr "A good teacher lights the way to a bright future."
+
+msgid "Statistika (namunaviy qiymatlar)"
+msgstr "Statistics (sample values)"
+
+msgid "Ta’lim muassasalari"
+msgstr "Educational institutions"
+
+msgid "O‘qituvchilar va xodimlar"
+msgstr "Teachers and staff"
+
+msgid "O‘quvchilar"
+msgstr "Students"
+
+msgid "To‘garak va loyihalar"
+msgstr "Clubs and projects"
+
+msgid "Ustozlar yutuqlari"
+msgstr "Teachers' achievements"
+
+msgid "Maket"
+msgstr "Mockup"
+
+msgid "Raqamlar haqiqiy ma’lumot bilan almashtiriladi."
+msgstr "The numbers will be replaced with real data."
+
+msgid "E’lonlar"
+msgstr "Announcements"
+
+msgid "O‘qituvchilar uchun attestatsiyaga tayyorgarlik seminari"
+msgstr "Certification preparation seminar for teachers"
+
+msgid "Tuman bosqichidagi fan olimpiadasi"
+msgstr "District stage of the subject olympiad"
+
+msgid "Maktablar uchun metodik tavsiyalar"
+msgstr "Methodological recommendations for schools"
+
+msgid "Yangi o‘quv yiliga oid tartib-qoidalar"
+msgstr "Rules for the new school year"
+
+msgid "Bo‘sh ish o‘rinlari haqida ma’lumot"
+msgstr "Information about vacancies"
+
+msgid "Muhim havolalar"
+msgstr "Important links"
+
+msgid "Normativ-huquqiy hujjatlar"
+msgstr "Regulatory documents"
+
+msgid "Yangiliklar arxivi"
+msgstr "News archive"
+
+msgid "Bog‘lanish"
+msgstr "Contact"
+
+msgid "Namuna Ustoz"
+msgstr "Sample Teacher"
+
+msgid "Yilning eng yaxshi ustozi — 2026"
+msgstr "Teacher of the Year — 2026"
+
+msgid "Namuna Muallim"
+msgstr "Sample Educator"
+
+msgid "Innovatsion loyihalar sovrindori"
+msgstr "Winner of innovative projects"
+
+msgid "Namuna Metodist"
+msgstr "Sample Methodologist"
+
+msgid "Metodik ishlanmalar g‘olibi"
+msgstr "Winner of methodological developments"
+
+msgid "Namuna IT-mutaxassis"
+msgstr "Sample IT Specialist"
+
+msgid "IT yo‘nalishi bo‘yicha yutuq"
+msgstr "Achievement in IT"
+
+msgid "Fotorasmlar galereyasi"
+msgstr "Photo gallery"
+
+msgid "Rasmni kattalashtirish"
+msgstr "Enlarge image"
+
+msgid "Yana rasmlar"
+msgstr "More photos"
+
+msgid "Video va media"
+msgstr "Video and media"
+
+msgid "Videoni ijro etish"
+msgstr "Play video"
+
+msgid "Ustozlar kuni munosabati bilan tantanali tadbir"
+msgstr "Festive event for Teachers' Day"
+
+msgid "ko‘rishlar va izohlar soni tizim ulanganda ko‘rsatiladi"
+msgstr "views and comments will be shown once the system is connected"
+
+msgid "Namuna hujjat · PDF"
+msgstr "Sample document · PDF"
+
+msgid "Metodik tavsiyalar"
+msgstr "Methodological recommendations"
+
+msgid "Namuna hujjat · Word"
+msgstr "Sample document · Word"
+
+msgid "Muassasalar ro‘yxati"
+msgstr "List of institutions"
+
+msgid "Namuna hujjat · Excel"
+msgstr "Sample document · Excel"
+
+msgid "E’lonlar, ustozlar, galereya, video va hujjatlar bo‘limlari namunaviy ma’lumot bilan ko‘rsatilgan va keyinchalik haqiqiy ma’lumot bilan almashtiriladi."
+msgstr "The Announcements, Teachers, Gallery, Video and Documents sections show sample data and will later be replaced with real data."
+
+msgid "Yutuqlar"
+msgstr "Achievements"
+
+msgid "Media"
+msgstr "Media"
+
+msgid "Joylashuv"
+msgstr "Location"
+
+msgid "Xarita namunasi — manzil tasdiqlangach almashtiriladi."
+msgstr "Sample map — will be replaced once the address is confirmed."

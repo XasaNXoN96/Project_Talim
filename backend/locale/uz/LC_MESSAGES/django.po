@@ -2653,3 +2653,138 @@ msgstr "Parolni unutdingizmi?"
 
 #~ msgid "Topshiriqlar bo‘yicha yangiliklar."
 #~ msgstr "Topshiriqlar bo‘yicha yangiliklar."
+
+msgid "Batafsil ma’lumot"
+msgstr "Batafsil ma’lumot"
+
+msgid "Yaxshi ustoz — yorqin kelajak yo‘lboshchisi."
+msgstr "Yaxshi ustoz — yorqin kelajak yo‘lboshchisi."
+
+msgid "Statistika (namunaviy qiymatlar)"
+msgstr "Statistika (namunaviy qiymatlar)"
+
+msgid "Ta’lim muassasalari"
+msgstr "Ta’lim muassasalari"
+
+msgid "O‘qituvchilar va xodimlar"
+msgstr "O‘qituvchilar va xodimlar"
+
+msgid "O‘quvchilar"
+msgstr "O‘quvchilar"
+
+msgid "To‘garak va loyihalar"
+msgstr "To‘garak va loyihalar"
+
+msgid "Ustozlar yutuqlari"
+msgstr "Ustozlar yutuqlari"
+
+msgid "Maket"
+msgstr "Maket"
+
+msgid "Raqamlar haqiqiy ma’lumot bilan almashtiriladi."
+msgstr "Raqamlar haqiqiy ma’lumot bilan almashtiriladi."
+
+msgid "E’lonlar"
+msgstr "E’lonlar"
+
+msgid "O‘qituvchilar uchun attestatsiyaga tayyorgarlik seminari"
+msgstr "O‘qituvchilar uchun attestatsiyaga tayyorgarlik seminari"
+
+msgid "Tuman bosqichidagi fan olimpiadasi"
+msgstr "Tuman bosqichidagi fan olimpiadasi"
+
+msgid "Maktablar uchun metodik tavsiyalar"
+msgstr "Maktablar uchun metodik tavsiyalar"
+
+msgid "Yangi o‘quv yiliga oid tartib-qoidalar"
+msgstr "Yangi o‘quv yiliga oid tartib-qoidalar"
+
+msgid "Bo‘sh ish o‘rinlari haqida ma’lumot"
+msgstr "Bo‘sh ish o‘rinlari haqida ma’lumot"
+
+msgid "Muhim havolalar"
+msgstr "Muhim havolalar"
+
+msgid "Normativ-huquqiy hujjatlar"
+msgstr "Normativ-huquqiy hujjatlar"
+
+msgid "Yangiliklar arxivi"
+msgstr "Yangiliklar arxivi"
+
+msgid "Bog‘lanish"
+msgstr "Bog‘lanish"
+
+msgid "Namuna Ustoz"
+msgstr "Namuna Ustoz"
+
+msgid "Yilning eng yaxshi ustozi — 2026"
+msgstr "Yilning eng yaxshi ustozi — 2026"
+
+msgid "Namuna Muallim"
+msgstr "Namuna Muallim"
+
+msgid "Innovatsion loyihalar sovrindori"
+msgstr "Innovatsion loyihalar sovrindori"
+
+msgid "Namuna Metodist"
+msgstr "Namuna Metodist"
+
+msgid "Metodik ishlanmalar g‘olibi"
+msgstr "Metodik ishlanmalar g‘olibi"
+
+msgid "Namuna IT-mutaxassis"
+msgstr "Namuna IT-mutaxassis"
+
+msgid "IT yo‘nalishi bo‘yicha yutuq"
+msgstr "IT yo‘nalishi bo‘yicha yutuq"
+
+msgid "Fotorasmlar galereyasi"
+msgstr "Fotorasmlar galereyasi"
+
+msgid "Rasmni kattalashtirish"
+msgstr "Rasmni kattalashtirish"
+
+msgid "Yana rasmlar"
+msgstr "Yana rasmlar"
+
+msgid "Video va media"
+msgstr "Video va media"
+
+msgid "Videoni ijro etish"
+msgstr "Videoni ijro etish"
+
+msgid "Ustozlar kuni munosabati bilan tantanali tadbir"
+msgstr "Ustozlar kuni munosabati bilan tantanali tadbir"
+
+msgid "ko‘rishlar va izohlar soni tizim ulanganda ko‘rsatiladi"
+msgstr "ko‘rishlar va izohlar soni tizim ulanganda ko‘rsatiladi"
+
+msgid "Namuna hujjat · PDF"
+msgstr "Namuna hujjat · PDF"
+
+msgid "Metodik tavsiyalar"
+msgstr "Metodik tavsiyalar"
+
+msgid "Namuna hujjat · Word"
+msgstr "Namuna hujjat · Word"
+
+msgid "Muassasalar ro‘yxati"
+msgstr "Muassasalar ro‘yxati"
+
+msgid "Namuna hujjat · Excel"
+msgstr "Namuna hujjat · Excel"
+
+msgid "E’lonlar, ustozlar, galereya, video va hujjatlar bo‘limlari namunaviy ma’lumot bilan ko‘rsatilgan va keyinchalik haqiqiy ma’lumot bilan almashtiriladi."
+msgstr "E’lonlar, ustozlar, galereya, video va hujjatlar bo‘limlari namunaviy ma’lumot bilan ko‘rsatilgan va keyinchalik haqiqiy ma’lumot bilan almashtiriladi."
+
+msgid "Yutuqlar"
+msgstr "Yutuqlar"
+
+msgid "Media"
+msgstr "Media"
+
+msgid "Joylashuv"
+msgstr "Joylashuv"
+
+msgid "Xarita namunasi — manzil tasdiqlangach almashtiriladi."
+msgstr "Xarita namunasi — manzil tasdiqlangach almashtiriladi."

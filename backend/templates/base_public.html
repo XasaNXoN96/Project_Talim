@@ -15,6 +15,10 @@
     <nav class="pub-nav" aria-label="{% translate 'Asosiy menyu' %}">
       <a href="{% url 'content:home' %}" {% if request.resolver_match.url_name == 'home' %}class="active" aria-current="page"{% endif %}>{% translate "Bosh sahifa" %}</a>
       <a href="{% url 'content:news_list' %}" {% if request.resolver_match.url_name == 'news_list' or request.resolver_match.url_name == 'news_detail' %}class="active" aria-current="page"{% endif %}>{% translate "Yangiliklar" %}</a>
+      <a href="{% url 'content:home' %}#yutuqlar">{% translate "Yutuqlar" %}</a>
+      <a href="{% url 'content:home' %}#hujjatlar">{% translate "Hujjatlar" %}</a>
+      <a href="{% url 'content:home' %}#media">{% translate "Media" %}</a>
+      <a href="#boglanish">{% translate "Bog‘lanish" %}</a>
     </nav>
     <div class="pub-actions">
       {% include "includes/language_switcher.html" %}
@@ -38,6 +42,7 @@
         <div class="foot-row"><span data-i="pin" data-c="sm"></span><span>{% translate "Manzil: tasdiqlangan ma’lumot kiritiladi" %}</span></div>
         <div class="foot-row"><span data-i="phone" data-c="sm"></span><span>{% translate "Telefon: tasdiqlangan ma’lumot kiritiladi" %}</span></div>
         <div class="foot-row"><span data-i="mail" data-c="sm"></span><span>{% translate "E-pochta: tasdiqlangan ma’lumot kiritiladi" %}</span></div></div>
+      <div><h4>{% translate "Joylashuv" %}</h4><div class="map-card"><svg viewBox="0 0 300 150" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><rect width="300" height="150" fill="#e4ecfa"/><path d="M-10 100L120 60l100 40 100-30M80-10l40 170M200-10l-30 170" stroke="#fff" stroke-width="10" fill="none"/></svg><span class="pin" data-i="pin" data-c="lg"></span></div><p class="xs" style="margin-top:6px">{% translate "Xarita namunasi — manzil tasdiqlangach almashtiriladi." %}</p></div>
     </div>
     <div class="copy"><span>© {% now "Y" %} {{ SITE_NAME }}</span><span>{% translate "Ishlab chiqish bosqichi" %}</span></div>
   </div>

@@ -1,24 +1,93 @@
 {% extends "base_public.html" %}
 {% load i18n %}
 {% block content %}
-<section class="hero" style="background:linear-gradient(135deg,var(--navy-900),var(--brand-700))">
+<section class="hero" id="top">
+  <div data-ph="building"></div>
   <div class="container">
     <div>
       <h1>{{ SITE_DISTRICT }}<br>{{ SITE_SHORT }}</h1>
       <p class="sub">{% translate "Ta’lim — kelajak poydevori" %}</p>
       <p class="lead">{% translate "Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!" %}</p>
-      <a class="btn btn-primary btn-lg" href="{% url 'content:news_list' %}">{% translate "Yangiliklar" %}</a>
+      <a class="btn btn-primary btn-lg" href="{% url 'content:news_list' %}">{% translate "Batafsil ma’lumot" %} <span data-i="arrow" data-c="sm"></span></a>
     </div>
+    <aside class="hero-quote"><span data-i="quote"></span><p>{% translate "Yaxshi ustoz — yorqin kelajak yo‘lboshchisi." %}</p></aside>
   </div>
 </section>
+
 <div class="container">
-  <section class="sec" aria-labelledby="h-news">
-    <div class="sec-head"><h2 id="h-news">{% translate "So‘nggi yangiliklar" %}</h2><a class="more" href="{% url 'content:news_list' %}">{% translate "Barchasini ko‘rish" %}</a></div>
-    {% if latest_news %}
-      <div class="auto-grid">{% for item in latest_news %}{% include "includes/news_card.html" %}{% endfor %}</div>
-    {% else %}
-      <div class="card empty"><div class="ic-chip c-blue" data-i="news"></div><h3>{% translate "Hozircha yangiliklar yo‘q" %}</h3><p>{% translate "Nashr etilgan yangiliklar shu yerda ko‘rinadi." %}</p></div>
-    {% endif %}
+  <div class="stats" aria-label="{% translate 'Statistika (namunaviy qiymatlar)' %}">
+    <div class="card stat"><div class="ic-chip c-blue" data-i="school"></div><div><div class="n">00</div><div class="l">{% translate "Ta’lim muassasalari" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-blue" data-i="users"></div><div><div class="n">00</div><div class="l">{% translate "O‘qituvchilar va xodimlar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-teal" data-i="book"></div><div><div class="n">00</div><div class="l">{% translate "O‘quvchilar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-green" data-i="layers"></div><div><div class="n">00</div><div class="l">{% translate "To‘garak va loyihalar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-orange" data-i="trophy"></div><div><div class="n">00</div><div class="l">{% translate "Ustozlar yutuqlari" %}</div></div></div>
+  </div>
+  <p class="xs muted" style="margin-top:8px"><span class="demo-tag">{% translate "Maket" %}</span> {% translate "Raqamlar haqiqiy ma’lumot bilan almashtiriladi." %}</p>
+
+  <div class="cols-3 sec" id="yangiliklar">
+    <section aria-labelledby="h-news">
+      <div class="sec-head"><h2 id="h-news">{% translate "So‘nggi yangiliklar" %}</h2><a class="more" href="{% url 'content:news_list' %}">{% translate "Barchasini ko‘rish" %} <span data-i="arrow" data-c="sm"></span></a></div>
+      {% if latest_news %}
+        <div class="news-grid">{% for item in latest_news|slice:":3" %}{% include "includes/news_card.html" %}{% endfor %}</div>
+      {% else %}
+        <div class="card empty"><div class="ic-chip c-blue" data-i="news"></div><h3>{% translate "Hozircha yangiliklar yo‘q" %}</h3><p>{% translate "Nashr etilgan yangiliklar shu yerda ko‘rinadi." %}</p></div>
+      {% endif %}
+    </section>
+    <section class="card card-pad" aria-labelledby="h-ann" style="padding:18px 20px">
+      <div class="sec-head" style="margin-bottom:6px"><h2 id="h-ann" style="font-size:20px">{% translate "E’lonlar" %}</h2></div>
+      <div class="list-rows">
+        <div class="li"><span class="ic-chip c-orange" data-i="users"></span><span class="t1 grow">{% translate "O‘qituvchilar uchun attestatsiyaga tayyorgarlik seminari" %}</span><span class="date">01.10.2026</span></div>
+        <div class="li"><span class="ic-chip c-red" data-i="trophy"></span><span class="t1 grow">{% translate "Tuman bosqichidagi fan olimpiadasi" %}</span><span class="date">29.09.2026</span></div>
+        <div class="li"><span class="ic-chip c-orange" data-i="file"></span><span class="t1 grow">{% translate "Maktablar uchun metodik tavsiyalar" %}</span><span class="date">27.09.2026</span></div>
+        <div class="li"><span class="ic-chip c-blue" data-i="clipboard"></span><span class="t1 grow">{% translate "Yangi o‘quv yiliga oid tartib-qoidalar" %}</span><span class="date">25.09.2026</span></div>
+        <div class="li"><span class="ic-chip c-red" data-i="alert"></span><span class="t1 grow">{% translate "Bo‘sh ish o‘rinlari haqida ma’lumot" %}</span><span class="date">20.09.2026</span></div>
+      </div>
+    </section>
+    <section class="links" aria-labelledby="h-links">
+      <div class="sec-head"><h2 id="h-links" style="font-size:20px">{% translate "Muhim havolalar" %}</h2></div>
+      <a class="lk" href="#hujjatlar"><span class="ic-chip c-green" data-i="file"></span>{% translate "Normativ-huquqiy hujjatlar" %}<span data-i="right" data-c="sm"></span></a>
+      <a class="lk" href="{% url 'content:news_list' %}"><span class="ic-chip c-violet" data-i="news"></span>{% translate "Yangiliklar arxivi" %}<span data-i="right" data-c="sm"></span></a>
+      <a class="lk" href="#yutuqlar"><span class="ic-chip c-orange" data-i="trophy"></span>{% translate "Ustozlar yutuqlari" %}<span data-i="right" data-c="sm"></span></a>
+      <a class="lk" href="#boglanish"><span class="ic-chip c-blue" data-i="phone"></span>{% translate "Bog‘lanish" %}<span data-i="right" data-c="sm"></span></a>
+    </section>
+  </div>
+
+  <div class="cols-3b sec">
+    <section id="yutuqlar" aria-labelledby="h-t">
+      <div class="sec-head"><h2 id="h-t">{% translate "Ustozlar yutuqlari" %}</h2></div>
+      <div class="teachers">
+        <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Ustoz' %}"></div><b>{% translate "Namuna Ustoz" %}</b><span class="xs muted">{% translate "Yilning eng yaxshi ustozi — 2026" %}</span></div>
+        <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Muallim' %}"></div><b>{% translate "Namuna Muallim" %}</b><span class="xs muted">{% translate "Innovatsion loyihalar sovrindori" %}</span></div>
+        <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Metodist' %}"></div><b>{% translate "Namuna Metodist" %}</b><span class="xs muted">{% translate "Metodik ishlanmalar g‘olibi" %}</span></div>
+        <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna IT-mutaxassis' %}"></div><b>{% translate "Namuna IT-mutaxassis" %}</b><span class="xs muted">{% translate "IT yo‘nalishi bo‘yicha yutuq" %}</span></div>
+      </div>
+    </section>
+    <section id="media" aria-labelledby="h-g">
+      <div class="sec-head"><h2 id="h-g">{% translate "Fotorasmlar galereyasi" %}</h2></div>
+      <div class="gallery">
+        <button class="g" data-lb aria-label="{% translate 'Rasmni kattalashtirish' %}"><div class="ph" data-ph="ceremony" style="height:100%"></div></button>
+        <button class="g" data-lb aria-label="{% translate 'Rasmni kattalashtirish' %}"><div class="ph" data-ph="hall" style="height:100%"></div></button>
+        <button class="g" data-lb aria-label="{% translate 'Rasmni kattalashtirish' %}"><div class="ph" data-ph="sport" style="height:100%"></div></button>
+        <button class="g" data-lb aria-label="{% translate 'Rasmni kattalashtirish' %}"><div class="ph" data-ph="class" style="height:100%"></div></button>
+        <button class="g" data-lb aria-label="{% translate 'Yana rasmlar' %}"><div class="ph" data-ph="people" style="height:100%"></div><span class="more-tile">+12</span></button>
+      </div>
+    </section>
+    <section aria-labelledby="h-v">
+      <div class="sec-head"><h2 id="h-v">{% translate "Video va media" %}</h2></div>
+      <div class="video"><div class="ratio-16-9" data-ph="ceremony"></div><button class="play" aria-label="{% translate 'Videoni ijro etish' %}"><span data-i="play"></span></button><span class="duration">00:00</span></div>
+      <h3 style="font-size:15px;margin-top:10px">{% translate "Ustozlar kuni munosabati bilan tantanali tadbir" %}</h3>
+      <p class="xs muted" style="margin-top:2px">01.10.2026 · <span class="demo-tag">{% translate "Maket" %}</span> {% translate "ko‘rishlar va izohlar soni tizim ulanganda ko‘rsatiladi" %}</p>
+    </section>
+  </div>
+
+  <section class="sec" id="hujjatlar" aria-labelledby="h-d">
+    <div class="sec-head"><h2 id="h-d">{% translate "Hujjatlar" %}</h2></div>
+    <div class="auto-grid">
+      <div class="card admin-tile"><span class="file-ico f-pdf">PDF</span><div><b>{% translate "Normativ-huquqiy hujjatlar" %}</b><small>{% translate "Namuna hujjat · PDF" %}</small></div></div>
+      <div class="card admin-tile"><span class="file-ico f-doc">DOC</span><div><b>{% translate "Metodik tavsiyalar" %}</b><small>{% translate "Namuna hujjat · Word" %}</small></div></div>
+      <div class="card admin-tile"><span class="file-ico f-xls">XLS</span><div><b>{% translate "Muassasalar ro‘yxati" %}</b><small>{% translate "Namuna hujjat · Excel" %}</small></div></div>
+    </div>
   </section>
+  <p class="xs muted" style="margin-bottom:24px"><span class="demo-tag">{% translate "Maket" %}</span> {% translate "E’lonlar, ustozlar, galereya, video va hujjatlar bo‘limlari namunaviy ma’lumot bilan ko‘rsatilgan va keyinchalik haqiqiy ma’lumot bilan almashtiriladi." %}</p>
 </div>
 {% endblock %}
