@@ -12,7 +12,7 @@
 5. Узбекская латиница: апострофы `‘ ’` и термины источника.
 6. Длинные подписи в RU на узких экранах (проверено визуально на 390 px: горизонтальной прокрутки нет, но читаемость оценивает дизайнер).
 
-Всего строк в каталогах: 848.
+Всего строк в каталогах: 849.
 
 
 ## A. E-mail texts (sent to real people; tone and formality matter) — 47
@@ -67,112 +67,113 @@
 | 46 | Parol kiritilmaydi: foydalanuvchi o‘z parolini taklifnoma havolasi orqali o‘rnatadi. | Пароль не вводится: пользователь задаёт пароль сам по ссылке из приглашения. | No password is entered: the user sets their own password using the link in the invitation. |
 | 47 | Xodimlar portaliga kirish uchun ma’lumotlaringizni kiriting. | Введите свои данные для входа на портал сотрудников. | Enter your details to sign in to the staff portal. |
 
-## B. Security, login and 2FA messages (must be unambiguous) — 102
+## B. Security, login and 2FA messages (must be unambiguous) — 103
 
 | # | UZ (источник) | RU | EN |
 |---|---|---|---|
 | 1 | Login yoki parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring. | Неверный логин или пароль, либо превышено число попыток. Повторите через 15 минут. | The login or password is incorrect, or the number of attempts was exceeded. Try again in 15 minutes. |
-| 2 | Kod noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring. | Неверный код, либо превышено число попыток. Повторите через 15 минут. | The code is incorrect, or the number of attempts was exceeded. Try again in 15 minutes. |
-| 3 | Joriy parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring. | Неверный текущий пароль, либо превышено число попыток. Повторите через 15 минут. | The current password is incorrect, or the number of attempts was exceeded. Try again in 15 minutes. |
-| 4 | Parol | Пароль | Password |
-| 5 | Yangi parol joriy paroldan farq qilishi kerak. | Новый пароль должен отличаться от текущего. | The new password must be different from the current one. |
-| 6 | Tasdiqlash kodi yoki zaxira kod | Код подтверждения или резервный код | Verification code or backup code |
-| 7 | Ilovadagi 6 xonali kod | 6-значный код из приложения | 6-digit code from the app |
-| 8 | Joriy parol | Текущий пароль | Current password |
-| 9 | Keyingi kirishda parolni almashtirish talab qilinadi. | При следующем входе потребуется сменить пароль. | A password change will be required at the next sign-in. |
-| 10 | Xavfsizlik uchun qayta kiring: ikki bosqichli tasdiqlash talab qilinadi. | В целях безопасности войдите заново: требуется двухэтапное подтверждение. | For your security, please sign in again: two-step verification is required. |
-| 11 | Davom etishdan oldin parolingizni almashtiring. | Прежде чем продолжить, смените пароль. | Please change your password before continuing. |
-| 12 | parolni almashtirish shart | обязательная смена пароля | password change required |
-| 13 | Parolingiz almashtirildi | Ваш пароль изменён | Your password was changed |
-| 14 | Hisobingiz paroli almashtirildi. Boshqa qurilmalardagi sessiyalar yopildi. | Пароль вашей учётной записи изменён. Сеансы на других устройствах завершены. | Your account password was changed. Sessions on other devices were closed. |
-| 15 | Parolingiz tiklandi | Ваш пароль сброшен | Your password was reset |
-| 16 | Hisobingizda ikki bosqichli himoya (2FA) yoqildi. | Для вашей учётной записи включена двухэтапная защита (2FA). | Two-step protection (2FA) was turned on for your account. |
-| 17 | Hisobingizda ikki bosqichli himoya (2FA) o‘chirildi. Endi hisob faqat parol bilan himoyalangan. | Для вашей учётной записи отключена двухэтапная защита (2FA). Теперь учётная запись защищена только паролем. | Two-step protection (2FA) was turned off for your account. It is now protected by a password only. |
-| 18 | Zaxira kodlar yangilandi | Резервные коды обновлены | Backup codes regenerated |
-| 19 | Hisobingizning zaxira kodlari yangilandi; eskilari bekor qilindi. | Резервные коды вашей учётной записи обновлены; прежние аннулированы. | The backup codes of your account were regenerated; the old ones are no longer valid. |
-| 20 | 2FA administrator tomonidan tiklandi | 2FA сброшена администратором | 2FA reset by an administrator |
-| 21 | Hisobingizning ikki bosqichli himoyasi administrator tomonidan olib tashlandi. Keyingi kirishda uni qayta sozlaysiz. | Двухэтапная защита вашей учётной записи снята администратором. При следующем входе вы настроите её заново. | The two-step protection of your account was removed by an administrator. You will set it up again at your next sign-in. |
-| 22 | Agar buni siz qilmagan bo‘lsangiz, zudlik bilan administratorga murojaat qiling va parolingizni almashtiring. | Если это были не вы, немедленно обратитесь к администратору и смените пароль. | If this was not you, contact an administrator immediately and change your password. |
-| 23 | Zaxira kodlaringiz kam qoldi. Yangilarini yarating. | Резервных кодов осталось мало. Создайте новые. | You are running low on backup codes. Generate new ones. |
-| 24 | Zaxira kodlarni yangilash | Обновление резервных кодов | Regenerate backup codes |
-| 25 | Yangi kodlar yaratish | Создать новые коды | Generate new codes |
-| 26 | Eski zaxira kodlar bekor qilinadi. | Прежние резервные коды будут аннулированы. | The old backup codes will be invalidated. |
-| 27 | Sizning rolingiz uchun 2FA majburiy: uni o‘chirib bo‘lmaydi. | Для вашей роли 2FA обязательна: её нельзя отключить. | 2FA is mandatory for your role: it cannot be turned off. |
-| 28 | 2FA ni o‘chirish | Отключение 2FA | Turn off 2FA |
-| 29 | Hisob faqat parol bilan himoyalanadi. | Учётная запись будет защищена только паролем. | The account will be protected by a password only. |
-| 30 | 2FA o‘chirildi. | 2FA отключена. | 2FA was turned off. |
-| 31 | Joriy sessiyani yakunlash uchun tizimdan chiqing. | Чтобы завершить текущую сессию, выйдите из системы. | To end the current session, sign out. |
-| 32 | Bu sessiya allaqachon yakunlangan. | Эта сессия уже завершена. | This session has already ended. |
-| 33 | Sessiya yakunlandi. | Сессия завершена. | Session ended. |
-| 34 | Boshqa sessiyalar yakunlandi. | Остальные сессии завершены. | The other sessions were ended. |
-| 35 | Yakunlash uchun boshqa sessiya yo‘q. | Других сессий для завершения нет. | There are no other sessions to end. |
-| 36 | Tizimga kirish | Вход в систему | Sign in |
-| 37 | Muvaffaqiyatsiz kirish | Неудачная попытка входа | Failed sign-in attempt |
-| 38 | Kirish vaqtincha bloklandi | Вход временно заблокирован | Sign-in temporarily locked |
-| 39 | Bloklangan paytda kirishga urinish | Попытка входа во время блокировки | Sign-in attempt while locked |
-| 40 | Parol almashtirildi | Пароль изменён | Password changed |
-| 41 | Parol tiklandi | Пароль восстановлен | Password reset completed |
-| 42 | 2FA yoqildi | 2FA включена | 2FA enabled |
-| 43 | 2FA o‘chirildi | 2FA отключена | 2FA disabled |
-| 44 | 2FA kodi noto‘g‘ri | Неверный код 2FA | Incorrect 2FA code |
-| 45 | 2FA tekshiruvi vaqtincha bloklandi | Проверка 2FA временно заблокирована | 2FA verification temporarily locked |
-| 46 | Bloklangan paytda 2FA urinishi | Попытка 2FA во время блокировки | 2FA attempt while locked |
-| 47 | Zaxira kod ishlatildi | Использован резервный код | Backup code used |
-| 48 | 2FA talab qilingani uchun sessiya yopildi | Сеанс закрыт: требуется 2FA | Session closed: 2FA required |
-| 49 | Parolni almashtirish majburiy qilindi | Потребована смена пароля | Password change required |
-| 50 | Sessiya yakunlandi | Сессия завершена | Session ended |
-| 51 | Boshqa sessiyalar yakunlandi | Остальные сессии завершены | Other sessions ended |
-| 52 | Urinishlar hisoblagichini tozalash | Очистка счётчиков попыток входа | Cleaning attempt counters |
-| 53 | Zaxira nusxa yaratildi (arxiv o‘qiladi) | Резервная копия создана (архив читается) | Backup created (the archive can be read) |
-| 54 | kirish darajasi | уровень доступа | access level |
-| 55 | Parolni almashtirish | Смена пароля | Change password |
-| 56 | Almashtirgandan so‘ng boshqa qurilmalardagi sessiyalar yopiladi. | После смены пароля сеансы на других устройствах будут завершены. | After the change, sessions on other devices will be closed. |
-| 57 | Parolingiz yangilandi. Boshqa qurilmalardagi sessiyalar yopildi. | Пароль обновлён. Сеансы на других устройствах завершены. | Your password was updated. Sessions on other devices were closed. |
-| 58 | Xavfsizlik sahifasiga qaytish | Вернуться к безопасности | Back to security |
-| 59 | Yangi parol o‘rnatildi. Barcha eski sessiyalar yopildi. Endi kirishingiz mumkin. | Новый пароль установлен. Все прежние сеансы завершены. Теперь вы можете войти. | Your new password has been set. All previous sessions were closed. You can now sign in. |
-| 60 | Kirish | Войти | Sign in |
-| 61 | Yangi parol | Новый пароль | New password |
-| 62 | Yangi parol o‘rnatish | Установка нового пароля | Set a new password |
-| 63 | Parolni saqlash | Сохранить пароль | Save password |
-| 64 | Kirish sahifasi | Страница входа | Sign-in page |
-| 65 | Agar siz buni so‘ramagan bo‘lsangiz, bu xatga e’tibor bermang — parolingiz o‘zgarmaydi. | Если вы этого не запрашивали, проигнорируйте это письмо — ваш пароль не изменится. | If you did not request this, ignore this e-mail — your password will not change. |
-| 66 | Xavfsizlik | Безопасность | Security |
-| 67 | Parol va ikki bosqichli himoya | Пароль и двухэтапная защита | Password and two-step protection |
-| 68 | Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi. | После смены пароля сеансы на других устройствах будут завершены. | After you change your password, sessions on other devices will be closed. |
-| 69 | Faol sessiyalar | Активные сессии | Active sessions |
-| 70 | Qaysi qurilmalardan kirilganini ko‘ring va keraksiz sessiyalarni yakunlang. | Посмотрите, с каких устройств выполнен вход, и завершите ненужные сессии. | See which devices are signed in and end the sessions you do not need. |
-| 71 | Sessiyalarni ko‘rish | Посмотреть сессии | View sessions |
-| 72 | Ikki bosqichli himoya (2FA) | Двухэтапная защита (2FA) | Two-step protection (2FA) |
-| 73 | Qolgan zaxira kodlar: %(n)s | Осталось резервных кодов: %(n)s | Backup codes left: %(n)s |
-| 74 | Sizning rolingiz uchun 2FA majburiy. | Для вашей роли 2FA обязательна. | 2FA is mandatory for your role. |
-| 75 | 2FA ni yoqish | Включить 2FA | Turn on 2FA |
-| 76 | Sessiyani yakunlash | Завершить сессию | End session |
-| 77 | Bu sessiya yakunlansa, o‘sha qurilmada qayta kirish kerak bo‘ladi. | После завершения этой сессии на том устройстве нужно будет войти заново. | If this session is ended, you will have to sign in again on that device. |
-| 78 | Hisobingizga kirilgan va server hali qabul qilayotgan sessiyalar. Tanimagan sessiya bo‘lsa, uni yakunlang va parolni almashtiring. | Сессии, в которых выполнен вход в вашу учётную запись и которые сервер ещё принимает. Если видите незнакомую сессию — завершите её и смените пароль. | Sessions signed in to your account that the server still accepts. If you see one you do not recognise, end it and change your password. |
-| 79 | Boshqa barcha sessiyalarni yakunlash | Завершить все остальные сессии | End all other sessions |
-| 80 | Joriy sessiya | Текущая сессия | Current session |
-| 81 | Faol sessiyalar topilmadi | Активных сессий не найдено | No active sessions found |
-| 82 | Boshqa sessiyalarni yakunlash | Завершить остальные сессии | End other sessions |
-| 83 | Joriy sessiyadan tashqari barcha sessiyalar yakunlanadi (%(count)s ta ko‘rinadigan). Siz bu qurilmada tizimda qolasiz; boshqa qurilmalarda qayta kirish kerak bo‘ladi. | Все сессии, кроме текущей, будут завершены (видимых: %(count)s). На этом устройстве вы останетесь в системе; на других нужно будет войти заново. | All sessions except the current one will be ended (%(count)s visible). You stay signed in on this device; on the others you will have to sign in again. |
-| 84 | Zaxira kodlar | Резервные коды | Backup codes |
-| 85 | Bu kodlar faqat bir marta ko‘rsatiladi. Har biri bir marta ishlaydi va telefoningiz yo‘qolganda kirishga yordam beradi. Xavfsiz joyda saqlang. | Эти коды показываются только один раз. Каждый работает один раз и поможет войти, если вы потеряете телефон. Храните их в надёжном месте. | These codes are shown only once. Each works one time and helps you sign in if you lose your phone. Keep them somewhere safe. |
-| 86 | 2FA ni sozlash | Настройка 2FA | Set up 2FA |
-| 87 | Telefoningizda autentifikator ilovasini oching (masalan, Google Authenticator, Microsoft Authenticator, Aegis). | Откройте на телефоне приложение-аутентификатор (например, Google Authenticator, Microsoft Authenticator, Aegis). | Open an authenticator app on your phone (for example Google Authenticator, Microsoft Authenticator, Aegis). |
-| 88 | QR-kodni skanerlang yoki maxfiy kalitni qo‘lda kiriting. | Отсканируйте QR-код или введите секретный ключ вручную. | Scan the QR code or enter the secret key manually. |
-| 89 | Ilovada ko‘rinadigan 6 xonali kodni pastga kiriting. | Введите ниже 6-значный код из приложения. | Enter the 6-digit code shown in the app below. |
-| 90 | Autentifikator ilovasidagi 6 xonali kodni kiriting. Qurilmangiz yo‘q bo‘lsa, zaxira kodlardan birini kiriting. | Введите 6-значный код из приложения-аутентификатора. Если устройства нет под рукой, введите один из резервных кодов. | Enter the 6-digit code from your authenticator app. If you do not have your device, enter one of your backup codes. |
-| 91 | Xavfsizlik tekshiruvi muvaffaqiyatsiz tugadi. Sahifani yangilab, qayta urinib ko‘ring. | Проверка безопасности не пройдена. Обновите страницу и повторите попытку. | The security check failed. Refresh the page and try again. |
-| 92 | Kirish, chiqish va rollar o‘zgarishi yozuvlari. Yozuvlarni o‘zgartirib yoki o‘chirib bo‘lmaydi. | Записи о входах, выходах и изменении ролей. Записи нельзя изменять или удалять. | Records of sign-ins, sign-outs and role changes. Records cannot be changed or deleted. |
-| 93 | Bu portalning asosiy skeleti: kirish, rollar va audit ishlaydi. Xodimlar, topshiriqlar, hujjatlar va boshqa bo‘limlar keyingi bosqichlarda qo‘shiladi. | Это основа портала: работают вход, роли и аудит. Сотрудники, задания, документы и другие разделы будут добавлены на следующих этапах. | This is the portal’s foundation: sign-in, roles and audit work. Employees, tasks, documents and other sections will be added in later stages. |
-| 94 | Xavfsizlik uchun faqat PDF, rasm va oddiy matn ko‘rsatiladi. Faylni yuklab olib oching. | В целях безопасности в портале показываются только PDF, изображения и простой текст. Скачайте файл и откройте его на своём устройстве. | For security, the portal shows only PDF, images and plain text. Download the file and open it on your device. |
-| 95 | Vaqtincha bloklangan | Временно заблокирована | Temporarily locked |
-| 96 | Parolni almashtirishi shart | Обязана сменить пароль | Must change password |
-| 97 | 2FA majburiy, hali yoqilmagan | 2FA обязательна, ещё не включена | 2FA is mandatory, not yet enabled |
-| 98 | 2FA yoqilmagan | 2FA не включена | 2FA is not enabled |
-| 99 | Parolni almashtirishni talab qilish | Потребовать смену пароля | Require a password change |
-| 100 | Hisoblar va rollar. Parollar bu yerda ko‘rinmaydi. | Учётные записи и роли. Пароли здесь не отображаются. | Accounts and roles. Passwords are never shown here. |
-| 101 | Parolni ko‘rsatish | Показать пароль | Show password |
-| 102 | Parolni unutdingizmi? | Забыли пароль? | Forgot your password? |
+| 2 | Ikkinchi omil vaqtincha ishlamayapti. Zaxira koddan foydalaning yoki administratorga murojaat qiling. | Второй фактор временно не работает. Используйте резервный код или обратитесь к администратору. | The second factor is temporarily unavailable. Use a backup code or contact the administrator. |
+| 3 | Kod noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring. | Неверный код, либо превышено число попыток. Повторите через 15 минут. | The code is incorrect, or the number of attempts was exceeded. Try again in 15 minutes. |
+| 4 | Joriy parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring. | Неверный текущий пароль, либо превышено число попыток. Повторите через 15 минут. | The current password is incorrect, or the number of attempts was exceeded. Try again in 15 minutes. |
+| 5 | Parol | Пароль | Password |
+| 6 | Yangi parol joriy paroldan farq qilishi kerak. | Новый пароль должен отличаться от текущего. | The new password must be different from the current one. |
+| 7 | Tasdiqlash kodi yoki zaxira kod | Код подтверждения или резервный код | Verification code or backup code |
+| 8 | Ilovadagi 6 xonali kod | 6-значный код из приложения | 6-digit code from the app |
+| 9 | Joriy parol | Текущий пароль | Current password |
+| 10 | Keyingi kirishda parolni almashtirish talab qilinadi. | При следующем входе потребуется сменить пароль. | A password change will be required at the next sign-in. |
+| 11 | Xavfsizlik uchun qayta kiring: ikki bosqichli tasdiqlash talab qilinadi. | В целях безопасности войдите заново: требуется двухэтапное подтверждение. | For your security, please sign in again: two-step verification is required. |
+| 12 | Davom etishdan oldin parolingizni almashtiring. | Прежде чем продолжить, смените пароль. | Please change your password before continuing. |
+| 13 | parolni almashtirish shart | обязательная смена пароля | password change required |
+| 14 | Parolingiz almashtirildi | Ваш пароль изменён | Your password was changed |
+| 15 | Hisobingiz paroli almashtirildi. Boshqa qurilmalardagi sessiyalar yopildi. | Пароль вашей учётной записи изменён. Сеансы на других устройствах завершены. | Your account password was changed. Sessions on other devices were closed. |
+| 16 | Parolingiz tiklandi | Ваш пароль сброшен | Your password was reset |
+| 17 | Hisobingizda ikki bosqichli himoya (2FA) yoqildi. | Для вашей учётной записи включена двухэтапная защита (2FA). | Two-step protection (2FA) was turned on for your account. |
+| 18 | Hisobingizda ikki bosqichli himoya (2FA) o‘chirildi. Endi hisob faqat parol bilan himoyalangan. | Для вашей учётной записи отключена двухэтапная защита (2FA). Теперь учётная запись защищена только паролем. | Two-step protection (2FA) was turned off for your account. It is now protected by a password only. |
+| 19 | Zaxira kodlar yangilandi | Резервные коды обновлены | Backup codes regenerated |
+| 20 | Hisobingizning zaxira kodlari yangilandi; eskilari bekor qilindi. | Резервные коды вашей учётной записи обновлены; прежние аннулированы. | The backup codes of your account were regenerated; the old ones are no longer valid. |
+| 21 | 2FA administrator tomonidan tiklandi | 2FA сброшена администратором | 2FA reset by an administrator |
+| 22 | Hisobingizning ikki bosqichli himoyasi administrator tomonidan olib tashlandi. Keyingi kirishda uni qayta sozlaysiz. | Двухэтапная защита вашей учётной записи снята администратором. При следующем входе вы настроите её заново. | The two-step protection of your account was removed by an administrator. You will set it up again at your next sign-in. |
+| 23 | Agar buni siz qilmagan bo‘lsangiz, zudlik bilan administratorga murojaat qiling va parolingizni almashtiring. | Если это были не вы, немедленно обратитесь к администратору и смените пароль. | If this was not you, contact an administrator immediately and change your password. |
+| 24 | Zaxira kodlaringiz kam qoldi. Yangilarini yarating. | Резервных кодов осталось мало. Создайте новые. | You are running low on backup codes. Generate new ones. |
+| 25 | Zaxira kodlarni yangilash | Обновление резервных кодов | Regenerate backup codes |
+| 26 | Yangi kodlar yaratish | Создать новые коды | Generate new codes |
+| 27 | Eski zaxira kodlar bekor qilinadi. | Прежние резервные коды будут аннулированы. | The old backup codes will be invalidated. |
+| 28 | Sizning rolingiz uchun 2FA majburiy: uni o‘chirib bo‘lmaydi. | Для вашей роли 2FA обязательна: её нельзя отключить. | 2FA is mandatory for your role: it cannot be turned off. |
+| 29 | 2FA ni o‘chirish | Отключение 2FA | Turn off 2FA |
+| 30 | Hisob faqat parol bilan himoyalanadi. | Учётная запись будет защищена только паролем. | The account will be protected by a password only. |
+| 31 | 2FA o‘chirildi. | 2FA отключена. | 2FA was turned off. |
+| 32 | Joriy sessiyani yakunlash uchun tizimdan chiqing. | Чтобы завершить текущую сессию, выйдите из системы. | To end the current session, sign out. |
+| 33 | Bu sessiya allaqachon yakunlangan. | Эта сессия уже завершена. | This session has already ended. |
+| 34 | Sessiya yakunlandi. | Сессия завершена. | Session ended. |
+| 35 | Boshqa sessiyalar yakunlandi. | Остальные сессии завершены. | The other sessions were ended. |
+| 36 | Yakunlash uchun boshqa sessiya yo‘q. | Других сессий для завершения нет. | There are no other sessions to end. |
+| 37 | Tizimga kirish | Вход в систему | Sign in |
+| 38 | Muvaffaqiyatsiz kirish | Неудачная попытка входа | Failed sign-in attempt |
+| 39 | Kirish vaqtincha bloklandi | Вход временно заблокирован | Sign-in temporarily locked |
+| 40 | Bloklangan paytda kirishga urinish | Попытка входа во время блокировки | Sign-in attempt while locked |
+| 41 | Parol almashtirildi | Пароль изменён | Password changed |
+| 42 | Parol tiklandi | Пароль восстановлен | Password reset completed |
+| 43 | 2FA yoqildi | 2FA включена | 2FA enabled |
+| 44 | 2FA o‘chirildi | 2FA отключена | 2FA disabled |
+| 45 | 2FA kodi noto‘g‘ri | Неверный код 2FA | Incorrect 2FA code |
+| 46 | 2FA tekshiruvi vaqtincha bloklandi | Проверка 2FA временно заблокирована | 2FA verification temporarily locked |
+| 47 | Bloklangan paytda 2FA urinishi | Попытка 2FA во время блокировки | 2FA attempt while locked |
+| 48 | Zaxira kod ishlatildi | Использован резервный код | Backup code used |
+| 49 | 2FA talab qilingani uchun sessiya yopildi | Сеанс закрыт: требуется 2FA | Session closed: 2FA required |
+| 50 | Parolni almashtirish majburiy qilindi | Потребована смена пароля | Password change required |
+| 51 | Sessiya yakunlandi | Сессия завершена | Session ended |
+| 52 | Boshqa sessiyalar yakunlandi | Остальные сессии завершены | Other sessions ended |
+| 53 | Urinishlar hisoblagichini tozalash | Очистка счётчиков попыток входа | Cleaning attempt counters |
+| 54 | Zaxira nusxa yaratildi (arxiv o‘qiladi) | Резервная копия создана (архив читается) | Backup created (the archive can be read) |
+| 55 | kirish darajasi | уровень доступа | access level |
+| 56 | Parolni almashtirish | Смена пароля | Change password |
+| 57 | Almashtirgandan so‘ng boshqa qurilmalardagi sessiyalar yopiladi. | После смены пароля сеансы на других устройствах будут завершены. | After the change, sessions on other devices will be closed. |
+| 58 | Parolingiz yangilandi. Boshqa qurilmalardagi sessiyalar yopildi. | Пароль обновлён. Сеансы на других устройствах завершены. | Your password was updated. Sessions on other devices were closed. |
+| 59 | Xavfsizlik sahifasiga qaytish | Вернуться к безопасности | Back to security |
+| 60 | Yangi parol o‘rnatildi. Barcha eski sessiyalar yopildi. Endi kirishingiz mumkin. | Новый пароль установлен. Все прежние сеансы завершены. Теперь вы можете войти. | Your new password has been set. All previous sessions were closed. You can now sign in. |
+| 61 | Kirish | Войти | Sign in |
+| 62 | Yangi parol | Новый пароль | New password |
+| 63 | Yangi parol o‘rnatish | Установка нового пароля | Set a new password |
+| 64 | Parolni saqlash | Сохранить пароль | Save password |
+| 65 | Kirish sahifasi | Страница входа | Sign-in page |
+| 66 | Agar siz buni so‘ramagan bo‘lsangiz, bu xatga e’tibor bermang — parolingiz o‘zgarmaydi. | Если вы этого не запрашивали, проигнорируйте это письмо — ваш пароль не изменится. | If you did not request this, ignore this e-mail — your password will not change. |
+| 67 | Xavfsizlik | Безопасность | Security |
+| 68 | Parol va ikki bosqichli himoya | Пароль и двухэтапная защита | Password and two-step protection |
+| 69 | Parolni almashtirsangiz, boshqa qurilmalardagi sessiyalar yopiladi. | После смены пароля сеансы на других устройствах будут завершены. | After you change your password, sessions on other devices will be closed. |
+| 70 | Faol sessiyalar | Активные сессии | Active sessions |
+| 71 | Qaysi qurilmalardan kirilganini ko‘ring va keraksiz sessiyalarni yakunlang. | Посмотрите, с каких устройств выполнен вход, и завершите ненужные сессии. | See which devices are signed in and end the sessions you do not need. |
+| 72 | Sessiyalarni ko‘rish | Посмотреть сессии | View sessions |
+| 73 | Ikki bosqichli himoya (2FA) | Двухэтапная защита (2FA) | Two-step protection (2FA) |
+| 74 | Qolgan zaxira kodlar: %(n)s | Осталось резервных кодов: %(n)s | Backup codes left: %(n)s |
+| 75 | Sizning rolingiz uchun 2FA majburiy. | Для вашей роли 2FA обязательна. | 2FA is mandatory for your role. |
+| 76 | 2FA ni yoqish | Включить 2FA | Turn on 2FA |
+| 77 | Sessiyani yakunlash | Завершить сессию | End session |
+| 78 | Bu sessiya yakunlansa, o‘sha qurilmada qayta kirish kerak bo‘ladi. | После завершения этой сессии на том устройстве нужно будет войти заново. | If this session is ended, you will have to sign in again on that device. |
+| 79 | Hisobingizga kirilgan va server hali qabul qilayotgan sessiyalar. Tanimagan sessiya bo‘lsa, uni yakunlang va parolni almashtiring. | Сессии, в которых выполнен вход в вашу учётную запись и которые сервер ещё принимает. Если видите незнакомую сессию — завершите её и смените пароль. | Sessions signed in to your account that the server still accepts. If you see one you do not recognise, end it and change your password. |
+| 80 | Boshqa barcha sessiyalarni yakunlash | Завершить все остальные сессии | End all other sessions |
+| 81 | Joriy sessiya | Текущая сессия | Current session |
+| 82 | Faol sessiyalar topilmadi | Активных сессий не найдено | No active sessions found |
+| 83 | Boshqa sessiyalarni yakunlash | Завершить остальные сессии | End other sessions |
+| 84 | Joriy sessiyadan tashqari barcha sessiyalar yakunlanadi (%(count)s ta ko‘rinadigan). Siz bu qurilmada tizimda qolasiz; boshqa qurilmalarda qayta kirish kerak bo‘ladi. | Все сессии, кроме текущей, будут завершены (видимых: %(count)s). На этом устройстве вы останетесь в системе; на других нужно будет войти заново. | All sessions except the current one will be ended (%(count)s visible). You stay signed in on this device; on the others you will have to sign in again. |
+| 85 | Zaxira kodlar | Резервные коды | Backup codes |
+| 86 | Bu kodlar faqat bir marta ko‘rsatiladi. Har biri bir marta ishlaydi va telefoningiz yo‘qolganda kirishga yordam beradi. Xavfsiz joyda saqlang. | Эти коды показываются только один раз. Каждый работает один раз и поможет войти, если вы потеряете телефон. Храните их в надёжном месте. | These codes are shown only once. Each works one time and helps you sign in if you lose your phone. Keep them somewhere safe. |
+| 87 | 2FA ni sozlash | Настройка 2FA | Set up 2FA |
+| 88 | Telefoningizda autentifikator ilovasini oching (masalan, Google Authenticator, Microsoft Authenticator, Aegis). | Откройте на телефоне приложение-аутентификатор (например, Google Authenticator, Microsoft Authenticator, Aegis). | Open an authenticator app on your phone (for example Google Authenticator, Microsoft Authenticator, Aegis). |
+| 89 | QR-kodni skanerlang yoki maxfiy kalitni qo‘lda kiriting. | Отсканируйте QR-код или введите секретный ключ вручную. | Scan the QR code or enter the secret key manually. |
+| 90 | Ilovada ko‘rinadigan 6 xonali kodni pastga kiriting. | Введите ниже 6-значный код из приложения. | Enter the 6-digit code shown in the app below. |
+| 91 | Autentifikator ilovasidagi 6 xonali kodni kiriting. Qurilmangiz yo‘q bo‘lsa, zaxira kodlardan birini kiriting. | Введите 6-значный код из приложения-аутентификатора. Если устройства нет под рукой, введите один из резервных кодов. | Enter the 6-digit code from your authenticator app. If you do not have your device, enter one of your backup codes. |
+| 92 | Xavfsizlik tekshiruvi muvaffaqiyatsiz tugadi. Sahifani yangilab, qayta urinib ko‘ring. | Проверка безопасности не пройдена. Обновите страницу и повторите попытку. | The security check failed. Refresh the page and try again. |
+| 93 | Kirish, chiqish va rollar o‘zgarishi yozuvlari. Yozuvlarni o‘zgartirib yoki o‘chirib bo‘lmaydi. | Записи о входах, выходах и изменении ролей. Записи нельзя изменять или удалять. | Records of sign-ins, sign-outs and role changes. Records cannot be changed or deleted. |
+| 94 | Bu portalning asosiy skeleti: kirish, rollar va audit ishlaydi. Xodimlar, topshiriqlar, hujjatlar va boshqa bo‘limlar keyingi bosqichlarda qo‘shiladi. | Это основа портала: работают вход, роли и аудит. Сотрудники, задания, документы и другие разделы будут добавлены на следующих этапах. | This is the portal’s foundation: sign-in, roles and audit work. Employees, tasks, documents and other sections will be added in later stages. |
+| 95 | Xavfsizlik uchun faqat PDF, rasm va oddiy matn ko‘rsatiladi. Faylni yuklab olib oching. | В целях безопасности в портале показываются только PDF, изображения и простой текст. Скачайте файл и откройте его на своём устройстве. | For security, the portal shows only PDF, images and plain text. Download the file and open it on your device. |
+| 96 | Vaqtincha bloklangan | Временно заблокирована | Temporarily locked |
+| 97 | Parolni almashtirishi shart | Обязана сменить пароль | Must change password |
+| 98 | 2FA majburiy, hali yoqilmagan | 2FA обязательна, ещё не включена | 2FA is mandatory, not yet enabled |
+| 99 | 2FA yoqilmagan | 2FA не включена | 2FA is not enabled |
+| 100 | Parolni almashtirishni talab qilish | Потребовать смену пароля | Require a password change |
+| 101 | Hisoblar va rollar. Parollar bu yerda ko‘rinmaydi. | Учётные записи и роли. Пароли здесь не отображаются. | Accounts and roles. Passwords are never shown here. |
+| 102 | Parolni ko‘rsatish | Показать пароль | Show password |
+| 103 | Parolni unutdingizmi? | Забыли пароль? | Forgot your password? |
 
 ## C. Personal-data, privacy and access wording (legal weight) — 53
 

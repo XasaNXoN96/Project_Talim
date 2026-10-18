@@ -47,7 +47,7 @@
 **`/etc/talim/talim.env`** (`root:talim`, `0640`; шаблон — `backend/deploy/staging/talim.env.staging.example`):
 `DJANGO_SETTINGS_MODULE`, `DJANGO_DEBUG`, `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS`, `DJANGO_ADMIN_URL`, `DJANGO_TRUSTED_PROXIES`, `DJANGO_PRIVATE_MEDIA_ROOT`, `DJANGO_HSTS_SECONDS`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`, `OTP_ENCRYPTION_KEYS`, `DOCUMENT_SCAN_MODE`, `EMAIL_HOST`, `DEFAULT_FROM_EMAIL`.
 Необязательные (есть в `config/settings`): `EMAIL_PORT`, `EMAIL_USE_TLS`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `CLAMAV_HOST`, `CLAMAV_PORT`, `CLAMAV_SOCKET`, `CLAMAV_TIMEOUT`, `DOCUMENT_MAX_BYTES`, `NOTIFICATION_EMAILS_ENABLED`, `DJANGO_LOG_LEVEL`. **Не задавать** `DJANGO_CSP_REPORT_ONLY` (CSP должен блокировать) и `DJANGO_SECURE_SSL_REDIRECT=0`.
-**`/etc/talim/backup.env`** (`root:talim`, `0640`, имена и пути): `BACKUP_DIR`, `BACKUP_PASSPHRASE_FILE`, `PGPASSFILE`; при необходимости `PGHOST PGPORT PGUSER PGDATABASE PRIVATE_MEDIA_ROOT BACKUP_KEEP`.
+**`/etc/talim/backup.env`** (`root:talim`, `0640`, имена и пути): `BACKUP_DIR`, `BACKUP_PASSPHRASE_FILE`, `PGPASSFILE`; при необходимости `PGHOST PGPORT PGUSER PGDATABASE PRIVATE_MEDIA_ROOT BACKUP_KEEP`; необязательный `BACKUP_OFFSITE_COMMAND` (абсолютный путь исполняемого файла, который выбрал владелец; получает только имя каталога копии и переменные `OFFSITE_*` — см. `BACKUP_AND_RESTORE.md` §12.5).
 **Отдельные секреты-файлы (`0600`, вне Git):** пароль владельца БД, пароль роли приложения, `backup.pass` (≥ 20 символов, вне `BACKUP_DIR`), `backup.pgpass`, приватный ключ TLS. **Копии секретов** (`OTP_ENCRYPTION_KEYS`, `backup.pass`, `talim.env`, ключ TLS) хранить **отдельно от резервных копий данных** (см. DEPLOYMENT_READINESS §6): без `OTP_ENCRYPTION_KEYS` пользователи не войдут после восстановления; без пароля копий копии нечитаемы. Значения не копировать в чаты, тикеты, журналы, Git.
 Роль копий (`PGUSER` в `backup.env`) — **отдельная** третья роль (`create_backup_role.sql`): `CREATEDB` + `pg_read_all_data`, не суперпользователь, не владелец, не runtime-роль. Проверка восстановления запускает прикладные шаги **от этой роли** (скрипт сам подставляет её в `DB_USER`), потому что runtime-роль не имеет прав ни на временную БД, ни на DDL. Топология из трёх ролей отрепетирована в песочнице (`deploy/backup/verify_backup_roles.sh`); **на сервере не проверялась** — `preflight.py --backup-env` проверит роль и права.
 
@@ -108,7 +108,7 @@
 | № | Проверка | Как | Ожидаемо |
 |---|---|---|---|
 | 1 | Приёмка снаружи | с **другой** машины: `python3 backend/deploy/staging/smoke_remote.py https://<хост> --admin-path <DJANGO_ADMIN_URL>` (**без** `--insecure-self-signed`) | `SMOKE OK: 21/21`; недоверенный сертификат = FAIL |
-| 2 | Здоровье | `curl -fsS https://<хост>/healthz/` | `{"status": "ok", "database": "ok"}` |
+| 2 | Здоровье | `curl -fsS https://<хост>/healthz/` | `{"status": "ok", "database": "ok", "grants": "ok"}` (`grants: error` = роль приложения не читает какую-то таблицу: выполнить `apply_grants.sql`) |
 | 3 | HTTP→HTTPS | `curl -sI http://<хост>/` | `301` на `https://` |
 | 4 | TLS | внешний сканер TLS/браузер | цепочка полная, TLS 1.2/1.3, имя совпадает **[не проверено]** |
 | 5 | `check --deploy` | `manage.py check --deploy` (на сервере) | только `security.W004` |
