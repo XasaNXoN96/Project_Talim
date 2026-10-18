@@ -54,7 +54,7 @@
 Роль копий (`PGUSER` в `backup.env`) — **отдельная** третья роль (`create_backup_role.sql`): `CREATEDB` + `pg_read_all_data`, не суперпользователь, не владелец, не runtime-роль. Проверка восстановления запускает прикладные шаги **от этой роли** (скрипт сам подставляет её в `DB_USER`), потому что runtime-роль не имеет прав ни на временную БД, ни на DDL. Топология из трёх ролей отрепетирована в песочнице (`deploy/backup/verify_backup_roles.sh`); **на сервере не проверялась** — `preflight.py --backup-env` проверит роль и права.
 
 ## 5. Последовательность развёртывания (все команды из репозитория)
-Рабочий каталог — клон репозитория; `<тег>` — каталог релиза.
+Рабочий каталог — клон репозитория; `<тег>` — произвольное имя каталога релиза (например, дата и короткий хеш коммита); `<репозиторий>` — адрес репозитория, который сообщает владелец/заказчик.
 
 1. **Пользователь и каталоги** (DEPLOYMENT_READINESS §4.1):
    ```bash
@@ -76,9 +76,13 @@
 4. **Код и зависимости**: релиз = полный checkout репозитория (нужны `backend/` и `assets/`):
    ```bash
    sudo -u talim git clone <репозиторий> /srv/talim/releases/<тег>
+   sudo -u talim git -C /srv/talim/releases/<тег> checkout <кодовый коммит>   # ТОЛЬКО коммит, указанный владельцем в OWNER_HANDOFF.md §1 (кодовый коммит кандидата), не «последний в ветке»
+   sudo -u talim /srv/talim/releases/<тег>/backend/deploy/staging/release_info.sh   # сверить коммит, хеш requirements.txt и хеш файлов развёртывания с OWNER_HANDOFF.md §1; расхождение — остановиться
    cd /srv/talim/releases/<тег>/backend && python3.12 -m venv .venv && .venv/bin/pip install --require-hashes -r requirements.txt
    sudo ln -sfn /srv/talim/releases/<тег>/backend /srv/talim/backend      # первый релиз; дальше — release.sh
    ```
+**Пароли и ключи не набирать в командной строке** (остаются в истории оболочки и видны в `ps`): в блоках ниже `<…>` означает значение из файла `0600`. Задавать переменные, например, так: `set +o history; set -a; . /etc/talim/talim.env; set +a` (или `read -rs DB_PASSWORD`), затем команда без значений в тексте.
+
 5. **Миграции и права** — владелец БД только для миграций (§4.4, §4.2):
    ```bash
    DB_USER=talim_owner DB_PASSWORD=<…> DJANGO_SETTINGS_MODULE=config.settings.production <остальные переменные из talim.env> .venv/bin/python manage.py migrate
