@@ -82,3 +82,71 @@ CLAMAV_REAL_TEST=1 CLAMAV_HOST=127.0.0.1 CLAMAV_PORT=3310 \
 Ожидается `Ran 4 tests … OK` **без** `skipped`. Условия: (1) `clamd` запущен и отвечает на `PING`; (2) загружена официальная база (`freshclam` выполнен; она содержит EICAR); (3) `StreamMaxLength` в `clamd.conf` соответствует `CLAMAV_*`/`DOCUMENT_MAX_BYTES` (тест «данные сверх лимита потока → сбой, а не «чисто»» опирается на лимит демона, см. выше); (4) для тестов нужна доступная PostgreSQL (тестовая БД создаётся и удаляется). Тесты работают с `config.settings.test` и **не** касаются рабочих данных.
 
 **Единственный прогон (песочница, День 30):** `freshclam` скачал официальные базы (`main`, `daily` версия 28157, `bytecode`) во временный каталог вне репозитория; `clamd` 1.5.4 запущен отдельным процессом с временной конфигурацией (TCP 127.0.0.1:3310, `StreamMaxLength 25M`, 3 628 169 сигнатур) без изменения системных файлов. Результат: **4 теста — OK, 0 пропусков**; затем демон остановлен, временные файлы вне репозитория. Ранее (docstring теста, Дни 6–9) в песочнице официальная база скачана не была и использовалась локальная сигнатура; теперь сеть позволила официальную. **Это не проверка staging:** другая машина, демон не под systemd и не с рабочей конфигурацией владельца, база не обновляется по расписанию. Блокер B-06 остаётся открытым до выполнения на staging: `freshclam` по расписанию, `clamd` как служба, `check_scanner --eicar`, загрузка EICAR отклонена и отклонение при остановленном `clamd` (`STAGING_OPERATOR_CHECKLIST.md` шаги 8–9), затем эта же команда на сервере. Полный набор тестов этим прогоном не повторялся: код не менялся.
+
+## Что проверено, что нужно проверить на staging и что не проводилось (День 31)
+| Категория | Содержание |
+|---|---|
+| **1. Проверено в песочнице** (не staging) | 4 теста `RealClamdTests` против настоящего `clamd` 1.5.4 с официальной базой (скачана `freshclam`) — OK; `check_scanner --eicar` и загрузка EICAR на **локальной** сигнатуре (Дни 6–9); fail-closed (`ScanFailed` → отказ загрузки) — тестами `documents/tests_scanner` на **тестовом сервере-заглушке протокола clamd** (это не настоящий демон) и тестом превышения лимита потока на настоящем демоне; остановка настоящей службы `clamav-daemon` не проверялась. |
+| **2. Обязательно выполнить на staging** | процедура ниже (шаги C-1…C-8). До этого **B-06 открыт**. |
+| **3. Не проводилось вообще** | `clamd` и `freshclam` как системные службы на сервере с рабочей конфигурацией; обновление базы по расписанию и контроль её даты; нагрузка на сканер; поведение при нехватке памяти на ВМ; отказ загрузки через настоящий HTTPS-путь с `nginx`; оповещение дежурного о падении `clamd`; запуск `RealClamdTests` на сервере. |
+
+## Процедура проверки ClamAV на staging (C-1…C-8)
+Выполняет оператор на staging-ВМ (не на песочнице), от пользователя `talim` там, где указано; результат каждого шага записывается вне Git (дата, кто, вывод **без** секретов). Имена служб и команды взяты из этого репозитория и `CLAMAV.md`; **все шаги ниже на сервере ещё не выполнялись.** Если шаг не пройден — остановиться (`STAGING_OPERATOR_CHECKLIST.md` §12).
+
+**C-1. Официальные сигнатуры и обновление.**
+```bash
+sudo systemctl stop clamav-freshclam; sudo freshclam; sudo systemctl start clamav-freshclam
+systemctl is-active clamav-freshclam            # ожидается: active
+journalctl -u clamav-freshclam -n 30 --no-pager  # нет ошибок загрузки, указана свежая версия базы
+clamdscan --version                              # в выводе — версия ClamAV, номер и дата базы (свежие)
+```
+Критерий: базы `main`, `daily`, `bytecode` скачаны с официальных серверов; дата базы не старше нескольких суток; служба обновления включена (`systemctl is-enabled clamav-freshclam`).
+
+**C-2. `clamd` как системная служба и PING.**
+```bash
+sudo systemctl enable --now clamav-daemon; systemctl is-active clamav-daemon   # ожидается: active (старт — десятки секунд)
+sudo -u talim /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py check_scanner    # код 0
+```
+`check_scanner` выполняет PING и проверку чистой строки; в `talim.env` заданы `DOCUMENT_SCAN_MODE=clamav` и (рекомендуется) `CLAMAV_SOCKET=/run/clamav/clamd.ctl`. Критерий: служба активна после перезагрузки сервера (`systemctl is-enabled clamav-daemon`), пользователь `talim` имеет доступ к сокету (группа/режим из `clamd.conf`), TCP-порт 3310 снаружи закрыт (проверка с другой машины).
+
+**C-3. Согласованность лимитов.**
+```bash
+grep -E '^(StreamMaxLength|MaxFileSize)' /etc/clamav/clamd.conf     # ожидается 25M и 25M
+grep -E '^DOCUMENT_MAX_BYTES' /etc/talim/talim.env || echo "по умолчанию 10 МБ (10485760)"
+```
+Критерий: `StreamMaxLength` **больше** `DOCUMENT_MAX_BYTES` (по умолчанию 25M > 10 МБ); иначе крупные допустимые файлы будут отклоняться. Проверка «данные сверх лимита потока → сбой, а не «чисто»» входит в C-4.
+
+**C-4. Четыре теста `RealClamdTests` (`CLAMAV_REAL_TEST=1`).** Тесты создают временную БД `test_<DB_NAME>`, поэтому роли приложения (без `CREATEDB`) не хватит.
+Вариант: запускать от **отдельного** пользователя в **отдельном** checkout того же кандидата (`release_info.sh` — те же хеши), с роль-копий или специально созданной на staging ролью с `CREATEDB` и **без** доступа к рабочей БД — **[не проверено на staging: достаточно ли для подключения роли копий к служебной БД `postgres`]**. Тест-прогон не должен использовать `talim.env` и рабочую БД.
+```bash
+cd <checkout>/backend && DB_NAME=<имя тестовой БД> DB_USER=<роль с CREATEDB> DB_PASSWORD=<из файла 0600> \
+  CLAMAV_REAL_TEST=1 CLAMAV_SOCKET=/run/clamav/clamd.ctl \
+  .venv/bin/python manage.py test apps.documents.tests_real_clamd --settings=config.settings.test --noinput -v 2
+```
+(Значения не набирать в командной строке — `STAGING_OPERATOR_CHECKLIST.md` §5, предупреждение перед шагом 5.) Ожидается `Ran 4 tests … OK` без `skipped`. Критерий: 0 пропусков; иначе прочитать причину пропуска.
+
+**C-5. `check_scanner --eicar` в боевых настройках.**
+```bash
+sudo -u talim /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py check_scanner --eicar   # код 0, EICAR обнаружен
+```
+Выполняется под `config.settings.production` (в `config.settings.test` команда отказывается: сканирование там отключено). Критерий: код 0; в выводе — «EICAR … DETECTED».
+
+**C-6. Отклонение EICAR через путь загрузки приложения.** Создать вручную файл с тестовой строкой EICAR (безвредна); в браузере войти вымышленным пользователем с правом загрузки, `/portal/documents/new/` — загрузить; затем загрузить вымышленный чистый PDF.
+Критерий: EICAR **отклонён** (сообщение об обнаруженной угрозе, версия не сохранена как «чистая»), в журнале аудита есть запись `file_threat_detected`; чистый PDF принят, статус «проверен», скачивается побайтно совпадающим (`/portal/documents/<id>/download/`); `manage.py verify_document_files` — без расхождений.
+
+**C-7. Fail-closed при остановленном/недоступном `clamd`.**
+```bash
+sudo systemctl stop clamav-daemon
+sudo -u talim /srv/talim/backend/.venv/bin/python /srv/talim/backend/manage.py check_scanner; echo $?    # ненулевой код
+# попытаться загрузить вымышленный чистый PDF через /portal/documents/new/ -> загрузка ОТКЛОНЕНА, документ не сохранён
+sudo systemctl start clamav-daemon; sudo -u talim ... manage.py check_scanner                              # снова 0
+```
+Также (если разрешено) неверная группа/режим сокета или значение `CLAMAV_SOCKET` — загрузка отклоняется. Критерий: пока демон недоступен, **ни одна новая версия не принята как чистая**; после запуска — работа восстановлена; оповещение дежурному о падении `talim-job@check_scanner.service` (таймер `talim-check_scanner.timer`, каждые 5 мин) пришло — если мониторинг настроен (B-11).
+
+**C-8. Журналы.**
+```bash
+journalctl -u talim-gunicorn --since "-30min" --no-pager | grep -E "Virus scan"
+```
+В журнале приложения при сбое — только строки вида `Virus scanner unreachable (<класс>)`, `Virus scan timed out after <N>s`, `Virus scanner returned an unexpected verdict (<N> chars)`; нет ни содержимого файлов, ни их имён, ни токенов. Проверить, что на время остановки `clamd` (C-7) в таблице версий документов нет записи со статусом «чистый» (`manage.py scan_documents` без `--all` ничего не должна менять, сообщив о недоступном сканере). Критерий: каждый отказ виден в журнале, а принятых как чистые при сбое файлов нет.
+
+**B-06 закрывается** только когда шаги C-1…C-8 выполнены на staging и результат записан (дата, кто). Песочничные тесты и любые моделирования его не закрывают.
