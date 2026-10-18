@@ -5,10 +5,10 @@
 ## 1. Текущее состояние релиза и точные коммиты
 | Что | Значение |
 |---|---|
-| Кандидат на выпуск | **RC-3** (RC-2 + одно исправление Дня 27, см. `RELEASE_CANDIDATE.md` §8) |
-| Кодовый коммит RC-3 | `34b53ccc4d280e0f086ae22b3ae968bf5da1bb93` |
-| Предыдущий кодовый коммит RC-2 | `8364d7a95bd2de90218ce42ac61e45f2e596bb4b` |
-| Актуальный HEAD документации | брать из `git rev-parse HEAD` ветки `claude/charming-feynman-3h7nwq` (после кодового коммита менялись только `docs/`: `git diff 34b53cc HEAD -- backend` пуст) |
+| Кандидат на выпуск | **RC-4** (RC-3 + исправления передачи копии вовне, `RELEASE_CANDIDATE.md` §9); полный набор тестов в песочнице: 1054 пройдено, 0 сбоев, 4 пропущено (тесты с настоящим `clamd` не включались) |
+| Кодовый коммит RC-4 | `58e5ec7cc577e224b941d61ee9440514e062b466` |
+| Предыдущие кодовые коммиты | RC-3 `34b53ccc4d280e0f086ae22b3ae968bf5da1bb93`, RC-2 `8364d7a95bd2de90218ce42ac61e45f2e596bb4b` |
+| Актуальный HEAD документации | брать из `git rev-parse HEAD` ветки `claude/charming-feynman-3h7nwq` (после кодового коммита менялись только `docs/`: `git diff 58e5ec7 HEAD -- backend` пуст) |
 | Хеш `requirements.txt` | `b27b0dea…1bc0` (полный — `backend/deploy/staging/release_info.sh`) |
 | Хеш файлов развёртывания (44) | `9f0adb01efcb28b1328fa55b7ca4dfac6f1f2bada9881db28ae5fa0eb606adbb` |
 | Статический сайт | не менялся: `afbdfc96…aa4df` |
