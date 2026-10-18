@@ -8,6 +8,7 @@ import socket
 import struct
 import subprocess
 import sys
+import shutil
 import tempfile
 import threading
 import time
@@ -165,7 +166,9 @@ class ScannerProtocolTests(SimpleTestCase):
         self.assertLess(time.monotonic() - started, 2.5)
 
     def test_unix_socket_transport(self):
-        path = str(Path(tempfile.mkdtemp()) / "clamd.sock")
+        socket_dir = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, socket_dir, True)  # only the directory created here
+        path = str(Path(socket_dir) / "clamd.sock")
         fake = FakeClamd("ok", unix_path=path).start()
         try:
             with scanning(fake):
