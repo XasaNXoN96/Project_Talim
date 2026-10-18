@@ -3,7 +3,7 @@
 {% block title %}{% if creating %}{% translate "Xodim qo‘shish" %}{% else %}{% translate "Tahrirlash" %}{% endif %}{% endblock %}
 {% block content %}
 <div class="page-head"><div><h1>{% if creating %}{% translate "Xodim qo‘shish" %}{% else %}{{ e.last_name }} {{ e.first_name }}{% endif %}</h1><p>{% translate "Haqiqiy shaxsiy ma’lumotlarni kiritishdan oldin huquqiy tekshiruv yakunlangan bo‘lishi kerak." %}</p></div></div>
-<form method="post" class="card card-pad" style="display:grid;gap:16px;max-width:560px" novalidate>
+<form method="post" enctype="multipart/form-data" class="card card-pad" style="display:grid;gap:16px;max-width:560px" novalidate>
   {% csrf_token %}
   {% if form.non_field_errors %}<div class="alert err" role="alert"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}
   {% for field in form %}{% include "includes/field.html" with field=field %}{% endfor %}

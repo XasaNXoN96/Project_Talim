@@ -2930,3 +2930,21 @@ msgstr "Для роли директора учреждения нужно ук�
 
 msgid "Bu muassasada direktor hisobi allaqachon bor: bitta muassasadan faqat direktor kiradi."
 msgstr "В этом учреждении уже есть аккаунт директора: из учреждения входит только директор."
+
+msgid "Surat (JPG yoki PNG)"
+msgstr "Фото (JPG или PNG)"
+
+msgid "Suratni olib tashlash"
+msgstr "Удалить фото"
+
+msgid "Surat hajmi 5 MB dan oshmasligi kerak."
+msgstr "Размер фото не должен превышать 5 МБ."
+
+msgid "Faqat JPG yoki PNG rasm yuklash mumkin."
+msgstr "Можно загрузить только изображение JPG или PNG."
+
+msgid "Rasm juda katta (piksellar soni)."
+msgstr "Изображение слишком большое (число пикселей)."
+
+msgid "Rasmni o‘qib bo‘lmadi. Boshqa fayl tanlang."
+msgstr "Не удалось прочитать изображение. Выберите другой файл."

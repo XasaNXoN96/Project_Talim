@@ -82,7 +82,7 @@ class World:
         table = {
             "users:detail": {"pk": self.users["emp"].pk}, "users:edit": {"pk": self.users["emp"].pk}, "users:role_add": {"pk": self.users["emp"].pk},
             "users:role_remove": {"pk": self.users["emp"].pk, "assignment_id": self.assignment.pk}, "users:action": {"pk": self.users["emp"].pk, "action": "unlock"},
-            "employees:detail": {"pk": self.card.pk}, "employees:edit": {"pk": self.card.pk}, "employees:archive": {"pk": self.card.pk}, "employees:restore": {"pk": self.card.pk},
+            "employees:detail": {"pk": self.card.pk}, "employees:photo": {"pk": self.card.pk}, "employees:edit": {"pk": self.card.pk}, "employees:archive": {"pk": self.card.pk}, "employees:restore": {"pk": self.card.pk},
             "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "employees:institution_edit": {"pk": self.institution.pk},
             "tasks:detail": {"pk": t}, "tasks:edit": {"pk": t}, "tasks:comment": {"pk": t}, "tasks:attachment_add": {"pk": t},
             "tasks:attachment_download": {"pk": t, "attachment_id": self.attachment.pk}, "tasks:attachment_remove": {"pk": t, "attachment_id": self.attachment.pk},

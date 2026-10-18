@@ -3,6 +3,7 @@ import uuid
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Q
+from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import ListView
@@ -79,6 +80,26 @@ class EmployeeDetailView(PortalPermissionMixin, View):
         })
 
 
+class EmployeePhotoView(PortalPermissionMixin, View):
+    """The photo is shown to exactly the people who see this person in the directory list (same queryset); nobody else, no public URL."""
+
+    permission_required = "organization.view_employee_directory"
+
+    def get(self, request, pk):
+        employee = access.directory_queryset(request.user).filter(pk=pk).first()
+        if employee is None or not employee.photo:
+            raise Http404
+        try:
+            handle = employee.photo.storage.open(employee.photo.name, "rb")
+        except (FileNotFoundError, ValueError, OSError) as exc:
+            raise Http404 from exc
+        response = FileResponse(handle, content_type="image/jpeg")
+        response["X-Content-Type-Options"] = "nosniff"
+        response["Cache-Control"] = "private, no-cache"
+        response["Content-Security-Policy"] = "default-src 'none'; sandbox"
+        return response
+
+
 class EmployeeMeView(PortalPermissionMixin, View):
     permission_required = "organization.view_employee_directory"
 
@@ -91,20 +112,22 @@ class EmployeeMeView(PortalPermissionMixin, View):
 
 
 def _changed(form):
-    return sorted(form.changed_data)
+    return sorted(f for f in form.changed_data if f not in ("photo_upload", "photo_clear")) + (
+        ["photo"] if form.cleaned_data.get("photo_upload") or form.cleaned_data.get("photo_clear") else []
+    )
 
 
 class EmployeeCreateView(PortalPermissionMixin, View):
     permission_required = "organization.add_employee"
 
-    def _form(self, request, data=None):
-        return EmployeeForm(data, can_link_user=request.user.has_perm("accounts.manage_users"))
+    def _form(self, request, data=None, files=None):
+        return EmployeeForm(data, files, can_link_user=request.user.has_perm("accounts.manage_users"), request=request)
 
     def get(self, request):
         return render(request, "portal/employees/form.html", {"form": self._form(request), "creating": True})
 
     def post(self, request):
-        form = self._form(request, request.POST)
+        form = self._form(request, request.POST, request.FILES)
         if form.is_valid():
             employee = form.save()
             record(
@@ -119,8 +142,8 @@ class EmployeeCreateView(PortalPermissionMixin, View):
 class EmployeeEditView(PortalPermissionMixin, View):
     permission_required = "organization.change_employee"
 
-    def _form(self, request, employee, data=None):
-        return EmployeeForm(data, instance=employee, can_link_user=request.user.has_perm("accounts.manage_users"))
+    def _form(self, request, employee, data=None, files=None):
+        return EmployeeForm(data, files, instance=employee, can_link_user=request.user.has_perm("accounts.manage_users"), request=request)
 
     def get(self, request, pk):
         employee = get_object_or_404(Employee, pk=pk)
@@ -128,7 +151,7 @@ class EmployeeEditView(PortalPermissionMixin, View):
 
     def post(self, request, pk):
         employee = get_object_or_404(Employee, pk=pk)
-        form = self._form(request, employee, request.POST)
+        form = self._form(request, employee, request.POST, request.FILES)
         if form.is_valid():
             changed = _changed(form)
             form.save()

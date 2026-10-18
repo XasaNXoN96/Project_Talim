@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import TimeStampedModel, UUIDModel
+from apps.documents.storage import PrivateStorage
 
 
 class Department(TimeStampedModel):
@@ -61,6 +62,8 @@ class Employee(TimeStampedModel):
     institution = models.ForeignKey(
         "Institution", null=True, blank=True, on_delete=models.PROTECT, related_name="employees", verbose_name=_("ta’lim muassasasi")
     )
+    # Profile photo: re-encoded JPEG in the private storage, served only through the permission-checked photo view.
+    photo = models.FileField(storage=PrivateStorage(), max_length=120, blank=True)
 
     class Meta:
         verbose_name = _("xodim")

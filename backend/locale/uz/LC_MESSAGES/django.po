@@ -2930,3 +2930,21 @@ msgstr "Muassasa direktori roli uchun ta’lim muassasasi ko‘rsatilishi shart.
 
 msgid "Bu muassasada direktor hisobi allaqachon bor: bitta muassasadan faqat direktor kiradi."
 msgstr "Bu muassasada direktor hisobi allaqachon bor: bitta muassasadan faqat direktor kiradi."
+
+msgid "Surat (JPG yoki PNG)"
+msgstr "Surat (JPG yoki PNG)"
+
+msgid "Suratni olib tashlash"
+msgstr "Suratni olib tashlash"
+
+msgid "Surat hajmi 5 MB dan oshmasligi kerak."
+msgstr "Surat hajmi 5 MB dan oshmasligi kerak."
+
+msgid "Faqat JPG yoki PNG rasm yuklash mumkin."
+msgstr "Faqat JPG yoki PNG rasm yuklash mumkin."
+
+msgid "Rasm juda katta (piksellar soni)."
+msgstr "Rasm juda katta (piksellar soni)."
+
+msgid "Rasmni o‘qib bo‘lmadi. Boshqa fayl tanlang."
+msgstr "Rasmni o‘qib bo‘lmadi. Boshqa fayl tanlang."

@@ -125,3 +125,6 @@ table.t td .file-ico { font-size: 10px; letter-spacing: -.02em; }
   .login-art { display: flex; min-height: 240px; padding: 24px 20px; }
   .login-art h2 { font-size: 20px; }
 }
+
+/* employee photos */
+img.av { object-fit: cover; background: var(--n-200, #e5eaf2); }

@@ -2930,3 +2930,21 @@ msgstr "An education institution is required for the institution director role."
 
 msgid "Bu muassasada direktor hisobi allaqachon bor: bitta muassasadan faqat direktor kiradi."
 msgstr "This institution already has a director account: only the director signs in from an institution."
+
+msgid "Surat (JPG yoki PNG)"
+msgstr "Photo (JPG or PNG)"
+
+msgid "Suratni olib tashlash"
+msgstr "Remove photo"
+
+msgid "Surat hajmi 5 MB dan oshmasligi kerak."
+msgstr "The photo must not exceed 5 MB."
+
+msgid "Faqat JPG yoki PNG rasm yuklash mumkin."
+msgstr "Only a JPG or PNG image can be uploaded."
+
+msgid "Rasm juda katta (piksellar soni)."
+msgstr "The image is too large (pixel count)."
+
+msgid "Rasmni o‘qib bo‘lmadi. Boshqa fayl tanlang."
+msgstr "The image could not be read. Choose another file."

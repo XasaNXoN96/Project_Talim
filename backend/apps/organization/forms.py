@@ -1,7 +1,12 @@
 from django import forms
+from django.core.files.base import ContentFile
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
+from apps.documents.storage import new_storage_name
+from apps.documents.validation import UploadRejected
+
+from . import photos
 from .models import Department, Employee, Institution, Position
 
 INPUT = {"class": "input"}
@@ -22,7 +27,14 @@ class EmployeeForm(forms.ModelForm):
             "birth_date": forms.DateInput(attrs={**INPUT, "type": "date"}, format="%Y-%m-%d"),
         }
 
-    def __init__(self, *args, can_link_user=False, **kwargs):
+    photo_upload = forms.FileField(
+        label=_("Surat (JPG yoki PNG)"), required=False, widget=forms.FileInput(attrs={"accept": "image/jpeg,image/png"})
+    )
+    photo_clear = forms.BooleanField(label=_("Suratni olib tashlash"), required=False)
+
+    def __init__(self, *args, can_link_user=False, request=None, **kwargs):
+        self._request = request
+        self._photo_bytes = None
         super().__init__(*args, **kwargs)
         for name, field in self.fields.items():
             if not isinstance(field.widget, forms.DateInput):
@@ -39,6 +51,29 @@ class EmployeeForm(forms.ModelForm):
             self.fields["user"].label = _("Foydalanuvchi hisobi")
         else:
             del self.fields["user"]
+
+    def clean_photo_upload(self):
+        uploaded = self.cleaned_data.get("photo_upload")
+        if uploaded:
+            try:
+                self._photo_bytes = photos.prepare_photo(uploaded, request=self._request, user=getattr(self._request, "user", None))
+            except UploadRejected as exc:
+                raise forms.ValidationError(str(exc)) from exc
+        return uploaded
+
+    def save(self, commit=True):
+        employee = super().save(commit=False)
+        old_name = employee.photo.name if employee.photo else ""
+        if self._photo_bytes:
+            employee.photo.save(new_storage_name("jpg"), ContentFile(self._photo_bytes), save=False)
+        elif self.cleaned_data.get("photo_clear") and old_name:
+            employee.photo = ""
+        if commit:
+            employee.save()
+            self.save_m2m()
+            if old_name and employee.photo.name != old_name:  # a replaced or removed photo must not linger on disk
+                employee.photo.storage.delete(old_name)
+        return employee
 
     def clean_user(self):
         user = self.cleaned_data.get("user")

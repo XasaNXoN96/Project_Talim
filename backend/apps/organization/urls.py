@@ -22,6 +22,7 @@ urlpatterns = [
     path("import/<uuid:pk>/confirm/", iv.ImportConfirmView.as_view(), name="import_confirm"),
     path("import/<uuid:pk>/cancel/", iv.ImportCancelView.as_view(), name="import_cancel"),
     path("<uuid:pk>/", v.EmployeeDetailView.as_view(), name="detail"),
+    path("<uuid:pk>/photo/", v.EmployeePhotoView.as_view(), name="photo"),
     path("<uuid:pk>/edit/", v.EmployeeEditView.as_view(), name="edit"),
     path("<uuid:pk>/archive/", v.EmployeeArchiveView.as_view(restore=False), name="archive"),
     path("<uuid:pk>/restore/", v.EmployeeArchiveView.as_view(restore=True), name="restore"),
