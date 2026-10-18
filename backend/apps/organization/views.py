@@ -13,8 +13,8 @@ from apps.audit.services import record
 from apps.core.mixins import PortalPermissionMixin
 
 from . import access
-from .forms import DepartmentForm, EmployeeForm, PositionForm
-from .models import Department, Employee, Position
+from .forms import DepartmentForm, EmployeeForm, InstitutionForm, PositionForm
+from .models import Department, Employee, Institution, Position
 
 
 class EmployeeListView(PortalPermissionMixin, ListView):
@@ -36,6 +36,12 @@ class EmployeeListView(PortalPermissionMixin, ListView):
                 qs = qs.filter(department_id__in=access.descendant_ids(uuid.UUID(dept)))
             except ValueError:
                 qs = qs.none()
+        inst = self.request.GET.get("institution")
+        if inst:
+            try:
+                qs = qs.filter(institution_id=uuid.UUID(inst))
+            except ValueError:
+                qs = qs.none()
         status = self.request.GET.get("status")
         if status in Employee.Status.values:
             qs = qs.filter(status=status)
@@ -46,6 +52,7 @@ class EmployeeListView(PortalPermissionMixin, ListView):
         ctx.update(
             q=self.request.GET.get("q", ""), department=self.request.GET.get("department", ""), status=self.request.GET.get("status", ""),
             departments=Department.objects.filter(is_active=True), statuses=Employee.Status.choices,
+            institution=self.request.GET.get("institution", ""), institutions=Institution.objects.all(),
             can_add=self.request.user.has_perm("organization.add_employee"),
         )
         return ctx
@@ -55,7 +62,7 @@ class EmployeeDetailView(PortalPermissionMixin, View):
     permission_required = "organization.view_employee_directory"
 
     def get(self, request, pk):
-        employee = get_object_or_404(Employee.objects.select_related("department", "position", "user"), pk=pk)
+        employee = get_object_or_404(Employee.objects.select_related("department", "position", "user", "institution"), pk=pk)
         tiers = access.visible_tiers(request.user, employee)
         if "directory" not in tiers or (employee.status == Employee.Status.ARCHIVED and not request.user.has_perm("organization.change_employee")):
             raise PermissionDenied
@@ -181,7 +188,10 @@ class StructureView(PortalPermissionMixin, View):
         return render(request, "portal/structure/index.html", {
             "rows": _tree(departments),
             "positions": Position.objects.annotate(n=Count("employees")),
+            "institutions": Institution.objects.annotate(n=Count("employees", filter=~Q(employees__status=Employee.Status.ARCHIVED))),
             "can_edit": request.user.has_perm("organization.change_department"),
+            "can_edit_institutions": request.user.has_perm("organization.change_institution"),
+            "can_add_institution": request.user.has_perm("organization.add_institution"),
         })
 
 
@@ -231,3 +241,13 @@ class PositionFormView(_OrgFormView):
     @property
     def permission_required(self):
         return "organization.change_position" if self.kwargs.get("pk") else "organization.add_position"
+
+
+class InstitutionFormView(_OrgFormView):
+    form_class = InstitutionForm
+    model = Institution
+    title = _("Ta’lim muassasasi")
+
+    @property
+    def permission_required(self):
+        return "organization.change_institution" if self.kwargs.get("pk") else "organization.add_institution"

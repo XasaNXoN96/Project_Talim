@@ -3,7 +3,7 @@
 {% block title %}{% translate "Tashkiliy tuzilma" %}{% endblock %}
 {% block content %}
 <div class="page-head"><div><h1>{% translate "Tashkiliy tuzilma" %}</h1><p>{% translate "Bo‘limlar daraxti va lavozimlar. Bo‘limlar o‘chirilmaydi, faqat faol emas qilinadi." %}</p></div>
-{% if can_edit %}<div class="row wrap"><a class="btn btn-primary" href="{% url 'employees:department_create' %}">{% translate "Bo‘lim qo‘shish" %}</a><a class="btn btn-secondary" href="{% url 'employees:position_create' %}">{% translate "Lavozim qo‘shish" %}</a></div>{% endif %}</div>
+{% if can_edit %}<div class="row wrap"><a class="btn btn-primary" href="{% url 'employees:department_create' %}">{% translate "Bo‘lim qo‘shish" %}</a><a class="btn btn-secondary" href="{% url 'employees:position_create' %}">{% translate "Lavozim qo‘shish" %}</a>{% if can_add_institution %}<a class="btn btn-secondary" href="{% url 'employees:institution_create' %}">{% translate "Muassasa qo‘shish" %}</a>{% endif %}</div>{% endif %}</div>
 <div class="stack" style="max-width:820px">
 <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Bo‘limlar" %}</h2>
 {% if rows %}<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Nomi" %}</th><th>{% translate "Xodimlar" %}</th><th>{% translate "Holat" %}</th><th></th></tr></thead><tbody>
@@ -11,6 +11,12 @@
 <td>{% if r.d.is_active %}<span class="badge b-ok">{% translate "Faol" %}</span>{% else %}<span class="badge b-err">{% translate "Faol emas" %}</span>{% endif %}</td>
 <td>{% if can_edit %}<a class="btn btn-ghost btn-sm" href="{% url 'employees:department_edit' r.d.pk %}">{% translate "Tahrirlash" %}</a>{% endif %}</td></tr>{% endfor %}
 </tbody></table></div>{% else %}<p class="muted">{% translate "Bo‘limlar hali kiritilmagan." %}</p>{% endif %}</section>
+<section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Ta’lim muassasalari" %}</h2>
+{% if institutions %}<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Nomi" %}</th><th>{% translate "Turi" %}</th><th>{% translate "Rahbar" %}</th><th>{% translate "Xodimlar" %}</th><th>{% translate "Saytda ko‘rsatish" %}</th><th></th></tr></thead><tbody>
+{% for i in institutions %}<tr><td><a href="{% url 'employees:list' %}?institution={{ i.pk }}">{{ i.name }}</a></td><td>{{ i.get_kind_display }}</td><td>{{ i.head_name|default:"—" }}</td><td>{{ i.n }}</td>
+<td>{% if i.is_published %}<span class="badge b-ok">{% translate "Ha" %}</span>{% else %}<span class="badge b-info">{% translate "Yo‘q" %}</span>{% endif %}</td>
+<td>{% if can_edit_institutions %}<a class="btn btn-ghost btn-sm" href="{% url 'employees:institution_edit' i.pk %}">{% translate "Tahrirlash" %}</a>{% endif %}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="muted">{% translate "Ta’lim muassasalari hali kiritilmagan." %}</p>{% endif %}</section>
 <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Lavozimlar" %}</h2>
 {% if positions %}<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Nomi" %}</th><th>{% translate "Xodimlar" %}</th><th></th></tr></thead><tbody>
 {% for p in positions %}<tr><td>{{ p.name }}</td><td>{{ p.n }}</td><td>{% if can_edit %}<a class="btn btn-ghost btn-sm" href="{% url 'employees:position_edit' p.pk %}">{% translate "Tahrirlash" %}</a>{% endif %}</td></tr>{% endfor %}

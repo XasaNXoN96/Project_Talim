@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block title %}{{ e.last_name }} {{ e.first_name }}{% endblock %}
 {% block content %}
-<div class="page-head"><div><h1>{{ e.last_name }} {{ e.first_name }} {{ e.middle_name }}</h1><p>{{ e.position.name|default:"—" }} · {{ e.department.name }}</p></div>
+<div class="page-head"><div><h1>{{ e.last_name }} {{ e.first_name }} {{ e.middle_name }}</h1><p>{{ e.position.name|default:"—" }} · {{ e.department.name }}{% if e.institution %} · {{ e.institution.name }}{% endif %}</p></div>
 <div class="row wrap"><a class="btn btn-secondary" href="{% url 'employees:list' %}">{% translate "Ro‘yxat" %}</a>{% if can_edit %}<a class="btn btn-secondary" href="{% url 'employees:edit' e.pk %}">{% translate "Tahrirlash" %}</a>
 {% if e.status == 'archived' %}<form method="post" action="{% url 'employees:restore' e.pk %}">{% csrf_token %}<button class="btn btn-secondary" type="submit">{% translate "Arxivdan qaytarish" %}</button></form>
 {% else %}<form method="post" action="{% url 'employees:archive' e.pk %}">{% csrf_token %}<button class="btn btn-danger" type="submit">{% translate "Arxivlash" %}</button></form>{% endif %}{% endif %}</div></div>

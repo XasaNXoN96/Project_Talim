@@ -20,7 +20,7 @@ from apps.documents.services import add_version
 from apps.documents.testing import upload
 from apps.documents.validation import validate_upload
 from apps.notifications.models import Notification
-from apps.organization.models import Department, Employee, EmployeeImport, Position
+from apps.organization.models import Department, Employee, EmployeeImport, Institution, Position
 from apps.tasks.models import Task, TaskAttachment
 
 User = get_user_model()
@@ -34,6 +34,7 @@ class World:
         self.child = Department.objects.create(name="A1", parent=self.root)
         self.other = Department.objects.create(name="B")
         self.position = Position.objects.create(name="Metodist")
+        self.institution = Institution.objects.create(name="1-sonli maktab", kind="school")
         self.users = {
             "emp": make_user("emp", role="employee"), "stranger": make_user("stranger", role="employee"),
             "content": make_user("content", role="content_manager"), "hr": make_user("hrista", role="hr"),
@@ -82,7 +83,7 @@ class World:
             "users:detail": {"pk": self.users["emp"].pk}, "users:edit": {"pk": self.users["emp"].pk}, "users:role_add": {"pk": self.users["emp"].pk},
             "users:role_remove": {"pk": self.users["emp"].pk, "assignment_id": self.assignment.pk}, "users:action": {"pk": self.users["emp"].pk, "action": "unlock"},
             "employees:detail": {"pk": self.card.pk}, "employees:edit": {"pk": self.card.pk}, "employees:archive": {"pk": self.card.pk}, "employees:restore": {"pk": self.card.pk},
-            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk},
+            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "employees:institution_edit": {"pk": self.institution.pk},
             "tasks:detail": {"pk": t}, "tasks:edit": {"pk": t}, "tasks:comment": {"pk": t}, "tasks:attachment_add": {"pk": t},
             "tasks:attachment_download": {"pk": t, "attachment_id": self.attachment.pk}, "tasks:attachment_remove": {"pk": t, "attachment_id": self.attachment.pk},
             "tasks:transition": {"pk": t, "status": "done"},
@@ -121,6 +122,7 @@ def app_routes():
 DYNAMIC_PERMISSIONS = {
     "employees:department_create": "organization.add_department", "employees:department_edit": "organization.change_department",
     "employees:position_create": "organization.add_position", "employees:position_edit": "organization.change_position",
+    "employees:institution_create": "organization.add_institution", "employees:institution_edit": "organization.change_institution",
 }
 
 

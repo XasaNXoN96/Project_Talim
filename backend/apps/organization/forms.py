@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-from .models import Department, Employee, Position
+from .models import Department, Employee, Institution, Position
 
 INPUT = {"class": "input"}
 User = get_user_model()
@@ -14,7 +14,7 @@ class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
         fields = [
-            "last_name", "first_name", "middle_name", "department", "position", "status",
+            "last_name", "first_name", "middle_name", "department", "position", "institution", "status",
             "work_phone", "work_email", "hired_at", "personal_phone", "birth_date", "user",
         ]
         widgets = {
@@ -31,6 +31,8 @@ class EmployeeForm(forms.ModelForm):
             pk=getattr(self.instance, "department_id", None)
         )
         self.fields["position"].queryset = Position.objects.all()
+        self.fields["institution"].queryset = Institution.objects.all()
+        self.fields["institution"].required = False
         if can_link_user:
             self.fields["user"].queryset = User.objects.filter(is_active=True)
             self.fields["user"].required = False
@@ -81,3 +83,20 @@ class PositionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["name"].widget.attrs["class"] = "input"
+
+
+class InstitutionForm(forms.ModelForm):
+    class Meta:
+        model = Institution
+        fields = ["name", "kind", "head_name", "is_published"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name in ("name", "kind", "head_name"):
+            self.fields[name].widget.attrs["class"] = "input"
+
+    def clean_name(self):
+        name = self.cleaned_data["name"].strip()
+        if Institution.objects.filter(name__iexact=name).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError(_("Bu nomdagi muassasa allaqachon bor."))
+        return name

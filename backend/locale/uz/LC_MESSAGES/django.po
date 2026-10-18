@@ -2882,3 +2882,33 @@ msgstr "Tur"
 msgctxt "menu"
 msgid "Ta’lim muassasalari"
 msgstr "Ta’lim muassasalari"
+
+msgid "Turi"
+msgstr "Turi"
+
+msgid "Rahbar"
+msgstr "Rahbar"
+
+msgid "Saytda ko‘rsatish"
+msgstr "Saytda ko‘rsatish"
+
+msgid "Ha"
+msgstr "Ha"
+
+msgid "Yo‘q"
+msgstr "Yo‘q"
+
+msgid "Muassasa qo‘shish"
+msgstr "Muassasa qo‘shish"
+
+msgid "Barcha muassasalar"
+msgstr "Barcha muassasalar"
+
+msgid "Ta’lim muassasalari hali kiritilmagan."
+msgstr "Ta’lim muassasalari hali kiritilmagan."
+
+msgid "Bu nomdagi muassasa allaqachon bor."
+msgstr "Bu nomdagi muassasa allaqachon bor."
+
+msgid "Ta’lim muassasasi"
+msgstr "Ta’lim muassasasi"

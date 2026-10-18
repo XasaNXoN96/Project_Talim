@@ -2882,3 +2882,33 @@ msgstr "Type"
 msgctxt "menu"
 msgid "Ta’lim muassasalari"
 msgstr "Institutions"
+
+msgid "Turi"
+msgstr "Type"
+
+msgid "Rahbar"
+msgstr "Head"
+
+msgid "Saytda ko‘rsatish"
+msgstr "Show on the website"
+
+msgid "Ha"
+msgstr "Yes"
+
+msgid "Yo‘q"
+msgstr "No"
+
+msgid "Muassasa qo‘shish"
+msgstr "Add institution"
+
+msgid "Barcha muassasalar"
+msgstr "All institutions"
+
+msgid "Ta’lim muassasalari hali kiritilmagan."
+msgstr "No institutions have been added yet."
+
+msgid "Bu nomdagi muassasa allaqachon bor."
+msgstr "An institution with this name already exists."
+
+msgid "Ta’lim muassasasi"
+msgstr "Education institution"
