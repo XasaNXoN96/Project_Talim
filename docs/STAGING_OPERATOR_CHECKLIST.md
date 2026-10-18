@@ -73,26 +73,34 @@
    sudo cp backend/deploy/tmpfiles.d/talim.conf /etc/tmpfiles.d/ && sudo systemd-tmpfiles --create
    sudo cp backend/deploy/logrotate/talim /etc/logrotate.d/talim
    ```
-2. **PostgreSQL**: роли и права (§4.2), `listen_addresses` только локально, `scram-sha-256`:
+2. **PostgreSQL**: роли и права (§4.2), `listen_addresses` только локально, `scram-sha-256`. Имя БД — `talim_staging` (как `DB_NAME` в шаблоне `talim.env`; роли — `talim_owner`, `talim_app`, `talim_backup`). Пароли ролей — случайные, из `secrets.token_urlsafe(30)` (символы `A-Za-z0-9_-`: не ломают `.pgpass` и `\set`), лежат в файлах `0600` на **рабочем месте оператора/в хранилище секретов владельца**, а не в репозитории. Пароли передаются в `psql` **через stdin** (в `ps` не видны; `printf` — встроенная команда оболочки, значения не попадают ни в чей argv); способ проверен в песочнице на PostgreSQL 16 (роли созданы, вход по паролю работает), **на сервере не проверялся**:
    ```bash
-   sudo -u postgres psql -v owner=talim_owner -v app=talim_app -v db=talim -v owner_password="$(cat <файл>)" -v app_password="$(cat <файл>)" -f backend/deploy/postgres/create_roles.sql
+   { printf "\\set owner_password '%s'\n" "$(cat <файл с паролем владельца>)"; printf "\\set app_password '%s'\n" "$(cat <файл с паролем приложения>)"; cat backend/deploy/postgres/create_roles.sql; } \
+     | sudo -u postgres psql -v ON_ERROR_STOP=1 -v owner=talim_owner -v app=talim_app -v db=talim_staging -f -
    # третья роль — только для резервного копирования и проверки восстановления (CREATEDB + чтение данных; не суперпользователь, не владелец):
-   sudo -u postgres psql -v backup_role=talim_backup -v backup_password="$(cat <файл 0600>)" -f backend/deploy/postgres/create_backup_role.sql
+   { printf "\\set backup_password '%s'\n" "$(cat <файл с паролем роли копий>)"; cat backend/deploy/postgres/create_backup_role.sql; } \
+     | sudo -u postgres psql -v ON_ERROR_STOP=1 -v backup_role=talim_backup -f -
    # право подключаться к рабочей БД роль копий получает из apply_grants.sql (шаг 5) при передаче -v backup_role=talim_backup
    ```
-3. **Окружение**: создать `/etc/talim/talim.env` по шаблону (`root:talim`, `0640`) и `backup.env` (§4). Файл не должен принадлежать пользователю `talim`. Секреты создаёт оператор на сервере, значения не выводятся на экран и не попадают в историю:
+3. **Окружение**: создать `/etc/talim/talim.env` по шаблону (`root:talim`, `0640`; владелец — `root`, не `talim`) и `backup.env` (§4). **Значения секретов не печатаются на экран и не передаются аргументами**: генерируются `secrets`/`os.urandom` (криптографически стойкий источник ОС) и записываются прямо в файлы:
    ```bash
+   sudo install -m 0640 -o root -g talim backend/deploy/staging/talim.env.staging.example /etc/talim/talim.env
+   # заменить заглушки секретов (остальные значения — хост, почта, путь админки — отредактировать вручную в sudoedit /etc/talim/talim.env):
+   sudo sed -i '/^DJANGO_SECRET_KEY=/d;/^OTP_ENCRYPTION_KEYS=/d;/^DB_PASSWORD=/d' /etc/talim/talim.env
+   printf 'DJANGO_SECRET_KEY=%s\n' "$(python3 -c 'import secrets;print(secrets.token_urlsafe(70))')" | sudo tee -a /etc/talim/talim.env >/dev/null
+   printf 'OTP_ENCRYPTION_KEYS=%s\n' "$(python3 -c 'import os,base64;print(base64.urlsafe_b64encode(os.urandom(32)).decode())')" | sudo tee -a /etc/talim/talim.env >/dev/null   # формат Fernet.generate_key(); без зависимостей
+   printf 'DB_PASSWORD=%s\n' "$(cat <файл с паролем приложения>)" | sudo tee -a /etc/talim/talim.env >/dev/null
+   # файлы паролей копий (читает только talim, режим 0600; значения не выводятся):
    sudo install -m 0600 -o talim -g talim /dev/null /etc/talim/backup.pass
-   python3 -c 'import secrets;print(secrets.token_urlsafe(40))' | sudo tee /etc/talim/backup.pass >/dev/null      # пароль копий (≥ 20 символов); ЕГО КОПИЮ — в хранилище секретов владельца, отдельно от копий данных
+   python3 -c 'import secrets;print(secrets.token_urlsafe(40))' | sudo tee /etc/talim/backup.pass >/dev/null      # пароль шифрования копий (≥ 20 символов)
    sudo install -m 0600 -o talim -g talim /dev/null /etc/talim/backup.pgpass
-   printf '127.0.0.1:5432:*:talim_backup:%s\n' "$(cat <файл с паролем роли копий>)" | sudo tee /etc/talim/backup.pgpass >/dev/null   # формат libpq; тот же, что в песочничной репетиции verify_preflight.sh
-   python3 -c 'import secrets;print(secrets.token_urlsafe(70))'        # DJANGO_SECRET_KEY: вывести, внести в talim.env, не копировать в чаты
-   python3 -c 'from cryptography.fernet import Fernet;print(Fernet.generate_key().decode())'   # OTP_ENCRYPTION_KEYS (после установки зависимостей, шаг 4: .venv/bin/python)
+   printf '127.0.0.1:5432:*:talim_backup:%s\n' "$(cat <файл с паролем роли копий>)" | sudo tee /etc/talim/backup.pgpass >/dev/null   # формат libpq (`.pgpass`) проверен в песочнице
    ```
-   (последние две команды печатают секрет в терминал: выполнять без записи терминала и очистить экран; предпочтительно сразу писать в файл с правами 0600.)
+   **Назначение:** `DJANGO_SECRET_KEY` — подпись сессий и токенов (меняется — все сессии и ссылки сброса недействительны); `OTP_ENCRYPTION_KEYS` — ключ шифрования секретов 2FA в БД (потеря = никто не войдёт с 2FA после восстановления); `DB_PASSWORD` — пароль runtime-роли `talim_app`; `backup.pass` — пароль шифрования копий (потеря = копии нечитаемы); `backup.pgpass` — пароль роли копий для `pg_dump`/проверки восстановления. **Копии** `OTP_ENCRYPTION_KEYS` и `backup.pass` сразу сохранить в хранилище секретов владельца, **отдельно от копий данных**: читать их с экрана не нужно — копировать из файла командой, которую выберет владелец (например, шифрованной передачей); значения не пересылать в чатах и тикетах. Если генерация идёт в консоли с записью сеанса — отключить запись. Все четыре файла секретов в Git не попадают (`/etc/talim` вне репозитория, `.gitignore` не нужен).
 4. **Код и зависимости**: релиз = полный checkout репозитория (нужны `backend/` и `assets/`):
    ```bash
    sudo -u talim git clone <репозиторий> /srv/talim/releases/<тег>
+   # если репозиторий приватный: клонируйте под своей учётной записью (токен доступа не сохраняйте на сервере) и передайте каталог: sudo cp -a ~/talim-src /srv/talim/releases/<тег> && sudo chown -R talim:talim /srv/talim/releases/<тег>
    sudo -u talim git -C /srv/talim/releases/<тег> checkout <кодовый коммит>   # ТОЛЬКО коммит, указанный владельцем в OWNER_HANDOFF.md §1 (кодовый коммит кандидата), не «последний в ветке»
    sudo -u talim /srv/talim/releases/<тег>/backend/deploy/staging/release_info.sh   # сверить коммит, хеш requirements.txt и хеш файлов развёртывания с OWNER_HANDOFF.md §1; расхождение — остановиться
    sudo -u talim bash -c 'cd /srv/talim/releases/<тег>/backend && python3.12 -m venv .venv && .venv/bin/pip install --require-hashes -r requirements.txt'
@@ -100,21 +108,18 @@
    ```
 **Пароли и ключи не набирать в командной строке** (остаются в истории оболочки и видны в `ps`): в блоках ниже `<…>` означает значение из файла `0600`. Задавать переменные, например, так: `set +o history; set -a; . /etc/talim/talim.env; set +a` (или `read -rs DB_PASSWORD`), затем команда без значений в тексте.
 
-5. **Миграции и права** — владелец БД только для миграций (§4.4, §4.2):
+5. **Миграции и права** — владелец БД только для миграций (§4.4, §4.2). Пароль владельца **вводится с клавиатуры** в запрос `read -s` (не отображается, не попадает ни в argv, ни в историю, ни в файл) и существует только в переменных окружения этого одного сеанса, который заканчивается после `apply_grants.sql`:
    ```bash
-   # 5a. временные файлы с паролем владельца БД (тот же пароль, что передавался в create_roles.sql; значение берётся из файла/хранилища оператора, не набирается):
-   sudo install -m 0600 -o talim -g talim /dev/null /srv/talim/owner.tmp.secret
-   sudo install -m 0600 -o talim -g talim /dev/null /srv/talim/owner.tmp.pgpass
-   sudo tee /srv/talim/owner.tmp.secret < <файл с паролем владельца> >/dev/null
-   printf '127.0.0.1:5432:talim:talim_owner:%s\n' "$(cat <файл с паролем владельца>)" | sudo tee /srv/talim/owner.tmp.pgpass >/dev/null
-   # 5b. от администратора; пароль владельца лежит во ВРЕМЕННОМ файле 0600 (его создаёт оператор на время шагов 5; после них — shred -u), в argv попадает только путь:
-   sudo -u talim bash -c 'cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && DB_USER=talim_owner DB_PASSWORD="$(cat /srv/talim/owner.tmp.secret)" DJANGO_SETTINGS_MODULE=config.settings.production .venv/bin/python manage.py migrate'
-   sudo -u talim env PGPASSFILE=/srv/talim/owner.tmp.pgpass psql -h 127.0.0.1 -U talim_owner -d talim -v app=talim_app -v db=talim -v backup_role=talim_backup -f /srv/talim/backend/deploy/postgres/apply_grants.sql
-   # ниже — от пользователя talim с окружением talim.env (runtime-роль): sudo -u talim bash -c 'cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && .venv/bin/python manage.py <команда>'
-   seed_roles --dry-run     # прочитать план; нестандартные права (=) остаются, удаляет только --prune
-   seed_roles && collectstatic --noinput
-   # после шага 5 удалить временные файлы: sudo shred -u /srv/talim/owner.tmp.secret /srv/talim/owner.tmp.pgpass
+   sudo -u talim bash -c '
+     cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a
+     IFS= read -rs -p "Пароль владельца БД (talim_owner): " OWNER_PW; echo
+     DB_USER=talim_owner DB_PASSWORD="$OWNER_PW" DJANGO_SETTINGS_MODULE=config.settings.production .venv/bin/python manage.py migrate || exit 1
+     PGPASSWORD="$OWNER_PW" psql -h 127.0.0.1 -U talim_owner -d "$DB_NAME" -v ON_ERROR_STOP=1 -v app=talim_app -v db="$DB_NAME" -v backup_role=talim_backup -f deploy/postgres/apply_grants.sql
+     unset OWNER_PW
+     .venv/bin/python manage.py seed_roles --dry-run          # прочитать план; нестандартные права (=) остаются, удаляет только --prune
+     .venv/bin/python manage.py seed_roles && .venv/bin/python manage.py collectstatic --noinput'
    ```
+   (Исходный файл с паролем владельца хранится у оператора/в хранилище секретов, **не** на сервере.) Остаточный риск: значение живёт в памяти процессов `bash`/`python`/`psql` пользователя `talim` и в их `environ` (читаемо только для `talim` и `root`) на время сеанса. Временных файлов с секретами этот шаг не создаёт, поэтому надёжное стирание файлов (`shred` на журналируемых и copy-on-write файловых системах и SSD гарантий не даёт) не требуется. Если секрет всё же пришлось записать в файл — держать его только в `/dev/shm` (память, исчезает при перезагрузке), права `0600`, каталог `0700`, и удалить сразу после шага; на `shred` не полагаться.
 6. **Предпроверка** (от `talim`; **остановиться, если есть FAIL**):
    ```bash
    sudo -u talim /srv/talim/backend/.venv/bin/python /srv/talim/backend/deploy/staging/preflight.py --env-file /etc/talim/talim.env --backend /srv/talim/backend --backup-env /etc/talim/backup.env

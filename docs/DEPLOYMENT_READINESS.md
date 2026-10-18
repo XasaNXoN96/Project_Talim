@@ -80,7 +80,7 @@ sudo cp backend/deploy/logrotate/talim /etc/logrotate.d/talim
 Пользователь `talim`: не `root`, не в `sudo`, без оболочки входа. Автоматические обновления безопасности и NTP включить средствами ОС.
 
 ### 4.2 PostgreSQL и роли с минимальными правами
-Две роли (скрипты — `backend/deploy/postgres/`; пароли — из файлов `0600` вне Git, значения в командной строке не печатаются):
+Две роли (скрипты — `backend/deploy/postgres/`; пароли — из файлов `0600` вне Git). **Внимание:** форма `-v owner_password="$(cat …)"` ниже подставляет значение в аргументы `psql`, и на время выполнения его видно в `ps` другим пользователям сервера; для staging используйте вариант через stdin из `STAGING_OPERATOR_CHECKLIST.md` §5.2 (проверен в песочнице), а `PGPASSWORD=… psql` — только внутри одного сеанса `bash`, как в §5.5 чек-листа:
 ```bash
 sudo -u postgres psql -v owner=talim_owner -v app=talim_app -v db=talim \
      -v owner_password="$(cat /root/secrets/db_owner)" -v app_password="$(cat /root/secrets/db_app)" -f backend/deploy/postgres/create_roles.sql
