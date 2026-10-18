@@ -54,7 +54,14 @@
 Роль копий (`PGUSER` в `backup.env`) — **отдельная** третья роль (`create_backup_role.sql`): `CREATEDB` + `pg_read_all_data`, не суперпользователь, не владелец, не runtime-роль. Проверка восстановления запускает прикладные шаги **от этой роли** (скрипт сам подставляет её в `DB_USER`), потому что runtime-роль не имеет прав ни на временную БД, ни на DDL. Топология из трёх ролей отрепетирована в песочнице (`deploy/backup/verify_backup_roles.sh`); **на сервере не проверялась** — `preflight.py --backup-env` проверит роль и права.
 
 ## 5. Последовательность развёртывания (все команды из репозитория)
-Рабочий каталог — клон репозитория; `<тег>` — произвольное имя каталога релиза (например, дата и короткий хеш коммита); `<репозиторий>` — адрес репозитория, который сообщает владелец/заказчик.
+0. **Пакеты и рабочий клон кандидата** (от администратора, `sudo`; список по `DEPLOYMENT_READINESS.md` §3; установка на сервере не проверялась):
+   ```bash
+   sudo apt-get update && sudo apt-get install -y git python3.12 python3.12-venv postgresql-16 nginx clamav-daemon clamav-freshclam curl openssl logrotate chrony
+   git clone <репозиторий> ~/talim-src && git -C ~/talim-src checkout <кодовый коммит>      # коммит из OWNER_HANDOFF.md §1 (сейчас RC-5 d8c02ccd785cc0fcde89348f0cc69bb21eaa40a0)
+   ~/talim-src/backend/deploy/staging/release_info.sh                                        # сверить с OWNER_HANDOFF.md §1; расхождение — остановиться
+   cd ~/talim-src          # шаги 1–2 и 7–10 ниже выполняются из этого клона (пути `backend/deploy/...` — относительно него)
+   ```
+Рабочий каталог шагов — клон `~/talim-src`; `<тег>` — произвольное имя каталога релиза (например, дата и короткий хеш коммита); `<репозиторий>` — адрес репозитория, который сообщает владелец/заказчик.
 
 1. **Пользователь и каталоги** (DEPLOYMENT_READINESS §4.1):
    ```bash
@@ -62,6 +69,7 @@
    sudo install -d -o root -g talim -m 0750 /etc/talim
    sudo install -d -o talim -g talim -m 0750 /var/lib/talim /var/lib/talim/private_media
    sudo install -d -o talim -g talim -m 0700 /var/backups/talim
+   sudo install -d -o talim -g talim -m 0755 /srv/talim /srv/talim/releases     # домашний каталог и место релизов (useradd его не создаёт); 0755: nginx должен проходить по /srv/talim
    sudo cp backend/deploy/tmpfiles.d/talim.conf /etc/tmpfiles.d/ && sudo systemd-tmpfiles --create
    sudo cp backend/deploy/logrotate/talim /etc/logrotate.d/talim
    ```
@@ -72,23 +80,40 @@
    sudo -u postgres psql -v backup_role=talim_backup -v backup_password="$(cat <файл 0600>)" -f backend/deploy/postgres/create_backup_role.sql
    # право подключаться к рабочей БД роль копий получает из apply_grants.sql (шаг 5) при передаче -v backup_role=talim_backup
    ```
-3. **Окружение**: создать `/etc/talim/talim.env` по шаблону (`root:talim`, `0640`) и `backup.env` (§4). Файл не должен принадлежать пользователю `talim`.
+3. **Окружение**: создать `/etc/talim/talim.env` по шаблону (`root:talim`, `0640`) и `backup.env` (§4). Файл не должен принадлежать пользователю `talim`. Секреты создаёт оператор на сервере, значения не выводятся на экран и не попадают в историю:
+   ```bash
+   sudo install -m 0600 -o talim -g talim /dev/null /etc/talim/backup.pass
+   python3 -c 'import secrets;print(secrets.token_urlsafe(40))' | sudo tee /etc/talim/backup.pass >/dev/null      # пароль копий (≥ 20 символов); ЕГО КОПИЮ — в хранилище секретов владельца, отдельно от копий данных
+   sudo install -m 0600 -o talim -g talim /dev/null /etc/talim/backup.pgpass
+   printf '127.0.0.1:5432:*:talim_backup:%s\n' "$(cat <файл с паролем роли копий>)" | sudo tee /etc/talim/backup.pgpass >/dev/null   # формат libpq; тот же, что в песочничной репетиции verify_preflight.sh
+   python3 -c 'import secrets;print(secrets.token_urlsafe(70))'        # DJANGO_SECRET_KEY: вывести, внести в talim.env, не копировать в чаты
+   python3 -c 'from cryptography.fernet import Fernet;print(Fernet.generate_key().decode())'   # OTP_ENCRYPTION_KEYS (после установки зависимостей, шаг 4: .venv/bin/python)
+   ```
+   (последние две команды печатают секрет в терминал: выполнять без записи терминала и очистить экран; предпочтительно сразу писать в файл с правами 0600.)
 4. **Код и зависимости**: релиз = полный checkout репозитория (нужны `backend/` и `assets/`):
    ```bash
    sudo -u talim git clone <репозиторий> /srv/talim/releases/<тег>
    sudo -u talim git -C /srv/talim/releases/<тег> checkout <кодовый коммит>   # ТОЛЬКО коммит, указанный владельцем в OWNER_HANDOFF.md §1 (кодовый коммит кандидата), не «последний в ветке»
    sudo -u talim /srv/talim/releases/<тег>/backend/deploy/staging/release_info.sh   # сверить коммит, хеш requirements.txt и хеш файлов развёртывания с OWNER_HANDOFF.md §1; расхождение — остановиться
-   cd /srv/talim/releases/<тег>/backend && python3.12 -m venv .venv && .venv/bin/pip install --require-hashes -r requirements.txt
+   sudo -u talim bash -c 'cd /srv/talim/releases/<тег>/backend && python3.12 -m venv .venv && .venv/bin/pip install --require-hashes -r requirements.txt'
    sudo ln -sfn /srv/talim/releases/<тег>/backend /srv/talim/backend      # первый релиз; дальше — release.sh
    ```
 **Пароли и ключи не набирать в командной строке** (остаются в истории оболочки и видны в `ps`): в блоках ниже `<…>` означает значение из файла `0600`. Задавать переменные, например, так: `set +o history; set -a; . /etc/talim/talim.env; set +a` (или `read -rs DB_PASSWORD`), затем команда без значений в тексте.
 
 5. **Миграции и права** — владелец БД только для миграций (§4.4, §4.2):
    ```bash
-   DB_USER=talim_owner DB_PASSWORD=<…> DJANGO_SETTINGS_MODULE=config.settings.production <остальные переменные из talim.env> .venv/bin/python manage.py migrate
-   PGPASSWORD=<…> psql -h 127.0.0.1 -U talim_owner -d talim -v app=talim_app -v db=talim -v backup_role=talim_backup -f deploy/postgres/apply_grants.sql
-   .venv/bin/python manage.py seed_roles --dry-run    # прочитать план; нестандартные права (=) остаются, удаляет только --prune
-   .venv/bin/python manage.py seed_roles && .venv/bin/python manage.py collectstatic --noinput
+   # 5a. временные файлы с паролем владельца БД (тот же пароль, что передавался в create_roles.sql; значение берётся из файла/хранилища оператора, не набирается):
+   sudo install -m 0600 -o talim -g talim /dev/null /srv/talim/owner.tmp.secret
+   sudo install -m 0600 -o talim -g talim /dev/null /srv/talim/owner.tmp.pgpass
+   sudo tee /srv/talim/owner.tmp.secret < <файл с паролем владельца> >/dev/null
+   printf '127.0.0.1:5432:talim:talim_owner:%s\n' "$(cat <файл с паролем владельца>)" | sudo tee /srv/talim/owner.tmp.pgpass >/dev/null
+   # 5b. от администратора; пароль владельца лежит во ВРЕМЕННОМ файле 0600 (его создаёт оператор на время шагов 5; после них — shred -u), в argv попадает только путь:
+   sudo -u talim bash -c 'cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && DB_USER=talim_owner DB_PASSWORD="$(cat /srv/talim/owner.tmp.secret)" DJANGO_SETTINGS_MODULE=config.settings.production .venv/bin/python manage.py migrate'
+   sudo -u talim env PGPASSFILE=/srv/talim/owner.tmp.pgpass psql -h 127.0.0.1 -U talim_owner -d talim -v app=talim_app -v db=talim -v backup_role=talim_backup -f /srv/talim/backend/deploy/postgres/apply_grants.sql
+   # ниже — от пользователя talim с окружением talim.env (runtime-роль): sudo -u talim bash -c 'cd /srv/talim/backend && set -a && . /etc/talim/talim.env && set +a && .venv/bin/python manage.py <команда>'
+   seed_roles --dry-run     # прочитать план; нестандартные права (=) остаются, удаляет только --prune
+   seed_roles && collectstatic --noinput
+   # после шага 5 удалить временные файлы: sudo shred -u /srv/talim/owner.tmp.secret /srv/talim/owner.tmp.pgpass
    ```
 6. **Предпроверка** (от `talim`; **остановиться, если есть FAIL**):
    ```bash
@@ -156,7 +181,7 @@ sudo systemctl start talim-job@run_restore_check.service           # восст�
 * Внешняя копия: **не реализована** (`ship_offsite.example.sh` — пример, не проверялся). Запись «внешняя копия работает» недопустима.
 
 ## 10. Откат
-**Откат приложения.** `release.sh deploy <тег>` перед изменениями делает копию (`PRE_BACKUP_CMD`; при её неудаче релиз не начинается), мигрирует, переключает ссылку, перезапускает, опрашивает `/healthz/`; при провале возвращает прежнюю ссылку и перезапускает (код 1, `RELEASE_FAILED_ROLLED_BACK`; код 3 — прежний релиз тоже не отвечает: срочно). Вручную: `release.sh rollback`, `release.sh status`. Логика отрепетирована в песочнице (`deploy/staging/verify_release.sh`, 24 проверки, настоящие gunicorn/PostgreSQL, production-настройки); **на сервере под systemd не проверялось**.
+**Откат приложения.** `release.sh deploy <тег>` перед изменениями делает копию (`PRE_BACKUP_CMD`; при её неудаче релиз не начинается), мигрирует, переключает ссылку, перезапускает, опрашивает `/healthz/`; при провале возвращает прежнюю ссылку и перезапускает (код 1, `RELEASE_FAILED_ROLLED_BACK`; код 3 — прежний релиз тоже не отвечает: срочно). Вручную: `release.sh rollback`, `release.sh status` — **с теми же переменными окружения, что и `deploy`** (`STAGING_RUNBOOK.md` §1; их удобно заранее сохранить в файле `0600` и подключать `. файл`, чтобы не искать в аварии). **Для первого релиза отката нет** (нет предыдущего): при сбое — остановить службы, не менять защиту, разобрать причину по журналам, эскалация (§0). Логика отрепетирована в песочнице (`deploy/staging/verify_release.sh`, 24 проверки, настоящие gunicorn/PostgreSQL, production-настройки); **на сервере под systemd не проверялось**.
 
 **⚠ Откат приложения НЕ откатывает схему БД.** Миграции не отменяются автоматически; после неудачного релиза прежний код работает с новой схемой. План при проблемах с миграцией:
 1. Миграция упала (`release.sh` код 1, «migrate FAILED»): ссылка не переключалась, прежний релиз работает. Прочитать ошибку; частично применённая миграция возможна — **не** запускать повторно вслепую; решить (исправить и выпустить новый релиз, либо восстановить БД).
