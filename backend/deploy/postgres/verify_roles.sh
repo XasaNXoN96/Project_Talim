@@ -45,4 +45,13 @@ try:
     c.execute('CREATE TABLE should_fail (i int)'); print('can create')
 except Exception: print('refused')" | grep -q refused; then echo "  [PASS] (migrate had nothing to do; creating a table is refused)"; else echo "  [FAIL] the restricted role can create tables"; exit 1; fi
 else echo "  [PASS] migrate as the restricted role is refused"; fi
+echo "a table created by a migration but WITHOUT grants must make /healthz/ report 'degraded' (so release.sh rolls back), and apply_grants.sql must cure it"
+PGPASSWORD="$OWNER_PW" PGUSER="$OWNER" psql -d "$DB" -qc "CREATE TABLE zz_forgotten_grants (i int)" >/dev/null
+health() { env "${APP_ENV[@]}" DB_USER="$APP" DB_PASSWORD="$APP_PW" "$PY" -c "
+import django; django.setup()
+from django.test import Client
+r = Client().get('/healthz/', HTTP_HOST='testserver'); print(r.status_code, r.json()['grants'])" 2>/dev/null; }
+if [ "$(health)" = "503 error" ]; then echo "  [PASS] forgotten grants are reported (503, grants=error)"; else echo "  [FAIL] forgotten grants are not detected: $(health)"; exit 1; fi
+PGPASSWORD="$OWNER_PW" PGUSER="$OWNER" psql -d "$DB" -qv ON_ERROR_STOP=1 -v app="$APP" -v db="$DB" -f "$HERE/apply_grants.sql" >/dev/null
+if [ "$(health)" = "200 ok" ]; then echo "  [PASS] after apply_grants.sql the check is healthy again"; else echo "  [FAIL] still degraded after apply_grants.sql: $(health)"; exit 1; fi
 echo "ROLE CHECKS FINISHED"

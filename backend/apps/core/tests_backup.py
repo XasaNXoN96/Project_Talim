@@ -734,3 +734,62 @@ class FailureModes(Base):
         self.assertFalse(files.exists())
         self.assertTrue((b / "MANIFEST.sha256").is_file())              # the copy itself is untouched
         self.assertFalse((b / "RESTORE_VERIFIED").exists())
+
+
+class OffsiteHook(Base):
+    """BACKUP_OFFSITE_COMMAND: an extension point for the mechanism the owner will choose. No provider is built in; this only proves the hand-over is safe and visible."""
+
+    def command(self, body="#!/bin/sh\nexit 0\n", mode=0o755):
+        path = self.tmp / "offsite.sh"
+        path.write_text(body)
+        path.chmod(mode)
+        return path
+
+    def run_job(self, cmd, **extra):
+        from django.core.management import call_command
+        env = {**os.environ, **self.env, **extra}
+        if cmd is not None:
+            env["BACKUP_OFFSITE_COMMAND"] = str(cmd)
+        with mock.patch.dict(os.environ, env, clear=False), mock.patch("django.core.management.base.connections.close_all"):
+            call_command("run_backup", "--no-record")
+
+    def test_without_the_variable_nothing_is_handed_over(self):
+        self.run_job(None)
+        self.assertEqual(len(self.complete()), 1)
+
+    def test_the_command_gets_only_the_folder_name_and_a_minimal_environment_without_any_secret(self):
+        record = self.tmp / "seen.txt"
+        cmd = self.command(f'#!/bin/sh\nenv > "{record}"\necho "ARG=$1" >> "{record}"\n')
+        self.run_job(cmd, OFFSITE_TARGET="example-target", OTP_ENCRYPTION_KEYS="must-not-leak-key", DJANGO_SECRET_KEY="must-not-leak-secret")
+        seen = record.read_text()
+        name = self.complete()[0].name
+        self.assertIn(f"ARG={name}", seen)
+        self.assertIn(f"BACKUP_NAME={name}", seen)
+        self.assertIn("OFFSITE_TARGET=example-target", seen)
+        for secret in (self.passphrase, self.db_password, "must-not-leak-key", "must-not-leak-secret", "BACKUP_PASSPHRASE_FILE", "PGPASSWORD", "DB_PASSWORD", "OTP_ENCRYPTION_KEYS"):
+            self.assertNotIn(secret, seen)
+
+    def test_a_failing_command_fails_the_job_says_so_and_keeps_the_local_copy(self):
+        with self.assertRaises(CommandError) as ctx:
+            self.run_job(self.command("#!/bin/sh\nexit 7\n"))
+        self.assertIn("offsite step failed", str(ctx.exception))
+        self.assertIn("exit code 7", str(ctx.exception))
+        self.assertIn("NOT stored away", str(ctx.exception))
+        self.assertEqual(len(self.complete()), 1)
+
+    def test_unsafe_or_broken_commands_are_refused_before_anything_is_run(self):
+        for bad in (self.command(mode=0o777), self.command(mode=0o644), "relative/path.sh", "/nonexistent/offsite.sh"):
+            with self.assertRaises(CommandError, msg=str(bad)):
+                self.run_job(bad)
+        marker = self.tmp / "ran.txt"
+        group_writable = self.command(f'#!/bin/sh\ntouch "{marker}"\n', mode=0o775)
+        with self.assertRaises(CommandError):
+            self.run_job(group_writable)
+        self.assertFalse(marker.exists())
+
+    def test_the_command_is_never_run_through_a_shell(self):
+        marker = self.tmp / "injected.txt"
+        cmd = self.command()
+        with self.assertRaises(CommandError):
+            self.run_job(f"{cmd}; touch {marker}")
+        self.assertFalse(marker.exists())

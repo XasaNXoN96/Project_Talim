@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project_Talim\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-18 00:06+0500\n"
+"POT-Creation-Date: 2026-10-18 10:11+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -96,6 +96,9 @@ msgstr "Users"
 
 msgid "Login yoki parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
 msgstr "The login or password is incorrect, or the number of attempts was exceeded. Try again in 15 minutes."
+
+msgid "Ikkinchi omil vaqtincha ishlamayapti. Zaxira koddan foydalaning yoki administratorga murojaat qiling."
+msgstr "The second factor is temporarily unavailable. Use a backup code or contact the administrator."
 
 msgid "Kod noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring."
 msgstr "The code is incorrect, or the number of attempts was exceeded. Try again in 15 minutes."

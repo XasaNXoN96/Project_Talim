@@ -60,7 +60,7 @@ def check_env_values(env, report):
     report.passed("no placeholder values") if not placeholders else report.failed("placeholder or empty values", ", ".join(placeholders))
     report.passed("DEBUG is off") if env.get("DJANGO_DEBUG", "").lower() in ("0", "false", "no", "off") else report.failed("DJANGO_DEBUG must be off")
     report.passed("production settings module") if env.get("DJANGO_SETTINGS_MODULE") == "config.settings.production" else report.failed("DJANGO_SETTINGS_MODULE must be config.settings.production")
-    report.passed("secret key length >= 50") if len(env.get("DJANGO_SECRET_KEY", "")) >= 50 and "insecure" not in env.get("DJANGO_SECRET_KEY", "").lower() else report.failed("DJANGO_SECRET_KEY too short or a development value")
+    report.passed("secret key length >= 50") if len(env.get("DJANGO_SECRET_KEY", "")) >= 50 and "insecure" not in env.get("DJANGO_SECRET_KEY", "").lower() else report.failed("DJANGO_SECRET_KEY too short or a development value", "need >= 50 random characters; create one on the server: python -c 'import secrets;print(secrets.token_urlsafe(70))' (do not paste it anywhere else)")
     hosts = [h.strip() for h in env.get("DJANGO_ALLOWED_HOSTS", "").split(",") if h.strip()]
     report.passed("ALLOWED_HOSTS has no wildcard") if hosts and not any(h in ("*", ".") or h.startswith("*") for h in hosts) else report.failed("ALLOWED_HOSTS empty or wildcard")
     origins = [o.strip() for o in env.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()]
@@ -76,7 +76,7 @@ def check_env_values(env, report):
             Fernet(k.encode())
         report.passed("OTP encryption keys are valid Fernet keys", f"{len(keys)} key(s)") if keys else report.failed("OTP_ENCRYPTION_KEYS empty")
     except Exception:  # noqa: BLE001 - never echo the value
-        report.failed("OTP_ENCRYPTION_KEYS is not a valid Fernet key list")
+        report.failed("OTP_ENCRYPTION_KEYS is not a valid Fernet key list", "create a key: python -c 'from cryptography.fernet import Fernet;print(Fernet.generate_key().decode())'; comma-separated, newest first; store a copy OUTSIDE the server and the backups")
     report.passed("database runtime role differs from a typical owner/superuser name") if env.get("DB_USER", "") not in ("postgres", "root", "talim_owner") else report.failed("DB_USER must be the restricted runtime role, not postgres/owner")
     report.passed("HSTS decision recorded", f"DJANGO_HSTS_SECONDS={env.get('DJANGO_HSTS_SECONDS', '0')}") if re.fullmatch(r"\d+", env.get("DJANGO_HSTS_SECONDS", "0")) else report.failed("DJANGO_HSTS_SECONDS must be an integer")
 
@@ -94,7 +94,7 @@ def check_files(env_file, env, report):
     for var, label in (("DJANGO_PRIVATE_MEDIA_ROOT", "document store"),):
         path = env.get(var)
         if not path or not os.path.isdir(path):
-            report.failed(f"{label} directory exists", var)
+            report.failed(f"{label} directory exists", f"{var} does not exist: sudo install -d -o talim -g talim -m 0750 <path>")
             continue
         m = stat.S_IMODE(os.stat(path).st_mode)
         report.passed(f"{label} is not accessible to others", oct(m)) if not m & 0o007 else report.failed(f"{label} is accessible to others", oct(m))

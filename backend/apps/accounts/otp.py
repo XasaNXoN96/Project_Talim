@@ -61,7 +61,13 @@ def get_or_create_pending_device(user) -> TotpDevice:
     if device and device.confirmed_at:
         return device
     if device:
-        return device
+        try:
+            decrypt_secret(device.secret_encrypted)
+            return device
+        except ImproperlyConfigured:
+            # An UNCONFIRMED secret that the configured keys cannot open (key lost or changed during an unfinished enrolment): nothing depends on it,
+            # so start again with a fresh one. A CONFIRMED device is never touched here (it is returned above); only an administrator drops it (reset_2fa).
+            device.delete()
     return TotpDevice.objects.create(user=user, secret_encrypted=encrypt_secret(pyotp.random_base32()))
 
 

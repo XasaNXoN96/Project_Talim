@@ -23,6 +23,7 @@ from .jobs import JobSkipped, TrackedCommand
 
 EXIT_BUSY = 75
 EXIT_PRUNE_FAILED = 4
+OFFSITE_TIMEOUT = 3 * 60 * 60
 TIMEOUT = 3 * 60 * 60  # seconds; a hung dump is killed and recorded as a failure
 
 
@@ -69,6 +70,27 @@ def summary(stdout, tag):
     return None
 
 
+def run_offsite(command, name, backup_dir):
+    """Optional hand-over of a finished backup to a mechanism the OWNER chose (BACKUP_OFFSITE_COMMAND in backup.env). This is an extension point, not a
+    provider: nothing here knows where the copy goes. The command is run WITHOUT a shell, as `<command> <backup folder name>`, with a minimal environment
+    (PATH, BACKUP_DIR, BACKUP_NAME and OFFSITE_* names only): the database password, the OTP keys, the Django secret and the PATH of the passphrase file
+    are NOT passed on. The file must be absolute, executable and not writable by anyone but its owner. A failure makes the whole job a failure, so
+    the existing job status and alerts show it; the local copy is kept either way."""
+    path = Path(command)
+    if not path.is_absolute() or not path.is_file() or not os.access(path, os.X_OK):
+        raise CommandError("BACKUP_OFFSITE_COMMAND must be the absolute path of an executable file.")
+    if path.stat().st_mode & 0o022:
+        raise CommandError("BACKUP_OFFSITE_COMMAND must not be writable by group or others.")
+    child = {"PATH": "/usr/local/bin:/usr/bin:/bin", "BACKUP_DIR": str(backup_dir), "BACKUP_NAME": name}
+    child.update({k: v for k, v in os.environ.items() if k.startswith("OFFSITE_")})
+    try:
+        done = subprocess.run([str(path), name], env=child, stdout=subprocess.DEVNULL, timeout=OFFSITE_TIMEOUT, check=False)
+    except subprocess.TimeoutExpired:
+        raise CommandError(f"backup {name} was created locally, but the offsite step did not finish within {OFFSITE_TIMEOUT // 3600} hours.") from None
+    if done.returncode != 0:
+        raise CommandError(f"backup {name} was created locally, but the offsite step failed (exit code {done.returncode}); it is NOT stored away from this server.")
+
+
 class BackupCreate(TrackedCommand):
     help = (
         "Create an encrypted backup (deploy/backup/backup.sh) and record the run. Success = the archive was written, its manifest verified "
@@ -89,6 +111,10 @@ class BackupCreate(TrackedCommand):
             raise CommandError(f"backup.sh failed (exit code {code}); nothing was kept.")
         run.processed = int(info.get("files", 0))
         run.note = info.get("name", "")[:80]
+        offsite = (os.environ.get("BACKUP_OFFSITE_COMMAND") or "").strip()
+        if offsite:
+            run_offsite(offsite, info.get("name", ""), env["BACKUP_DIR"])
+            run.note = (run.note + " offsite=ok")[:80]
         self.stdout.write(f"backup written: {run.note} files={run.processed}")
 
 

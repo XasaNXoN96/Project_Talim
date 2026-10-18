@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 # One message for "wrong credentials" AND "temporarily blocked": the response never reveals which, nor whether
 # the login/e-mail exists.
 NEUTRAL_LOGIN_ERROR = _("Login yoki parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring.")
+KEY_UNAVAILABLE_ERROR = _("Ikkinchi omil vaqtincha ishlamayapti. Zaxira koddan foydalaning yoki administratorga murojaat qiling.")
 NEUTRAL_CODE_ERROR = _("Kod noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring.")
 NEUTRAL_PASSWORD_ERROR = _("Joriy parol noto‘g‘ri yoki urinishlar soni chegaradan oshgan. 15 daqiqadan so‘ng qayta urinib ko‘ring.")
 

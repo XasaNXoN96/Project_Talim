@@ -1,10 +1,12 @@
 import io
+import logging
 
 import qrcode
 import qrcode.image.svg
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.views import (
     LoginView as DjangoLoginView,
     PasswordChangeView as DjangoPasswordChangeView,
@@ -30,6 +32,7 @@ from apps.core.network import throttle_ip_key
 
 from . import otp, throttle
 from .forms import (
+    KEY_UNAVAILABLE_ERROR,
     NEUTRAL_CODE_ERROR,
     NEUTRAL_PASSWORD_ERROR,
     LoginForm,
@@ -53,6 +56,9 @@ from .twofactor import (
 )
 
 User = get_user_model()
+
+
+logger = logging.getLogger(__name__)
 
 
 # ----------------------------------------------------------------- sign in
@@ -134,7 +140,16 @@ class TwoFactorVerifyView(FormView):
 
         used_backup = False
         if otp.normalise_totp_code(code):
-            ok = otp.verify_totp(self.user.totp_device, code)
+            try:
+                ok = otp.verify_totp(self.user.totp_device, code)
+            except ImproperlyConfigured:
+                # The stored secret cannot be opened with the configured OTP_ENCRYPTION_KEYS (key lost, wrong file, restore without the key).
+                # A calm refusal for the person, a loud and secret-free line for the operator; a backup code still works (it does not use the key).
+                logger.error("Second factor unusable: a stored TOTP secret cannot be decrypted with the configured OTP_ENCRYPTION_KEYS (user id %s). "
+                             "Check the keys; recovery: docs/DEPLOYMENT_READINESS.md section 6.", self.user.pk)
+                record(AuditLog.Action.TWO_FACTOR_FAILED, request=self.request, user=self.user, meta={"reason": "secret_unreadable"})
+                form.add_error(None, KEY_UNAVAILABLE_ERROR)
+                return self.form_invalid(form)
         else:
             ok = used_backup = otp.verify_backup_code(self.user, code)
 

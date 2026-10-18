@@ -13,16 +13,28 @@ logger = logging.getLogger(__name__)
 
 
 def healthz(request):
-    """Liveness + database check. Does not reveal error details."""
+    """Liveness + database + table privileges. Reveals no details (counts and words only).
+
+    "grants" catches the classic release mistake: a migration created a table but `deploy/postgres/apply_grants.sql` was not run, so the runtime role
+    cannot read it. The database answers SELECT 1 and the first page that touches the new table then fails with a 500; a health check that
+    only pings the database would call that release healthy and release.sh would not roll it back."""
+    database, grants = "ok", "ok"
     try:
         with connection.cursor() as cursor:
             cursor.execute("SELECT 1")
-        database = "ok"
+            cursor.execute(
+                "SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace "
+                "WHERE n.nspname = 'public' AND c.relkind = 'r' AND NOT has_table_privilege(current_user, c.oid, 'SELECT')"
+            )
+            unreadable = cursor.fetchone()[0]
+            if unreadable:
+                grants = "error"
+                logger.error("Health check: the database role cannot read %s table(s); run deploy/postgres/apply_grants.sql after every migration.", unreadable)
     except Exception:  # noqa: BLE001
         logger.exception("Health check: database unavailable")
         database = "error"
-    ok = database == "ok"
-    return JsonResponse({"status": "ok" if ok else "degraded", "database": database}, status=200 if ok else 503)
+    ok = database == "ok" and grants == "ok"
+    return JsonResponse({"status": "ok" if ok else "degraded", "database": database, "grants": grants}, status=200 if ok else 503)
 
 
 def error_400(request, exception=None):
