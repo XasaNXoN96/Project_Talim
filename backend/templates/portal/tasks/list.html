@@ -12,11 +12,15 @@
   <button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button>
 </form>
 {% if tasks %}
-<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Sarlavha" %}</th><th>{% translate "Ijrochilar" %}</th><th>{% translate "Muddat" %}</th><th>{% translate "Holat" %}</th></tr></thead><tbody>
-{% for t in tasks %}<tr><td><a href="{% url 'tasks:detail' t.pk %}">{{ t.title }}</a>{% if t.priority == "high" %} <span class="badge b-err plain">{% translate "Yuqori" %}</span>{% endif %}</td>
-<td>{% for u in t.assignees.all %}{{ u.get_full_name|default:u.get_username }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
-<td class="nw">{% if t.due_date %}{{ t.due_date|date:"d.m.Y" }}{% if t.due_date < today and t.status != "done" and t.status != "cancelled" %} <span class="badge b-err">{% translate "Muddati o‘tgan" %}</span>{% endif %}{% else %}—{% endif %}</td>
-<td><span class="badge {% if t.status == 'done' %}b-ok{% elif t.status == 'cancelled' %}b-err{% elif t.status == 'review' %}b-warn{% else %}b-info{% endif %}">{{ t.get_status_display }}</span></td></tr>{% endfor %}
+<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Topshiriq" %}</th><th>{% translate "Muddat" %}</th><th>{% translate "Mas’ul" %}</th><th>{% translate "Muallif" %}</th><th>{% translate "Ustuvorlik" %}</th><th>{% translate "Holat" %}</th><th></th></tr></thead><tbody>
+{% for t in tasks %}<tr{% if t.due_date and t.due_date < today and t.status != "done" and t.status != "cancelled" %} class="overdue"{% endif %}>
+<td><b class="t-title"><a href="{% url 'tasks:detail' t.pk %}" style="color:inherit">{{ t.title }}</a></b></td>
+<td class="nw t-date">{% if t.due_date %}{{ t.due_date|date:"d.m.Y" }}{% else %}—{% endif %}</td>
+<td>{% for u in t.assignees.all %}<span class="row" style="gap:8px;flex-wrap:nowrap;margin-bottom:2px"><span class="av sm" data-name="{{ u.get_full_name|default:u.get_username }}"></span><span>{{ u.get_full_name|default:u.get_username }}</span></span>{% empty %}—{% endfor %}</td>
+<td>{{ t.created_by.get_full_name|default:t.created_by.get_username }}</td>
+<td><span class="prio {% if t.priority == 'high' %}p-high{% elif t.priority == 'low' %}p-low{% else %}p-mid{% endif %}"><i></i>{{ t.get_priority_display }}</span></td>
+<td><span class="badge {% if t.status == 'done' %}b-ok{% elif t.status == 'cancelled' %}b-err{% elif t.status == 'review' %}b-warn{% elif t.due_date and t.due_date < today and t.status != 'done' %}b-err{% else %}b-info{% endif %}">{% if t.due_date and t.due_date < today and t.status != "done" and t.status != "cancelled" %}{% translate "Muddati o‘tgan" %}{% else %}{{ t.get_status_display }}{% endif %}</span></td>
+<td class="nw"><a class="btn btn-secondary btn-sm" href="{% url 'tasks:detail' t.pk %}">{% translate "Batafsil" %}</a></td></tr>{% endfor %}
 </tbody></table></div>
 {% include "includes/pagination.html" %}
 {% else %}<div class="card empty"><h3>{% translate "Topshiriqlar yo‘q" %}</h3></div>{% endif %}

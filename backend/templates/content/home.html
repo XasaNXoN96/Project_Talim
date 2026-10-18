@@ -15,7 +15,7 @@
 </section>
 
 <div class="container">
-  <div class="stats" aria-label="{% translate 'Statistika (namunaviy qiymatlar)' %}">
+  <div class="stats" id="statistika" aria-label="{% translate 'Statistika (namunaviy qiymatlar)' %}">
     <div class="card stat"><div class="ic-chip c-blue" data-i="school"></div><div><div class="n">00</div><div class="l">{% translate "Ta’lim muassasalari" %}</div></div></div>
     <div class="card stat"><div class="ic-chip c-blue" data-i="users"></div><div><div class="n">00</div><div class="l">{% translate "O‘qituvchilar va xodimlar" %}</div></div></div>
     <div class="card stat"><div class="ic-chip c-teal" data-i="book"></div><div><div class="n">00</div><div class="l">{% translate "O‘quvchilar" %}</div></div></div>
@@ -34,7 +34,7 @@
       {% endif %}
     </section>
     <section class="card card-pad" aria-labelledby="h-ann" style="padding:18px 20px">
-      <div class="sec-head" style="margin-bottom:6px"><h2 id="h-ann" style="font-size:20px">{% translate "E’lonlar" %}</h2></div>
+      <div class="sec-head" style="margin-bottom:6px"><h2 id="h-ann" style="font-size:20px">{% translate "E’lonlar" %}</h2><a class="more" href="{% url 'content:news_list' %}">{% translate "Barchasi" %}</a></div>
       <div class="list-rows">
         <div class="li"><span class="ic-chip c-orange" data-i="users"></span><span class="t1 grow">{% translate "O‘qituvchilar uchun attestatsiyaga tayyorgarlik seminari" %}</span><span class="date">01.10.2026</span></div>
         <div class="li"><span class="ic-chip c-red" data-i="trophy"></span><span class="t1 grow">{% translate "Tuman bosqichidagi fan olimpiadasi" %}</span><span class="date">29.09.2026</span></div>

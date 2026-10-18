@@ -12,8 +12,11 @@
   <button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button>
 </form>
 {% if documents %}
-<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Sarlavha" %}</th><th>{% translate "Raqam" %}</th><th>{% translate "Turkum" %}</th><th>{% translate "Sana" %}</th><th>{% translate "Daraja" %}</th></tr></thead><tbody>
-{% for d in documents %}<tr><td><a href="{% url 'documents:detail' d.pk %}">{{ d.title }}</a></td><td>{{ d.number|default:"—" }}</td><td>{{ d.category }}</td><td class="nw">{{ d.doc_date|date:"d.m.Y"|default:"—" }}</td><td><span class="badge {% if d.access_level == 'confidential' %}b-err{% elif d.access_level == 'department' %}b-warn{% else %}b-info{% endif %}">{{ d.get_access_level_display }}</span></td></tr>{% endfor %}
+<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Tur" %}</th><th>{% translate "Sarlavha" %}</th><th>{% translate "Raqam" %}</th><th>{% translate "Turkum" %}</th><th>{% translate "Sana" %}</th><th>{% translate "Muallif" %}</th><th>{% translate "Daraja" %}</th><th></th></tr></thead><tbody>
+{% for d in documents %}{% with v=d.current_version %}<tr><td>{% if v %}<span class="file-ico {% if v.extension == 'pdf' %}f-pdf{% elif v.extension == 'doc' or v.extension == 'docx' or v.extension == 'odt' %}f-doc{% elif v.extension == 'xls' or v.extension == 'xlsx' or v.extension == 'ods' %}f-xls{% else %}f-other{% endif %}">{{ v.extension|upper|slice:":4" }}</span>{% else %}—{% endif %}</td>
+<td><b><a href="{% url 'documents:detail' d.pk %}" style="color:inherit">{{ d.title }}</a></b></td><td>{{ d.number|default:"—" }}</td><td>{{ d.category }}</td><td class="nw">{{ d.doc_date|date:"d.m.Y"|default:"—" }}</td><td>{{ d.created_by.get_full_name|default:d.created_by.get_username }}</td>
+<td><span class="badge {% if d.access_level == 'confidential' %}b-err{% elif d.access_level == 'department' %}b-warn{% else %}b-info{% endif %}">{{ d.get_access_level_display }}</span></td>
+<td class="nw"><a class="btn btn-secondary btn-sm" href="{% url 'documents:detail' d.pk %}">{% translate "Ko‘rish" %}</a></td></tr>{% endwith %}{% endfor %}
 </tbody></table></div>
 {% include "includes/pagination.html" %}
 {% else %}<div class="card empty"><h3>{% translate "Hujjatlar topilmadi" %}</h3></div>{% endif %}

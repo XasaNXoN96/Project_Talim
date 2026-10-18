@@ -4,18 +4,34 @@
 {% block content %}
 <div class="page-head"><div><h1>{% translate "Yangiliklarni boshqarish" %}</h1><p>{% translate "Qoralama yarating, ko‘rib chiqing va nashr eting. Faqat nashr etilgan yangiliklar ochiq saytda ko‘rinadi." %}</p></div>
 <div class="row wrap">{% if can_categories %}<a class="btn btn-secondary" href="{% url 'news_admin:categories' %}">{% translate "Kategoriyalar" %}</a>{% endif %}{% if review_count %}<a class="btn btn-secondary" href="?status=review">{% translate "Tekshiruvni kutmoqda" %}: {{ review_count }}</a>{% endif %}{% if can_add %}<a class="btn btn-primary" href="{% url 'news_admin:create' %}">{% translate "Yangi yangilik" %}</a>{% endif %}</div></div>
+<div class="tabs" style="margin-bottom:16px">
+  <a class="tab {% if not category %}active{% endif %}" href="?{% if q %}q={{ q|urlencode }}&amp;{% endif %}{% if status %}status={{ status }}{% endif %}">{% translate "Barchasi" %}</a>
+  {% for c in categories %}<a class="tab {% if category == c.pk|stringformat:'s' %}active{% endif %}" href="?category={{ c.pk }}{% if q %}&amp;q={{ q|urlencode }}{% endif %}{% if status %}&amp;status={{ status }}{% endif %}">{{ c.name }}</a>{% endfor %}
+</div>
 <form method="get" class="row wrap" style="margin-bottom:16px">
   <input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Qidirish: sarlavha, tavsif' %}" style="max-width:240px" maxlength="100">
   <select class="input" name="status" style="max-width:180px" aria-label="{% translate 'Holat' %}"><option value="">{% translate "Barcha holatlar" %}</option>{% for code, label in statuses %}<option value="{{ code }}" {% if status == code %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
   <select class="input" name="category" style="max-width:200px" aria-label="{% translate 'Kategoriya' %}"><option value="">{% translate "Barcha kategoriyalar" %}</option>{% for c in categories %}<option value="{{ c.pk }}" {% if category == c.pk|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select>
   <button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button>
+  <span class="view-switch" role="group" aria-label="{% translate 'Ko‘rinish' %}"><button type="button" class="active" data-view="grid" aria-label="{% translate 'Kartochkalar' %}"><i data-i="grid" data-c="sm" style="display:contents"></i></button><button type="button" data-view="list" aria-label="{% translate 'Ro‘yxat' %}"><i data-i="list" data-c="sm" style="display:contents"></i></button></span>
 </form>
 {% if items %}
+<div class="news-views" data-mode="grid">
+<div class="auto-grid vw-grid">
+{% for n in items %}<article class="card news-card"><div class="ratio-16-9 ph-none">{% translate "Rasm yo‘q" %}</div><div class="body">
+  <div class="row wrap">{% if n.category %}<span class="badge plain b-info">{{ n.category.name }}</span>{% endif %}<span class="badge {% if n.status == 'published' or n.status == 'approved' %}b-ok{% elif n.status == 'archived' %}b-err{% elif n.status == 'review' %}b-info{% else %}b-warn{% endif %} plain">{{ n.get_status_display }}</span></div>
+  <h3 class="clamp3"><a href="{% url 'news_admin:preview' n.pk %}" style="color:inherit">{{ n.title }}</a></h3><span class="xs muted">{{ n.publish_at|date:"d.m.Y"|default:"—" }}</span>
+  {% if n.excerpt %}<p class="clamp3">{{ n.excerpt }}</p>{% endif %}
+  <a class="btn btn-secondary btn-sm" href="{% url 'news_admin:preview' n.pk %}">{% translate "Batafsil" %}</a></div></article>{% endfor %}
+</div>
+<div class="vw-list">
 <div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Sarlavha" %}</th><th>{% translate "Kategoriya" %}</th><th>{% translate "Holat" %}</th><th>{% translate "Nashr sanasi" %}</th><th>{% translate "O‘zgartirilgan" %}</th></tr></thead><tbody>
 {% for n in items %}<tr><td><a href="{% url 'news_admin:preview' n.pk %}">{{ n.title }}</a></td><td>{{ n.category.name|default:"—" }}</td>
 <td><span class="badge {% if n.status == 'published' or n.status == 'approved' %}b-ok{% elif n.status == 'archived' %}b-err{% elif n.status == 'review' %}b-info{% else %}b-warn{% endif %} plain">{{ n.get_status_display }}</span>{% if n.status == 'published' and n.publish_at > now %}<div class="muted small">{% translate "Rejalashtirilgan" %}</div>{% endif %}</td>
 <td class="nw">{{ n.publish_at|date:"d.m.Y H:i"|default:"—" }}</td><td class="nw">{{ n.updated_at|date:"d.m.Y H:i" }}</td></tr>{% endfor %}
 </tbody></table></div>
+</div>
+</div>
 {% include "includes/pagination.html" %}
 {% else %}<div class="card empty"><h3>{% translate "Yangiliklar topilmadi" %}</h3>{% if can_add %}<p>{% translate "Birinchi qoralamani yarating." %}</p>{% endif %}</div>{% endif %}
 {% endblock %}

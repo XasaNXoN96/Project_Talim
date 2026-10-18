@@ -2857,3 +2857,28 @@ msgstr "История действий"
 
 msgid "Rejalashtirilgan ishlar"
 msgstr "Запланированные задачи"
+
+msgid "Ustozlar"
+msgstr "Учителя"
+
+msgid "Ko‘rinish"
+msgstr "Вид"
+
+msgid "Kartochkalar"
+msgstr "Карточки"
+
+msgid "Topshiriq"
+msgstr "Задание"
+
+msgid "Mas’ul"
+msgstr "Ответственный"
+
+msgid "Ustuvorlik"
+msgstr "Приоритет"
+
+msgid "Tur"
+msgstr "Тип"
+
+msgctxt "menu"
+msgid "Ta’lim muassasalari"
+msgstr "Учреждения"

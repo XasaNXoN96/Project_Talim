@@ -2857,3 +2857,28 @@ msgstr "Harakatlar tarixi"
 
 msgid "Rejalashtirilgan ishlar"
 msgstr "Rejalashtirilgan ishlar"
+
+msgid "Ustozlar"
+msgstr "Ustozlar"
+
+msgid "Ko‘rinish"
+msgstr "Ko‘rinish"
+
+msgid "Kartochkalar"
+msgstr "Kartochkalar"
+
+msgid "Topshiriq"
+msgstr "Topshiriq"
+
+msgid "Mas’ul"
+msgstr "Mas’ul"
+
+msgid "Ustuvorlik"
+msgstr "Ustuvorlik"
+
+msgid "Tur"
+msgstr "Tur"
+
+msgctxt "menu"
+msgid "Ta’lim muassasalari"
+msgstr "Ta’lim muassasalari"

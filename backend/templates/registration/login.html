@@ -28,9 +28,9 @@
       <div class="field"><label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
         <div class="input-wrap"><i class="field-icon" data-i="lock" data-c="sm"></i>{{ form.password }}<button class="btn-eye" type="button" data-eye="#{{ form.password.id_for_label }}" aria-label="{% translate 'Parolni ko‘rsatish' %}"><i data-i="eye" style="display:contents"></i></button></div>
         {% for e in form.password.errors %}<span class="err-text">{{ e }}</span>{% endfor %}</div>
-      <label class="check"><input type="checkbox" name="remember_me" id="id_remember_me"> {{ form.remember_me.label }}</label>
+      <div class="row between"><label class="check"><input type="checkbox" name="remember_me" id="id_remember_me"> {{ form.remember_me.label }}</label>
+      <a class="small" href="{% url 'accounts:password_reset' %}">{% translate "Parolni unutdingizmi?" %}</a></div>
       <button class="btn btn-primary btn-lg btn-block" type="submit">{% translate "Kirish" %}</button>
-      <a class="small" href="{% url 'accounts:password_reset' %}">{% translate "Parolni unutdingizmi?" %}</a>
     </form>
   </main>
   <aside class="login-art"><div data-ph="building"></div><div><h2>{% translate "Ta’lim — kelajak poydevori" %}</h2><p>{{ SITE_NAME }}</p></div></aside>

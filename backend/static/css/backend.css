@@ -56,3 +56,72 @@
   .topsearch { display: none; }
   .topsearch-link { display: inline-flex; }
 }
+
+/* ===================== Design alignment (Day 40): only presentation; the shared stylesheet stays unchanged ===================== */
+/* page heading: the title block shrinks, the actions stay on the right of the same row */
+.page-head > div:first-child { flex: 1 1 320px; min-width: 0; }
+.page-head > .row, .page-head > a.btn { flex: 0 0 auto; }
+.crumbs .crumb-sep { display: inline-flex; color: var(--text-3); } .crumbs .crumb-sep .ico { width: 14px; height: 14px; }
+.crumbs a:hover { color: var(--brand-600); }
+
+/* search field with the magnifier inside tool rows and the top bar */
+.content .search { flex: 1 1 260px; max-width: 340px; display: block; }
+.topsearch .search { width: 100%; }
+.topsearch { flex: 0 1 380px; }
+.content .search input { height: var(--ctl-h); }
+
+/* row states, priorities and badges of the lists */
+table.t tr.overdue .t-title, table.t tr.overdue .t-title a, table.t tr.overdue .t-date { color: var(--err); }
+table.t td .file-ico { width: 38px; height: 38px; }
+.view-switch { display: inline-flex; margin-left: auto; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.view-switch button { border: 0; background: none; width: 38px; height: 38px; display: grid; place-items: center; color: var(--text-3); cursor: pointer; }
+.view-switch button.active { background: var(--info-bg); color: var(--brand-600); }
+.news-views[data-mode="grid"] .vw-list { display: none; } .news-views[data-mode="list"] .vw-grid { display: none; }
+.news-views .news-card .body .btn { align-self: flex-start; margin-top: auto; }
+
+/* file inputs look like the other controls */
+input[type=file]::file-selector-button { margin-right: 12px; height: 32px; padding: 0 14px; border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); font: inherit; font-weight: 600; cursor: pointer; }
+
+/* menu entries that live in the profile menu on narrow screens only */
+.dd-menu .m-only { display: none; }
+@media (max-width: 767px) {
+  .topbar .lang-switch, .topbar .site-link { display: none; }
+  .dd-menu .m-only { display: block; } .dd-menu a.m-only { display: flex; } .dd-menu .sep.m-only { display: block; }
+  /* rows become cards instead of a squeezed wide table */
+  .table-wrap { border: 0; background: none; overflow: visible; }
+  table.t.stack-m, table.t.stack-m tbody, table.t.stack-m tr, table.t.stack-m td { display: block; width: 100%; }
+  table.t.stack-m { min-width: 0; border: 0; }
+  table.t.stack-m thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  table.t.stack-m tr { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 6px 14px; margin-bottom: 12px; }
+  table.t.stack-m td { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0; border: 0; border-bottom: 1px solid var(--border); text-align: right; min-height: 0; }
+  table.t.stack-m td:last-child { border-bottom: 0; }
+  table.t.stack-m td::before { content: attr(data-label); flex: none; color: var(--text-3); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; text-align: left; }
+  table.t.stack-m td[data-label=""]::before, table.t.stack-m td:not([data-label])::before { content: none; }
+  table.t.stack-m td:first-child { font-size: 15px; }
+  .content .search { max-width: none; flex-basis: 100%; }
+  table.t.stack-m td[data-label="#"] { display: none; }
+}
+
+/* the eight-item public menu has to fit next to the brand and the buttons in every language */
+@media (min-width: 900px) and (max-width: 1599px) {
+  .pub-nav { gap: 0; } .pub-nav a { padding: 8px 8px; font-size: 13px; }
+  .pub-header .container { gap: 14px; }
+}
+@media (max-width: 767px) { .page-head > .row, .page-head > a.btn { flex: 1 1 100%; } }
+table.t td .file-ico { font-size: 10px; letter-spacing: -.02em; }
+
+/* reports: the task timeline is a column chart like in the design (the same data, bars grow upwards) */
+.rbars.cols { display: flex; align-items: flex-end; gap: 6px; height: 240px; }
+.rbars.cols .rbar-col { flex: 1 1 0; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; }
+.rbars.cols .rbar-pair { flex: 1; display: flex; align-items: flex-end; gap: 2px; }
+.rbars.cols .rbar { flex: 1; height: 0; min-height: 2px; min-width: 3px; border-radius: 4px 4px 0 0; }
+.rbars.cols .rbar-lab { font-size: 11px; line-height: 14px; height: 14px; text-align: center; white-space: nowrap; overflow: visible; }
+.rbars.cols .rbar-col:not(:nth-child(5n+1)) .rbar-lab { visibility: hidden; }
+/* news management: three cards per row on wide screens like in the design */
+.news-views .auto-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+/* mobile login: the building picture closes the page under the form, as in the design */
+@media (max-width: 767px) {
+  .login { min-height: 100vh; grid-template-rows: auto 1fr; }
+  .login-art { display: flex; min-height: 240px; padding: 24px 20px; }
+  .login-art h2 { font-size: 20px; }
+}

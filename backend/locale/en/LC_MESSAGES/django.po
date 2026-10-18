@@ -2857,3 +2857,28 @@ msgstr "Activity history"
 
 msgid "Rejalashtirilgan ishlar"
 msgstr "Scheduled jobs"
+
+msgid "Ustozlar"
+msgstr "Teachers"
+
+msgid "Ko‘rinish"
+msgstr "View"
+
+msgid "Kartochkalar"
+msgstr "Cards"
+
+msgid "Topshiriq"
+msgstr "Task"
+
+msgid "Mas’ul"
+msgstr "Assignee"
+
+msgid "Ustuvorlik"
+msgstr "Priority"
+
+msgid "Tur"
+msgstr "Type"
+
+msgctxt "menu"
+msgid "Ta’lim muassasalari"
+msgstr "Institutions"

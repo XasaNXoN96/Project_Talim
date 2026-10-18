@@ -31,8 +31,8 @@
 <section class="card card-pad" style="margin-bottom:16px"><h2 style="font-size:16px;margin-bottom:8px">{% translate "Topshiriqlar dinamikasi" %}</h2>
   <div class="rlegend"><span><i style="background:var(--info)"></i>{% translate "Yaratilgan" %}</span><span><i style="background:var(--ok)"></i>{% translate "Yakunlangan" %} ({{ kpis.tasks_completed_in_period }})</span></div>
   {% if kpis.tasks_total or kpis.tasks_completed_in_period %}
-  <div class="rbars" role="img" aria-label="{% translate 'Topshiriqlar dinamikasi' %}">
-    {% for r in chart %}<div class="rbar-row"><span class="muted">{{ r.label }}</span><div class="rbar-track"><div class="rbar created" style="width:{{ r.cw }}%"></div><div class="rbar completed" style="width:{{ r.dw }}%"></div></div><span>{{ r.created }} / {{ r.completed }}</span></div>{% endfor %}
+  <div class="rbars cols" role="img" aria-label="{% translate 'Topshiriqlar dinamikasi' %}">
+    {% for r in chart %}<div class="rbar-col" title="{{ r.label }}: {{ r.created }} / {{ r.completed }}"><div class="rbar-pair"><div class="rbar created" style="height:{{ r.cw }}%"></div><div class="rbar completed" style="height:{{ r.dw }}%"></div></div><span class="muted rbar-lab">{{ r.label }}</span></div>{% endfor %}
   </div>
   {% else %}<p class="muted">{% translate "Tanlangan davr va filtrlar bo‘yicha ma’lumot yo‘q." %}</p>{% endif %}
 </section>
