@@ -153,6 +153,8 @@ class RouteMatrixTests(TestCase):
                 tampered["fmt"] = "exe"
             if "slug" in tampered:
                 tampered["slug"] = "no-such-slug"
+            if "section" in tampered:
+                tampered["section"] = "no-such-section"
             if "token" in tampered:
                 tampered["token"] = "bad-token"
             for method in ("get", "post"):
