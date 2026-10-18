@@ -82,21 +82,31 @@
      | sudo -u postgres psql -v ON_ERROR_STOP=1 -v backup_role=talim_backup -f -
    # право подключаться к рабочей БД роль копий получает из apply_grants.sql (шаг 5) при передаче -v backup_role=talim_backup
    ```
-3. **Окружение**: создать `/etc/talim/talim.env` по шаблону (`root:talim`, `0640`; владелец — `root`, не `talim`) и `backup.env` (§4). **Значения секретов не печатаются на экран и не передаются аргументами**: генерируются `secrets`/`os.urandom` (криптографически стойкий источник ОС) и записываются прямо в файлы:
+3. **Окружение**: создать `/etc/talim/talim.env` по шаблону (`root:talim`, `0640`; владелец — `root`, не `talim`) и `backup.env` (§4). **Значения секретов не печатаются на экран и не передаются аргументами**: генерируются `secrets`/`os.urandom` (криптографически стойкий источник ОС) и записываются прямо в файлы. **Блок выполняется один раз.** Он защищён от повторного запуска: если `talim.env` уже есть, ничего не делается (повтор иначе создал бы новый `DJANGO_SECRET_KEY` и **новый `OTP_ENCRYPTION_KEYS`** — все секреты 2FA в БД стали бы нечитаемыми, а заполненные хост и почта вернулись бы к заглушкам; проверено на временной копии):
    ```bash
-   sudo install -m 0640 -o root -g talim backend/deploy/staging/talim.env.staging.example /etc/talim/talim.env
-   # заменить заглушки секретов (остальные значения — хост, почта, путь админки — отредактировать вручную в sudoedit /etc/talim/talim.env):
-   sudo sed -i '/^DJANGO_SECRET_KEY=/d;/^OTP_ENCRYPTION_KEYS=/d;/^DB_PASSWORD=/d' /etc/talim/talim.env
-   printf 'DJANGO_SECRET_KEY=%s\n' "$(python3 -c 'import secrets;print(secrets.token_urlsafe(70))')" | sudo tee -a /etc/talim/talim.env >/dev/null
-   printf 'OTP_ENCRYPTION_KEYS=%s\n' "$(python3 -c 'import os,base64;print(base64.urlsafe_b64encode(os.urandom(32)).decode())')" | sudo tee -a /etc/talim/talim.env >/dev/null   # формат Fernet.generate_key(); без зависимостей
-   printf 'DB_PASSWORD=%s\n' "$(cat <файл с паролем приложения>)" | sudo tee -a /etc/talim/talim.env >/dev/null
-   # файлы паролей копий (читает только talim, режим 0600; значения не выводятся):
-   sudo install -m 0600 -o talim -g talim /dev/null /etc/talim/backup.pass
-   python3 -c 'import secrets;print(secrets.token_urlsafe(40))' | sudo tee /etc/talim/backup.pass >/dev/null      # пароль шифрования копий (≥ 20 символов)
-   sudo install -m 0600 -o talim -g talim /dev/null /etc/talim/backup.pgpass
-   printf '127.0.0.1:5432:*:talim_backup:%s\n' "$(cat <файл с паролем роли копий>)" | sudo tee /etc/talim/backup.pgpass >/dev/null   # формат libpq (`.pgpass`) проверен в песочнице
+   if sudo test -e /etc/talim/talim.env; then
+     echo "STOP: /etc/talim/talim.env уже существует - блок не выполняется (изменение - только sudoedit; ротация ключа OTP - DEPLOYMENT_READINESS.md §6.3)"
+   else
+     sudo install -m 0640 -o root -g talim backend/deploy/staging/talim.env.staging.example /etc/talim/talim.env
+     [ -z "$(sudo tail -c1 /etc/talim/talim.env)" ] || echo | sudo tee -a /etc/talim/talim.env >/dev/null   # файл обязан кончаться переводом строки, иначе значение приклеится к последней строке
+     # заменить заглушки секретов (остальные значения - хост, почта, путь админки - заполняются вручную: sudoedit /etc/talim/talim.env):
+     sudo sed -i '/^DJANGO_SECRET_KEY=/d;/^OTP_ENCRYPTION_KEYS=/d;/^DB_PASSWORD=/d' /etc/talim/talim.env
+     printf 'DJANGO_SECRET_KEY=%s\n' "$(python3 -c 'import secrets;print(secrets.token_urlsafe(70))')" | sudo tee -a /etc/talim/talim.env >/dev/null
+     printf 'OTP_ENCRYPTION_KEYS=%s\n' "$(python3 -c 'import os,base64;print(base64.urlsafe_b64encode(os.urandom(32)).decode())')" | sudo tee -a /etc/talim/talim.env >/dev/null   # формат Fernet.generate_key(): 32 случайных байта, urlsafe-base64, 44 символа; без зависимостей
+     printf 'DB_PASSWORD=%s\n' "$(cat <файл с паролем приложения>)" | sudo tee -a /etc/talim/talim.env >/dev/null
+   fi
+   # файлы паролей копий (читает только talim, режим 0600; значения не выводятся; те же защиты от повтора - не выполнять, если файл уже есть):
+   sudo test -e /etc/talim/backup.pass || { sudo install -m 0600 -o talim -g talim /dev/null /etc/talim/backup.pass && python3 -c 'import secrets;print(secrets.token_urlsafe(40))' | sudo tee /etc/talim/backup.pass >/dev/null; }      # пароль шифрования копий (≥ 20 символов)
+   sudo test -e /etc/talim/backup.pgpass || { sudo install -m 0600 -o talim -g talim /dev/null /etc/talim/backup.pgpass && printf '127.0.0.1:5432:*:talim_backup:%s\n' "$(cat <файл с паролем роли копий>)" | sudo tee /etc/talim/backup.pgpass >/dev/null; }   # формат libpq (`.pgpass`) проверен в песочнице
    ```
-   **Назначение:** `DJANGO_SECRET_KEY` — подпись сессий и токенов (меняется — все сессии и ссылки сброса недействительны); `OTP_ENCRYPTION_KEYS` — ключ шифрования секретов 2FA в БД (потеря = никто не войдёт с 2FA после восстановления); `DB_PASSWORD` — пароль runtime-роли `talim_app`; `backup.pass` — пароль шифрования копий (потеря = копии нечитаемы); `backup.pgpass` — пароль роли копий для `pg_dump`/проверки восстановления. **Копии** `OTP_ENCRYPTION_KEYS` и `backup.pass` сразу сохранить в хранилище секретов владельца, **отдельно от копий данных**: читать их с экрана не нужно — копировать из файла командой, которую выберет владелец (например, шифрованной передачей); значения не пересылать в чатах и тикетах. Если генерация идёт в консоли с записью сеанса — отключить запись. Все четыре файла секретов в Git не попадают (`/etc/talim` вне репозитория, `.gitignore` не нужен).
+   **Проверка файла после заполнения** (имена и права, значения не выводятся):
+   ```bash
+   sudo stat -c '%U:%G %a %n' /etc/talim/talim.env /etc/talim/backup.env /etc/talim/backup.pass /etc/talim/backup.pgpass     # talim.env: root:talim 640; backup.env: root:talim 640; backup.pass/backup.pgpass: talim:talim 600
+   sudo awk -F= '/^[A-Za-z_]+=/{c[$1]++} END{for(k in c) if(c[k]>1) print "DUPLICATE:",k}' /etc/talim/talim.env       # ожидается пустой вывод; preflight.py дубликатов не замечает (действует последнее значение)
+   sudo grep -c 'CHANGE_ME' /etc/talim/talim.env                                                                     # ожидается 0 (preflight.py тоже отвергнет остаточные заглушки)
+   ```
+   **Правила значений:** без пробелов и спецсимволов; если значение содержит пробелы, `<` или `>` (например, `DEFAULT_FROM_EMAIL`), оно берётся в двойные кавычки: `DEFAULT_FROM_EMAIL="Talim <noreply@хост>"`. Без кавычек команды шагов 5 и 11 (`. /etc/talim/talim.env`) падают с синтаксической ошибкой (проверено); с кавычками `bash`-загрузка и разбор в `preflight.py` дают верное значение, `EnvironmentFile` systemd кавычки поддерживает (**на сервере не проверялось**). Менять файл дальше - только `sudoedit /etc/talim/talim.env` (владелец и режим сохраняются), после правки повторить проверки выше и `preflight.py`.
+   **Ключ `OTP_ENCRYPTION_KEYS`.** Формат: один или несколько ключей Fernet через запятую, **новейший первым** (`OTP_ENCRYPTION_KEYS=<новый>,<старый>`; пробелы вокруг запятых игнорируются); приложение читает его из этой переменной (`config/settings/base.py`) и в production не запускается с пустым значением, а корректность формата проверяет `preflight.py`. **Назначение остальных секретов:** `DJANGO_SECRET_KEY` - подпись сессий и токенов (смена - все сессии и ссылки сброса недействительны, данные целы); `DB_PASSWORD` - пароль runtime-роли `talim_app`; `backup.pass` - пароль шифрования копий (потеря = копии нечитаемы); `backup.pgpass` - пароль роли копий для `pg_dump` и проверки восстановления. **Последствия потери `OTP_ENCRYPTION_KEYS`** (поведение подтверждено автотестами): коды приложения-аутентификатора перестают приниматься (пользователь видит спокойное сообщение, в журнале - ошибка без секретов), вход возможен по резервным кодам; остальным пользователям нужен сброс 2FA администратором и повторная привязка; незавершённая привязка пересоздаётся сама; сами данные не теряются, но вход с 2FA без ключа невозможен. **Сохранение:** сразу после создания переместить копию в хранилище секретов владельца (минимум два независимых экземпляра, **не рядом с копиями данных**; `DEPLOYMENT_READINESS.md` §6.2) командой, которую выберет владелец, не выводя значение на экран, и проверить, что сохранённая копия **читается**: при первой проверке восстановления (шаг 11) `restore_check.sh` расшифровывает секреты 2FA именно этим ключом (`verify_restored_two_factor`) - использовать ключ из хранилища, а не из `talim.env`. Копии ключа в чатах, тикетах, письмах и Git недопустимы. Если генерация идёт в консоли с записью сеанса - отключить запись.
 4. **Код и зависимости**: релиз = полный checkout репозитория (нужны `backend/` и `assets/`):
    ```bash
    sudo -u talim git clone <репозиторий> /srv/talim/releases/<тег>
