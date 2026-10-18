@@ -2912,3 +2912,21 @@ msgstr "Учреждение с таким названием уже есть."
 
 msgid "Ta’lim muassasasi"
 msgstr "Образовательное учреждение"
+
+msgid "Muassasa direktori"
+msgstr "Директор учреждения"
+
+msgid "Ta’lim muassasasi (faqat muassasa direktori uchun)"
+msgstr "Образовательное учреждение (только для директора учреждения)"
+
+msgid "Faqat o‘z muassasasi xodimlarini va ularning aloqa ma’lumotlarini ko‘radi; o‘ziga biriktirilgan topshiriqlar bilan ishlaydi. Boshqa muassasalarni ko‘rmaydi."
+msgstr "Видит только сотрудников своего учреждения и их контакты; работает с назначенными ему заданиями. Другие учреждения не видит."
+
+msgid "Bu foydalanuvchi boshqa ta’lim muassasasi xodimi sifatida kiritilgan."
+msgstr "Этот пользователь уже записан сотрудником другого учреждения."
+
+msgid "Muassasa direktori roli uchun ta’lim muassasasi ko‘rsatilishi shart."
+msgstr "Для роли директора учреждения нужно указать образовательное учреждение."
+
+msgid "Bu muassasada direktor hisobi allaqachon bor: bitta muassasadan faqat direktor kiradi."
+msgstr "В этом учреждении уже есть аккаунт директора: из учреждения входит только директор."

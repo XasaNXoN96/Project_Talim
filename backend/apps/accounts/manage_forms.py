@@ -4,7 +4,7 @@ from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
 from apps.access.roles import RoleCode
-from apps.organization.models import Department
+from apps.organization.models import Department, Institution
 
 User = get_user_model()
 
@@ -27,6 +27,10 @@ class UserCreateForm(forms.Form):
     role = forms.ChoiceField(label=_("Rol"), choices=RoleCode.choices, widget=forms.Select(attrs=INPUT))
     department = forms.ModelChoiceField(
         label=_("Bo‘lim (faqat bo‘lim boshlig‘i uchun)"), queryset=Department.objects.filter(is_active=True), required=False,
+        widget=forms.Select(attrs=INPUT),
+    )
+    institution = forms.ModelChoiceField(
+        label=_("Ta’lim muassasasi (faqat muassasa direktori uchun)"), queryset=Institution.objects.all(), required=False,
         widget=forms.Select(attrs=INPUT),
     )
 
@@ -69,6 +73,9 @@ class RoleAssignForm(forms.Form):
     role = forms.ChoiceField(label=_("Rol"), choices=RoleCode.choices, widget=forms.Select(attrs=INPUT))
     department = forms.ModelChoiceField(
         label=_("Bo‘lim"), queryset=Department.objects.filter(is_active=True), required=False, widget=forms.Select(attrs=INPUT)
+    )
+    institution = forms.ModelChoiceField(
+        label=_("Ta’lim muassasasi"), queryset=Institution.objects.all(), required=False, widget=forms.Select(attrs=INPUT)
     )
 
     def __init__(self, *args, allowed_roles=None, **kwargs):

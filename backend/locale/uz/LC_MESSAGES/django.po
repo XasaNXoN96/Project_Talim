@@ -2912,3 +2912,21 @@ msgstr "Bu nomdagi muassasa allaqachon bor."
 
 msgid "Ta’lim muassasasi"
 msgstr "Ta’lim muassasasi"
+
+msgid "Muassasa direktori"
+msgstr "Muassasa direktori"
+
+msgid "Ta’lim muassasasi (faqat muassasa direktori uchun)"
+msgstr "Ta’lim muassasasi (faqat muassasa direktori uchun)"
+
+msgid "Faqat o‘z muassasasi xodimlarini va ularning aloqa ma’lumotlarini ko‘radi; o‘ziga biriktirilgan topshiriqlar bilan ishlaydi. Boshqa muassasalarni ko‘rmaydi."
+msgstr "Faqat o‘z muassasasi xodimlarini va ularning aloqa ma’lumotlarini ko‘radi; o‘ziga biriktirilgan topshiriqlar bilan ishlaydi. Boshqa muassasalarni ko‘rmaydi."
+
+msgid "Bu foydalanuvchi boshqa ta’lim muassasasi xodimi sifatida kiritilgan."
+msgstr "Bu foydalanuvchi boshqa ta’lim muassasasi xodimi sifatida kiritilgan."
+
+msgid "Muassasa direktori roli uchun ta’lim muassasasi ko‘rsatilishi shart."
+msgstr "Muassasa direktori roli uchun ta’lim muassasasi ko‘rsatilishi shart."
+
+msgid "Bu muassasada direktor hisobi allaqachon bor: bitta muassasadan faqat direktor kiradi."
+msgstr "Bu muassasada direktor hisobi allaqachon bor: bitta muassasadan faqat direktor kiradi."

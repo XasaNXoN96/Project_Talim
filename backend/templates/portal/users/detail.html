@@ -32,7 +32,7 @@
     <h2 style="font-size:17px;margin-bottom:8px">{% translate "Rollar" %}</h2>
     {% if assignments %}
     <div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Rol" %}</th><th>{% translate "Doira" %}</th><th>{% translate "Bo‘lim" %}</th><th></th></tr></thead><tbody>
-    {% for a in assignments %}<tr><td>{{ a.role.name|role_label }}</td><td>{{ a.get_scope_display }}</td><td>{{ a.department|default:"—" }}</td>
+    {% for a in assignments %}<tr><td>{{ a.role.name|role_label }}</td><td>{{ a.get_scope_display }}</td><td>{% if a.scope == "institution" %}{{ target.employee.institution|default:"—" }}{% else %}{{ a.department|default:"—" }}{% endif %}</td>
       <td>{% if can_assign %}<form method="post" action="{% url 'users:role_remove' target.pk a.pk %}">{% csrf_token %}<button class="btn btn-ghost btn-sm" type="submit">{% translate "Olib tashlash" %}</button></form>{% endif %}</td></tr>{% endfor %}
     </tbody></table></div>
     {% else %}<p class="muted">{% translate "Rol biriktirilmagan: foydalanuvchi hech narsaga kira olmaydi." %}</p>{% endif %}
@@ -41,6 +41,7 @@
       {% csrf_token %}
       {% include "includes/field.html" with field=assign_form.role %}
       {% include "includes/field.html" with field=assign_form.department %}
+      {% include "includes/field.html" with field=assign_form.institution %}
       <button class="btn btn-primary" type="submit">{% translate "Rol biriktirish" %}</button>
     </form>
     {% if role_hints %}<details style="margin-top:12px"><summary>{% translate "Yangilik rollari nimaga ruxsat beradi" %}</summary>

@@ -14,6 +14,7 @@ class RoleAssignment(TimeStampedModel):
     class Scope(models.TextChoices):
         OWN = "own", _("Faqat o‘zi")
         DEPARTMENT = "department", _("Bo‘lim")
+        INSTITUTION = "institution", _("Ta’lim muassasasi")
         ALL = "all", _("Butun tashkilot")
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="role_assignments")

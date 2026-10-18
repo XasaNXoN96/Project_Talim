@@ -57,15 +57,16 @@ def _holds_admin(user):
     return user.role_assignments.filter(role__name=RoleCode.ADMIN).exists()
 
 
-def create_user(actor, *, username, email, first_name, last_name, role, department, request):
+def create_user(actor, *, username, email, first_name, last_name, role, department, request, institution=None):
     if role in PRIVILEGED_ROLES and not has_role(actor, RoleCode.ADMIN):
         raise ActionNotAllowed(_("Bu rolni faqat administrator bera oladi."))
     with transaction.atomic():
         user = User(username=username, email=email, first_name=first_name, last_name=last_name, is_active=True)
         user.set_unusable_password()  # the person sets their own password through the invitation link
         user.save()
-        _assign(actor, user, role, department, request)
-        record(AuditLog.Action.USER_CREATED, request=request, user=actor, object_type="User", object_id=user.pk, meta=_meta(user, role=role))
+        _assign(actor, user, role, department, request, institution=institution)
+        extra = {"institution_id": str(institution.pk)} if ROLE_SCOPE.get(role) == "institution" and institution else {}
+        record(AuditLog.Action.USER_CREATED, request=request, user=actor, object_type="User", object_id=user.pk, meta=_meta(user, role=role, **extra))
     return user
 
 
@@ -77,12 +78,45 @@ def update_user(actor, user, *, email, first_name, last_name, locale, request):
     record(AuditLog.Action.USER_UPDATED, request=request, user=actor, object_type="User", object_id=user.pk, meta=_meta(user, fields=changed))
 
 
-def _assign(actor, user, role_name, department, request):
+SCHOOL_STAFF_DEPARTMENT = "Ta’lim muassasalari"  # an employee card needs a department; staff of institutions sit under this one
+DIRECTOR_POSITION = "Maktab direktori"
+
+
+def _ensure_institution_card(user, institution):
+    """The employee card that ties the account to its institution (created when missing). Returns the card."""
+    from apps.organization.models import Department, Employee, Position
+
+    card = Employee.objects.filter(user=user).first()
+    if card is not None:
+        if card.institution_id and card.institution_id != institution.pk:
+            raise ActionNotAllowed(_("Bu foydalanuvchi boshqa ta’lim muassasasi xodimi sifatida kiritilgan."))
+        if card.institution_id != institution.pk:
+            card.institution = institution
+            card.save(update_fields=["institution", "updated_at"])
+        return card
+    department, _created = Department.objects.get_or_create(name=SCHOOL_STAFF_DEPARTMENT, parent=None)
+    position, _created = Position.objects.get_or_create(name=DIRECTOR_POSITION)
+    return Employee.objects.create(
+        last_name=user.last_name, first_name=user.first_name, department=department, position=position,
+        institution=institution, user=user, status=Employee.Status.ACTIVE, work_email=user.email,
+    )
+
+
+def _assign(actor, user, role_name, department, request, institution=None):
     if role_name not in RoleCode.values:
         raise ActionNotAllowed(_("Noma’lum rol."))
     scope = ROLE_SCOPE[role_name]
     if scope == "department" and department is None:
         raise ActionNotAllowed(_("Bo‘lim boshlig‘i roli uchun bo‘lim ko‘rsatilishi shart."))
+    if scope == "institution":
+        if institution is None:
+            raise ActionNotAllowed(_("Muassasa direktori roli uchun ta’lim muassasasi ko‘rsatilishi shart."))
+        busy = RoleAssignment.objects.filter(
+            role__name=role_name, scope=RoleAssignment.Scope.INSTITUTION, user__is_active=True, user__employee__institution=institution
+        ).exclude(user=user).exists()
+        if busy:
+            raise ActionNotAllowed(_("Bu muassasada direktor hisobi allaqachon bor: bitta muassasadan faqat direktor kiradi."))
+        _ensure_institution_card(user, institution)
     if scope != "department":
         department = None
     assignment = RoleAssignment(user=user, role=Group.objects.get(name=role_name), scope=scope, department=department)
@@ -91,13 +125,13 @@ def _assign(actor, user, role_name, department, request):
     return assignment
 
 
-def assign_role(actor, user, *, role, department, request):
+def assign_role(actor, user, *, role, department, request, institution=None):
     _guard_target(actor, user)
     if role in PRIVILEGED_ROLES and not has_role(actor, RoleCode.ADMIN):
         raise ActionNotAllowed(_("Bu rolni faqat administrator bera oladi."))
     if RoleAssignment.objects.filter(user=user, role__name=role, department=department if ROLE_SCOPE.get(role) == "department" else None).exists():
         raise ActionNotAllowed(_("Bu rol allaqachon biriktirilgan."))
-    return _assign(actor, user, role, department, request)
+    return _assign(actor, user, role, department, request, institution=institution)
 
 
 def revoke_role(actor, assignment, request):

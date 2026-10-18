@@ -19,6 +19,7 @@ class RoleCode(models.TextChoices):
     NEWS_EDITOR = "news_editor", _("Yangilik muharriri")
     NEWS_PUBLISHER = "news_publisher", _("Yangilik nashr etuvchisi")
     SYSADMIN = "sysadmin", _("Tizim administratori")
+    SCHOOL_DIRECTOR = "school_director", _("Muassasa direktori")
 
 
 _CONTENT = [
@@ -63,6 +64,9 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
     RoleCode.NEWS_EDITOR: _NEWS_EDITOR + _NOTIFY,
     RoleCode.NEWS_PUBLISHER: _NEWS_PUBLISHER + _NOTIFY,
     RoleCode.SYSADMIN: ["audit.view_auditlog"],
+    # A school director sees the staff directory (names, positions, contacts) of THEIR OWN institution only: the limit is the
+    # "institution" scope, enforced in apps.organization.access. No department structure, no other institutions, no editing of people.
+    RoleCode.SCHOOL_DIRECTOR: _DIRECTORY + _CONTACTS + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
 }
 
 
@@ -77,6 +81,7 @@ ROLE_SCOPE = {
     RoleCode.NEWS_EDITOR: "all",
     RoleCode.NEWS_PUBLISHER: "all",
     RoleCode.SYSADMIN: "all",
+    RoleCode.SCHOOL_DIRECTOR: "institution",  # needs an employee card linked to an institution
 }
 PRIVILEGED_ROLES = {RoleCode.ADMIN, RoleCode.SYSADMIN}  # only an administrator may hand these out
 
@@ -86,5 +91,6 @@ ROLE_HINTS = {
     RoleCode.NEWS_AUTHOR: _("Yangilik yozadi va o‘z qoralamalarini tahrirlaydi, tekshiruvga yuboradi, o‘z yangiliklari bo‘yicha qarorlar va izohlarni ko‘radi. Ma’qullay yoki nashr eta olmaydi."),
     RoleCode.NEWS_EDITOR: _("Tekshiruvdagi yangiliklarni ko‘radi, ma’qullaydi yoki majburiy izoh bilan qaytaradi. Yozmaydi va nashr etmaydi; o‘z yangiligini ma’qullay olmaydi."),
     RoleCode.NEWS_PUBLISHER: _("Faqat ma’qullangan yangilikni nashr etadi va nashrdan oladi. Qoralamani to‘g‘ridan-to‘g‘ri nashr eta olmaydi."),
+    RoleCode.SCHOOL_DIRECTOR: _("Faqat o‘z muassasasi xodimlarini va ularning aloqa ma’lumotlarini ko‘radi; o‘ziga biriktirilgan topshiriqlar bilan ishlaydi. Boshqa muassasalarni ko‘rmaydi."),
     RoleCode.CONTENT_MANAGER: _("Yangilikni yozadi, tekshiradi va nashr etadi (o‘zinikini ma’qullay olmaydi)."),
 }

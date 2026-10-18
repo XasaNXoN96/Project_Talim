@@ -55,6 +55,42 @@ def covered_departments_for(user, permission):
     return covered
 
 
+def own_institution_id(user):
+    """The institution the user's own employee card belongs to (None = no card or no institution)."""
+    return Employee.objects.filter(user=user).values_list("institution_id", flat=True).first()
+
+
+def covered_institutions_for(user, permission):
+    """Institutions covered by "institution"-scope role assignments that carry `permission` (always a set; may be empty)."""
+    if not getattr(user, "is_authenticated", False) or not user.is_active:
+        return set()
+    app, codename = permission.split(".")
+    has = RoleAssignment.objects.filter(
+        user=user, scope=RoleAssignment.Scope.INSTITUTION,
+        role__permissions__content_type__app_label=app, role__permissions__codename=codename,
+    ).exists()
+    inst = own_institution_id(user) if has else None
+    return {inst} if inst else set()
+
+
+def directory_institution_limit(user):
+    """None = no institution limit; otherwise the set of institution ids the user is confined to.
+
+    A user is confined only when EVERY role assignment that carries the directory permission is institution-scoped
+    (a school director). Anyone with a wider assignment, and superusers, are not limited here."""
+    if user.is_superuser:
+        return None
+    app, codename = PERMISSION["directory"].split(".")
+    scopes = set(
+        RoleAssignment.objects.filter(
+            user=user, role__permissions__content_type__app_label=app, role__permissions__codename=codename
+        ).values_list("scope", flat=True)
+    )
+    if scopes and scopes == {RoleAssignment.Scope.INSTITUTION}:
+        return covered_institutions_for(user, PERMISSION["directory"])
+    return None
+
+
 def visible_tiers(user, employee) -> set:
     """Tiers of `employee` that `user` may read."""
     if not getattr(user, "is_authenticated", False) or not user.is_active:
@@ -70,6 +106,8 @@ def visible_tiers(user, employee) -> set:
         covered = covered_departments(user, tier)
         if covered is None or employee.department_id in covered:
             tiers.add(tier)
+        elif employee.institution_id and employee.institution_id in covered_institutions_for(user, PERMISSION[tier]):
+            tiers.add(tier)
     return tiers
 
 
@@ -77,7 +115,10 @@ def directory_queryset(user):
     """Employees the user may list. Archived records are for people who can edit employees."""
     if not user.has_perm(PERMISSION["directory"]):
         return Employee.objects.none()
-    qs = Employee.objects.select_related("department", "position")
+    qs = Employee.objects.select_related("department", "position", "institution")
+    limit = directory_institution_limit(user)
+    if limit is not None:
+        qs = qs.filter(institution_id__in=limit)
     if not user.has_perm("organization.change_employee"):
         qs = qs.exclude(status=Employee.Status.ARCHIVED)
     return qs
