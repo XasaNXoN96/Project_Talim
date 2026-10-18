@@ -3,7 +3,7 @@
 {% block title %}{% translate "Xodimlar" %}{% endblock %}
 {% block content %}
 <div class="page-head"><div><h1>{% translate "Xodimlar" %}</h1><p>{% translate "Ism, bo‘lim, lavozim va holat. Aloqa ma’lumotlari xodim kartasida, ruxsat bo‘lsa ko‘rinadi." %}</p></div>
-<div class="row wrap"><a class="btn btn-secondary" href="{% url 'employees:me' %}">{% translate "Mening kartam" %}</a>{% if can_add %}<a class="btn btn-secondary" href="{% url 'employees:import' %}">{% translate "Excel’dan import" %}</a><a class="btn btn-primary" href="{% url 'employees:create' %}">{% translate "Xodim qo‘shish" %}</a>{% endif %}</div></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% url 'employees:me' %}">{% translate "Mening kartam" %}</a>{% if can_add %}{% if can_import %}<a class="btn btn-secondary" href="{% url 'employees:import' %}">{% translate "Excel’dan import" %}</a>{% endif %}<a class="btn btn-primary" href="{% url 'employees:create' %}">{% translate "Xodim qo‘shish" %}</a>{% endif %}</div></div>
 <div class="tabs" style="margin-bottom:16px">
   <a class="tab {% if not status %}active{% endif %}" href="{% url 'employees:list' %}">{% translate "Barcha xodimlar" %}</a>
   {% if perms.organization.view_department %}<a class="tab" href="{% url 'employees:structure' %}">{% translate "Bo‘limlar" %}</a>{% endif %}

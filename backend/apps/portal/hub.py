@@ -22,7 +22,11 @@ TILES = (
 
 
 def can_open_hub(user):
-    return user.is_authenticated and user.is_active and any(user.has_perm(p) for p in MANAGE_PERMS)
+    if not (user.is_authenticated and user.is_active and any(user.has_perm(p) for p in MANAGE_PERMS)):
+        return False
+    from apps.organization.access import directory_institution_limit
+
+    return directory_institution_limit(user) is None  # a school director maintains their own staff, not the organisation
 
 
 def tiles_for(user):

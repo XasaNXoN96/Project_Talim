@@ -64,9 +64,11 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
     RoleCode.NEWS_EDITOR: _NEWS_EDITOR + _NOTIFY,
     RoleCode.NEWS_PUBLISHER: _NEWS_PUBLISHER + _NOTIFY,
     RoleCode.SYSADMIN: ["audit.view_auditlog"],
-    # A school director sees the staff directory (names, positions, contacts) of THEIR OWN institution only: the limit is the
-    # "institution" scope, enforced in apps.organization.access. No department structure, no other institutions, no editing of people.
-    RoleCode.SCHOOL_DIRECTOR: _DIRECTORY + _CONTACTS + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    # A school director sees and maintains the staff of THEIR OWN institution only: the limit is the "institution" scope,
+    # enforced in apps.organization.access (listing, cards, create/edit/archive, photo). add/change_employee are global Django
+    # permissions; the views narrow them to the own institution's cards without an account, hide department/user/private fields,
+    # and keep the director out of the import tool and the admin hub. No department structure, no other institutions.
+    RoleCode.SCHOOL_DIRECTOR: _DIRECTORY + _CONTACTS + ["organization.add_employee", "organization.change_employee"] + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
 }
 
 

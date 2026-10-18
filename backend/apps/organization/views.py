@@ -55,6 +55,7 @@ class EmployeeListView(PortalPermissionMixin, ListView):
             departments=Department.objects.filter(is_active=True), statuses=Employee.Status.choices,
             institution=self.request.GET.get("institution", ""), institutions=Institution.objects.all(),
             can_add=self.request.user.has_perm("organization.add_employee"),
+            can_import=self.request.user.has_perm("organization.add_employee") and access.directory_institution_limit(self.request.user) is None,
         )
         return ctx
 
@@ -76,7 +77,7 @@ class EmployeeDetailView(PortalPermissionMixin, View):
             )
         return render(request, "portal/employees/detail.html", {
             "e": employee, "tiers": tiers, "own": own,
-            "can_edit": request.user.has_perm("organization.change_employee"),
+            "can_edit": request.user.has_perm("organization.change_employee") and access.manageable_employees(request.user).filter(pk=employee.pk).exists(),
         })
 
 
@@ -111,6 +112,18 @@ class EmployeeMeView(PortalPermissionMixin, View):
         return redirect("employees:detail", pk=employee.pk)
 
 
+def _school_for(user):
+    """The Institution a confined user (school director) works for; None for everyone else. A confined user without an
+    institution on their card cannot maintain staff at all (403)."""
+    limit = access.directory_institution_limit(user)
+    if limit is None:
+        return None
+    school = Institution.objects.filter(pk__in=limit).first()
+    if school is None:
+        raise PermissionDenied
+    return school
+
+
 def _changed(form):
     return sorted(f for f in form.changed_data if f not in ("photo_upload", "photo_clear")) + (
         ["photo"] if form.cleaned_data.get("photo_upload") or form.cleaned_data.get("photo_clear") else []
@@ -121,7 +134,7 @@ class EmployeeCreateView(PortalPermissionMixin, View):
     permission_required = "organization.add_employee"
 
     def _form(self, request, data=None, files=None):
-        return EmployeeForm(data, files, can_link_user=request.user.has_perm("accounts.manage_users"), request=request)
+        return EmployeeForm(data, files, can_link_user=request.user.has_perm("accounts.manage_users"), request=request, school=_school_for(request.user))
 
     def get(self, request):
         return render(request, "portal/employees/form.html", {"form": self._form(request), "creating": True})
@@ -143,14 +156,16 @@ class EmployeeEditView(PortalPermissionMixin, View):
     permission_required = "organization.change_employee"
 
     def _form(self, request, employee, data=None, files=None):
-        return EmployeeForm(data, files, instance=employee, can_link_user=request.user.has_perm("accounts.manage_users"), request=request)
+        return EmployeeForm(
+            data, files, instance=employee, can_link_user=request.user.has_perm("accounts.manage_users"), request=request, school=_school_for(request.user)
+        )
 
     def get(self, request, pk):
-        employee = get_object_or_404(Employee, pk=pk)
+        employee = get_object_or_404(access.manageable_employees(request.user), pk=pk)
         return render(request, "portal/employees/form.html", {"form": self._form(request, employee), "e": employee})
 
     def post(self, request, pk):
-        employee = get_object_or_404(Employee, pk=pk)
+        employee = get_object_or_404(access.manageable_employees(request.user), pk=pk)
         form = self._form(request, employee, request.POST, request.FILES)
         if form.is_valid():
             changed = _changed(form)
@@ -171,7 +186,7 @@ class EmployeeArchiveView(PortalPermissionMixin, View):
     restore = False
 
     def post(self, request, pk):
-        employee = get_object_or_404(Employee, pk=pk)
+        employee = get_object_or_404(access.manageable_employees(request.user), pk=pk)
         if self.restore:
             employee.status = Employee.Status.ACTIVE
             action, text = AuditLog.Action.EMPLOYEE_RESTORED, _("Xodim arxivdan qaytarildi.")

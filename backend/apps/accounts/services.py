@@ -78,13 +78,13 @@ def update_user(actor, user, *, email, first_name, last_name, locale, request):
     record(AuditLog.Action.USER_UPDATED, request=request, user=actor, object_type="User", object_id=user.pk, meta=_meta(user, fields=changed))
 
 
-SCHOOL_STAFF_DEPARTMENT = "Ta’lim muassasalari"  # an employee card needs a department; staff of institutions sit under this one
 DIRECTOR_POSITION = "Maktab direktori"
 
 
 def _ensure_institution_card(user, institution):
     """The employee card that ties the account to its institution (created when missing). Returns the card."""
-    from apps.organization.models import Department, Employee, Position
+    from apps.organization.access import school_staff_department
+    from apps.organization.models import Employee, Position
 
     card = Employee.objects.filter(user=user).first()
     if card is not None:
@@ -94,7 +94,7 @@ def _ensure_institution_card(user, institution):
             card.institution = institution
             card.save(update_fields=["institution", "updated_at"])
         return card
-    department, _created = Department.objects.get_or_create(name=SCHOOL_STAFF_DEPARTMENT, parent=None)
+    department = school_staff_department()
     position, _created = Position.objects.get_or_create(name=DIRECTOR_POSITION)
     return Employee.objects.create(
         last_name=user.last_name, first_name=user.first_name, department=department, position=position,

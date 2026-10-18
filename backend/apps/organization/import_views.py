@@ -18,7 +18,7 @@ from apps.core.mixins import PortalPermissionMixin
 from apps.documents import files
 from apps.documents.validation import UploadRejected
 
-from . import importer
+from . import access, importer
 from .models import Employee, EmployeeImport
 
 
@@ -43,6 +43,10 @@ def _is_open(imp):
 
 class _Base(PortalPermissionMixin, View):
     permission_required = "organization.add_employee"
+
+    def has_permission(self):
+        # the import writes into any department: not for someone confined to one institution (a school director)
+        return super().has_permission() and access.directory_institution_limit(self.request.user) is None
 
     def get_import(self, request, pk):
         return get_object_or_404(EmployeeImport, pk=pk, user=request.user)  # someone else's import -> 404

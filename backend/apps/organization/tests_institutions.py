@@ -134,8 +134,9 @@ class SchoolDirectorTests(TestCase):
         u = self.create_director()
         c = Client()
         login_with_two_factor(c, u)
-        for name, args in (("create", ()), ("edit", (self.t1.pk,)), ("structure", ()), ("institution_create", ()), ("import", ())):
+        for name, args in (("structure", ()), ("institution_create", ()), ("import", ())):
             self.assertEqual(c.get(url(name, *args)).status_code, 403, name)
+        self.assertEqual(c.get(url("edit", self.t2.pk)).status_code, 404)  # another school's staff
         self.assertEqual(c.get(reverse("users:list")).status_code, 403)
         self.assertEqual(c.get(reverse("portal:admin_hub")).status_code, 403)
 
@@ -157,3 +158,87 @@ def User_exists(username):
     from django.contrib.auth import get_user_model
 
     return get_user_model().objects.filter(username=username).exists()
+
+
+class SchoolStaffTests(TestCase):
+    """Stage B: the director maintains the staff of their own school, and only that."""
+
+    def setUp(self):
+        from apps.accounts import services
+
+        call_command("seed_roles", verbosity=0)
+        self.admin = make_user("boss", role="admin")
+        self.dept = Department.objects.create(name="Bo‘lim")
+        self.s1 = Institution.objects.create(name="1-maktab", kind="school")
+        self.s2 = Institution.objects.create(name="2-maktab", kind="school")
+        self.mine = Employee.objects.create(last_name="Karimov", first_name="A", department=self.dept, institution=self.s1, status="active", birth_date="1990-01-01", personal_phone="+998 90 000 00 00")
+        self.theirs = Employee.objects.create(last_name="Saidov", first_name="B", department=self.dept, institution=self.s2, status="active")
+        self.office = Employee.objects.create(last_name="Office", first_name="C", department=self.dept, status="active")
+        self.director = services.create_user(self.admin, username="dir1", email="d1@example.test", first_name="Dilshod", last_name="Direktor",
+                                             role="school_director", department=None, institution=self.s1, request=None)
+        self.c = Client()
+        login_with_two_factor(self.c, self.director)
+
+    def form(self, **extra):
+        data = {"last_name": "Yangi", "first_name": "Xodim", "middle_name": "", "position": "", "work_phone": "+998 90 123 45 67", "work_email": "x@example.test", "status": "active"}
+        data.update(extra)
+        return data
+
+    def test_add_button_yes_import_button_no(self):
+        body = self.c.get(url("list")).content.decode()
+        self.assertIn(url("create"), body)
+        self.assertNotIn(url("import"), body)
+
+    def test_create_forces_own_institution_and_office_department(self):
+        # even if the client tries to smuggle department/institution/account/private values
+        r = self.c.post(url("create"), self.form(institution=str(self.s2.pk), department=str(self.dept.pk), user=str(self.admin.pk), birth_date="2000-02-02", personal_phone="+998 1"))
+        self.assertEqual(r.status_code, 302)
+        e = Employee.objects.get(last_name="Yangi")
+        self.assertEqual(e.institution, self.s1)
+        self.assertEqual(e.department.name, "Ta’lim muassasalari")
+        self.assertIsNone(e.user)
+        self.assertIsNone(e.birth_date)
+        self.assertEqual(e.personal_phone, "")
+
+    def test_form_has_no_office_account_or_private_fields(self):
+        body = self.c.get(url("create")).content.decode()
+        for hidden in ('name="department"', 'name="institution"', 'name="user"', 'name="birth_date"', 'name="personal_phone"', 'name="hired_at"'):
+            self.assertNotIn(hidden, body, hidden)
+        self.assertIn('name="work_phone"', body)
+
+    def test_edit_and_archive_only_own_staff_without_account(self):
+        self.assertEqual(self.c.post(url("edit", self.mine.pk), self.form(last_name="Karimov2", first_name="A")).status_code, 302)
+        self.mine.refresh_from_db()
+        self.assertEqual(self.mine.last_name, "Karimov2")
+        self.assertEqual(self.mine.birth_date.isoformat(), "1990-01-01")  # private tier untouched
+        self.assertEqual(self.c.post(url("archive", self.mine.pk)).status_code, 302)
+        self.mine.refresh_from_db()
+        self.assertEqual(self.mine.status, "archived")
+        self.assertEqual(self.c.post(url("restore", self.mine.pk)).status_code, 302)
+        for other in (self.theirs, self.office, Employee.objects.get(user=self.director)):  # other school, office, own account card
+            for name in ("edit", "archive", "restore"):
+                self.assertEqual(self.c.get(url(name, other.pk)).status_code if name == "edit" else self.c.post(url(name, other.pk)).status_code, 404, (other, name))
+            self.assertEqual(self.c.post(url("edit", other.pk), self.form()).status_code, 404)
+        self.theirs.refresh_from_db()
+        self.assertEqual(self.theirs.last_name, "Saidov")
+
+    def test_detail_shows_edit_only_for_own_staff(self):
+        self.assertContains(self.c.get(url("detail", self.mine.pk)), url("edit", self.mine.pk))
+        own_card = Employee.objects.get(user=self.director)
+        self.assertNotContains(self.c.get(url("detail", own_card.pk)), url("edit", own_card.pk))
+
+    def test_import_is_closed_to_the_director(self):
+        for name in ("import", "import_template"):
+            self.assertEqual(self.c.get(url(name)).status_code, 403, name)
+
+    def test_director_without_an_institution_cannot_maintain_staff(self):
+        card = Employee.objects.get(user=self.director)
+        Employee.objects.filter(pk=card.pk).update(institution=None)
+        self.assertEqual(self.c.get(url("create")).status_code, 403)
+
+    def test_hr_is_not_affected(self):
+        hr = make_user("hrista", role="hr")
+        c = Client()
+        login_with_two_factor(c, hr)
+        self.assertEqual(c.get(url("import")).status_code, 200)
+        self.assertEqual(c.post(url("edit", self.theirs.pk), {"last_name": "Saidov", "first_name": "B", "middle_name": "", "department": str(self.dept.pk), "position": "", "institution": str(self.s2.pk), "status": "active"}).status_code, 302)

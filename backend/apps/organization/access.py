@@ -73,12 +73,20 @@ def covered_institutions_for(user, permission):
     return {inst} if inst else set()
 
 
+SCHOOL_STAFF_DEPARTMENT = "Ta’lim muassasalari"  # an employee card needs a department; staff of institutions sit under this one
+
+
+def school_staff_department():
+    department, _created = Department.objects.get_or_create(name=SCHOOL_STAFF_DEPARTMENT, parent=None)
+    return department
+
+
 def directory_institution_limit(user):
     """None = no institution limit; otherwise the set of institution ids the user is confined to.
 
     A user is confined only when EVERY role assignment that carries the directory permission is institution-scoped
     (a school director). Anyone with a wider assignment, and superusers, are not limited here."""
-    if user.is_superuser:
+    if not getattr(user, "is_authenticated", False) or not user.is_active or user.is_superuser:
         return None
     app, codename = PERMISSION["directory"].split(".")
     scopes = set(
@@ -121,4 +129,14 @@ def directory_queryset(user):
         qs = qs.filter(institution_id__in=limit)
     if not user.has_perm("organization.change_employee"):
         qs = qs.exclude(status=Employee.Status.ARCHIVED)
+    return qs
+
+
+def manageable_employees(user):
+    """Cards the user may edit or archive: all for unlimited users; for a school director only the staff of their own
+    institution that have no account (cards tied to an account are managed by an administrator or HR)."""
+    qs = Employee.objects.all()
+    limit = directory_institution_limit(user)
+    if limit is not None:
+        qs = qs.filter(institution_id__in=limit, user__isnull=True)
     return qs

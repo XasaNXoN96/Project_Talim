@@ -32,9 +32,13 @@ class EmployeeForm(forms.ModelForm):
     )
     photo_clear = forms.BooleanField(label=_("Suratni olib tashlash"), required=False)
 
-    def __init__(self, *args, can_link_user=False, request=None, **kwargs):
+    # fields a school director never sees or sets: the office structure, account link and the private tier
+    SCHOOL_HIDDEN = ("department", "institution", "user", "hired_at", "personal_phone", "birth_date")
+
+    def __init__(self, *args, can_link_user=False, request=None, school=None, **kwargs):
         self._request = request
         self._photo_bytes = None
+        self._school = school  # an Institution when a school director edits their own staff
         super().__init__(*args, **kwargs)
         for name, field in self.fields.items():
             if not isinstance(field.widget, forms.DateInput):
@@ -45,6 +49,10 @@ class EmployeeForm(forms.ModelForm):
         self.fields["position"].queryset = Position.objects.all()
         self.fields["institution"].queryset = Institution.objects.all()
         self.fields["institution"].required = False
+        if school is not None:
+            for name in self.SCHOOL_HIDDEN:
+                self.fields.pop(name, None)
+            return
         if can_link_user:
             self.fields["user"].queryset = User.objects.filter(is_active=True)
             self.fields["user"].required = False
@@ -63,6 +71,11 @@ class EmployeeForm(forms.ModelForm):
 
     def save(self, commit=True):
         employee = super().save(commit=False)
+        if self._school is not None:
+            from .access import school_staff_department
+
+            employee.institution = self._school
+            employee.department = school_staff_department()
         old_name = employee.photo.name if employee.photo else ""
         if self._photo_bytes:
             employee.photo.save(new_storage_name("jpg"), ContentFile(self._photo_bytes), save=False)
