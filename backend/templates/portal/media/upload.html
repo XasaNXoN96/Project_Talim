@@ -1,0 +1,12 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'gallery:list' %}">{% translate "Media" %}</a></div><h1>{{ title }}</h1><p>{% translate "Fayllar avval qoralama bo‘lib saqlanadi. Ularni ko‘rib chiqib, rozilik belgilangandan keyingina nashr etasiz." %}</p></div></div>
+<form method="post" enctype="multipart/form-data" class="card card-pad" style="display:grid;gap:16px;max-width:640px" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert err" role="alert"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}
+  {% for field in form %}{% include "includes/field.html" with field=field %}{% endfor %}
+  <div class="row"><button class="btn btn-primary" type="submit">{% translate "Yuklash" %}</button><a class="btn btn-secondary" href="{% url 'gallery:list' %}">{% translate "Bekor qilish" %}</a></div>
+</form>
+{% endblock %}

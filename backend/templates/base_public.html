@@ -19,7 +19,7 @@
       <a href="{% url 'content:home' %}#yutuqlar">{% translate "Ustozlar" %}</a>
       <a href="{% url 'achievements_public:list' %}">{% translate "Yutuqlar" %}</a>
       <a href="{% url 'content:home' %}#hujjatlar">{% translate "Hujjatlar" %}</a>
-      <a href="{% url 'content:home' %}#media">{% translate "Media" %}</a>
+      <a href="{% url 'gallery_public:list' %}">{% translate "Media" %}</a>
       <a href="#boglanish">{% translate "Bog‘lanish" %}</a>
     </nav>
     <div class="pub-actions">
@@ -50,5 +50,6 @@
   </div>
 </footer>
 <script src="{% static 'assets/js/app.js' %}"></script>
+<script src="{% static 'js/gallery.js' %}"></script>
 </body>
 </html>

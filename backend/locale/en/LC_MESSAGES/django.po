@@ -3595,3 +3595,121 @@ msgstr "Open tasks past their deadline"
 
 msgid "Muddati o‘tgan topshiriqlar yo‘q."
 msgstr "There are no overdue tasks."
+
+#, python-format
+msgid "%(n)d ta faylda nashrga rozilik belgilanmagan: ular nashr etilmadi."
+msgstr "%(n)d files have no publishing consent ticked: they were not published."
+
+msgid "Avval fayllarni belgilang va amalni tanlang."
+msgstr "First tick the files and choose an action."
+
+#, python-format
+msgid "Bajarildi: %(n)d ta fayl."
+msgstr "Done: %(n)d files."
+
+msgid "Barcha rasmlarga bir xil sarlavha qo‘yiladi (ixtiyoriy)."
+msgstr "The same title is given to all pictures (optional)."
+
+msgid "Belgilanganlarni nashr etish"
+msgstr "Publish the ticked ones"
+
+#, python-format
+msgid "Bir yuklashda ko‘pi bilan %(n)d ta rasm."
+msgstr "At most %(n)d pictures per upload."
+
+msgid "Butunlay o‘chirish"
+msgstr "Delete permanently"
+
+msgid "Fayl o‘chirildi."
+msgstr "The file was deleted."
+
+msgid "Fayl saytdan va serverdan butunlay o‘chiriladi. Bu amalni qaytarib bo‘lmaydi."
+msgstr "The file is removed completely from the site and the server. This cannot be undone."
+
+msgid "Fayllar avval qoralama bo‘lib saqlanadi. Ularni ko‘rib chiqib, rozilik belgilangandan keyingina nashr etasiz."
+msgstr "Files are saved as drafts first. You can publish them after reviewing and ticking the consent."
+
+msgid "Faylni o‘chirish"
+msgstr "Delete the file"
+
+msgid "Fotorasm"
+msgstr "Photo"
+
+msgid "Fotorasmlar"
+msgstr "Photos"
+
+msgid "Fotorasmlar (JPG yoki PNG)"
+msgstr "Photos (JPG or PNG)"
+
+msgid "Fotorasmlar va video materiallar kutubxonasi"
+msgstr "Library of photos and videos"
+
+msgid "Fotorasmlar va video materiallar."
+msgstr "Photos and videos."
+
+msgid "Fotorasmlar yuklash"
+msgstr "Upload photos"
+
+msgid "Ha, o‘chirish"
+msgstr "Yes, delete"
+
+msgid "Hozircha fayllar yo‘q"
+msgstr "No files yet"
+
+msgid "Kamida bitta rasm tanlang."
+msgstr "Choose at least one picture."
+
+msgid "Media fayl o‘zgartirildi"
+msgstr "Media file changed"
+
+msgid "Media fayllar yuklandi"
+msgstr "Media files uploaded"
+
+msgid "Media faylni nashr etish va nashrdan olish"
+msgstr "Publish and unpublish media files"
+
+msgid "Nashr etilgan faylning roziligini olib tashlab bo‘lmaydi: avval nashrdan oling."
+msgstr "The consent of a published file cannot be removed: unpublish it first."
+
+msgid "Nashr etilgan fotorasm va videolar shu yerda ko‘rinadi."
+msgstr "Published photos and videos appear here."
+
+msgid "Nashr etish uchun fayllarda rozilik belgilangan bo‘lishi kerak."
+msgstr "Files need the consent ticked to be published."
+
+msgid "Nashrga rozilik"
+msgstr "Consent to publish"
+
+msgid "Olingan sana"
+msgstr "Date taken"
+
+msgid "Qidirish: sarlavha, muassasa"
+msgstr "Search: title, institution"
+
+msgid "Rasmda yoki videoda ko‘ringan shaxslar (voyaga yetmaganlar uchun ota-onasi) ochiq saytda nashr etishga rozilik bergan. Rozilik bo‘lmasa, fayl nashr etilmaydi."
+msgstr "The people shown (parents, for minors) agreed to publication on the public site. Without consent the file is not published."
+
+msgid "Rozilik yo‘q"
+msgstr "No consent"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Video uchun sarlavha shart."
+msgstr "A video needs a title."
+
+msgid "Video yuklash"
+msgstr "Upload a video"
+
+#, python-format
+msgid "Yuklandi: %(n)d ta fayl. Ular qoralama holatida: tekshirib, nashr eting."
+msgstr "Uploaded: %(n)d files. They are drafts: check and publish them."
+
+msgid "media fayl"
+msgstr "media file"
+
+msgid "media fayllar"
+msgstr "media files"
+
+msgid "Media faylni serverdan butunlay o‘chirish"
+msgstr "Erase a media file from the server for good"

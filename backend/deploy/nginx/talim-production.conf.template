@@ -74,6 +74,46 @@ server {
         proxy_request_buffering on;
     }
 
+    # Gallery uploads: up to 12 photos (8 MB each) in one form, or one video. Larger body limit and longer timeouts for THESE two URLs only
+    # (photos are scanned one by one). Keep the video limit above MEDIA_VIDEO_MAX_BYTES/ACHIEVEMENT_VIDEO_MAX_BYTES + fields.
+    location = /portal/media/new/photos/ {
+        client_max_body_size 100m;
+        client_body_timeout 180s;
+        proxy_pass http://talim_app;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_bind 127.0.0.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP "";
+        proxy_set_header Forwarded "";
+
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 180s;
+        proxy_read_timeout 180s;
+        proxy_request_buffering on;
+    }
+
+    location = /portal/media/new/video/ {
+        client_max_body_size 22m;
+        client_body_timeout 120s;
+        proxy_pass http://talim_app;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_bind 127.0.0.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP "";
+        proxy_set_header Forwarded "";
+
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 120s;
+        proxy_read_timeout 120s;
+        proxy_request_buffering on;
+    }
+
     location / {
         proxy_pass http://talim_app;
         proxy_http_version 1.1;

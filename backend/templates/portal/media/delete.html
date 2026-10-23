@@ -1,0 +1,13 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Faylni o‘chirish" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'gallery:list' %}">{% translate "Media" %}</a></div><h1>{% translate "Faylni o‘chirish" %}</h1></div></div>
+<form method="post" class="card card-pad" style="display:grid;gap:16px;max-width:640px">
+  {% csrf_token %}
+  {% if item.kind == 'photo' %}<img src="{% url 'gallery:file' item.pk 'thumb' %}" alt="" style="max-width:320px;border-radius:12px">{% endif %}
+  <p><b>{{ item.title|default:"—" }}</b></p>
+  <p class="muted">{% translate "Fayl saytdan va serverdan butunlay o‘chiriladi. Bu amalni qaytarib bo‘lmaydi." %}</p>
+  <div class="row"><button class="btn btn-danger" type="submit">{% translate "Ha, o‘chirish" %}</button><a class="btn btn-secondary" href="{% url 'gallery:list' %}">{% translate "Bekor qilish" %}</a></div>
+</form>
+{% endblock %}

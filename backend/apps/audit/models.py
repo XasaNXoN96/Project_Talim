@@ -86,6 +86,8 @@ class AuditLog(models.Model):
         PROFILE_CHANGE_DECIDED = "profile_change_decided", _("Ma’lumotni o‘zgartirish so‘rovi bo‘yicha qaror")
         CHAT_NOTICE_ACCEPTED = "chat_notice_accepted", _("Chat haqidagi ogohlantirish qabul qilindi")
         CHAT_ARCHIVE_VIEWED = "chat_archive_viewed", _("Administrator suhbatni ko‘rdi")
+        MEDIA_UPLOADED = "media_uploaded", _("Media fayllar yuklandi")
+        MEDIA_CHANGED = "media_changed", _("Media fayl o‘zgartirildi")
         ACHIEVEMENT_CREATED = "achievement_created", _("Yutuq yaratildi")
         ACHIEVEMENT_UPDATED = "achievement_updated", _("Yutuq o‘zgartirildi")
         ACHIEVEMENT_STEP = "achievement_step", _("Yutuq holati o‘zgardi")

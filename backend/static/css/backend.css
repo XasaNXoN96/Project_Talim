@@ -145,3 +145,10 @@ img.av { object-fit: cover; background: var(--n-200, #e5eaf2); }
 .cht-thread .cht-msg.mine { justify-items: end; text-align: right; }
 .cht-thread .cht-bubble { max-width: 80%; padding: 8px 12px; border-radius: 14px; background: var(--n-100, #eef1f6); overflow-wrap: anywhere; text-align: left; }
 .cht-thread .cht-msg.mine .cht-bubble { background: var(--brand-500, #1f6bff); color: #fff; }
+
+/* gallery photo viewer */
+.lightbox .stage.lbx { aspect-ratio: auto; width: auto; max-width: 100%; max-height: 100%; background: transparent; display: flex; align-items: center; justify-content: center; }
+.lightbox .stage.lbx img { max-width: 100%; max-height: calc(100vh - 110px); object-fit: contain; border-radius: 12px; }
+.lightbox .lb-count { max-width: 90%; text-align: center; }
+.photo .g { display: block; }
+.gallery a.g { display: block; border-radius: 12px; overflow: hidden; }

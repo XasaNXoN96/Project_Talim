@@ -3595,3 +3595,121 @@ msgstr "Muddati o‘tgan ochiq topshiriqlar"
 
 msgid "Muddati o‘tgan topshiriqlar yo‘q."
 msgstr "Muddati o‘tgan topshiriqlar yo‘q."
+
+#, python-format
+msgid "%(n)d ta faylda nashrga rozilik belgilanmagan: ular nashr etilmadi."
+msgstr "%(n)d ta faylda nashrga rozilik belgilanmagan: ular nashr etilmadi."
+
+msgid "Avval fayllarni belgilang va amalni tanlang."
+msgstr "Avval fayllarni belgilang va amalni tanlang."
+
+#, python-format
+msgid "Bajarildi: %(n)d ta fayl."
+msgstr "Bajarildi: %(n)d ta fayl."
+
+msgid "Barcha rasmlarga bir xil sarlavha qo‘yiladi (ixtiyoriy)."
+msgstr "Barcha rasmlarga bir xil sarlavha qo‘yiladi (ixtiyoriy)."
+
+msgid "Belgilanganlarni nashr etish"
+msgstr "Belgilanganlarni nashr etish"
+
+#, python-format
+msgid "Bir yuklashda ko‘pi bilan %(n)d ta rasm."
+msgstr "Bir yuklashda ko‘pi bilan %(n)d ta rasm."
+
+msgid "Butunlay o‘chirish"
+msgstr "Butunlay o‘chirish"
+
+msgid "Fayl o‘chirildi."
+msgstr "Fayl o‘chirildi."
+
+msgid "Fayl saytdan va serverdan butunlay o‘chiriladi. Bu amalni qaytarib bo‘lmaydi."
+msgstr "Fayl saytdan va serverdan butunlay o‘chiriladi. Bu amalni qaytarib bo‘lmaydi."
+
+msgid "Fayllar avval qoralama bo‘lib saqlanadi. Ularni ko‘rib chiqib, rozilik belgilangandan keyingina nashr etasiz."
+msgstr "Fayllar avval qoralama bo‘lib saqlanadi. Ularni ko‘rib chiqib, rozilik belgilangandan keyingina nashr etasiz."
+
+msgid "Faylni o‘chirish"
+msgstr "Faylni o‘chirish"
+
+msgid "Fotorasm"
+msgstr "Fotorasm"
+
+msgid "Fotorasmlar"
+msgstr "Fotorasmlar"
+
+msgid "Fotorasmlar (JPG yoki PNG)"
+msgstr "Fotorasmlar (JPG yoki PNG)"
+
+msgid "Fotorasmlar va video materiallar kutubxonasi"
+msgstr "Fotorasmlar va video materiallar kutubxonasi"
+
+msgid "Fotorasmlar va video materiallar."
+msgstr "Fotorasmlar va video materiallar."
+
+msgid "Fotorasmlar yuklash"
+msgstr "Fotorasmlar yuklash"
+
+msgid "Ha, o‘chirish"
+msgstr "Ha, o‘chirish"
+
+msgid "Hozircha fayllar yo‘q"
+msgstr "Hozircha fayllar yo‘q"
+
+msgid "Kamida bitta rasm tanlang."
+msgstr "Kamida bitta rasm tanlang."
+
+msgid "Media fayl o‘zgartirildi"
+msgstr "Media fayl o‘zgartirildi"
+
+msgid "Media fayllar yuklandi"
+msgstr "Media fayllar yuklandi"
+
+msgid "Media faylni nashr etish va nashrdan olish"
+msgstr "Media faylni nashr etish va nashrdan olish"
+
+msgid "Nashr etilgan faylning roziligini olib tashlab bo‘lmaydi: avval nashrdan oling."
+msgstr "Nashr etilgan faylning roziligini olib tashlab bo‘lmaydi: avval nashrdan oling."
+
+msgid "Nashr etilgan fotorasm va videolar shu yerda ko‘rinadi."
+msgstr "Nashr etilgan fotorasm va videolar shu yerda ko‘rinadi."
+
+msgid "Nashr etish uchun fayllarda rozilik belgilangan bo‘lishi kerak."
+msgstr "Nashr etish uchun fayllarda rozilik belgilangan bo‘lishi kerak."
+
+msgid "Nashrga rozilik"
+msgstr "Nashrga rozilik"
+
+msgid "Olingan sana"
+msgstr "Olingan sana"
+
+msgid "Qidirish: sarlavha, muassasa"
+msgstr "Qidirish: sarlavha, muassasa"
+
+msgid "Rasmda yoki videoda ko‘ringan shaxslar (voyaga yetmaganlar uchun ota-onasi) ochiq saytda nashr etishga rozilik bergan. Rozilik bo‘lmasa, fayl nashr etilmaydi."
+msgstr "Rasmda yoki videoda ko‘ringan shaxslar (voyaga yetmaganlar uchun ota-onasi) ochiq saytda nashr etishga rozilik bergan. Rozilik bo‘lmasa, fayl nashr etilmaydi."
+
+msgid "Rozilik yo‘q"
+msgstr "Rozilik yo‘q"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Video uchun sarlavha shart."
+msgstr "Video uchun sarlavha shart."
+
+msgid "Video yuklash"
+msgstr "Video yuklash"
+
+#, python-format
+msgid "Yuklandi: %(n)d ta fayl. Ular qoralama holatida: tekshirib, nashr eting."
+msgstr "Yuklandi: %(n)d ta fayl. Ular qoralama holatida: tekshirib, nashr eting."
+
+msgid "media fayl"
+msgstr "media fayl"
+
+msgid "media fayllar"
+msgstr "media fayllar"
+
+msgid "Media faylni serverdan butunlay o‘chirish"
+msgstr "Media faylni serverdan butunlay o‘chirish"

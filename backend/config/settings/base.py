@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "apps.content",
     "apps.achievements",
     "apps.chat",
+    "apps.gallery",
     "apps.audit",
     "apps.tasks",
     "apps.documents",
@@ -269,6 +270,7 @@ NOTIFICATION_EMAILS_ENABLED = env_bool("NOTIFICATION_EMAILS_ENABLED", False)
 # (see deploy/nginx); a larger file is then refused, never accepted unscanned. Raise all three together.
 ACHIEVEMENT_VIDEO_MAX_BYTES = int(env("ACHIEVEMENT_VIDEO_MAX_BYTES", str(20 * 1024 * 1024)))
 CLAMAV_VIDEO_TIMEOUT = float(env("CLAMAV_VIDEO_TIMEOUT", "90"))  # seconds for scanning one video
+MEDIA_VIDEO_MAX_BYTES = int(env("MEDIA_VIDEO_MAX_BYTES", str(ACHIEVEMENT_VIDEO_MAX_BYTES)))  # gallery videos: same rules, own cap
 DOCUMENT_SCAN_MODE = env("DOCUMENT_SCAN_MODE", "clamav")
 CLAMAV_SOCKET = env("CLAMAV_SOCKET", "")  # e.g. /run/clamav/clamd.ctl ; empty = use host/port below
 CLAMAV_HOST = env("CLAMAV_HOST", "127.0.0.1")

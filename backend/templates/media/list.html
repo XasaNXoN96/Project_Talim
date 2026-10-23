@@ -1,0 +1,19 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+{% block title %}{% translate "Media" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><span>{% translate "Media" %}</span></div><h1>{% translate "Media" %}</h1><p>{% translate "Fotorasmlar va video materiallar." %}</p></div></section>
+<div class="container pub-body">
+  <div class="tabs" style="margin-bottom:16px"><a class="tab {% if tab == 'photo' %}active{% endif %}" href="?">{% translate "Fotorasmlar" %}</a><a class="tab {% if tab == 'video' %}active{% endif %}" href="?type=video">{% translate "Video" %}</a></div>
+  {% if items %}
+    {% if tab == 'photo' %}
+    <div class="photo-grid">{% for m in items %}<figure class="photo"><a class="g" data-lbx href="{% url 'gallery_public:file' m.pk 'full' %}" data-caption="{{ m.title }}"><img src="{% url 'gallery_public:file' m.pk 'thumb' %}" alt="{{ m.title }}" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block"></a>{% if m.title %}<figcaption class="small">{{ m.title }}</figcaption>{% endif %}</figure>{% endfor %}</div>
+    {% else %}
+    <div class="auto-grid">{% for m in items %}<article class="card"><video controls preload="metadata" playsinline style="width:100%;aspect-ratio:16/9;background:#000;display:block;border-radius:12px 12px 0 0" src="{% url 'gallery_public:file' m.pk 'full' %}#t=0.1"></video><div style="padding:12px 14px"><b class="small clamp2">{{ m.title }}</b>{% if m.institution %}<div class="xs muted">{{ m.institution.name }}</div>{% endif %}</div></article>{% endfor %}</div>
+    {% endif %}
+    {% include "includes/pagination.html" %}
+  {% else %}
+    <div class="card empty"><div class="ic-chip c-blue" data-i="image"></div><h3>{% translate "Hozircha fayllar yo‘q" %}</h3><p>{% translate "Nashr etilgan fotorasm va videolar shu yerda ko‘rinadi." %}</p></div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -97,10 +97,10 @@ def _read(uploaded):
     return b"".join(uploaded.chunks())
 
 
-def prepare_video(uploaded, *, request=None, user=None) -> CheckedVideo:
+def prepare_video(uploaded, *, request=None, user=None, limit=None) -> CheckedVideo:
     """Returns the bytes to store. Raises UploadRejected with a message fit for the form; refusals are audited (reason code only)."""
     try:
-        return _prepare(uploaded)
+        return _prepare(uploaded, limit)
     except UploadRejected as exc:
         if request is not None:
             if exc.code == "malware":
@@ -109,8 +109,8 @@ def prepare_video(uploaded, *, request=None, user=None) -> CheckedVideo:
         raise
 
 
-def _prepare(uploaded) -> CheckedVideo:
-    limit = max_bytes()
+def _prepare(uploaded, limit=None) -> CheckedVideo:
+    limit = limit or max_bytes()
     if uploaded.size > limit:
         raise UploadRejected("too_large", _("Video hajmi %(mb)d MB dan oshmasligi kerak.") % {"mb": mb(limit)})
     name = (uploaded.name or "").lower()

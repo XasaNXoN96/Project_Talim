@@ -1,0 +1,15 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Tahrirlash" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'gallery:list' %}">{% translate "Media" %}</a></div><h1>{{ item.title|default:_("Fotorasm") }}</h1></div></div>
+<div class="stack" style="max-width:640px">
+  <div class="card card-pad">{% if item.kind == 'photo' %}<img src="{% url 'gallery:file' item.pk 'thumb' %}" alt="" style="max-width:100%;border-radius:12px">{% else %}<video controls preload="metadata" playsinline style="width:100%;border-radius:12px;background:#000" src="{% url 'gallery:file' item.pk 'full' %}#t=0.1"></video>{% endif %}</div>
+  <form method="post" class="card card-pad" style="display:grid;gap:16px" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="alert err" role="alert"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}
+    {% for field in form %}{% include "includes/field.html" with field=field %}{% endfor %}
+    <div class="row"><button class="btn btn-primary" type="submit">{% translate "Saqlash" %}</button><a class="btn btn-secondary" href="{% url 'gallery:list' %}">{% translate "Bekor qilish" %}</a></div>
+  </form>
+</div>
+{% endblock %}

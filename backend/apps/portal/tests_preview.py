@@ -37,13 +37,16 @@ class PreviewSectionTests(TestCase):
     def test_the_menu_lists_the_sections_and_marks_the_current_one(self):
         user = make_user("viewer3", role="employee")
         login_with_two_factor(self.client, user)
-        body = self.client.get(reverse("portal:preview", args=["media"])).content.decode()
+        body = self.client.get(reverse("portal:preview", args=["geolokatsiya"])).content.decode()
         for slug in PREVIEW_SECTIONS:
             if slug == "chat":  # a real section for everybody with the chat right (an employee has it)
                 self.assertIn(reverse("chat:inbox"), body)
                 continue
+            if slug == "media":  # the gallery is real for everybody who may view it (an employee may)
+                self.assertIn(reverse("gallery:list"), body)
+                continue
             self.assertIn(reverse("portal:preview", args=[slug]), body)
-        self.assertRegex(body, r'href="/portal/maket/media/"[^>]*class="active"')
+        self.assertRegex(body, r'href="/portal/maket/geolokatsiya/"[^>]*class="active"')
 
 
 class DashboardTests(TestCase):
@@ -116,8 +119,9 @@ class AdminHubAndMenuTests(TestCase):
         positions = [body.index(f'href="{reverse(n)}"') for n in order]
         self.assertEqual(positions, sorted(positions))
         sidebar = body[body.index('class="sb-nav"'):body.index("</nav>", body.index('class="sb-nav"'))]
-        for slug in ("media", "kirish-chiqish", "geolokatsiya"):
+        for slug in ("kirish-chiqish", "geolokatsiya"):
             self.assertIn(reverse("portal:preview", args=[slug]), sidebar)
+        self.assertIn(f'href="{reverse("gallery:list")}"', sidebar)  # Media is real now
         self.assertIn(f'href="{reverse("chat:inbox")}"', sidebar)  # Chat is real now
         # Yutuqlar and Sertifikatlar are real now (the achievements section); the mock pages stay for people without access to it
         self.assertIn(f'href="{reverse("achievements:list")}"', sidebar)

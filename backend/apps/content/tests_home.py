@@ -17,8 +17,9 @@ class HomePageTests(TestCase):
         body = self.get().content.decode()
         for anchor in SECTIONS:
             self.assertIn(f'id="{anchor}"', body, anchor)
-        for anchor in ("yutuqlar", "hujjatlar", "media"):
+        for anchor in ("yutuqlar", "hujjatlar"):
             self.assertIn(f"#{anchor}", body)
+        self.assertIn('href="/media/"', body)  # the menu's Media is the real gallery page now (the "media" section stays on the home page)
         for marker in ('class="hero"', 'class="stats"', 'class="gallery"', 'class="video"', 'class="teachers"', 'class="map-card"'):
             self.assertIn(marker, body, marker)
 

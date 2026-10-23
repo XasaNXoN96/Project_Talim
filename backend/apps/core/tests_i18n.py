@@ -71,7 +71,7 @@ class CatalogTests(SimpleTestCase):
     def test_translations_are_real_not_copies_of_the_uzbek_source(self):
         # A handful of terms legitimately look the same in two languages (PDF, Excel). Everything else must differ.
         same_ok = {"Excel", "PDF", "2FA"}
-        same_ok_en = same_ok | {"Administrator", "e-mail", "Portal", "Media", "Medal", "Chat", "Admin panel", "Django admin"}  # identical in Uzbek and English
+        same_ok_en = same_ok | {"Administrator", "e-mail", "Portal", "Media", "Medal", "Video", "Chat", "Admin panel", "Django admin"}  # identical in Uzbek and English
         for lang in ("ru", "en"):
             ok = same_ok_en if lang == "en" else same_ok
             copies = [e["id"] for e in parse_po(lang) if e["str"] == e["id"] and e["id"] not in ok and CYRILLIC.search(e["id"]) is None]

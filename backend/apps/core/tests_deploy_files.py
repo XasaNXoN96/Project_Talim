@@ -259,3 +259,25 @@ class AchievementVideoUploadLimits(SimpleTestCase):
             self.assertEqual(conf.count("client_max_body_size 11m;"), 1, name)  # the general cap stays small
         self.assertLess(settings.ACHIEVEMENT_VIDEO_MAX_BYTES, 22 * 1024 * 1024)  # the cap leaves room for the form fields
         self.assertLess(settings.ACHIEVEMENT_VIDEO_MAX_BYTES, 25 * 1024 * 1024)  # and stays below clamd's StreamMaxLength of docs/CLAMAV.md
+
+
+class GalleryUploadLimits(SimpleTestCase):
+    """The gallery takes up to 12 photos or one video per form: exactly these two URLs get a bigger body limit (verified with `nginx -t` and a real nginx)."""
+
+    def test_both_nginx_templates_have_the_two_gallery_upload_locations(self):
+        from django.conf import settings
+
+        from apps.gallery.forms import MAX_PHOTOS_PER_UPLOAD
+        from apps.achievements.images import MAX_BYTES
+
+        for name in ("talim.conf.template", "talim-production.conf.template"):
+            conf = text(DEPLOY / "nginx" / name)
+            photos = conf[conf.index("location = /portal/media/new/photos/ {"):]
+            photos = photos[:photos.index("\n    }")]
+            video = conf[conf.index("location = /portal/media/new/video/ {"):]
+            video = video[:video.index("\n    }")]
+            self.assertIn("client_max_body_size 100m;", photos, name)
+            self.assertIn("client_max_body_size 22m;", video, name)
+            self.assertEqual(conf.count("client_max_body_size 11m;"), 1, name)  # the general cap stays small
+        self.assertGreaterEqual(100 * 1024 * 1024, MAX_PHOTOS_PER_UPLOAD * MAX_BYTES + 1024 * 1024)  # 12 x 8 MB fit the photo limit
+        self.assertLess(settings.MEDIA_VIDEO_MAX_BYTES, 22 * 1024 * 1024)

@@ -67,7 +67,10 @@
       {% endif %}
     </section>
     <section id="media" aria-labelledby="h-g">
-      <div class="sec-head"><h2 id="h-g">{% translate "Fotorasmlar galereyasi" %}</h2></div>
+      <div class="sec-head"><h2 id="h-g">{% translate "Fotorasmlar galereyasi" %}</h2>{% if latest_photos %}<a class="more" href="{% url 'gallery_public:list' %}">{% translate "Barchasi" %}</a>{% endif %}</div>
+      {% if latest_photos %}
+      <div class="gallery">{% for m in latest_photos %}<a class="g" data-lbx href="{% url 'gallery_public:file' m.pk 'full' %}" data-caption="{{ m.title }}" aria-label="{% translate 'Rasmni kattalashtirish' %}"><img src="{% url 'gallery_public:file' m.pk 'thumb' %}" alt="{{ m.title }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></a>{% endfor %}</div>
+      {% else %}
       <div class="gallery">
         <button class="g" data-lb aria-label="{% translate 'Rasmni kattalashtirish' %}"><div class="ph" data-ph="ceremony" style="height:100%"></div></button>
         <button class="g" data-lb aria-label="{% translate 'Rasmni kattalashtirish' %}"><div class="ph" data-ph="hall" style="height:100%"></div></button>
@@ -75,12 +78,19 @@
         <button class="g" data-lb aria-label="{% translate 'Rasmni kattalashtirish' %}"><div class="ph" data-ph="class" style="height:100%"></div></button>
         <button class="g" data-lb aria-label="{% translate 'Yana rasmlar' %}"><div class="ph" data-ph="people" style="height:100%"></div><span class="more-tile">+12</span></button>
       </div>
+      {% endif %}
     </section>
     <section aria-labelledby="h-v">
-      <div class="sec-head"><h2 id="h-v">{% translate "Video va media" %}</h2></div>
+      <div class="sec-head"><h2 id="h-v">{% translate "Video va media" %}</h2>{% if latest_video %}<a class="more" href="{% url 'gallery_public:list' %}?type=video">{% translate "Barchasi" %}</a>{% endif %}</div>
+      {% if latest_video %}
+      <video controls preload="metadata" playsinline style="width:100%;aspect-ratio:16/9;background:#000;display:block;border-radius:12px" src="{% url 'gallery_public:file' latest_video.pk 'full' %}#t=0.1"></video>
+      <h3 style="font-size:15px;margin-top:10px">{{ latest_video.title }}</h3>
+      {% if latest_video.taken_on %}<p class="xs muted" style="margin-top:2px">{{ latest_video.taken_on|date:"d.m.Y" }}</p>{% endif %}
+      {% else %}
       <div class="video"><div class="ratio-16-9" data-ph="ceremony"></div><button class="play" aria-label="{% translate 'Videoni ijro etish' %}"><span data-i="play"></span></button><span class="duration">00:00</span></div>
       <h3 style="font-size:15px;margin-top:10px">{% translate "Ustozlar kuni munosabati bilan tantanali tadbir" %}</h3>
       <p class="xs muted" style="margin-top:2px">01.10.2026 · <span class="demo-tag">{% translate "Maket" %}</span> {% translate "ko‘rishlar va izohlar soni tizim ulanganda ko‘rsatiladi" %}</p>
+          {% endif %}
     </section>
   </div>
 

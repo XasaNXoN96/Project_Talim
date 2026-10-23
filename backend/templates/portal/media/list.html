@@ -1,0 +1,33 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Media" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Media" %}</h1><p>{% translate "Fotorasmlar va video materiallar kutubxonasi" %}</p></div>
+<div class="row wrap">{% if can_add %}<a class="btn btn-primary" href="{% url 'gallery:upload_photos' %}"><span data-i="upload" data-c="sm"></span>{% translate "Fotorasmlar yuklash" %}</a><a class="btn btn-secondary" href="{% url 'gallery:upload_video' %}">{% translate "Video yuklash" %}</a>{% endif %}</div></div>
+<div class="tabs" style="margin-bottom:16px"><a class="tab {% if tab == 'photo' %}active{% endif %}" href="?">{% translate "Fotorasmlar" %} ({{ n_photo }})</a><a class="tab {% if tab == 'video' %}active{% endif %}" href="?type=video">{% translate "Video" %} ({{ n_video }})</a></div>
+<form method="get" class="row wrap" style="margin-bottom:16px">
+  {% if tab == 'video' %}<input type="hidden" name="type" value="video">{% endif %}
+  <input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Qidirish: sarlavha, muassasa' %}" style="max-width:260px" maxlength="100">
+  {% if curator %}<select class="input" name="status" style="max-width:180px" aria-label="{% translate 'Holat' %}"><option value="">{% translate "Barcha holatlar" %}</option>{% for code, label in statuses %}<option value="{{ code }}" {% if status == code %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>{% endif %}
+  <button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button>
+</form>
+{% if items %}
+<form method="post" action="{% url 'gallery:bulk' %}">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+{% if curator %}<div class="row wrap" style="margin-bottom:12px"><button class="btn btn-primary btn-sm" type="submit" name="action" value="publish">{% translate "Belgilanganlarni nashr etish" %}</button><button class="btn btn-secondary btn-sm" type="submit" name="action" value="unpublish">{% translate "Nashrdan olish" %}</button><span class="muted small">{% translate "Nashr etish uchun fayllarda rozilik belgilangan bo‘lishi kerak." %}</span></div>{% endif %}
+{% if tab == 'photo' %}
+<div class="photo-grid">{% for m in items %}<figure class="photo">
+  {% if curator %}<label class="check" style="margin-bottom:6px"><input type="checkbox" name="ids" value="{{ m.pk }}"> <span class="small">{% if m.status == 'published' %}<span class="badge b-ok plain">{% translate "Nashr etilgan" %}</span>{% else %}<span class="badge plain">{% translate "Qoralama" %}</span>{% endif %}{% if not m.consent_confirmed %} <span class="badge b-warn plain">{% translate "Rozilik yo‘q" %}</span>{% endif %}</span></label>{% endif %}
+  <a class="g" data-lbx href="{% url 'gallery:file' m.pk 'full' %}" data-caption="{{ m.title }}"><img src="{% url 'gallery:file' m.pk 'thumb' %}" alt="{{ m.title }}" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block"></a>
+  <figcaption class="small">{{ m.title|default:"—" }}{% if m.institution %}<div class="xs muted">{{ m.institution.name }}</div>{% endif %}
+  {% if curator %}<div class="row" style="gap:8px;margin-top:4px">{% if perms.gallery.change_mediaitem %}<a class="xs" href="{% url 'gallery:edit' m.pk %}">{% translate "Tahrirlash" %}</a>{% endif %}{% if perms.gallery.erase_mediaitem %}<a class="xs" href="{% url 'gallery:delete' m.pk %}">{% translate "Butunlay o‘chirish" %}</a>{% endif %}</div>{% endif %}</figcaption></figure>{% endfor %}</div>
+{% else %}
+<div class="auto-grid">{% for m in items %}<article class="card">
+  <video controls preload="metadata" playsinline style="width:100%;aspect-ratio:16/9;background:#000;display:block;border-radius:12px 12px 0 0" src="{% url 'gallery:file' m.pk 'full' %}#t=0.1"></video>
+  <div style="padding:12px 14px"><b class="small clamp2">{{ m.title }}</b>{% if m.institution %}<div class="xs muted">{{ m.institution.name }}</div>{% endif %}
+  {% if curator %}<label class="check" style="margin-top:6px"><input type="checkbox" name="ids" value="{{ m.pk }}"> <span class="small">{% if m.status == 'published' %}<span class="badge b-ok plain">{% translate "Nashr etilgan" %}</span>{% else %}<span class="badge plain">{% translate "Qoralama" %}</span>{% endif %}{% if not m.consent_confirmed %} <span class="badge b-warn plain">{% translate "Rozilik yo‘q" %}</span>{% endif %}</span></label>
+  <div class="row" style="gap:8px;margin-top:4px">{% if perms.gallery.change_mediaitem %}<a class="xs" href="{% url 'gallery:edit' m.pk %}">{% translate "Tahrirlash" %}</a>{% endif %}{% if perms.gallery.erase_mediaitem %}<a class="xs" href="{% url 'gallery:delete' m.pk %}">{% translate "Butunlay o‘chirish" %}</a>{% endif %}</div>{% endif %}</div></article>{% endfor %}</div>
+{% endif %}
+</form>
+{% include "includes/pagination.html" %}
+{% else %}<div class="card empty"><div class="ic-chip c-blue" data-i="image"></div><h3>{% translate "Hozircha fayllar yo‘q" %}</h3><p>{% translate "Nashr etilgan fotorasm va videolar shu yerda ko‘rinadi." %}</p></div>{% endif %}
+{% endblock %}

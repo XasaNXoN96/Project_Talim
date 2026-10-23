@@ -15,6 +15,7 @@ urlpatterns = [
     path("portal/news/", include("apps.content.manage_urls")),
     path("portal/achievements/", include("apps.achievements.urls")),
     path("portal/chat/", include("apps.chat.urls")),
+    path("portal/media/", include("apps.gallery.urls")),
     path("portal/employees/", include("apps.organization.urls")),
     path("portal/tasks/", include("apps.tasks.urls")),
     path("portal/documents/", include("apps.documents.urls")),
@@ -22,6 +23,7 @@ urlpatterns = [
     path("portal/notifications/", include("apps.notifications.urls")),
     path("portal/", include("apps.portal.urls")),
     path("", include("apps.achievements.public_urls")),
+    path("", include("apps.gallery.public_urls")),
     path("", include("apps.content.urls")),
 ]
 

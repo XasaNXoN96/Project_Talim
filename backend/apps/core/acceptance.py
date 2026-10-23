@@ -110,6 +110,12 @@ class World:
             vid.save()
             return a, im
 
+        from apps.gallery.models import MediaItem
+
+        self.media_item = MediaItem(kind="photo", title="Rasm", content_type="image/jpeg", size=len(_jpeg()), sha256="0" * 64, status="published", publish_at=timezone.now(), consent_confirmed=True)
+        self.media_item.file.save("ab/test-media.jpg", ContentFile(_jpeg()), save=False)
+        self.media_item.thumb.save("ab/test-media-thumb.jpg", ContentFile(_jpeg()), save=False)
+        self.media_item.save()
         self.achievement, self.achievement_image = _achievement("submitted")
         self.pub_achievement, self.pub_image = _achievement("published", publish_at=timezone.now())
         self.news = News.objects.create(title="Yangilik", slug="yangilik", body="Matn", excerpt="Q", status="published", publish_at=timezone.now(), category=self.news_category)
@@ -129,7 +135,7 @@ class World:
             "users:detail": {"pk": self.users["emp"].pk}, "users:edit": {"pk": self.users["emp"].pk}, "users:role_add": {"pk": self.users["emp"].pk},
             "users:role_remove": {"pk": self.users["emp"].pk, "assignment_id": self.assignment.pk}, "users:action": {"pk": self.users["emp"].pk, "action": "unlock"},
             "employees:detail": {"pk": self.card.pk}, "employees:photo": {"pk": self.card.pk}, "employees:edit": {"pk": self.card.pk}, "employees:archive": {"pk": self.card.pk}, "employees:restore": {"pk": self.card.pk},
-            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "reports:school": {"pk": self.institution.pk}, "chat:thread": {"pk": self.conversation.pk}, "chat:archive_thread": {"pk": self.conversation.pk}, "employees:change_detail": {"pk": self.change_request.pk}, "employees:change_decide": {"pk": self.change_request.pk, "decision": "reject"}, "employees:change_cancel": {"pk": self.change_request.pk}, "employees:institution_edit": {"pk": self.institution.pk},
+            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "gallery:file": {"pk": self.media_item.pk, "variant": "thumb"}, "gallery:edit": {"pk": self.media_item.pk}, "gallery:delete": {"pk": self.media_item.pk}, "gallery_public:file": {"pk": self.media_item.pk, "variant": "thumb"}, "reports:school": {"pk": self.institution.pk}, "chat:thread": {"pk": self.conversation.pk}, "chat:archive_thread": {"pk": self.conversation.pk}, "employees:change_detail": {"pk": self.change_request.pk}, "employees:change_decide": {"pk": self.change_request.pk, "decision": "reject"}, "employees:change_cancel": {"pk": self.change_request.pk}, "employees:institution_edit": {"pk": self.institution.pk},
             "tasks:detail": {"pk": t}, "tasks:edit": {"pk": t}, "tasks:comment": {"pk": t}, "tasks:attachment_add": {"pk": t},
             "tasks:attachment_download": {"pk": t, "attachment_id": self.attachment.pk}, "tasks:attachment_remove": {"pk": t, "attachment_id": self.attachment.pk},
             "tasks:transition": {"pk": t, "status": "done"},

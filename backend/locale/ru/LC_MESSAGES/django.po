@@ -3595,3 +3595,121 @@ msgstr "Открытые задания с истёкшим сроком"
 
 msgid "Muddati o‘tgan topshiriqlar yo‘q."
 msgstr "Просроченных заданий нет."
+
+#, python-format
+msgid "%(n)d ta faylda nashrga rozilik belgilanmagan: ular nashr etilmadi."
+msgstr "У %(n)d файлов не отмечено согласие на публикацию: они не опубликованы."
+
+msgid "Avval fayllarni belgilang va amalni tanlang."
+msgstr "Сначала отметьте файлы и выберите действие."
+
+#, python-format
+msgid "Bajarildi: %(n)d ta fayl."
+msgstr "Выполнено: %(n)d файлов."
+
+msgid "Barcha rasmlarga bir xil sarlavha qo‘yiladi (ixtiyoriy)."
+msgstr "Один и тот же заголовок будет у всех фото (необязательно)."
+
+msgid "Belgilanganlarni nashr etish"
+msgstr "Опубликовать отмеченные"
+
+#, python-format
+msgid "Bir yuklashda ko‘pi bilan %(n)d ta rasm."
+msgstr "За одну загрузку — не более %(n)d фото."
+
+msgid "Butunlay o‘chirish"
+msgstr "Удалить навсегда"
+
+msgid "Fayl o‘chirildi."
+msgstr "Файл удалён."
+
+msgid "Fayl saytdan va serverdan butunlay o‘chiriladi. Bu amalni qaytarib bo‘lmaydi."
+msgstr "Файл будет полностью удалён с сайта и с сервера. Это действие нельзя отменить."
+
+msgid "Fayllar avval qoralama bo‘lib saqlanadi. Ularni ko‘rib chiqib, rozilik belgilangandan keyingina nashr etasiz."
+msgstr "Файлы сначала сохраняются как черновики. Опубликовать их можно после просмотра и отметки согласия."
+
+msgid "Faylni o‘chirish"
+msgstr "Удаление файла"
+
+msgid "Fotorasm"
+msgstr "Фото"
+
+msgid "Fotorasmlar"
+msgstr "Фотографии"
+
+msgid "Fotorasmlar (JPG yoki PNG)"
+msgstr "Фотографии (JPG или PNG)"
+
+msgid "Fotorasmlar va video materiallar kutubxonasi"
+msgstr "Библиотека фотографий и видеоматериалов"
+
+msgid "Fotorasmlar va video materiallar."
+msgstr "Фотографии и видеоматериалы."
+
+msgid "Fotorasmlar yuklash"
+msgstr "Загрузить фотографии"
+
+msgid "Ha, o‘chirish"
+msgstr "Да, удалить"
+
+msgid "Hozircha fayllar yo‘q"
+msgstr "Файлов пока нет"
+
+msgid "Kamida bitta rasm tanlang."
+msgstr "Выберите хотя бы одно фото."
+
+msgid "Media fayl o‘zgartirildi"
+msgstr "Медиафайл изменён"
+
+msgid "Media fayllar yuklandi"
+msgstr "Медиафайлы загружены"
+
+msgid "Media faylni nashr etish va nashrdan olish"
+msgstr "Публикация и снятие с публикации медиафайлов"
+
+msgid "Nashr etilgan faylning roziligini olib tashlab bo‘lmaydi: avval nashrdan oling."
+msgstr "Нельзя убрать согласие у опубликованного файла: сначала снимите его с публикации."
+
+msgid "Nashr etilgan fotorasm va videolar shu yerda ko‘rinadi."
+msgstr "Опубликованные фото и видео появятся здесь."
+
+msgid "Nashr etish uchun fayllarda rozilik belgilangan bo‘lishi kerak."
+msgstr "Для публикации у файлов должно быть отмечено согласие."
+
+msgid "Nashrga rozilik"
+msgstr "Согласие на публикацию"
+
+msgid "Olingan sana"
+msgstr "Дата съёмки"
+
+msgid "Qidirish: sarlavha, muassasa"
+msgstr "Поиск: заголовок, учреждение"
+
+msgid "Rasmda yoki videoda ko‘ringan shaxslar (voyaga yetmaganlar uchun ota-onasi) ochiq saytda nashr etishga rozilik bergan. Rozilik bo‘lmasa, fayl nashr etilmaydi."
+msgstr "Люди на фото или видео (за несовершеннолетних — родители) согласились на публикацию на открытом сайте. Без согласия файл не публикуется."
+
+msgid "Rozilik yo‘q"
+msgstr "Нет согласия"
+
+msgid "Video"
+msgstr "Видео"
+
+msgid "Video uchun sarlavha shart."
+msgstr "Для видео нужен заголовок."
+
+msgid "Video yuklash"
+msgstr "Загрузить видео"
+
+#, python-format
+msgid "Yuklandi: %(n)d ta fayl. Ular qoralama holatida: tekshirib, nashr eting."
+msgstr "Загружено файлов: %(n)d. Они в черновиках: проверьте и опубликуйте."
+
+msgid "media fayl"
+msgstr "медиафайл"
+
+msgid "media fayllar"
+msgstr "медиафайлы"
+
+msgid "Media faylni serverdan butunlay o‘chirish"
+msgstr "Полное удаление медиафайла с сервера"

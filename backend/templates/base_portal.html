@@ -32,7 +32,11 @@
       {% if perms.documents.view_document %}
       <a href="{% url 'documents:list' %}" title="{% translate 'Hujjatlar' %}" {% if request.resolver_match.namespace == 'documents' %}class="active" aria-current="page"{% endif %}><i data-i="file" style="display:contents"></i><span>{% translate "Hujjatlar" %}</span></a>
       {% endif %}
+      {% if perms.gallery.view_mediaitem %}
+      <a href="{% url 'gallery:list' %}" title="{% translate 'Media' %}" {% if request.resolver_match.namespace == 'gallery' %}class="active" aria-current="page"{% endif %}><i data-i="image" style="display:contents"></i><span>{% translate "Media" %}</span></a>
+      {% else %}
       <a href="{% url 'portal:preview' 'media' %}" title="{% translate 'Media' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'media' %}class="active" aria-current="page"{% endif %}><i data-i="image" style="display:contents"></i><span>{% translate "Media" %}</span></a>
+      {% endif %}
       {% if perms.organization.view_department %}
       <a href="{% url 'employees:structure' %}" title="{% translate 'Tashkilot' %}" {% if request.resolver_match.url_name == 'structure' %}class="active" aria-current="page"{% endif %}><i data-i="building" style="display:contents"></i><span>{% translate "Tashkilot" %}</span></a>
       {% endif %}
@@ -90,5 +94,6 @@
 <div class="scrim"></div>
 <script src="{% static 'assets/js/app.js' %}"></script>
 <script src="{% static 'js/shell.js' %}"></script>
+<script src="{% static 'js/gallery.js' %}"></script>
 </body>
 </html>

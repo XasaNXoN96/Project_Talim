@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.audit.models import AuditLog
 from apps.audit.services import record
 from apps.core.mixins import PortalPermissionMixin
+from apps.core.ranged import ranged_file_response
 from apps.organization.models import Institution
 
 from . import workflow
@@ -31,67 +32,9 @@ def _file_response(image, *, public):
     return response
 
 
-def _parse_range(header, size):
-    """('ok', start, end) for a single byte range, ('none',) when there is no Range header, ('bad',) when it cannot be satisfied."""
-    import re
-
-    if not header:
-        return ("none",)
-    m = re.fullmatch(r"bytes=(\d*)-(\d*)", header.strip())
-    if not m or (m.group(1) == "" and m.group(2) == ""):
-        return ("bad",)
-    if m.group(1) == "":  # the last N bytes
-        n = int(m.group(2))
-        if n == 0:
-            return ("bad",)
-        return ("ok", max(size - n, 0), size - 1)
-    start = int(m.group(1))
-    end = int(m.group(2)) if m.group(2) else size - 1
-    if start >= size or end < start:
-        return ("bad",)
-    return ("ok", start, min(end, size - 1))
-
-
 def _video_response(request, video, *, public):
     """The video with Range support (browsers seek with it). Call it AFTER the permission check."""
-    from django.http import HttpResponse, StreamingHttpResponse
-
-    try:
-        handle = video.file.storage.open(video.file.name, "rb")
-        size = video.file.storage.size(video.file.name)
-    except (FileNotFoundError, ValueError, OSError) as exc:
-        raise Http404 from exc
-    rng = _parse_range(request.headers.get("Range"), size)
-    if rng[0] == "bad":
-        handle.close()
-        response = HttpResponse(status=416)
-        response["Content-Range"] = f"bytes */{size}"
-        return response
-    start, end = (rng[1], rng[2]) if rng[0] == "ok" else (0, size - 1)
-    length = end - start + 1
-
-    def chunks():
-        try:
-            handle.seek(start)
-            left = length
-            while left > 0:
-                data = handle.read(min(64 * 1024, left))
-                if not data:
-                    break
-                left -= len(data)
-                yield data
-        finally:
-            handle.close()
-
-    response = StreamingHttpResponse(chunks(), status=206 if rng[0] == "ok" else 200, content_type=video.content_type)
-    response["Content-Length"] = str(length)
-    response["Accept-Ranges"] = "bytes"
-    if rng[0] == "ok":
-        response["Content-Range"] = f"bytes {start}-{end}/{size}"
-    response["X-Content-Type-Options"] = "nosniff"
-    response["Cache-Control"] = "public, max-age=3600" if public else "private, no-cache"
-    response["Content-Security-Policy"] = "default-src 'none'; sandbox"
-    return response
+    return ranged_file_response(request, video.file, video.content_type, public=public)
 
 
 def _school_for(user):
