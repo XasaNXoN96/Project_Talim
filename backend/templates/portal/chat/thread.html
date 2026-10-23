@@ -1,0 +1,21 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{{ other.get_full_name|default:other.get_username }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'chat:inbox' %}">{% translate "Chat" %}</a></div><h1>{{ other.get_full_name|default:other.get_username }}</h1>{% if other.employee.institution %}<p>{{ other.employee.institution.name }}</p>{% endif %}</div></div>
+{% include "portal/chat/_banner.html" %}
+<div class="stack" style="max-width:820px">
+  <section class="card card-pad cht-thread" aria-live="polite">
+    {% for m in messages_list %}<div class="cht-msg {% if m.sender_id == request.user.pk %}mine{% endif %}"><div class="cht-bubble">{{ m.body|linebreaksbr }}</div><div class="xs muted">{{ m.sender.get_full_name|default:m.sender.get_username }} · {{ m.created_at|date:"d.m.Y H:i" }}{% if m.sender_id == request.user.pk and m.read_at %} · {% translate "o‘qildi" %}{% endif %}</div></div>
+    {% empty %}<p class="muted">{% translate "Hali xabarlar yo‘q. Birinchi bo‘lib yozing." %}</p>{% endfor %}
+  </section>
+  {% if other.is_active %}
+  <form method="post" class="card card-pad" style="display:grid;gap:8px">
+    {% csrf_token %}
+    <label for="chat-body" class="sr-only">{% translate "Xabar" %}</label>
+    <textarea id="chat-body" class="input" name="body" rows="3" maxlength="{{ max_body }}" required placeholder="{% translate 'Xabar yozing' %}"></textarea>
+    <div class="row"><button class="btn btn-primary" type="submit">{% translate "Yuborish" %}</button><a class="btn btn-ghost" href="{% url 'chat:thread' conv.pk %}">{% translate "Yangilash" %}</a></div>
+  </form>
+  {% else %}<p class="muted">{% translate "Suhbatdosh faol emas: unga yozib bo‘lmaydi." %}</p>{% endif %}
+</div>
+{% endblock %}

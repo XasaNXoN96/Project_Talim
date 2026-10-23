@@ -1,0 +1,25 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Chat" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Chat" %}</h1><p>{% translate "Tizim ichidagi xodimlar va muassasalar bilan yozishma." %}</p></div>
+<div class="row wrap">{% if can_audit %}<a class="btn btn-secondary" href="{% url 'chat:archive' %}">{% translate "Chat arxivi" %}</a>{% endif %}<a class="btn btn-ghost" href="{% url 'chat:notice' %}">{% translate "Qoidalar" %}</a></div></div>
+{% include "portal/chat/_banner.html" %}
+<div class="stack" style="max-width:820px">
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Suhbatlar" %}</h2>
+    {% if items %}<ul class="cht-list">{% for conv, other, last, unread in items %}
+      <li><a href="{% url 'chat:thread' conv.pk %}"><span class="av" data-name="{{ other.get_full_name|default:other.get_username }}"></span>
+        <span class="grow"><b>{{ other.get_full_name|default:other.get_username }}</b>{% if other.employee.institution %} <span class="muted small">· {{ other.employee.institution.name }}</span>{% endif %}
+        <span class="muted small clamp1" style="display:block">{% if last %}{{ last.body|truncatechars:80 }}{% else %}—{% endif %}</span></span>
+        {% if last %}<span class="muted xs nw">{{ last.created_at|date:"d.m H:i" }}</span>{% endif %}{% if unread %}<span class="badge b-err plain">{{ unread }}</span>{% endif %}</a></li>{% endfor %}</ul>
+    {% else %}<p class="muted">{% translate "Hali suhbatlar yo‘q. Quyidan kimnidir tanlang." %}</p>{% endif %}</section>
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Yangi suhbat" %}</h2>
+    <form method="get" class="row wrap" style="margin-bottom:12px"><input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Ism yoki muassasa' %}" style="max-width:260px" maxlength="100"><button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button></form>
+    {% if people %}<ul class="cht-list">{% for p in people %}
+      <li><form method="post" action="{% url 'chat:start' %}">{% csrf_token %}<input type="hidden" name="user" value="{{ p.pk }}">
+        <button type="submit"><span class="av" data-name="{{ p.get_full_name|default:p.get_username }}"></span>
+        <span class="grow"><b>{{ p.get_full_name|default:p.get_username }}</b>{% if p.employee.institution %} <span class="muted small">· {{ p.employee.institution.name }}</span>{% elif p.employee.position %} <span class="muted small">· {{ p.employee.position.name }}</span>{% endif %}</span>
+        <span class="btn btn-secondary btn-sm">{% translate "Yozish" %}</span></button></form></li>{% endfor %}</ul>
+    {% else %}<p class="muted">{% translate "Hech kim topilmadi." %}</p>{% endif %}</section>
+</div>
+{% endblock %}

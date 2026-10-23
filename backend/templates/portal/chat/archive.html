@@ -1,0 +1,14 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Chat arxivi" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'chat:inbox' %}">{% translate "Chat" %}</a></div><h1>{% translate "Chat arxivi" %}</h1><p>{% translate "Barcha suhbatlar. Har bir ochilish jurnalga yoziladi." %}</p></div></div>
+<form method="get" class="row wrap" style="margin-bottom:16px"><input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Ishtirokchi ismi' %}" style="max-width:260px" maxlength="100"><button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button></form>
+{% if conversations %}
+<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Ishtirokchilar" %}</th><th>{% translate "Xabarlar" %}</th><th>{% translate "Oxirgi xabar" %}</th><th></th></tr></thead><tbody>
+{% for c in conversations %}<tr><td><b>{{ c.user_low.get_full_name|default:c.user_low.get_username }}</b> ⇄ <b>{{ c.user_high.get_full_name|default:c.user_high.get_username }}</b></td><td>{{ c.n }}</td><td>{{ c.last_message_at|date:"d.m.Y H:i"|default:"—" }}</td>
+<td class="nw"><a class="btn btn-secondary btn-sm" href="{% url 'chat:archive_thread' c.pk %}">{% translate "Ochish" %}</a></td></tr>{% endfor %}
+</tbody></table></div>
+{% include "includes/pagination.html" %}
+{% else %}<div class="card empty"><h3>{% translate "Suhbatlar yo‘q" %}</h3></div>{% endif %}
+{% endblock %}

@@ -3346,3 +3346,153 @@ msgstr "запрос на изменение данных"
 
 msgid "ma’lumotni o‘zgartirish so‘rovlari"
 msgstr "запросы на изменение данных"
+
+msgid "Administrator barcha yozishmalarni ko‘rishi mumkin."
+msgstr "Администратор может читать всю переписку."
+
+msgid "Administrator suhbatni ko‘rdi"
+msgstr "Администратор просмотрел переписку"
+
+msgid "Barcha suhbatlar. Har bir ochilish jurnalga yoziladi."
+msgstr "Все переписки. Каждое открытие записывается в журнал."
+
+msgid "Barcha suhbatlarni ko‘rish (har bir ko‘rish jurnalga yoziladi)"
+msgstr "Просмотр всех переписок (каждый просмотр записывается в журнал)"
+
+msgid "Barcha xabarlar saqlanadi va o‘chirib bo‘lmaydi."
+msgstr "Все сообщения сохраняются и не могут быть удалены."
+
+msgid "Bu foydalanuvchi bilan yozishib bo‘lmaydi."
+msgstr "С этим пользователем нельзя переписываться."
+
+msgid "Bu suhbat sizniki emas."
+msgstr "Эта переписка не ваша."
+
+msgid "Chat arxivi"
+msgstr "Архив чата"
+
+msgid "Chat faqat shu sayt ichida ishlaydi: yozishmalar tashqariga chiqmaydi."
+msgstr "Чат работает только внутри этого сайта: переписка не выходит наружу."
+
+msgid "Chat haqida ogohlantirish"
+msgstr "Предупреждение о чате"
+
+msgid "Chat haqidagi ogohlantirish qabul qilindi"
+msgstr "Предупреждение о чате принято"
+
+msgid "Chat rasmiy topshiriq o‘rnini bosmaydi: ish topshiriqlari «Topshiriqlar» bo‘limida beriladi."
+msgstr "Чат не заменяет официальное поручение: рабочие задания даются в разделе «Задания»."
+
+msgid "Chatdan foydalanish"
+msgstr "Пользоваться чатом"
+
+msgid "Chatdan foydalanishdan oldin quyidagi qoidalar bilan tanishing."
+msgstr "Перед использованием чата ознакомьтесь с правилами ниже."
+
+msgid "Chatni ochish"
+msgstr "Открыть чат"
+
+msgid "Davom etish uchun ogohlantirish bilan tanishganingizni tasdiqlang."
+msgstr "Чтобы продолжить, подтвердите, что ознакомились с предупреждением."
+
+msgid "Eslatma."
+msgstr "Напоминание."
+
+msgid "Faqat matn yuboriladi: fayl va rasm yo‘q."
+msgstr "Отправляется только текст: файлов и изображений нет."
+
+msgid "Hali suhbatlar yo‘q. Quyidan kimnidir tanlang."
+msgstr "Переписок пока нет. Выберите кого-нибудь ниже."
+
+msgid "Hali xabarlar yo‘q. Birinchi bo‘lib yozing."
+msgstr "Сообщений пока нет. Напишите первым."
+
+msgid "Hech kim topilmadi."
+msgstr "Никого не найдено."
+
+msgid "Ishtirokchi ismi"
+msgstr "Имя участника"
+
+msgid "Ishtirokchilar"
+msgstr "Участники"
+
+msgid "Ism yoki muassasa"
+msgstr "Имя или учреждение"
+
+msgid "Juda tez yozyapsiz. Bir daqiqadan keyin qayta urinib ko‘ring."
+msgstr "Вы пишете слишком часто. Повторите через минуту."
+
+msgid "Oxirgi xabar"
+msgstr "Последнее сообщение"
+
+msgid "O‘zingiz bilan suhbat ochib bo‘lmaydi."
+msgstr "Нельзя начать переписку с самим собой."
+
+msgid "Parol, shaxsiy hujjat, karta raqami kabi maxfiy ma’lumotni yubormang."
+msgstr "Не отправляйте конфиденциальные данные: пароли, личные документы, номера карт."
+
+msgid "Qayta tasdiqlash"
+msgstr "Подтвердить снова"
+
+msgid "Qoidalar"
+msgstr "Правила"
+
+msgid "Siz boshqa odamlarning yozishmasini ko‘ryapsiz. Bu ko‘rish jurnalga yozildi."
+msgstr "Вы просматриваете чужую переписку. Этот просмотр записан в журнал."
+
+msgid "Suhbatdosh faol emas: unga yozib bo‘lmaydi."
+msgstr "Собеседник неактивен: ему нельзя писать."
+
+msgid "Suhbatlar"
+msgstr "Переписки"
+
+msgid "Suhbatlar yo‘q"
+msgstr "Переписок нет"
+
+msgid "Tanishdim va roziman"
+msgstr "Ознакомлен(а) и согласен(на)"
+
+msgid "Tizim ichidagi xodimlar va muassasalar bilan yozishma."
+msgstr "Переписка с сотрудниками и учреждениями внутри системы."
+
+msgid "Uning har bir ko‘rishi jurnalga yoziladi."
+msgstr "Каждый его просмотр записывается в журнал."
+
+msgid "Xabar"
+msgstr "Сообщение"
+
+msgid "Xabar bo‘sh."
+msgstr "Сообщение пустое."
+
+msgid "Xabar juda uzun."
+msgstr "Сообщение слишком длинное."
+
+msgid "Xabar yozing"
+msgstr "Напишите сообщение"
+
+msgid "Xabarlar"
+msgstr "Сообщения"
+
+msgid "Xabarlar yo‘q."
+msgstr "Сообщений нет."
+
+msgid "Yangi suhbat"
+msgstr "Новая переписка"
+
+msgid "Yangilash"
+msgstr "Обновить"
+
+msgid "Yozish"
+msgstr "Написать"
+
+msgid "Yozishmalar saqlanadi va administrator ularni ko‘rishi mumkin. Maxfiy ma’lumot yubormang."
+msgstr "Переписка сохраняется, и администратор может её читать. Не отправляйте конфиденциальные данные."
+
+msgid "o‘qildi"
+msgstr "прочитано"
+
+msgid "suhbat"
+msgstr "переписка"
+
+msgid "suhbatlar"
+msgstr "переписки"

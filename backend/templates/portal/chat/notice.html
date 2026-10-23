@@ -1,0 +1,23 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Chat haqida ogohlantirish" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Chat haqida ogohlantirish" %}</h1><p>{% translate "Chatdan foydalanishdan oldin quyidagi qoidalar bilan tanishing." %}</p></div></div>
+<div class="stack" style="max-width:760px">
+  <section class="card card-pad">
+    <ul class="stack" style="margin:0;padding-left:20px">
+      <li>{% translate "Chat faqat shu sayt ichida ishlaydi: yozishmalar tashqariga chiqmaydi." %}</li>
+      <li><b>{% translate "Barcha xabarlar saqlanadi va o‘chirib bo‘lmaydi." %}</b></li>
+      <li><b>{% translate "Administrator barcha yozishmalarni ko‘rishi mumkin." %}</b> {% translate "Uning har bir ko‘rishi jurnalga yoziladi." %}</li>
+      <li>{% translate "Parol, shaxsiy hujjat, karta raqami kabi maxfiy ma’lumotni yubormang." %}</li>
+      <li>{% translate "Chat rasmiy topshiriq o‘rnini bosmaydi: ish topshiriqlari «Topshiriqlar» bo‘limida beriladi." %}</li>
+      <li>{% translate "Faqat matn yuboriladi: fayl va rasm yo‘q." %}</li>
+    </ul>
+  </section>
+  <form method="post" class="card card-pad" style="display:grid;gap:12px">
+    {% csrf_token %}
+    <label class="check"><input type="checkbox" name="agree" value="1" required> <span>{% translate "Tanishdim va roziman" %}</span></label>
+    <div class="row"><button class="btn btn-primary" type="submit">{% if accepted %}{% translate "Qayta tasdiqlash" %}{% else %}{% translate "Chatni ochish" %}{% endif %}</button></div>
+  </form>
+</div>
+{% endblock %}

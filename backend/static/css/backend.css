@@ -134,3 +134,14 @@ img.av { object-fit: cover; background: var(--n-200, #e5eaf2); }
 
 /* checkbox fields (e.g. the publishing consent) sit at the start of the row, not centred */
 .field input[type="checkbox"] { width: 20px; height: 20px; margin: 4px 0; justify-self: start; align-self: flex-start; }
+
+/* chat */
+.cht-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.cht-list a, .cht-list button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 0; border-radius: 12px; background: transparent; color: inherit; text-align: left; text-decoration: none; cursor: pointer; font: inherit; }
+.cht-list a:hover, .cht-list button:hover { background: var(--brand-50, #eef4ff); }
+.cht-list .grow { flex: 1 1 auto; min-width: 0; }
+.cht-thread { display: grid; gap: 12px; max-height: 60vh; overflow-y: auto; }
+.cht-thread .cht-msg { display: grid; gap: 2px; justify-items: start; }
+.cht-thread .cht-msg.mine { justify-items: end; text-align: right; }
+.cht-thread .cht-bubble { max-width: 80%; padding: 8px 12px; border-radius: 14px; background: var(--n-100, #eef1f6); overflow-wrap: anywhere; text-align: left; }
+.cht-thread .cht-msg.mine .cht-bubble { background: var(--brand-500, #1f6bff); color: #fff; }

@@ -53,6 +53,12 @@ class World:
         self.change_request = EmployeeChangeRequest.objects.create(
             employee=self.card, requested_by=self.users["emp"], fields=["work_phone"], changes={"work_phone": "+998 90 000 00 01"}, old_values={"work_phone": "+998 71 111 22 33"}
         )
+        from apps.chat import services as chat_services
+        from apps.chat.models import ChatNoticeAcceptance
+
+        ChatNoticeAcceptance.objects.create(user=self.users["admin"])  # the administrator has read the notice; the others have not
+        self.conversation = chat_services.start(self.users["admin"], self.users["emp"])
+        chat_services.send(self.users["emp"], self.conversation, "Salom")
         self.task = Task.objects.create(title="Hisobot", description="Matn", created_by=self.users["admin"], status="review", due_date=timezone.localdate())
         self.task.assignees.set([self.users["emp"]])
         self.attachment = TaskAttachment(task=self.task, original_name="a.pdf", extension="pdf", size=10, sha256="0" * 64, uploaded_by=self.users["emp"])
@@ -110,7 +116,7 @@ class World:
             "users:detail": {"pk": self.users["emp"].pk}, "users:edit": {"pk": self.users["emp"].pk}, "users:role_add": {"pk": self.users["emp"].pk},
             "users:role_remove": {"pk": self.users["emp"].pk, "assignment_id": self.assignment.pk}, "users:action": {"pk": self.users["emp"].pk, "action": "unlock"},
             "employees:detail": {"pk": self.card.pk}, "employees:photo": {"pk": self.card.pk}, "employees:edit": {"pk": self.card.pk}, "employees:archive": {"pk": self.card.pk}, "employees:restore": {"pk": self.card.pk},
-            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "employees:change_detail": {"pk": self.change_request.pk}, "employees:change_decide": {"pk": self.change_request.pk, "decision": "reject"}, "employees:change_cancel": {"pk": self.change_request.pk}, "employees:institution_edit": {"pk": self.institution.pk},
+            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "chat:thread": {"pk": self.conversation.pk}, "chat:archive_thread": {"pk": self.conversation.pk}, "employees:change_detail": {"pk": self.change_request.pk}, "employees:change_decide": {"pk": self.change_request.pk, "decision": "reject"}, "employees:change_cancel": {"pk": self.change_request.pk}, "employees:institution_edit": {"pk": self.institution.pk},
             "tasks:detail": {"pk": t}, "tasks:edit": {"pk": t}, "tasks:comment": {"pk": t}, "tasks:attachment_add": {"pk": t},
             "tasks:attachment_download": {"pk": t, "attachment_id": self.attachment.pk}, "tasks:attachment_remove": {"pk": t, "attachment_id": self.attachment.pk},
             "tasks:transition": {"pk": t, "status": "done"},

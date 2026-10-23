@@ -84,6 +84,8 @@ class AuditLog(models.Model):
         SESSIONS_ENDED_OTHERS = "sessions_ended_others", _("Boshqa sessiyalar yakunlandi")
         PROFILE_CHANGE_REQUESTED = "profile_change_requested", _("Xodim o‘z ma’lumotini o‘zgartirishni so‘radi")
         PROFILE_CHANGE_DECIDED = "profile_change_decided", _("Ma’lumotni o‘zgartirish so‘rovi bo‘yicha qaror")
+        CHAT_NOTICE_ACCEPTED = "chat_notice_accepted", _("Chat haqidagi ogohlantirish qabul qilindi")
+        CHAT_ARCHIVE_VIEWED = "chat_archive_viewed", _("Administrator suhbatni ko‘rdi")
         ACHIEVEMENT_CREATED = "achievement_created", _("Yutuq yaratildi")
         ACHIEVEMENT_UPDATED = "achievement_updated", _("Yutuq o‘zgartirildi")
         ACHIEVEMENT_STEP = "achievement_step", _("Yutuq holati o‘zgardi")

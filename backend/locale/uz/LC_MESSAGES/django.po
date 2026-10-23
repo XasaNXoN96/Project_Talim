@@ -3346,3 +3346,153 @@ msgstr "ma’lumotni o‘zgartirish so‘rovi"
 
 msgid "ma’lumotni o‘zgartirish so‘rovlari"
 msgstr "ma’lumotni o‘zgartirish so‘rovlari"
+
+msgid "Administrator barcha yozishmalarni ko‘rishi mumkin."
+msgstr "Administrator barcha yozishmalarni ko‘rishi mumkin."
+
+msgid "Administrator suhbatni ko‘rdi"
+msgstr "Administrator suhbatni ko‘rdi"
+
+msgid "Barcha suhbatlar. Har bir ochilish jurnalga yoziladi."
+msgstr "Barcha suhbatlar. Har bir ochilish jurnalga yoziladi."
+
+msgid "Barcha suhbatlarni ko‘rish (har bir ko‘rish jurnalga yoziladi)"
+msgstr "Barcha suhbatlarni ko‘rish (har bir ko‘rish jurnalga yoziladi)"
+
+msgid "Barcha xabarlar saqlanadi va o‘chirib bo‘lmaydi."
+msgstr "Barcha xabarlar saqlanadi va o‘chirib bo‘lmaydi."
+
+msgid "Bu foydalanuvchi bilan yozishib bo‘lmaydi."
+msgstr "Bu foydalanuvchi bilan yozishib bo‘lmaydi."
+
+msgid "Bu suhbat sizniki emas."
+msgstr "Bu suhbat sizniki emas."
+
+msgid "Chat arxivi"
+msgstr "Chat arxivi"
+
+msgid "Chat faqat shu sayt ichida ishlaydi: yozishmalar tashqariga chiqmaydi."
+msgstr "Chat faqat shu sayt ichida ishlaydi: yozishmalar tashqariga chiqmaydi."
+
+msgid "Chat haqida ogohlantirish"
+msgstr "Chat haqida ogohlantirish"
+
+msgid "Chat haqidagi ogohlantirish qabul qilindi"
+msgstr "Chat haqidagi ogohlantirish qabul qilindi"
+
+msgid "Chat rasmiy topshiriq o‘rnini bosmaydi: ish topshiriqlari «Topshiriqlar» bo‘limida beriladi."
+msgstr "Chat rasmiy topshiriq o‘rnini bosmaydi: ish topshiriqlari «Topshiriqlar» bo‘limida beriladi."
+
+msgid "Chatdan foydalanish"
+msgstr "Chatdan foydalanish"
+
+msgid "Chatdan foydalanishdan oldin quyidagi qoidalar bilan tanishing."
+msgstr "Chatdan foydalanishdan oldin quyidagi qoidalar bilan tanishing."
+
+msgid "Chatni ochish"
+msgstr "Chatni ochish"
+
+msgid "Davom etish uchun ogohlantirish bilan tanishganingizni tasdiqlang."
+msgstr "Davom etish uchun ogohlantirish bilan tanishganingizni tasdiqlang."
+
+msgid "Eslatma."
+msgstr "Eslatma."
+
+msgid "Faqat matn yuboriladi: fayl va rasm yo‘q."
+msgstr "Faqat matn yuboriladi: fayl va rasm yo‘q."
+
+msgid "Hali suhbatlar yo‘q. Quyidan kimnidir tanlang."
+msgstr "Hali suhbatlar yo‘q. Quyidan kimnidir tanlang."
+
+msgid "Hali xabarlar yo‘q. Birinchi bo‘lib yozing."
+msgstr "Hali xabarlar yo‘q. Birinchi bo‘lib yozing."
+
+msgid "Hech kim topilmadi."
+msgstr "Hech kim topilmadi."
+
+msgid "Ishtirokchi ismi"
+msgstr "Ishtirokchi ismi"
+
+msgid "Ishtirokchilar"
+msgstr "Ishtirokchilar"
+
+msgid "Ism yoki muassasa"
+msgstr "Ism yoki muassasa"
+
+msgid "Juda tez yozyapsiz. Bir daqiqadan keyin qayta urinib ko‘ring."
+msgstr "Juda tez yozyapsiz. Bir daqiqadan keyin qayta urinib ko‘ring."
+
+msgid "Oxirgi xabar"
+msgstr "Oxirgi xabar"
+
+msgid "O‘zingiz bilan suhbat ochib bo‘lmaydi."
+msgstr "O‘zingiz bilan suhbat ochib bo‘lmaydi."
+
+msgid "Parol, shaxsiy hujjat, karta raqami kabi maxfiy ma’lumotni yubormang."
+msgstr "Parol, shaxsiy hujjat, karta raqami kabi maxfiy ma’lumotni yubormang."
+
+msgid "Qayta tasdiqlash"
+msgstr "Qayta tasdiqlash"
+
+msgid "Qoidalar"
+msgstr "Qoidalar"
+
+msgid "Siz boshqa odamlarning yozishmasini ko‘ryapsiz. Bu ko‘rish jurnalga yozildi."
+msgstr "Siz boshqa odamlarning yozishmasini ko‘ryapsiz. Bu ko‘rish jurnalga yozildi."
+
+msgid "Suhbatdosh faol emas: unga yozib bo‘lmaydi."
+msgstr "Suhbatdosh faol emas: unga yozib bo‘lmaydi."
+
+msgid "Suhbatlar"
+msgstr "Suhbatlar"
+
+msgid "Suhbatlar yo‘q"
+msgstr "Suhbatlar yo‘q"
+
+msgid "Tanishdim va roziman"
+msgstr "Tanishdim va roziman"
+
+msgid "Tizim ichidagi xodimlar va muassasalar bilan yozishma."
+msgstr "Tizim ichidagi xodimlar va muassasalar bilan yozishma."
+
+msgid "Uning har bir ko‘rishi jurnalga yoziladi."
+msgstr "Uning har bir ko‘rishi jurnalga yoziladi."
+
+msgid "Xabar"
+msgstr "Xabar"
+
+msgid "Xabar bo‘sh."
+msgstr "Xabar bo‘sh."
+
+msgid "Xabar juda uzun."
+msgstr "Xabar juda uzun."
+
+msgid "Xabar yozing"
+msgstr "Xabar yozing"
+
+msgid "Xabarlar"
+msgstr "Xabarlar"
+
+msgid "Xabarlar yo‘q."
+msgstr "Xabarlar yo‘q."
+
+msgid "Yangi suhbat"
+msgstr "Yangi suhbat"
+
+msgid "Yangilash"
+msgstr "Yangilash"
+
+msgid "Yozish"
+msgstr "Yozish"
+
+msgid "Yozishmalar saqlanadi va administrator ularni ko‘rishi mumkin. Maxfiy ma’lumot yubormang."
+msgstr "Yozishmalar saqlanadi va administrator ularni ko‘rishi mumkin. Maxfiy ma’lumot yubormang."
+
+msgid "o‘qildi"
+msgstr "o‘qildi"
+
+msgid "suhbat"
+msgstr "suhbat"
+
+msgid "suhbatlar"
+msgstr "suhbatlar"

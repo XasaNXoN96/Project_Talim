@@ -38,7 +38,11 @@
       {% endif %}
       <a href="{% url 'portal:preview' 'kirish-chiqish' %}" title="{% translate 'Kirish-chiqish' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'kirish-chiqish' %}class="active" aria-current="page"{% endif %}><i data-i="login" style="display:contents"></i><span>{% translate "Kirish-chiqish" %}</span></a>
       <a href="{% url 'portal:preview' 'geolokatsiya' %}" title="{% translate 'Geolokatsiya' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'geolokatsiya' %}class="active" aria-current="page"{% endif %}><i data-i="pin" style="display:contents"></i><span>{% translate "Geolokatsiya" %}</span></a>
+      {% if perms.chat.use_chat %}
+      <a href="{% url 'chat:inbox' %}" title="{% translate 'Chat' %}" {% if request.resolver_match.namespace == 'chat' %}class="active" aria-current="page"{% endif %}><i data-i="chat" style="display:contents"></i><span>{% translate "Chat" %}</span>{% if unread_chat %}<span class="badge b-err plain" style="margin-left:auto">{{ unread_chat }}</span>{% endif %}</a>
+      {% else %}
       <a href="{% url 'portal:preview' 'chat' %}" title="{% translate 'Chat' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'chat' %}class="active" aria-current="page"{% endif %}><i data-i="chat" style="display:contents"></i><span>{% translate "Chat" %}</span></a>
+      {% endif %}
       {% if perms.notifications.view_notification %}
       <a href="{% url 'notifications:list' %}" title="{% translate 'Bildirishnomalar' %}" {% if request.resolver_match.namespace == 'notifications' %}class="active" aria-current="page"{% endif %}><i data-i="bell" style="display:contents"></i><span>{% translate "Bildirishnomalar" %}</span></a>
       {% endif %}

@@ -1,0 +1,13 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Chat arxivi" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'chat:archive' %}">{% translate "Chat arxivi" %}</a></div><h1>{{ conv.user_low.get_full_name|default:conv.user_low.get_username }} ⇄ {{ conv.user_high.get_full_name|default:conv.user_high.get_username }}</h1></div></div>
+<div class="alert warn" role="note" style="margin-bottom:16px"><span>{% translate "Siz boshqa odamlarning yozishmasini ko‘ryapsiz. Bu ko‘rish jurnalga yozildi." %}</span></div>
+<div class="stack" style="max-width:820px">
+  <section class="card card-pad cht-thread">
+    {% for m in messages_list %}<div class="cht-msg {% if m.sender_id == conv.user_low_id %}mine{% endif %}"><div class="cht-bubble">{{ m.body|linebreaksbr }}</div><div class="xs muted">{{ m.sender.get_full_name|default:m.sender.get_username }} · {{ m.created_at|date:"d.m.Y H:i" }}</div></div>
+    {% empty %}<p class="muted">{% translate "Xabarlar yo‘q." %}</p>{% endfor %}
+  </section>
+</div>
+{% endblock %}

@@ -3346,3 +3346,153 @@ msgstr "data change request"
 
 msgid "ma’lumotni o‘zgartirish so‘rovlari"
 msgstr "data change requests"
+
+msgid "Administrator barcha yozishmalarni ko‘rishi mumkin."
+msgstr "An administrator can read all correspondence."
+
+msgid "Administrator suhbatni ko‘rdi"
+msgstr "An administrator viewed a conversation"
+
+msgid "Barcha suhbatlar. Har bir ochilish jurnalga yoziladi."
+msgstr "All conversations. Every opening is written to the log."
+
+msgid "Barcha suhbatlarni ko‘rish (har bir ko‘rish jurnalga yoziladi)"
+msgstr "View all conversations (every viewing is logged)"
+
+msgid "Barcha xabarlar saqlanadi va o‘chirib bo‘lmaydi."
+msgstr "All messages are kept and cannot be deleted."
+
+msgid "Bu foydalanuvchi bilan yozishib bo‘lmaydi."
+msgstr "You cannot chat with this user."
+
+msgid "Bu suhbat sizniki emas."
+msgstr "This conversation is not yours."
+
+msgid "Chat arxivi"
+msgstr "Chat archive"
+
+msgid "Chat faqat shu sayt ichida ishlaydi: yozishmalar tashqariga chiqmaydi."
+msgstr "The chat works only inside this site: nothing leaves it."
+
+msgid "Chat haqida ogohlantirish"
+msgstr "Notice about the chat"
+
+msgid "Chat haqidagi ogohlantirish qabul qilindi"
+msgstr "The chat notice was accepted"
+
+msgid "Chat rasmiy topshiriq o‘rnini bosmaydi: ish topshiriqlari «Topshiriqlar» bo‘limida beriladi."
+msgstr "The chat does not replace an official task: work tasks are given in the Tasks section."
+
+msgid "Chatdan foydalanish"
+msgstr "Use the chat"
+
+msgid "Chatdan foydalanishdan oldin quyidagi qoidalar bilan tanishing."
+msgstr "Read the rules below before using the chat."
+
+msgid "Chatni ochish"
+msgstr "Open the chat"
+
+msgid "Davom etish uchun ogohlantirish bilan tanishganingizni tasdiqlang."
+msgstr "To continue, confirm that you have read the notice."
+
+msgid "Eslatma."
+msgstr "Reminder."
+
+msgid "Faqat matn yuboriladi: fayl va rasm yo‘q."
+msgstr "Only text is sent: no files or pictures."
+
+msgid "Hali suhbatlar yo‘q. Quyidan kimnidir tanlang."
+msgstr "No conversations yet. Choose someone below."
+
+msgid "Hali xabarlar yo‘q. Birinchi bo‘lib yozing."
+msgstr "No messages yet. Write first."
+
+msgid "Hech kim topilmadi."
+msgstr "Nobody was found."
+
+msgid "Ishtirokchi ismi"
+msgstr "Participant name"
+
+msgid "Ishtirokchilar"
+msgstr "Participants"
+
+msgid "Ism yoki muassasa"
+msgstr "Name or institution"
+
+msgid "Juda tez yozyapsiz. Bir daqiqadan keyin qayta urinib ko‘ring."
+msgstr "You are writing too fast. Try again in a minute."
+
+msgid "Oxirgi xabar"
+msgstr "Last message"
+
+msgid "O‘zingiz bilan suhbat ochib bo‘lmaydi."
+msgstr "You cannot start a conversation with yourself."
+
+msgid "Parol, shaxsiy hujjat, karta raqami kabi maxfiy ma’lumotni yubormang."
+msgstr "Do not send confidential data such as passwords, personal documents or card numbers."
+
+msgid "Qayta tasdiqlash"
+msgstr "Confirm again"
+
+msgid "Qoidalar"
+msgstr "Rules"
+
+msgid "Siz boshqa odamlarning yozishmasini ko‘ryapsiz. Bu ko‘rish jurnalga yozildi."
+msgstr "You are viewing other people's correspondence. This viewing was written to the log."
+
+msgid "Suhbatdosh faol emas: unga yozib bo‘lmaydi."
+msgstr "The other person is not active: you cannot write to them."
+
+msgid "Suhbatlar"
+msgstr "Conversations"
+
+msgid "Suhbatlar yo‘q"
+msgstr "No conversations"
+
+msgid "Tanishdim va roziman"
+msgstr "I have read this and agree"
+
+msgid "Tizim ichidagi xodimlar va muassasalar bilan yozishma."
+msgstr "Messages with employees and institutions inside the system."
+
+msgid "Uning har bir ko‘rishi jurnalga yoziladi."
+msgstr "Each of its viewings is written to the log."
+
+msgid "Xabar"
+msgstr "Message"
+
+msgid "Xabar bo‘sh."
+msgstr "The message is empty."
+
+msgid "Xabar juda uzun."
+msgstr "The message is too long."
+
+msgid "Xabar yozing"
+msgstr "Write a message"
+
+msgid "Xabarlar"
+msgstr "Messages"
+
+msgid "Xabarlar yo‘q."
+msgstr "No messages."
+
+msgid "Yangi suhbat"
+msgstr "New conversation"
+
+msgid "Yangilash"
+msgstr "Refresh"
+
+msgid "Yozish"
+msgstr "Write"
+
+msgid "Yozishmalar saqlanadi va administrator ularni ko‘rishi mumkin. Maxfiy ma’lumot yubormang."
+msgstr "Messages are kept and an administrator can read them. Do not send confidential data."
+
+msgid "o‘qildi"
+msgstr "read"
+
+msgid "suhbat"
+msgstr "conversation"
+
+msgid "suhbatlar"
+msgstr "conversations"

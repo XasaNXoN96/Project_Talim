@@ -40,6 +40,9 @@ _ACH_PUBLISH = _ACH_WRITE + ["achievements.publish_achievement"]
 # A person asks to correct their OWN data; only HR / an administrator confirm (never the person themselves).
 _SELF_CHANGE = ["organization.request_employee_change"]
 _REVIEW_CHANGE = ["organization.review_employee_change"]
+# Chat: anybody with a portal account may write to other accounts; only the administrators may read the archive (each reading is logged).
+_CHAT = ["chat.use_chat"]
+_CHAT_AUDIT = ["chat.audit_chat"]
 _ORG_VIEW = ["organization.view_department", "organization.view_position"]
 _DIRECTORY = ["organization.view_employee_directory"]
 _CONTACTS = ["organization.view_employee_contacts"]
@@ -61,11 +64,11 @@ _USER_ADMIN = ["accounts.view_user", "accounts.manage_users", "accounts.assign_r
 
 ROLE_PERMISSIONS: dict[str, list[str]] = {
     # Contacts/private data are further limited by SCOPE (own / department / all) in apps.organization.access.
-    RoleCode.EMPLOYEE: _DIRECTORY + _SELF_CHANGE + _ORG_VIEW + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
-    RoleCode.DEPARTMENT_HEAD: _DIRECTORY + _SELF_CHANGE + _CONTACTS + _ORG_VIEW + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
-    RoleCode.CONTENT_MANAGER: _CONTENT + _ACH_PUBLISH + _SELF_CHANGE + ["organization.view_institution"] + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
-    RoleCode.HR: _DIRECTORY + _SELF_CHANGE + _REVIEW_CHANGE + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + ["accounts.view_user"] + _TASKS_BASIC + ["tasks.add_task"] + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _NOTIFY,
-    RoleCode.ADMIN: _CONTENT + _ACH_PUBLISH + _SELF_CHANGE + _REVIEW_CHANGE + _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + _USER_ADMIN + ["audit.view_auditlog"] + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
+    RoleCode.EMPLOYEE: _CHAT + _DIRECTORY + _SELF_CHANGE + _ORG_VIEW + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    RoleCode.DEPARTMENT_HEAD: _CHAT + _DIRECTORY + _SELF_CHANGE + _CONTACTS + _ORG_VIEW + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
+    RoleCode.CONTENT_MANAGER: _CHAT + _CONTENT + _ACH_PUBLISH + _SELF_CHANGE + ["organization.view_institution"] + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    RoleCode.HR: _CHAT + _DIRECTORY + _SELF_CHANGE + _REVIEW_CHANGE + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + ["accounts.view_user"] + _TASKS_BASIC + ["tasks.add_task"] + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _NOTIFY,
+    RoleCode.ADMIN: _CHAT + _CHAT_AUDIT + _CONTENT + _ACH_PUBLISH + _SELF_CHANGE + _REVIEW_CHANGE + _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + _USER_ADMIN + ["audit.view_auditlog"] + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
     RoleCode.NEWS_AUTHOR: _NEWS_AUTHOR + _NOTIFY,
     RoleCode.NEWS_EDITOR: _NEWS_EDITOR + _NOTIFY,
     RoleCode.NEWS_PUBLISHER: _NEWS_PUBLISHER + _NOTIFY,
@@ -74,7 +77,7 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
     # enforced in apps.organization.access (listing, cards, create/edit/archive, photo). add/change_employee are global Django
     # permissions; the views narrow them to the own institution's cards without an account, hide department/user/private fields,
     # and keep the director out of the import tool and the admin hub. No department structure, no other institutions.
-    RoleCode.SCHOOL_DIRECTOR: _DIRECTORY + _CONTACTS + ["organization.add_employee", "organization.change_employee"] + _ACH_WRITE + _SELF_CHANGE + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    RoleCode.SCHOOL_DIRECTOR: _DIRECTORY + _CONTACTS + ["organization.add_employee", "organization.change_employee"] + _ACH_WRITE + _SELF_CHANGE + _CHAT + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
 }
 
 
