@@ -3713,3 +3713,7 @@ msgstr "медиафайлы"
 
 msgid "Media faylni serverdan butunlay o‘chirish"
 msgstr "Полное удаление медиафайла с сервера"
+
+#, python-format
+msgid "Topshiriqlar yaratildi: %(n)d ta (har bir muassasa uchun alohida)."
+msgstr "Созданы задания: %(n)d (отдельное для каждого учреждения)."

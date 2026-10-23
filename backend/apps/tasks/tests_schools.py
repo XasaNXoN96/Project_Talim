@@ -73,13 +73,48 @@ class SchoolTaskTests(TestCase):
         data.update(extra)
         return self.c.post(reverse("tasks:create"), data)
 
-    def test_task_for_schools_goes_to_their_directors_with_time_and_urgency(self):
+    def test_task_for_schools_becomes_one_separate_task_per_school_with_time_and_urgency(self):
         r = self.post(institutions=[str(self.s1.pk), str(self.s2.pk)])
         self.assertEqual(r.status_code, 302)
-        t = Task.objects.get(title="Hisobot")
-        self.assertEqual(set(t.assignees.all()), {self.d1, self.d2})
-        self.assertEqual((t.priority, t.due_time), ("urgent", datetime.time(14, 30)))
+        self.assertIn("tab=created", r["Location"])  # several tasks were made: the list of the tasks I gave
+        tasks = list(Task.objects.filter(title="Hisobot"))
+        self.assertEqual(len(tasks), 2)
+        self.assertEqual(sorted(tuple(sorted(u.username for u in t.assignees.all())) for t in tasks), [("dir1",), ("dir2",)])
+        for t in tasks:
+            self.assertEqual((t.priority, t.due_time, t.status, t.created_by), ("urgent", datetime.time(14, 30), "new", self.admin))
         self.assertTrue(Notification.objects.filter(user=self.d1).exists())
+        self.assertTrue(Notification.objects.filter(user=self.d2).exists())
+
+    def test_each_school_moves_and_closes_its_own_task_independently(self):
+        self.post(institutions=[str(self.s1.pk), str(self.s2.pk)])
+        t1 = Task.objects.get(title="Hisobot", assignees=self.d1)
+        t2 = Task.objects.get(title="Hisobot", assignees=self.d2)
+        c1 = Client()
+        login_with_two_factor(c1, self.d1)
+        c1.post(reverse("tasks:transition", args=[t1.pk, "in_progress"]))
+        c1.post(reverse("tasks:transition", args=[t1.pk, "review"]))
+        self.c.post(reverse("tasks:transition", args=[t1.pk, "done"]))
+        t1.refresh_from_db(); t2.refresh_from_db()
+        self.assertEqual((t1.status, t2.status), ("done", "new"))  # the other school's task is untouched
+        c2 = Client()
+        login_with_two_factor(c2, self.d2)
+        self.assertEqual(c2.get(reverse("tasks:detail", args=[t1.pk])).status_code, 403)  # and it cannot even open the first school's task
+
+    def test_one_school_gives_one_task_and_a_person_plus_a_school_give_two(self):
+        self.post(institutions=[str(self.s1.pk)])
+        self.assertEqual(Task.objects.count(), 1)
+        r = self.post(title="Aralash", institutions=[str(self.s2.pk)], assignees=[str(self.admin.pk)])
+        self.assertEqual(r.status_code, 302)
+        mixed = Task.objects.filter(title="Aralash")
+        self.assertEqual(mixed.count(), 2)  # one for the person named, one for the school
+        self.assertEqual(sorted(tuple(sorted(u.username for u in t.assignees.all())) for t in mixed), [("boss",), ("dir2",)])
+
+    def test_editing_one_task_still_adds_the_chosen_schools_directors_to_it(self):
+        self.post(institutions=[str(self.s1.pk)])
+        t = Task.objects.get()
+        r = self.c.post(reverse("tasks:edit", args=[t.pk]), {"title": "Hisobot", "description": "Matn", "priority": "urgent", "due_date": "2030-01-05", "due_time": "14:30", "institutions": [str(self.s2.pk)], "assignees": [str(self.d1.pk)]})
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual({u.username for u in t.assignees.all()}, {"dir1", "dir2"})
 
     def test_school_without_director_is_refused_with_its_name(self):
         r = self.post(institutions=[str(self.s1.pk), str(self.s3.pk)])

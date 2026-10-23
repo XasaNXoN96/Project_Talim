@@ -3713,3 +3713,7 @@ msgstr "media fayllar"
 
 msgid "Media faylni serverdan butunlay o‘chirish"
 msgstr "Media faylni serverdan butunlay o‘chirish"
+
+#, python-format
+msgid "Topshiriqlar yaratildi: %(n)d ta (har bir muassasa uchun alohida)."
+msgstr "Topshiriqlar yaratildi: %(n)d ta (har bir muassasa uchun alohida)."

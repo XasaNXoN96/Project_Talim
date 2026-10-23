@@ -4,6 +4,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView
@@ -113,18 +114,26 @@ class TaskCreateView(PortalPermissionMixin, View):
         return render(request, "portal/tasks/form.html", {"form": TaskForm(assignable=access.assignable_users(request.user), can_assign_schools=access.can_assign_schools(request.user)), "creating": True})
 
     def post(self, request):
-        form = TaskForm(request.POST, assignable=access.assignable_users(request.user), can_assign_schools=access.can_assign_schools(request.user))
+        form = TaskForm(request.POST, assignable=access.assignable_users(request.user), can_assign_schools=access.can_assign_schools(request.user), split_schools=True)
         if form.is_valid():
+            # one task for the people picked by name, and one SEPARATE task per chosen school (its director(s)): every school moves and closes its own
+            groups = ([form.cleaned_data["assignees"]] if form.cleaned_data["assignees"] else []) + [dirs for _school, dirs in form.cleaned_data["school_groups"]]
+            tasks = []
             with transaction.atomic():
-                task = form.save(commit=False)
-                task.created_by = request.user
-                task.save()
-                form.save_m2m()
-                _event(task, request.user, TaskEvent.Kind.CREATED, assignees=[str(u.pk) for u in form.cleaned_data["assignees"]])
-                for person in form.cleaned_data["assignees"]:
-                    notify(person, Notification.Kind.TASK_ASSIGNED, task, actor=request.user)
-            messages.success(request, _("Topshiriq yaratildi."))
-            return redirect("tasks:detail", pk=task.pk)
+                template = form.save(commit=False)
+                for n, users in enumerate(groups):
+                    task = template if n == 0 else Task(
+                        title=template.title, description=template.description, priority=template.priority, due_date=template.due_date, due_time=template.due_time
+                    )
+                    task.created_by = request.user
+                    task.save()
+                    task.assignees.set(users)
+                    _event(task, request.user, TaskEvent.Kind.CREATED, assignees=[str(u.pk) for u in users])
+                    for person in users:
+                        notify(person, Notification.Kind.TASK_ASSIGNED, task, actor=request.user)
+                    tasks.append(task)
+            messages.success(request, _("Topshiriq yaratildi.") if len(tasks) == 1 else gettext("Topshiriqlar yaratildi: %(n)d ta (har bir muassasa uchun alohida).") % {"n": len(tasks)})
+            return redirect("tasks:detail", pk=tasks[0].pk) if len(tasks) == 1 else redirect(reverse("tasks:list") + "?tab=created")
         return render(request, "portal/tasks/form.html", {"form": form, "creating": True})
 
 

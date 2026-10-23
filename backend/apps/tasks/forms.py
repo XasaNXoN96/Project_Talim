@@ -38,8 +38,11 @@ class TaskForm(forms.ModelForm):
             "due_time": forms.TimeInput(attrs={**INPUT, "type": "time"}, format="%H:%M"),
         }
 
-    def __init__(self, *args, assignable, can_assign_schools=False, **kwargs):
+    def __init__(self, *args, assignable, can_assign_schools=False, split_schools=False, **kwargs):
         super().__init__(*args, **kwargs)
+        # When creating, a task for several schools becomes ONE TASK PER SCHOOL (each school does and closes its own); when editing one task, the
+        # directors of the chosen schools simply join its assignees.
+        self.split_schools = split_schools
         if can_assign_schools:
             self.fields["institutions"].queryset = Institution.objects.all()
         else:
@@ -53,22 +56,27 @@ class TaskForm(forms.ModelForm):
         data = super().clean()
         people = list(data.get("assignees") or [])
         missing = []
+        groups = []  # [(school, [directors])] when the task is split per school
         for school in data.get("institutions") or []:
             directors = User.objects.filter(
                 is_active=True, role_assignments__role__name="school_director", role_assignments__scope="institution", employee__institution=school
             ).distinct()
             if directors:
-                people += [d for d in directors if d not in people]
+                if self.split_schools:
+                    groups.append((school, list(directors)))
+                else:
+                    people += [d for d in directors if d not in people]
             else:
                 missing.append(school.name)
         if missing:
             self.add_error("institutions", _("Direktor hisobi yo‘q muassasalar: %(names)s.") % {"names": ", ".join(missing)})
-        elif not people:
+        elif not people and not groups:
             if "institutions" in self.fields:
                 self.add_error("assignees", _("Kamida bitta ijrochi yoki muassasa tanlang."))
             else:  # no school picker for this user: the field is simply required, as before
                 self.add_error("assignees", self.fields["assignees"].error_messages["required"])
         data["assignees"] = people
+        data["school_groups"] = groups
         return data
 
     def clean_due_time(self):
