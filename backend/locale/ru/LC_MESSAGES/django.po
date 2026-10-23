@@ -3580,3 +3580,18 @@ msgstr "да"
 #, python-format
 msgid "… ro‘yxat %(limit)d qatorda to‘xtatildi"
 msgstr "… список остановлен на %(limit)d строках"
+
+msgid "Yutuqlar: nashr etilgan / jami."
+msgstr "Достижения: опубликовано / всего."
+
+msgid "Bajarilgan, %"
+msgstr "Выполнено, %"
+
+msgid "Barcha topshiriqlar va yutuqlar ro‘yxati — Excel faylida."
+msgstr "Полный список заданий и достижений — в файле Excel."
+
+msgid "Muddati o‘tgan ochiq topshiriqlar"
+msgstr "Открытые задания с истёкшим сроком"
+
+msgid "Muddati o‘tgan topshiriqlar yo‘q."
+msgstr "Просроченных заданий нет."

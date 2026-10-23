@@ -206,3 +206,87 @@ class SchoolExcelTests(SchoolStatsTests):
                 for v in row:
                     if isinstance(v, str):
                         self.assertNotIn("‘", v.replace("1-maktab", "").replace("2-maktab", "").replace("3-maktab", "") if sheet.title == "Школы" else "")
+
+
+class SchoolPdfTests(SchoolStatsTests):
+    """The PDF is the printable summary: same rows and rights as the page, no staff names, words never torn apart (checked when poppler is installed)."""
+
+    def pdf(self, user=None, lang=None):
+        c = self.client_for(user or self.admin)
+        if lang:
+            c.cookies["django_language"] = lang
+        r = c.get(reverse("reports:schools_export_pdf"))
+        self.assertEqual(r.status_code, 200)
+        return r
+
+    @staticmethod
+    def text_of(content):
+        import shutil
+        import subprocess
+
+        if not shutil.which("pdftotext"):
+            return None
+        return subprocess.run(["pdftotext", "-layout", "-", "-"], input=content, capture_output=True, check=True).stdout.decode()
+
+    def test_it_is_a_pdf_with_an_embedded_font_the_right_headers_and_an_audit_entry(self):
+        from apps.audit.models import AuditLog
+
+        r = self.pdf()
+        self.assertTrue(r.content.startswith(b"%PDF-"))
+        self.assertIn(b"DejaVuSans", r.content)  # a Unicode font is embedded: Cyrillic and the Uzbek apostrophes print
+        self.assertEqual(r["Content-Type"], "application/pdf")
+        self.assertRegex(r["Content-Disposition"], r'^attachment; filename="maktablar-\d{8}-\d{4}\.pdf"$')
+        self.assertIn("no-store", r["Cache-Control"])
+        self.assertEqual(r["X-Content-Type-Options"], "nosniff")
+        log = AuditLog.objects.get(action="report_exported", user=self.admin)
+        self.assertEqual((log.meta["kind"], log.meta["format"], log.meta["rows"]), ("schools", "pdf", 3))
+
+    def test_the_text_has_the_figures_and_the_overdue_task_but_no_staff_names(self):
+        text = self.text_of(self.pdf().content)
+        if text is None:
+            self.skipTest("pdftotext (poppler) is not installed")
+        for needle in ("1-maktab", "2-maktab", "3-maktab", "overdue open"):
+            self.assertIn(needle, text)
+        self.assertNotIn("on time", text)  # only OPEN tasks past their deadline are listed
+        self.assertNotIn("done late", text)
+        for secret in ("Karimov", "Saidov", "Archived"):
+            self.assertNotIn(secret, text)
+        row = next(line for line in text.splitlines() if "1-maktab" in line)
+        self.assertRegex(row, r"1\s+3\s+5\s+2\s+50\s+2\s+1\s+1\s+1\s*/\s*3\s+1")  # directors, staff, tasks, done, %, open, overdue, late, published/total, pending
+
+    def test_the_list_of_overdue_tasks_is_cut_with_a_pointer_to_excel(self):
+        from django.conf import settings
+
+        past = timezone.localdate() - datetime.timedelta(days=5)
+        for i in range(settings.REPORT_PDF_MAX_ROWS + 5):
+            t = Task.objects.create(title=f"late {i}", created_by=self.admin, status="new", due_date=past)
+            t.assignees.set([self.d2])
+        text = self.text_of(self.pdf().content)
+        if text is None:
+            self.skipTest("pdftotext (poppler) is not installed")
+        self.assertIn("Excel", text)
+        self.assertIn("yana 6 ta qator", text)  # 5 extra + the one already overdue in the fixture, beyond the limit of 60
+
+    def test_every_header_word_fits_its_column_in_every_language(self):
+        for lang, title in (("uz", "Maktablar bo‘yicha statistika"), ("ru", "Статистика по школам"), ("en", "Statistics by school")):
+            text = self.text_of(self.pdf(lang=lang).content)
+            if text is None:
+                self.skipTest("pdftotext (poppler) is not installed")
+            self.assertIn(title, text)
+            head = " ".join(text.splitlines()[4:7])
+            # a torn word would leave a stray one- or two-letter fragment on the second header line
+            for fragment in (" r ", " n ", " i ", " a ", " ts ", " ion "):
+                self.assertNotIn(fragment, f" {head} ".replace("   ", " "), (lang, fragment))
+
+    def test_who_may_download_it(self):
+        url = reverse("reports:schools_export_pdf")
+        for user, expected in ((self.admin, 200), (self.hr, 200), (self.d1, 403), (make_user("worker", role="employee"), 403)):
+            self.assertEqual(self.client_for(user).get(url).status_code, expected, user.username)
+        head = make_user("head", role="employee")
+        RoleAssignment.objects.create(user=head, role=Group.objects.get(name="department_head"), scope="department", department=self.dept)
+        self.assertEqual(self.client_for(head).get(url).status_code, 403)
+        self.assertEqual(Client().get(url).status_code, 302)
+        self.assertEqual(self.client_for(self.admin).post(url).status_code, 405)
+
+    def test_the_button_is_on_the_page(self):
+        self.assertIn(reverse("reports:schools_export_pdf"), self.client_for(self.admin).get(reverse("reports:schools")).content.decode())

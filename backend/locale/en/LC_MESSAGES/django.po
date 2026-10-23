@@ -3580,3 +3580,18 @@ msgstr "yes"
 #, python-format
 msgid "… ro‘yxat %(limit)d qatorda to‘xtatildi"
 msgstr "… the list stops at %(limit)d rows"
+
+msgid "Yutuqlar: nashr etilgan / jami."
+msgstr "Achievements: published / total."
+
+msgid "Bajarilgan, %"
+msgstr "Done, %"
+
+msgid "Barcha topshiriqlar va yutuqlar ro‘yxati — Excel faylida."
+msgstr "The complete list of tasks and achievements is in the Excel file."
+
+msgid "Muddati o‘tgan ochiq topshiriqlar"
+msgstr "Open tasks past their deadline"
+
+msgid "Muddati o‘tgan topshiriqlar yo‘q."
+msgstr "There are no overdue tasks."

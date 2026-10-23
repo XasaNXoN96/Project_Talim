@@ -222,3 +222,61 @@ def schools_to_xlsx(rows, total, user) -> bytes:
     buf = io.BytesIO()
     wb.save(buf)
     return buf.getvalue()
+
+
+def schools_to_pdf(rows, total, user) -> bytes:
+    """A short printable summary of the statistics by school: the figures per school and the open tasks that are past their deadline.
+    The complete lists (every task, every achievement) are in the Excel file; the page says so. No staff names. Same rows as the page."""
+    from . import schools as school_stats
+
+    _fonts()
+    buf = io.BytesIO()
+    title = gettext("Maktablar bo‘yicha statistika")
+    doc = SimpleDocTemplate(buf, pagesize=landscape(A4), leftMargin=12 * mm, rightMargin=12 * mm, topMargin=14 * mm, bottomMargin=14 * mm, title=title, author="")
+    h1 = ParagraphStyle("h1", fontName="DejaVu-Bold", fontSize=16, spaceAfter=6)
+    h2 = ParagraphStyle("h2", fontName="DejaVu-Bold", fontSize=11, spaceBefore=10, spaceAfter=4)
+    body = ParagraphStyle("body", fontName="DejaVu", fontSize=8.5, leading=11)
+    cell = ParagraphStyle("cell", fontName="DejaVu", fontSize=8, leading=10)
+    num = ParagraphStyle("num", parent=cell, alignment=2)
+    hcell = ParagraphStyle("hcell", parent=cell, fontSize=7, leading=8.5)  # header cells: smaller, so whole words fit the narrow figure columns
+    hnum = ParagraphStyle("hnum", parent=hcell, alignment=2)
+    bad = ParagraphStyle("bad", parent=num, fontName="DejaVu-Bold", textColor=colors.HexColor("#B42318"))
+
+    def table(columns, data, widths, numeric_from=1):
+        head = [Paragraph(f"<b>{_esc(c)}</b>", hcell if i < numeric_from else hnum) for i, c in enumerate(columns)]
+        t = Table([head] + data, colWidths=widths, repeatRows=1, hAlign="LEFT")
+        t.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#E8EEF9")), ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#B8C2D6")), ("VALIGN", (0, 0), (-1, -1), "TOP")]))
+        return t
+
+    story = [Paragraph(_esc(title), h1),
+             Paragraph(_esc(gettext("Tayyorlangan: %(when)s (%(user)s)") % {"when": f"{timezone.localtime():%d.%m.%Y %H:%M}", "user": user.get_username()}), body),
+             Paragraph(_esc(gettext("Hisoblash butun tarix bo‘yicha; bir nechta muassasaga berilgan topshiriq har biriga hisoblanadi.")), body), Spacer(1, 6)]
+    cols = [gettext("Muassasa"), gettext("Direktor hisobi"), gettext("Xodimlar"), gettext("Topshiriqlar"), gettext("Bajarilgan"), gettext("Bajarilgan, %"),
+            gettext("Jarayonda"), gettext("Muddati o‘tgan"), gettext("Kechikkan"), gettext("Yutuqlar"), gettext("Tekshiruvni kutmoqda")]
+    P = lambda v, style=num: Paragraph(_esc("" if v is None else v), style)
+    data = [[P(r.institution.name, cell), P(r.directors), P(r.staff), P(r.tasks), P(r.done), P(r.rate), P(r.open), P(r.overdue, bad if r.overdue else num), P(r.late), P(f"{r.ach_published} / {r.ach_total}"), P(r.ach_pending)] for r in rows]
+    bold = ParagraphStyle("b", parent=num, fontName="DejaVu-Bold")
+    data.append([Paragraph(f"<b>{_esc(gettext('Jami'))}</b>", cell)] + [P(v, bold) for v in (total.directors, total.staff, total.tasks, total.done, total.rate, total.open, total.overdue, total.late, f"{total.ach_published} / {total.ach_total}", total.ach_pending)])
+    # each figure column is as wide as the longest WORD of its header (in this language) needs, so no word is ever torn apart; the name column takes the rest
+    usable = (297 - 28) * mm
+    figure_w = [max(max(pdfmetrics.stringWidth(w, "DejaVu-Bold", 7) for w in c.split()) + 15, 15 * mm) for c in cols[1:]]
+    widths = [max(usable - sum(figure_w), 40 * mm)] + figure_w
+    story.append(table(cols, data, widths))
+    story.append(Paragraph(_esc(gettext("Yutuqlar: nashr etilgan / jami.")), body))
+
+    names = {r.institution.pk: r.institution.name for r in rows}
+    overdue = sorted(((names.get(i, ""), t) for i, t in school_stats.school_tasks() if t.is_overdue), key=lambda p: (p[0].lower(), p[1].deadline))
+    story.append(Paragraph(_esc(gettext("Muddati o‘tgan ochiq topshiriqlar")), h2))
+    limit = settings.REPORT_PDF_MAX_ROWS
+    if overdue:
+        story.append(table([gettext("Muassasa"), gettext("Topshiriq"), gettext("Muddat"), gettext("Holat"), gettext("Ustuvorlik")],
+                           [[P(n, cell), P(t.title, cell), P(f"{t.due_date:%d.%m.%Y}" + (f" {t.due_time:%H:%M}" if t.due_time else ""), cell), P(t.get_status_display(), cell), P(t.get_priority_display(), cell)] for n, t in overdue[:limit]],
+                           [60 * mm, 100 * mm, 32 * mm, 35 * mm, 35 * mm], numeric_from=5))
+        if len(overdue) > limit:
+            story.append(Paragraph(_esc(gettext("… yana %(n)d ta qator ko‘rsatilmadi (to‘liq ro‘yxat Excel faylida).") % {"n": len(overdue) - limit}), body))
+    else:
+        story.append(Paragraph(_esc(gettext("Muddati o‘tgan topshiriqlar yo‘q.")), body))
+    story.append(Spacer(1, 6))
+    story.append(Paragraph(_esc(gettext("Barcha topshiriqlar va yutuqlar ro‘yxati — Excel faylida.")), body))
+    doc.build(story)
+    return buf.getvalue()

@@ -3580,3 +3580,18 @@ msgstr "ha"
 #, python-format
 msgid "… ro‘yxat %(limit)d qatorda to‘xtatildi"
 msgstr "… ro‘yxat %(limit)d qatorda to‘xtatildi"
+
+msgid "Yutuqlar: nashr etilgan / jami."
+msgstr "Yutuqlar: nashr etilgan / jami."
+
+msgid "Bajarilgan, %"
+msgstr "Bajarilgan, %"
+
+msgid "Barcha topshiriqlar va yutuqlar ro‘yxati — Excel faylida."
+msgstr "Barcha topshiriqlar va yutuqlar ro‘yxati — Excel faylida."
+
+msgid "Muddati o‘tgan ochiq topshiriqlar"
+msgstr "Muddati o‘tgan ochiq topshiriqlar"
+
+msgid "Muddati o‘tgan topshiriqlar yo‘q."
+msgstr "Muddati o‘tgan topshiriqlar yo‘q."

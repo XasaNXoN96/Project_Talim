@@ -127,21 +127,27 @@ class SchoolDetailView(_SchoolsBase):
 
 
 class SchoolsExportView(PortalPermissionMixin, View):
-    """The school statistics as an Excel file: the same rows and the same (organisation-wide) right as the page, plus reports.export_reports."""
+    """The school statistics as an Excel or PDF file: the same rows and the same (organisation-wide) right as the page, plus reports.export_reports."""
 
     permission_required = ["reports.view_reports", "reports.export_reports"]
     http_method_names = ["get"]
+    fmt = "xlsx"
+    FORMATS = {
+        "xlsx": ("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", exports.schools_to_xlsx),
+        "pdf": ("application/pdf", exports.schools_to_pdf),
+    }
 
     def has_permission(self):
         return super().has_permission() and schools.can_see_schools(self.request.user)
 
     def get(self, request):
+        ctype, writer = self.FORMATS[self.fmt]
         rows = schools.build_rows()
-        content = exports.schools_to_xlsx(rows, schools.totals(rows), request.user)
+        content = writer(rows, schools.totals(rows), request.user)
         record(AuditLog.Action.REPORT_EXPORTED, request=request, user=request.user, object_type="Report",
-               meta={"format": "xlsx", "kind": "schools", "rows": len(rows), "bytes": len(content)})
-        response = HttpResponse(content, content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-        response["Content-Disposition"] = f'attachment; filename="maktablar-{timezone.localtime():%Y%m%d-%H%M}.xlsx"'
+               meta={"format": self.fmt, "kind": "schools", "rows": len(rows), "bytes": len(content)})
+        response = HttpResponse(content, content_type=ctype)
+        response["Content-Disposition"] = f'attachment; filename="maktablar-{timezone.localtime():%Y%m%d-%H%M}.{self.fmt}"'
         response["Cache-Control"] = "private, no-store"
         response["X-Content-Type-Options"] = "nosniff"
         return response
