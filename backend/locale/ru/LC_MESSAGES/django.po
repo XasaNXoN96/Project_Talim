@@ -3564,3 +3564,19 @@ msgstr "Удалить видео"
 
 msgid "Yoki videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting."
 msgstr "Или разместите видео на другом сайте (например, YouTube) и вставьте https-ссылку."
+
+msgid "Faol direktor hisoblari"
+msgstr "Активные аккаунты директоров"
+
+msgid "Hisoblash butun tarix bo‘yicha; bir nechta muassasaga berilgan topshiriq har biriga hisoblanadi."
+msgstr "Подсчёт по всей истории; задание, выданное нескольким учреждениям, учитывается для каждого."
+
+msgid "Maktablar"
+msgstr "Школы"
+
+msgid "ha"
+msgstr "да"
+
+#, python-format
+msgid "… ro‘yxat %(limit)d qatorda to‘xtatildi"
+msgstr "… список остановлен на %(limit)d строках"

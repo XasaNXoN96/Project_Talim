@@ -1,5 +1,6 @@
 """Excel and PDF writers. They only format a ReportData that build_report() already limited to what the user may see;
 they never query anything themselves."""
+import datetime
 import io
 from pathlib import Path
 
@@ -155,4 +156,69 @@ def to_pdf(data, user) -> bytes:
         if t.note:
             story.append(Paragraph(_esc(t.note), body))
     doc.build(story)
+    return buf.getvalue()
+
+
+MAX_DETAIL_ROWS = 5000  # per sheet of the school workbook; the totals sheet is never cut
+
+
+def schools_to_xlsx(rows, total, user) -> bytes:
+    """Workbook of the statistics by school: totals per school, then the tasks and the achievements behind them (what the administrator may see).
+    Written from rows that apps.reports.schools already computed; names of staff are never included. Text from the database goes through excel_safe."""
+    from apps.achievements.models import Achievement
+    from . import schools as school_stats
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = gettext("Maktablar")
+    ws.append([gettext("Maktablar bo‘yicha statistika")])
+    ws["A1"].font = Font(bold=True, size=14)
+    ws.append([gettext("Hisoblash butun tarix bo‘yicha; bir nechta muassasaga berilgan topshiriq har biriga hisoblanadi.")])
+    ws.append([gettext("Tayyorlangan: %(when)s (%(user)s)") % {"when": f"{timezone.localtime():%d.%m.%Y %H:%M}", "user": excel_safe(user.get_username())}])
+    ws.append([])
+    ws.append([gettext("Muassasa"), gettext("Turi"), gettext("Faol direktor hisoblari"), gettext("Xodimlar"), gettext("Topshiriqlar"), gettext("Bajarilgan"),
+               gettext("Bajarilish ulushi, %"), gettext("Jarayonda"), gettext("Muddati o‘tgan"), gettext("Kechikkan"), gettext("Yutuqlar"),
+               gettext("Nashr etilgan yutuqlar"), gettext("Tekshiruvni kutmoqda")])
+    header_row = ws.max_row
+    for c in ws[header_row]:
+        c.font, c.fill, c.alignment = Font(bold=True), PatternFill("solid", fgColor="E8EEF9"), Alignment(wrap_text=True, vertical="top")
+    for r in rows:
+        ws.append([excel_safe(r.institution.name), excel_safe(r.institution.get_kind_display()), r.directors, r.staff, r.tasks, r.done, r.rate, r.open, r.overdue, r.late,
+                   r.ach_total, r.ach_published, r.ach_pending])
+    ws.append([gettext("Jami"), "", total.directors, total.staff, total.tasks, total.done, total.rate, total.open, total.overdue, total.late, total.ach_total,
+               total.ach_published, total.ach_pending])
+    for c in ws[ws.max_row]:
+        c.font = Font(bold=True)
+    for i, col in enumerate(ws.iter_cols(min_row=header_row), 1):
+        width = max((len(str(c.value)) for c in col if c.value is not None), default=8)
+        ws.column_dimensions[get_column_letter(i)].width = min(max(width + 2, 12), 40)
+    ws.column_dimensions["A"].width = 44
+    ws.freeze_panes = ws.cell(row=header_row + 1, column=2)
+
+    tasks = wb.create_sheet(gettext("Topshiriqlar"))
+    tasks.append([gettext("Muassasa"), gettext("Topshiriq"), gettext("Muddat"), gettext("Holat"), gettext("Muddati o‘tgan"), gettext("Ustuvorlik")])
+    cut = False
+    names = {r.institution.pk: r.institution.name for r in rows}
+    pairs = sorted(school_stats.school_tasks(), key=lambda p: (names.get(p[0], "").lower(), p[1].due_date is None, p[1].due_date or datetime.date.min, p[1].due_time or datetime.time.min))
+    for n, (inst_id, t) in enumerate(pairs):
+        if n >= MAX_DETAIL_ROWS:
+            cut = True
+            break
+        name = names.get(inst_id, "")
+        due = ""
+        if t.due_date:
+            due = f"{t.due_date:%d.%m.%Y}" + (f" {t.due_time:%H:%M}" if t.due_time else "")
+        tasks.append([excel_safe(name), excel_safe(t.title), due, excel_safe(t.get_status_display()), gettext("ha") if t.is_overdue else "", excel_safe(t.get_priority_display())])
+    if cut:
+        tasks.append([gettext("… ro‘yxat %(limit)d qatorda to‘xtatildi") % {"limit": MAX_DETAIL_ROWS}])
+    _style(tasks)
+
+    ach = wb.create_sheet(gettext("Yutuqlar"))
+    ach.append([gettext("Muassasa"), gettext("Sarlavha"), gettext("Kim"), gettext("Turi"), gettext("Daraja"), gettext("Holat")])
+    qs = Achievement.objects.exclude(status=Achievement.Status.DRAFT).select_related("institution").order_by("institution__name", "-created_at")[:MAX_DETAIL_ROWS]
+    for a in qs:  # unsent drafts are not for the administrator: they stay out of the file too
+        ach.append([excel_safe(a.institution.name), excel_safe(a.title), excel_safe(a.person_name), excel_safe(a.get_kind_display()), excel_safe(a.get_level_display()), excel_safe(a.get_status_display())])
+    _style(ach)
+    buf = io.BytesIO()
+    wb.save(buf)
     return buf.getvalue()

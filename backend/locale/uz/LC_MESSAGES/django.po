@@ -3564,3 +3564,19 @@ msgstr "Videoni olib tashlash"
 
 msgid "Yoki videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting."
 msgstr "Yoki videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting."
+
+msgid "Faol direktor hisoblari"
+msgstr "Faol direktor hisoblari"
+
+msgid "Hisoblash butun tarix bo‘yicha; bir nechta muassasaga berilgan topshiriq har biriga hisoblanadi."
+msgstr "Hisoblash butun tarix bo‘yicha; bir nechta muassasaga berilgan topshiriq har biriga hisoblanadi."
+
+msgid "Maktablar"
+msgstr "Maktablar"
+
+msgid "ha"
+msgstr "ha"
+
+#, python-format
+msgid "… ro‘yxat %(limit)d qatorda to‘xtatildi"
+msgstr "… ro‘yxat %(limit)d qatorda to‘xtatildi"

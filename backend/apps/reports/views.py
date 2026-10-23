@@ -104,7 +104,7 @@ class _SchoolsBase(PortalPermissionMixin, View):
 class SchoolsReportView(_SchoolsBase):
     def get(self, request):
         rows = schools.build_rows()
-        return render(request, "portal/reports/schools.html", {"rows": rows, "total": schools.totals(rows)})
+        return render(request, "portal/reports/schools.html", {"rows": rows, "total": schools.totals(rows), "can_export": request.user.has_perm("reports.export_reports")})
 
 
 class SchoolDetailView(_SchoolsBase):
@@ -124,3 +124,24 @@ class SchoolDetailView(_SchoolsBase):
             a.openable = a.pk in visible
         positions = list(Employee.objects.filter(institution=inst).exclude(status=Employee.Status.ARCHIVED).values_list("position__name").annotate(n=Count("pk")).order_by("-n"))
         return render(request, "portal/reports/school_detail.html", {"inst": inst, "row": row, "tasks": tasks, "achievements": achievements, "positions": positions})
+
+
+class SchoolsExportView(PortalPermissionMixin, View):
+    """The school statistics as an Excel file: the same rows and the same (organisation-wide) right as the page, plus reports.export_reports."""
+
+    permission_required = ["reports.view_reports", "reports.export_reports"]
+    http_method_names = ["get"]
+
+    def has_permission(self):
+        return super().has_permission() and schools.can_see_schools(self.request.user)
+
+    def get(self, request):
+        rows = schools.build_rows()
+        content = exports.schools_to_xlsx(rows, schools.totals(rows), request.user)
+        record(AuditLog.Action.REPORT_EXPORTED, request=request, user=request.user, object_type="Report",
+               meta={"format": "xlsx", "kind": "schools", "rows": len(rows), "bytes": len(content)})
+        response = HttpResponse(content, content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        response["Content-Disposition"] = f'attachment; filename="maktablar-{timezone.localtime():%Y%m%d-%H%M}.xlsx"'
+        response["Cache-Control"] = "private, no-store"
+        response["X-Content-Type-Options"] = "nosniff"
+        return response

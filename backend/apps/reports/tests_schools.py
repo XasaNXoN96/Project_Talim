@@ -128,3 +128,81 @@ class SchoolStatsTests(TestCase):
                 html = re.sub(r"\d-maktab|A (published|submitted|draft)", "", html)  # fixture data
                 self.assertNotIn("‘", html, (lang, page))
                 self.assertNotIn("’", html, (lang, page))
+
+
+class SchoolExcelTests(SchoolStatsTests):
+    """The Excel file carries the same numbers as the page, nothing the viewer may not see, and no spreadsheet formulas."""
+
+    def get_book(self, user=None, lang=None):
+        import io
+
+        from openpyxl import load_workbook
+
+        c = self.client_for(user or self.admin)
+        if lang:
+            c.cookies["django_language"] = lang
+        r = c.get(reverse("reports:schools_export"))
+        self.assertEqual(r.status_code, 200)
+        return r, load_workbook(io.BytesIO(r.content))
+
+    def test_headers_audit_and_the_numbers_match_the_page(self):
+        from apps.audit.models import AuditLog
+
+        r, wb = self.get_book()
+        self.assertEqual(r["Content-Type"], "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        self.assertRegex(r["Content-Disposition"], r'^attachment; filename="maktablar-\d{8}-\d{4}\.xlsx"$')
+        self.assertIn("no-store", r["Cache-Control"])
+        self.assertIn("private", r["Cache-Control"])
+        self.assertEqual(r["X-Content-Type-Options"], "nosniff")
+        self.assertEqual(wb.sheetnames, ["Maktablar", "Topshiriqlar", "Yutuqlar"])
+        ws = wb["Maktablar"]
+        table = {row[0]: row for row in ws.iter_rows(min_row=6, values_only=True) if row[0]}
+        one = table["1-maktab"]
+        self.assertEqual(one[2:], (1, 3, 5, 2, 50, 2, 1, 1, 3, 1, 1))  # directors, staff, tasks, done, rate, open, overdue, late, ach total/published/pending
+        self.assertEqual(table["3-maktab"][2:7], (0, 0, 0, 0, None))
+        self.assertEqual(table["Jami"][4:6], (7, 2))
+        log = AuditLog.objects.get(action="report_exported", user=self.admin)
+        self.assertEqual((log.meta["kind"], log.meta["format"], log.meta["rows"]), ("schools", "xlsx", 3))
+
+    def test_detail_sheets_list_what_the_page_shows_and_no_unsent_drafts_or_staff_names(self):
+        _r, wb = self.get_book()
+        titles = [row[1] for row in wb["Topshiriqlar"].iter_rows(min_row=2, values_only=True)]
+        self.assertEqual(sorted(titles), sorted(["on time", "overdue open", "done late", "cancelled", "for both", "for both", "s2 only"]))  # the office task is not a school's
+        ach = [row[1] for row in wb["Yutuqlar"].iter_rows(min_row=2, values_only=True)]
+        self.assertEqual(sorted(ach), ["A published", "A submitted"])  # the unsent draft stays out
+        flat = " ".join(str(c.value) for sheet in wb for row in sheet.iter_rows() for c in row if c.value is not None)
+        for secret in ("Karimov", "Saidov", "Archived"):
+            self.assertNotIn(secret, flat)
+
+    def test_text_that_looks_like_a_formula_is_neutralised(self):
+        Task.objects.filter(title="s2 only").update(title="=HYPERLINK(\"http://evil\",\"x\")")
+        Institution.objects.filter(pk=self.s3.pk).update(name="@SUM(1+1)")
+        _r, wb = self.get_book()
+        for sheet in wb:
+            for row in sheet.iter_rows():
+                for c in row:
+                    if isinstance(c.value, str):
+                        self.assertFalse(c.value.startswith(("=", "@", "+")), (sheet.title, c.value))
+        self.assertIn("'=HYPERLINK", " ".join(str(row[1]) for row in wb["Topshiriqlar"].iter_rows(min_row=2, values_only=True)))
+
+    def test_who_may_download_it(self):
+        url = reverse("reports:schools_export")
+        for user, expected in ((self.admin, 200), (self.hr, 200), (self.d1, 403), (make_user("worker", role="employee"), 403)):
+            self.assertEqual(self.client_for(user).get(url).status_code, expected, user.username)
+        head = make_user("head", role="employee")
+        RoleAssignment.objects.create(user=head, role=Group.objects.get(name="department_head"), scope="department", department=self.dept)
+        self.assertEqual(self.client_for(head).get(url).status_code, 403)  # a branch head may export their own reports, not every school
+        self.assertEqual(Client().get(url).status_code, 302)
+        self.assertEqual(self.client_for(self.admin).post(url).status_code, 405)
+
+    def test_the_button_is_on_the_page_for_those_who_can_export(self):
+        self.assertIn(reverse("reports:schools_export"), self.client_for(self.admin).get(reverse("reports:schools")).content.decode())
+
+    def test_the_sheets_speak_the_viewers_language(self):
+        _r, wb = self.get_book(lang="ru")
+        self.assertEqual(wb.sheetnames, ["Школы", "Задания", "Достижения"])
+        for sheet in wb:
+            for row in sheet.iter_rows(values_only=True):
+                for v in row:
+                    if isinstance(v, str):
+                        self.assertNotIn("‘", v.replace("1-maktab", "").replace("2-maktab", "").replace("3-maktab", "") if sheet.title == "Школы" else "")

@@ -3,7 +3,8 @@
 {% block title %}{% translate "Maktablar bo‘yicha statistika" %}{% endblock %}
 {% block content %}
 <div class="page-head"><div><div class="crumbs"><a href="{% url 'reports:index' %}">{% translate "Hisobotlar" %}</a></div><h1>{% translate "Maktablar bo‘yicha statistika" %}</h1>
-<p>{% translate "Har bir muassasa uchun: topshiriqlar, muddatlar, yutuqlar. Topshiriq muassasa direktoriga beriladi; muddati o‘tganlar yuqorida." %}</p></div></div>
+<p>{% translate "Har bir muassasa uchun: topshiriqlar, muddatlar, yutuqlar. Topshiriq muassasa direktoriga beriladi; muddati o‘tganlar yuqorida." %}</p></div>
+{% if can_export %}<div class="row wrap"><a class="btn btn-secondary" href="{% url 'reports:schools_export' %}">{% translate "Excel" %}</a></div>{% endif %}</div>
 <div class="stat-grid">
   <div class="card kpi"><div class="ic-chip c-orange" data-i="clipboard"></div><div><div class="n">{{ total.tasks }}</div><div class="l">{% translate "Topshiriqlar" %}</div></div></div>
   <div class="card kpi"><div class="ic-chip c-green" data-i="check"></div><div><div class="n">{{ total.done }}</div><div class="l">{% translate "Bajarilgan" %}</div></div></div>
