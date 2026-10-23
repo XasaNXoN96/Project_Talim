@@ -128,3 +128,6 @@ table.t td .file-ico { font-size: 10px; letter-spacing: -.02em; }
 
 /* employee photos */
 img.av { object-fit: cover; background: var(--n-200, #e5eaf2); }
+
+/* urgent tasks */
+.p-urgent i { background: var(--err); box-shadow: 0 0 0 3px rgba(220, 38, 38, .22); } .prio.p-urgent { color: var(--err); font-weight: 700; }

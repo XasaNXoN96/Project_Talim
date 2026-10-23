@@ -2948,3 +2948,25 @@ msgstr "Rasm juda katta (piksellar soni)."
 
 msgid "Rasmni o‘qib bo‘lmadi. Boshqa fayl tanlang."
 msgstr "Rasmni o‘qib bo‘lmadi. Boshqa fayl tanlang."
+
+msgid "Shoshilinch"
+msgstr "Shoshilinch"
+
+msgid "muddat vaqti"
+msgstr "muddat vaqti"
+
+msgid "Topshiriq tanlangan muassasa direktoriga beriladi."
+msgstr "Topshiriq tanlangan muassasa direktoriga beriladi."
+
+msgid "Vaqt ko‘rsatilmasa, muddat o‘sha kun oxirigacha hisoblanadi."
+msgstr "Vaqt ko‘rsatilmasa, muddat o‘sha kun oxirigacha hisoblanadi."
+
+#, python-format
+msgid "Direktor hisobi yo‘q muassasalar: %(names)s."
+msgstr "Direktor hisobi yo‘q muassasalar: %(names)s."
+
+msgid "Kamida bitta ijrochi yoki muassasa tanlang."
+msgstr "Kamida bitta ijrochi yoki muassasa tanlang."
+
+msgid "Vaqt uchun avval sanani ko‘rsating."
+msgstr "Vaqt uchun avval sanani ko‘rsating."

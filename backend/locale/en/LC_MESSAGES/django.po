@@ -2948,3 +2948,25 @@ msgstr "The image is too large (pixel count)."
 
 msgid "Rasmni o‘qib bo‘lmadi. Boshqa fayl tanlang."
 msgstr "The image could not be read. Choose another file."
+
+msgid "Shoshilinch"
+msgstr "Urgent"
+
+msgid "muddat vaqti"
+msgstr "deadline time"
+
+msgid "Topshiriq tanlangan muassasa direktoriga beriladi."
+msgstr "The task goes to the director of the chosen institution."
+
+msgid "Vaqt ko‘rsatilmasa, muddat o‘sha kun oxirigacha hisoblanadi."
+msgstr "Without a time the deadline is the end of that day."
+
+#, python-format
+msgid "Direktor hisobi yo‘q muassasalar: %(names)s."
+msgstr "Institutions without a director account: %(names)s."
+
+msgid "Kamida bitta ijrochi yoki muassasa tanlang."
+msgstr "Choose at least one assignee or institution."
+
+msgid "Vaqt uchun avval sanani ko‘rsating."
+msgstr "Give a date before a time."

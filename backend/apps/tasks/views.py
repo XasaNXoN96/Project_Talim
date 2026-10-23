@@ -38,7 +38,7 @@ class TaskListView(PortalPermissionMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         tab = self.request.GET.get("tab", "mine")
-        qs = access.visible_tasks(user).select_related("created_by").prefetch_related("assignees")
+        qs = access.visible_tasks(user).select_related("created_by").prefetch_related("assignees__employee__institution")
         if tab == "mine":
             qs = qs.filter(assignees=user)
         elif tab == "created":
@@ -79,7 +79,7 @@ class TaskDetailView(_TaskBase):
         task = self.get_task(request, pk)
         transitions = access.allowed_transitions(request.user, task)
         return render(request, "portal/tasks/detail.html", {
-            "task": task, "assignees": task.assignees.all(), "comments": task.comments.select_related("author"),
+            "task": task, "assignees": task.assignees.select_related("employee__institution"), "comments": task.comments.select_related("author"),
             "events": task.events.select_related("actor"), "form": form or CommentForm(),
             "transitions": [(c, l) for c, l in Task.Status.choices if c in transitions],
             "can_edit": access.can_edit(request.user, task), "today": timezone.localdate(),
@@ -110,10 +110,10 @@ class TaskCreateView(PortalPermissionMixin, View):
     permission_required = "tasks.add_task"
 
     def get(self, request):
-        return render(request, "portal/tasks/form.html", {"form": TaskForm(assignable=access.assignable_users(request.user)), "creating": True})
+        return render(request, "portal/tasks/form.html", {"form": TaskForm(assignable=access.assignable_users(request.user), can_assign_schools=access.can_assign_schools(request.user)), "creating": True})
 
     def post(self, request):
-        form = TaskForm(request.POST, assignable=access.assignable_users(request.user))
+        form = TaskForm(request.POST, assignable=access.assignable_users(request.user), can_assign_schools=access.can_assign_schools(request.user))
         if form.is_valid():
             with transaction.atomic():
                 task = form.save(commit=False)
@@ -139,11 +139,11 @@ class TaskEditView(_TaskBase):
 
     def get(self, request, pk):
         task = self._task(request, pk)
-        return render(request, "portal/tasks/form.html", {"form": TaskForm(instance=task, assignable=access.assignable_users(request.user)), "task": task})
+        return render(request, "portal/tasks/form.html", {"form": TaskForm(instance=task, assignable=access.assignable_users(request.user), can_assign_schools=access.can_assign_schools(request.user)), "task": task})
 
     def post(self, request, pk):
         task = self._task(request, pk)
-        form = TaskForm(request.POST, instance=task, assignable=access.assignable_users(request.user))
+        form = TaskForm(request.POST, instance=task, assignable=access.assignable_users(request.user), can_assign_schools=access.can_assign_schools(request.user))
         if form.is_valid():
             changed = sorted(form.changed_data)
             before = set(task.assignees.values_list("pk", flat=True))

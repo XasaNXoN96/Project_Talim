@@ -1,5 +1,9 @@
+import datetime
+
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext_lazy
 
@@ -19,6 +23,7 @@ class Task(TimeStampedModel):
         LOW = "low", _("Past")
         NORMAL = "normal", _("Oddiy")
         HIGH = "high", _("Yuqori")
+        URGENT = "urgent", _("Shoshilinch")
 
     FINAL = (Status.DONE, Status.CANCELLED)
 
@@ -29,6 +34,7 @@ class Task(TimeStampedModel):
     status = models.CharField(_("holat"), max_length=16, choices=Status.choices, default=Status.NEW)
     priority = models.CharField(_("muhimlik"), max_length=8, choices=Priority.choices, default=Priority.NORMAL)
     due_date = models.DateField(_("muddat"), null=True, blank=True)
+    due_time = models.TimeField(_("muddat vaqti"), null=True, blank=True)  # set by the person who gives the task; none = end of that day
     closed_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
@@ -40,6 +46,24 @@ class Task(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    @property
+    def deadline(self):
+        """Aware datetime of the deadline (end of that day when no time was set); None without a due date."""
+        if not self.due_date:
+            return None
+        return timezone.make_aware(datetime.datetime.combine(self.due_date, self.due_time or datetime.time.max))
+
+    @property
+    def is_overdue(self):
+        """Open and past its deadline. With a due time the task is overdue from that minute, not from the next day."""
+        return self.status not in self.FINAL and self.deadline is not None and timezone.now() > self.deadline
+
+
+def overdue_q(prefix=""):
+    """Q for 'past its deadline' (date passed, or today and the due time passed). Combine with a status filter yourself."""
+    now = timezone.localtime()
+    return Q(**{f"{prefix}due_date__lt": now.date()}) | Q(**{f"{prefix}due_date": now.date(), f"{prefix}due_time__lt": now.time()})
 
 
 class TaskComment(TimeStampedModel):

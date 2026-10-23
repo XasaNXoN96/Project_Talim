@@ -9,8 +9,8 @@
   <section class="card card-pad">
     <p class="row wrap"><span class="badge {% if task.status == 'done' %}b-ok{% elif task.status == 'cancelled' %}b-err{% elif task.status == 'review' %}b-warn{% else %}b-info{% endif %}">{{ task.get_status_display }}</span>
       <span class="badge plain">{{ task.get_priority_display }}</span>
-      {% if task.due_date %}<span class="muted small">{% translate "Muddat" %}: {{ task.due_date|date:"d.m.Y" }}{% if task.due_date < today and task.status != "done" and task.status != "cancelled" %} — <b>{% translate "muddati o‘tgan" %}</b>{% endif %}</span>{% endif %}</p>
-    <p class="muted small">{% translate "Ijrochilar" %}: {% for u in assignees %}{{ u.get_full_name|default:u.get_username }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+      {% if task.due_date %}<span class="muted small">{% translate "Muddat" %}: {{ task.due_date|date:"d.m.Y" }}{% if task.due_time %} {{ task.due_time|time:"H:i" }}{% endif %}{% if task.is_overdue %} — <b>{% translate "muddati o‘tgan" %}</b>{% endif %}</span>{% endif %}</p>
+    <p class="muted small">{% translate "Ijrochilar" %}: {% for u in assignees %}{{ u.get_full_name|default:u.get_username }}{% if u.employee.institution %} ({{ u.employee.institution.name }}){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     {% if task.description %}<div style="white-space:pre-wrap;margin-top:12px">{{ task.description }}</div>{% endif %}
     {% if transitions %}<div class="row wrap" style="margin-top:16px">{% for code, label in transitions %}
       <form method="post" action="{% url 'tasks:transition' task.pk code %}">{% csrf_token %}<button class="btn {% if code == 'cancelled' %}btn-danger{% else %}btn-primary{% endif %} btn-sm" type="submit">{{ label }}</button></form>{% endfor %}</div>{% endif %}

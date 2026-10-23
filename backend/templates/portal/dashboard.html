@@ -29,8 +29,8 @@
       <div class="card-body">
         {% for t in my_tasks %}
         <div class="task-row"><div class="grow"><b>{{ t.title }}</b>
-          <div class="xs muted{% if t.due_date and t.due_date < today %} due{% endif %}">{% if t.due_date %}{% translate "Muddat" %}: {{ t.due_date|date:"d.m.Y" }}{% if t.due_date < today %} · {% translate "Muddati o‘tgan" %}{% endif %}{% else %}—{% endif %}</div></div>
-          <span class="prio {% if t.priority == 'high' %}p-high{% elif t.priority == 'low' %}p-low{% else %}p-mid{% endif %}"><i></i>{{ t.get_priority_display }}</span>
+          <div class="xs muted{% if t.is_overdue %} due{% endif %}">{% if t.due_date %}{% translate "Muddat" %}: {{ t.due_date|date:"d.m.Y" }}{% if t.due_time %} {{ t.due_time|time:"H:i" }}{% endif %}{% if t.is_overdue %} · {% translate "Muddati o‘tgan" %}{% endif %}{% else %}—{% endif %}</div></div>
+          <span class="prio {% if t.priority == 'urgent' %}p-urgent{% elif t.priority == 'high' %}p-high{% elif t.priority == 'low' %}p-low{% else %}p-mid{% endif %}"><i></i>{{ t.get_priority_display }}</span>
           <span class="badge {% if t.status == 'review' %}b-warn{% elif t.status == 'new' %}b-violet{% else %}b-info{% endif %}">{{ t.get_status_display }}</span>
           <a class="btn btn-ghost btn-sm" href="{% url 'tasks:detail' t.pk %}">{% translate "Batafsil" %}</a></div>
         {% empty %}<p class="muted">{% translate "Sizga biriktirilgan ochiq topshiriqlar yo‘q" %}</p>{% endfor %}

@@ -2948,3 +2948,25 @@ msgstr "Изображение слишком большое (число пик�
 
 msgid "Rasmni o‘qib bo‘lmadi. Boshqa fayl tanlang."
 msgstr "Не удалось прочитать изображение. Выберите другой файл."
+
+msgid "Shoshilinch"
+msgstr "Срочное"
+
+msgid "muddat vaqti"
+msgstr "время срока"
+
+msgid "Topshiriq tanlangan muassasa direktoriga beriladi."
+msgstr "Задание получит директор выбранного учреждения."
+
+msgid "Vaqt ko‘rsatilmasa, muddat o‘sha kun oxirigacha hisoblanadi."
+msgstr "Если время не указано, срок считается до конца этого дня."
+
+#, python-format
+msgid "Direktor hisobi yo‘q muassasalar: %(names)s."
+msgstr "Учреждения без аккаунта директора: %(names)s."
+
+msgid "Kamida bitta ijrochi yoki muassasa tanlang."
+msgstr "Выберите хотя бы одного исполнителя или учреждение."
+
+msgid "Vaqt uchun avval sanani ko‘rsating."
+msgstr "Для времени сначала укажите дату."

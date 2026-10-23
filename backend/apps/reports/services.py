@@ -22,7 +22,7 @@ from apps.documents.access import visible_documents
 from apps.documents.models import Document, DocumentCategory
 from apps.organization.access import covered_departments_for, descendant_ids
 from apps.organization.models import Department, Employee
-from apps.tasks.models import Task
+from apps.tasks.models import Task, overdue_q
 
 INPUT = {"class": "input"}
 
@@ -184,9 +184,12 @@ def build_report(user, filters: dict) -> ReportData:
     base = Task.objects.filter(pk__in=task_ids)
     data.kpis["tasks_total"] = len(task_ids)
     data.kpis["tasks_done"] = base.filter(status=Task.Status.DONE).count()
-    data.kpis["tasks_overdue_open"] = base.exclude(status__in=Task.FINAL).filter(due_date__lt=today).count()
+    data.kpis["tasks_overdue_open"] = base.exclude(status__in=Task.FINAL).filter(overdue_q()).count()
     done_qs = base.filter(status=Task.Status.DONE, due_date__isnull=False, closed_at__isnull=False)
-    late = sum(1 for due, closed in done_qs.values_list("due_date", "closed_at") if timezone.localtime(closed).date() > due)
+    late = sum(
+        1 for due, due_time, closed in done_qs.values_list("due_date", "due_time", "closed_at")
+        if timezone.localtime(closed) > timezone.make_aware(datetime.datetime.combine(due, due_time or datetime.time.max))
+    )
     data.kpis["tasks_done_late"] = late
     data.kpis["tasks_done_rate"] = round(100 * data.kpis["tasks_done"] / len(task_ids)) if task_ids else 0
     counts = dict(base.values_list("status").annotate(n=Count("pk")).order_by())
@@ -197,7 +200,7 @@ def build_report(user, filters: dict) -> ReportData:
     link = Task.assignees.through.objects.filter(task_id__in=task_ids)
     if scope is not None:
         link = link.filter(user__employee__department_id__in=scope)
-    open_overdue = Q(task__status__in=[Task.Status.NEW, Task.Status.IN_PROGRESS, Task.Status.REVIEW], task__due_date__lt=today)
+    open_overdue = Q(task__status__in=[Task.Status.NEW, Task.Status.IN_PROGRESS, Task.Status.REVIEW]) & overdue_q("task__")
     perf_dept = (
         link.values("user__employee__department__name")
         .annotate(total=Count("task_id", distinct=True), done=Count("task_id", filter=Q(task__status=Task.Status.DONE), distinct=True), overdue=Count("task_id", filter=open_overdue, distinct=True))

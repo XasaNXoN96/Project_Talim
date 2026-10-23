@@ -58,6 +58,11 @@ def assignable_users(user):
     return qs.filter(Q(pk=user.pk) | Q(employee__department_id__in=covered)).distinct()
 
 
+def can_assign_schools(user):
+    """Giving a task to whole institutions (their directors) is for those whose add_task covers the whole organisation."""
+    return user.has_perm("tasks.add_task") and covered_departments_for(user, "tasks.add_task") is None
+
+
 def allowed_transitions(user, task):
     """Statuses `user` may move the task to right now."""
     S = Task.Status
