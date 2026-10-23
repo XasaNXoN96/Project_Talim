@@ -3,6 +3,7 @@
 {% block title %}{% translate "Hisobotlar" %}{% endblock %}
 {% block content %}
 <div class="page-head"><div><h1>{% translate "Hisobotlar" %}</h1><p>{% translate "Ma’lumotlar bazasidagi joriy ma’lumotlar. Siz faqat o‘z doirangizdagi ma’lumotlarni ko‘rasiz." %}</p></div>
+{% if can_schools %}<div class="row wrap"><a class="btn btn-secondary" href="{% url 'reports:schools' %}">{% translate "Maktablar bo‘yicha statistika" %}</a></div>{% endif %}
 {% if can_export and data %}<div class="row wrap">
   <a class="btn btn-secondary" data-export data-busy="{% translate 'Tayyorlanmoqda…' %}" href="{% url 'reports:export' 'xlsx' %}?{{ query }}">{% translate "Excel" %}</a>
   <a class="btn btn-secondary" data-export data-busy="{% translate 'Tayyorlanmoqda…' %}" href="{% url 'reports:export' 'pdf' %}?{{ query }}">{% translate "PDF" %}</a></div>{% endif %}</div>

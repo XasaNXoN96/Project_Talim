@@ -16,6 +16,12 @@
 {% endif %}
 <div class="dash">
   <div class="stack">
+    {% if school_overview %}
+    <section class="card"><div class="card-head"><h2>{% translate "Maktablar holati" %}</h2><a class="more" href="{% url 'reports:schools' %}">{% translate "Barchasi" %}</a></div>
+      <div class="card-body"><div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Muassasa" %}</th><th>{% translate "Bajarilgan" %}</th><th>{% translate "Muddati o‘tgan" %}</th><th>{% translate "Yutuqlar" %}</th></tr></thead><tbody>
+      {% for r in school_overview %}<tr{% if r.overdue %} class="overdue"{% endif %}><td><a href="{% url 'reports:school' r.institution.pk %}" style="color:inherit"><b>{{ r.institution.name }}</b></a></td><td>{{ r.done }} / {{ r.tasks }}</td><td>{% if r.overdue %}<b style="color:var(--err)">{{ r.overdue }}</b>{% else %}0{% endif %}</td><td>{{ r.ach_published }}{% if r.ach_pending %} <span class="muted small">+{{ r.ach_pending }} {% translate "kutmoqda" %}</span>{% endif %}</td></tr>{% endfor %}
+      </tbody></table></div></div></section>
+    {% endif %}
     {% if perms.content.view_news %}
     <section class="card"><div class="card-head"><h2>{% translate "So‘nggi yangiliklar" %}</h2><a class="more" href="{% url 'news_admin:list' %}">{% translate "Barchasi" %}</a></div>
       <div class="card-body news-3">

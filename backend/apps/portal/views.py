@@ -42,6 +42,12 @@ class DashboardView(LoginRequiredMixin, TemplateView):
                 Task.objects.filter(assignees=user).exclude(status__in=Task.FINAL).order_by("due_date", "-created_at")[:5]
             )
         context["stats"] = stats
+        from apps.reports import schools as school_stats
+
+        if school_stats.can_see_schools(user):  # organisation-wide reporting: how the schools are doing
+            rows = school_stats.build_rows()
+            context["school_overview"] = [r for r in rows if r.tasks or r.ach_total][:5]
+            context["school_total"] = school_stats.totals(rows)
         if user.has_perm("content.view_news"):
             context["latest_news"] = list(News.objects.published().select_related("category")[:3])
         if user.has_perm("notifications.view_notification"):

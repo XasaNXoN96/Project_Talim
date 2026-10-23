@@ -3496,3 +3496,42 @@ msgstr "conversation"
 
 msgid "suhbatlar"
 msgstr "conversations"
+
+msgid "Bir nechta muassasaga berilgan topshiriq har biriga hisoblanadi. Hisoblash butun tarix bo‘yicha: muddati o‘tgan topshiriq yopilmaguncha ko‘rinib turadi."
+msgstr "A task given to several institutions counts for each of them. The count covers the whole history: an overdue task stays visible until it is closed."
+
+msgid "Bu muassasada faol direktor hisobi yo‘q: unga topshiriq berib bo‘lmaydi."
+msgstr "This institution has no active director account: it cannot be given a task."
+
+msgid "Direktor hisobi"
+msgstr "Director account"
+
+msgid "Har bir muassasa uchun: topshiriqlar, muddatlar, yutuqlar. Topshiriq muassasa direktoriga beriladi; muddati o‘tganlar yuqorida."
+msgstr "For each institution: tasks, deadlines, achievements. A task goes to the institution's director; overdue ones come first."
+
+msgid "Hisob yo‘q"
+msgstr "No account"
+
+msgid "Maktablar bo‘yicha statistika"
+msgstr "Statistics by school"
+
+msgid "Maktablar holati"
+msgstr "State of the schools"
+
+msgid "Nashr etilgan yutuqlar"
+msgstr "Published achievements"
+
+msgid "Shaxsiy ma’lumotlar bu yerda ko‘rsatilmaydi: faqat lavozimlar bo‘yicha soni."
+msgstr "Personal data is not shown here: only the number per position."
+
+msgid "Xodimlar kiritilmagan."
+msgstr "No staff have been entered."
+
+msgid "kutmoqda"
+msgstr "waiting"
+
+msgid "Kechikkan"
+msgstr "Late"
+
+msgid "Direktor hisobi yo‘q"
+msgstr "No director account"

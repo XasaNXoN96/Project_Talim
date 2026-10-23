@@ -1,0 +1,30 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{{ inst.name }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'reports:schools' %}">{% translate "Maktablar bo‘yicha statistika" %}</a></div><h1>{{ inst.name }}</h1><p>{{ inst.get_kind_display }}{% if inst.head_name %} · {{ inst.head_name }}{% endif %}</p></div></div>
+<div class="stat-grid">
+  <div class="card kpi"><div class="ic-chip c-orange" data-i="clipboard"></div><div><div class="n">{{ row.tasks }}</div><div class="l">{% translate "Topshiriqlar" %}</div></div></div>
+  <div class="card kpi"><div class="ic-chip c-green" data-i="check"></div><div><div class="n">{{ row.done }}</div><div class="l">{% translate "Bajarilgan" %}{% if row.rate is not None %} · {{ row.rate }}%{% endif %}</div></div></div>
+  <div class="card kpi"><div class="ic-chip c-red" data-i="clock"></div><div><div class="n">{{ row.overdue }}</div><div class="l">{% translate "Muddati o‘tgan" %}</div></div></div>
+  <div class="card kpi"><div class="ic-chip c-blue" data-i="trophy"></div><div><div class="n">{{ row.ach_published }}</div><div class="l">{% translate "Nashr etilgan yutuqlar" %}</div></div></div>
+</div>
+<div class="stack" style="margin-top:16px;max-width:980px">
+  {% if not row.directors %}<div class="alert warn" role="status"><span>{% translate "Bu muassasada faol direktor hisobi yo‘q: unga topshiriq berib bo‘lmaydi." %}</span></div>{% endif %}
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Topshiriqlar" %}</h2>
+    {% if tasks %}<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Topshiriq" %}</th><th>{% translate "Muddat" %}</th><th>{% translate "Holat" %}</th><th>{% translate "Ustuvorlik" %}</th><th></th></tr></thead><tbody>
+    {% for t in tasks %}<tr{% if t.is_overdue %} class="overdue"{% endif %}><td><b>{{ t.title }}</b></td><td class="nw">{% if t.due_date %}{{ t.due_date|date:"d.m.Y" }}{% if t.due_time %} {{ t.due_time|time:"H:i" }}{% endif %}{% else %}—{% endif %}</td>
+    <td><span class="badge {% if t.status == 'done' %}b-ok{% elif t.status == 'cancelled' %}b-err{% elif t.status == 'review' %}b-warn{% elif t.is_overdue %}b-err{% else %}b-info{% endif %}">{% if t.is_overdue %}{% translate "Muddati o‘tgan" %}{% else %}{{ t.get_status_display }}{% endif %}</span></td>
+    <td><span class="prio {% if t.priority == 'urgent' %}p-urgent{% elif t.priority == 'high' %}p-high{% elif t.priority == 'low' %}p-low{% else %}p-mid{% endif %}"><i></i>{{ t.get_priority_display }}</span></td>
+    <td class="nw"><a class="btn btn-secondary btn-sm" href="{% url 'tasks:detail' t.pk %}">{% translate "Batafsil" %}</a></td></tr>{% endfor %}</tbody></table></div>
+    {% else %}<p class="muted">{% translate "Topshiriqlar yo‘q" %}</p>{% endif %}</section>
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Yutuqlar" %}</h2>
+    {% if achievements %}<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Sarlavha" %}</th><th>{% translate "Kim" %}</th><th>{% translate "Turi" %}</th><th>{% translate "Holat" %}</th><th></th></tr></thead><tbody>
+    {% for a in achievements %}<tr><td><b>{{ a.title }}</b></td><td>{{ a.person_name }}</td><td>{{ a.get_kind_display }}</td><td><span class="badge {% if a.status == 'published' %}b-ok{% elif a.status == 'changes_requested' %}b-warn{% elif a.status == 'archived' %}b-err{% elif a.status == 'draft' %}plain{% else %}b-info{% endif %}">{{ a.get_status_display }}</span></td>
+    <td class="nw">{% if a.openable %}<a class="btn btn-secondary btn-sm" href="{% url 'achievements:detail' a.pk %}">{% translate "Ko‘rish" %}</a>{% endif %}</td></tr>{% endfor %}</tbody></table></div>
+    {% else %}<p class="muted">{% translate "Yutuqlar yo‘q" %}</p>{% endif %}</section>
+  <section class="card card-pad"><h2 style="font-size:17px;margin-bottom:8px">{% translate "Xodimlar" %}: {{ row.staff }}</h2>
+    {% if positions %}<ul class="stack" style="margin:0;padding-left:18px">{% for name, n in positions %}<li>{{ name|default:"—" }}: <b>{{ n }}</b></li>{% endfor %}</ul>{% else %}<p class="muted">{% translate "Xodimlar kiritilmagan." %}</p>{% endif %}
+    <p class="muted small" style="margin-top:8px">{% translate "Shaxsiy ma’lumotlar bu yerda ko‘rsatilmaydi: faqat lavozimlar bo‘yicha soni." %}</p></section>
+</div>
+{% endblock %}

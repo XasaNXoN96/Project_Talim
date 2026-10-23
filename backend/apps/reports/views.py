@@ -10,7 +10,9 @@ from apps.audit.models import AuditLog
 from apps.audit.services import record
 from apps.core.mixins import PortalPermissionMixin
 
-from . import exports
+from django.db.models import Count
+
+from . import exports, schools
 from .services import FilterForm, build_report
 
 
@@ -31,7 +33,8 @@ class ReportView(PortalPermissionMixin, View):
 
     def get(self, request):
         form = FilterForm(request.GET or {}, user=request.user)  # an empty GET still validates: defaults = the last 30 days
-        ctx = {"form": form, "query": request.GET.urlencode(), "can_export": request.user.has_perm("reports.export_reports"), "error": None}
+        ctx = {"form": form, "query": request.GET.urlencode(), "can_export": request.user.has_perm("reports.export_reports"), "error": None,
+               "can_schools": schools.can_see_schools(request.user)}
         if not form.is_valid():
             return render(request, "portal/reports/index.html", ctx)
         try:
@@ -85,3 +88,39 @@ class ReportExportView(PortalPermissionMixin, View):
         response["Cache-Control"] = "private, no-store"
         response["X-Content-Type-Options"] = "nosniff"
         return response
+
+
+# ---- statistics by school --------------------------------------------------------------------------------------------
+
+class _SchoolsBase(PortalPermissionMixin, View):
+    """Whole-organisation reporting right only (see schools.can_see_schools); anything narrower gets 403."""
+
+    permission_required = "reports.view_reports"
+
+    def has_permission(self):
+        return schools.can_see_schools(self.request.user)
+
+
+class SchoolsReportView(_SchoolsBase):
+    def get(self, request):
+        rows = schools.build_rows()
+        return render(request, "portal/reports/schools.html", {"rows": rows, "total": schools.totals(rows)})
+
+
+class SchoolDetailView(_SchoolsBase):
+    def get(self, request, pk):
+        from django.shortcuts import get_object_or_404
+
+        from apps.achievements import workflow as ach_workflow
+        from apps.achievements.models import Achievement
+        from apps.organization.models import Employee, Institution
+
+        inst = get_object_or_404(Institution, pk=pk)
+        row = next(r for r in schools.build_rows() if r.institution.pk == inst.pk)
+        tasks = [t for _i, t in schools.school_tasks([inst.pk])]
+        visible = set(ach_workflow.visible_achievements(request.user).filter(institution=inst).values_list("pk", flat=True))
+        achievements = list(Achievement.objects.filter(institution=inst).order_by("-created_at")[:50])
+        for a in achievements:
+            a.openable = a.pk in visible
+        positions = list(Employee.objects.filter(institution=inst).exclude(status=Employee.Status.ARCHIVED).values_list("position__name").annotate(n=Count("pk")).order_by("-n"))
+        return render(request, "portal/reports/school_detail.html", {"inst": inst, "row": row, "tasks": tasks, "achievements": achievements, "positions": positions})

@@ -3496,3 +3496,42 @@ msgstr "переписка"
 
 msgid "suhbatlar"
 msgstr "переписки"
+
+msgid "Bir nechta muassasaga berilgan topshiriq har biriga hisoblanadi. Hisoblash butun tarix bo‘yicha: muddati o‘tgan topshiriq yopilmaguncha ko‘rinib turadi."
+msgstr "Задание, выданное нескольким учреждениям, учитывается для каждого. Подсчёт идёт по всей истории: просроченное задание остаётся видимым, пока не закрыто."
+
+msgid "Bu muassasada faol direktor hisobi yo‘q: unga topshiriq berib bo‘lmaydi."
+msgstr "В этом учреждении нет активного аккаунта директора: задание ему выдать нельзя."
+
+msgid "Direktor hisobi"
+msgstr "Аккаунт директора"
+
+msgid "Har bir muassasa uchun: topshiriqlar, muddatlar, yutuqlar. Topshiriq muassasa direktoriga beriladi; muddati o‘tganlar yuqorida."
+msgstr "По каждому учреждению: задания, сроки, достижения. Задание выдаётся директору учреждения; просроченные — сверху."
+
+msgid "Hisob yo‘q"
+msgstr "Нет аккаунта"
+
+msgid "Maktablar bo‘yicha statistika"
+msgstr "Статистика по школам"
+
+msgid "Maktablar holati"
+msgstr "Состояние школ"
+
+msgid "Nashr etilgan yutuqlar"
+msgstr "Опубликованные достижения"
+
+msgid "Shaxsiy ma’lumotlar bu yerda ko‘rsatilmaydi: faqat lavozimlar bo‘yicha soni."
+msgstr "Личные данные здесь не показываются: только число по должностям."
+
+msgid "Xodimlar kiritilmagan."
+msgstr "Сотрудники не внесены."
+
+msgid "kutmoqda"
+msgstr "ожидает"
+
+msgid "Kechikkan"
+msgstr "С опозданием"
+
+msgid "Direktor hisobi yo‘q"
+msgstr "Нет аккаунта директора"

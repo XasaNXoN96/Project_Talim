@@ -1,0 +1,25 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Maktablar bo‘yicha statistika" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'reports:index' %}">{% translate "Hisobotlar" %}</a></div><h1>{% translate "Maktablar bo‘yicha statistika" %}</h1>
+<p>{% translate "Har bir muassasa uchun: topshiriqlar, muddatlar, yutuqlar. Topshiriq muassasa direktoriga beriladi; muddati o‘tganlar yuqorida." %}</p></div></div>
+<div class="stat-grid">
+  <div class="card kpi"><div class="ic-chip c-orange" data-i="clipboard"></div><div><div class="n">{{ total.tasks }}</div><div class="l">{% translate "Topshiriqlar" %}</div></div></div>
+  <div class="card kpi"><div class="ic-chip c-green" data-i="check"></div><div><div class="n">{{ total.done }}</div><div class="l">{% translate "Bajarilgan" %}</div></div></div>
+  <div class="card kpi"><div class="ic-chip c-red" data-i="clock"></div><div><div class="n">{{ total.overdue }}</div><div class="l">{% translate "Muddati o‘tgan" %}</div></div></div>
+  <div class="card kpi"><div class="ic-chip c-blue" data-i="trophy"></div><div><div class="n">{{ total.ach_published }}</div><div class="l">{% translate "Nashr etilgan yutuqlar" %}</div></div></div>
+</div>
+{% if rows %}
+<div class="table-wrap" style="margin-top:16px"><table class="t"><thead><tr>
+  <th>{% translate "Muassasa" %}</th><th>{% translate "Xodimlar" %}</th><th>{% translate "Topshiriqlar" %}</th><th>{% translate "Bajarilgan" %}</th><th>{% translate "Jarayonda" %}</th><th>{% translate "Muddati o‘tgan" %}</th><th>{% translate "Kechikkan" %}</th><th>{% translate "Yutuqlar" %}</th></tr></thead><tbody>
+{% for r in rows %}<tr{% if r.overdue %} class="overdue"{% endif %}>
+<td><b><a href="{% url 'reports:school' r.institution.pk %}" style="color:inherit">{{ r.institution.name }}</a></b>{% if not r.directors %} <span class="badge b-warn">{% translate "Direktor hisobi yo‘q" %}</span>{% endif %}</td>
+<td>{{ r.staff }}</td><td>{{ r.tasks }}</td>
+<td>{{ r.done }}{% if r.rate is not None %} <span class="muted small">({{ r.rate }}%)</span>{% endif %}</td><td>{{ r.open }}</td>
+<td>{% if r.overdue %}<b style="color:var(--err)">{{ r.overdue }}</b>{% else %}0{% endif %}</td><td>{{ r.late }}</td>
+<td>{{ r.ach_published }} <span class="muted small">/ {{ r.ach_total }}{% if r.ach_pending %} · {{ r.ach_pending }} {% translate "kutmoqda" %}{% endif %}</span></td></tr>{% endfor %}
+</tbody></table></div>
+<p class="muted small" style="margin-top:8px">{% translate "Bir nechta muassasaga berilgan topshiriq har biriga hisoblanadi. Hisoblash butun tarix bo‘yicha: muddati o‘tgan topshiriq yopilmaguncha ko‘rinib turadi." %}</p>
+{% else %}<div class="card empty"><h3>{% translate "Ta’lim muassasalari hali kiritilmagan." %}</h3></div>{% endif %}
+{% endblock %}

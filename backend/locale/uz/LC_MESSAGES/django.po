@@ -3496,3 +3496,42 @@ msgstr "suhbat"
 
 msgid "suhbatlar"
 msgstr "suhbatlar"
+
+msgid "Bir nechta muassasaga berilgan topshiriq har biriga hisoblanadi. Hisoblash butun tarix bo‘yicha: muddati o‘tgan topshiriq yopilmaguncha ko‘rinib turadi."
+msgstr "Bir nechta muassasaga berilgan topshiriq har biriga hisoblanadi. Hisoblash butun tarix bo‘yicha: muddati o‘tgan topshiriq yopilmaguncha ko‘rinib turadi."
+
+msgid "Bu muassasada faol direktor hisobi yo‘q: unga topshiriq berib bo‘lmaydi."
+msgstr "Bu muassasada faol direktor hisobi yo‘q: unga topshiriq berib bo‘lmaydi."
+
+msgid "Direktor hisobi"
+msgstr "Direktor hisobi"
+
+msgid "Har bir muassasa uchun: topshiriqlar, muddatlar, yutuqlar. Topshiriq muassasa direktoriga beriladi; muddati o‘tganlar yuqorida."
+msgstr "Har bir muassasa uchun: topshiriqlar, muddatlar, yutuqlar. Topshiriq muassasa direktoriga beriladi; muddati o‘tganlar yuqorida."
+
+msgid "Hisob yo‘q"
+msgstr "Hisob yo‘q"
+
+msgid "Maktablar bo‘yicha statistika"
+msgstr "Maktablar bo‘yicha statistika"
+
+msgid "Maktablar holati"
+msgstr "Maktablar holati"
+
+msgid "Nashr etilgan yutuqlar"
+msgstr "Nashr etilgan yutuqlar"
+
+msgid "Shaxsiy ma’lumotlar bu yerda ko‘rsatilmaydi: faqat lavozimlar bo‘yicha soni."
+msgstr "Shaxsiy ma’lumotlar bu yerda ko‘rsatilmaydi: faqat lavozimlar bo‘yicha soni."
+
+msgid "Xodimlar kiritilmagan."
+msgstr "Xodimlar kiritilmagan."
+
+msgid "kutmoqda"
+msgstr "kutmoqda"
+
+msgid "Kechikkan"
+msgstr "Kechikkan"
+
+msgid "Direktor hisobi yo‘q"
+msgstr "Direktor hisobi yo‘q"
