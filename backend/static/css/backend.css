@@ -131,3 +131,6 @@ img.av { object-fit: cover; background: var(--n-200, #e5eaf2); }
 
 /* urgent tasks */
 .p-urgent i { background: var(--err); box-shadow: 0 0 0 3px rgba(220, 38, 38, .22); } .prio.p-urgent { color: var(--err); font-weight: 700; }
+
+/* checkbox fields (e.g. the publishing consent) sit at the start of the row, not centred */
+.field input[type="checkbox"] { width: 20px; height: 20px; margin: 4px 0; justify-self: start; align-self: flex-start; }

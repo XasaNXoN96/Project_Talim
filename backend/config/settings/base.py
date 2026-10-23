@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "apps.organization",
     "apps.access",
     "apps.content",
+    "apps.achievements",
     "apps.audit",
     "apps.tasks",
     "apps.documents",

@@ -1,5 +1,7 @@
 from django.views.generic import DetailView, ListView, TemplateView
 
+from apps.achievements.models import Achievement
+
 from .models import News
 
 
@@ -9,6 +11,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["latest_news"] = News.objects.published().select_related("category")[:6]
+        context["latest_achievements"] = Achievement.objects.published().select_related("institution")[:4]
         return context
 
 

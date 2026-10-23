@@ -52,6 +52,15 @@ def notify_news(user, kind, news, *, actor=None, dedupe_key=""):
     return obj
 
 
+def notify_achievement(user, kind, achievement, *, actor=None):
+    """Same rules as notify(), for an achievement: not the actor, not an inactive user. The e-mail copy carries only the event and the title."""
+    if not user.is_active or (actor is not None and user.pk == actor.pk):
+        return None
+    obj = Notification.objects.create(user=user, kind=kind, achievement=achievement, title=achievement.title[:200])
+    transaction.on_commit(lambda: send_email_copy(obj))
+    return obj
+
+
 def send_email_copy(notification):
     """Separate, optional layer. OFF by default; needs NOTIFICATION_EMAILS_ENABLED and a configured e-mail backend.
     The message has no link and no description: just the event and the task title."""

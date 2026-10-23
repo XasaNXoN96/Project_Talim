@@ -113,8 +113,11 @@ class AdminHubAndMenuTests(TestCase):
         positions = [body.index(f'href="{reverse(n)}"') for n in order]
         self.assertEqual(positions, sorted(positions))
         sidebar = body[body.index('class="sb-nav"'):body.index("</nav>", body.index('class="sb-nav"'))]
-        for slug in ("yutuqlar", "sertifikatlar", "media", "kirish-chiqish", "geolokatsiya", "chat"):
+        for slug in ("media", "kirish-chiqish", "geolokatsiya", "chat"):
             self.assertIn(reverse("portal:preview", args=[slug]), sidebar)
+        # Yutuqlar and Sertifikatlar are real now (the achievements section); the mock pages stay for people without access to it
+        self.assertIn(f'href="{reverse("achievements:list")}"', sidebar)
+        self.assertIn(f'href="{reverse("achievements:list")}?kind=certificate"', sidebar)
         for name in ("tasks:list", "documents:list", "employees:structure", "notifications:list", "reports:index", "portal:admin_hub"):
             self.assertIn(f'href="{reverse(name)}"', sidebar, name)
         self.assertGreaterEqual(sidebar.count("<a "), 15)

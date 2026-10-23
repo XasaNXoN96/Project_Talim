@@ -1,0 +1,8 @@
+{% load i18n %}{# The ONE rendering of an achievement: the public page and the preview use it, so the preview is exactly what the public sees. Plain text, auto-escaped. #}
+<div class="row wrap"><span class="badge plain b-info">{{ a.get_kind_display }}</span><span class="badge plain">{{ a.get_level_display }}</span>{% if a.awarded_on %}<span class="small muted">{{ a.awarded_on|date:"d.m.Y" }}</span>{% endif %}</div>
+<h1>{{ a.title }}</h1>
+<p><b>{{ a.person_name }}</b>{% if a.person_position %} · {{ a.person_position }}{% endif %} <span class="muted">({{ a.get_person_kind_display }})</span></p>
+<p class="muted">{{ a.institution.name }}</p>
+{% if a.description %}{{ a.description|linebreaks }}{% endif %}
+{% if images %}<div class="auto-grid" style="margin:16px 0">{% for im in images %}<img src="{% if public %}{% url 'achievements_public:image' im.pk %}{% else %}{% url 'achievements:image' im.pk %}{% endif %}" alt="{{ a.title }}" loading="lazy" style="width:100%;height:auto;border-radius:12px">{% endfor %}</div>{% endif %}
+{% if a.video_url %}<p><a class="btn btn-secondary" href="{{ a.video_url }}" target="_blank" rel="noopener noreferrer nofollow">{% translate "Videoni ko‘rish" %}</a> <span class="small muted">{% translate "(boshqa saytda ochiladi)" %}</span></p>{% endif %}

@@ -34,6 +34,9 @@ _NOTIFY = ["notifications.view_notification"]
 _NEWS_AUTHOR = ["content.view_news", "content.add_news", "content.change_news"]
 _NEWS_EDITOR = ["content.view_news", "content.review_news"]
 _NEWS_PUBLISHER = ["content.view_news", "content.publish_news"]
+# Achievements: a school writes and sends its own; whoever holds publish_achievement checks, completes and publishes (after a preview).
+_ACH_WRITE = ["achievements.view_achievement", "achievements.add_achievement", "achievements.change_achievement"]
+_ACH_PUBLISH = _ACH_WRITE + ["achievements.publish_achievement"]
 _ORG_VIEW = ["organization.view_department", "organization.view_position"]
 _DIRECTORY = ["organization.view_employee_directory"]
 _CONTACTS = ["organization.view_employee_contacts"]
@@ -57,9 +60,9 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
     # Contacts/private data are further limited by SCOPE (own / department / all) in apps.organization.access.
     RoleCode.EMPLOYEE: _DIRECTORY + _ORG_VIEW + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
     RoleCode.DEPARTMENT_HEAD: _DIRECTORY + _CONTACTS + _ORG_VIEW + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
-    RoleCode.CONTENT_MANAGER: _CONTENT + ["organization.view_institution"] + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    RoleCode.CONTENT_MANAGER: _CONTENT + _ACH_PUBLISH + ["organization.view_institution"] + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
     RoleCode.HR: _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + ["accounts.view_user"] + _TASKS_BASIC + ["tasks.add_task"] + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _NOTIFY,
-    RoleCode.ADMIN: _CONTENT + _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + _USER_ADMIN + ["audit.view_auditlog"] + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
+    RoleCode.ADMIN: _CONTENT + _ACH_PUBLISH + _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + _USER_ADMIN + ["audit.view_auditlog"] + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
     RoleCode.NEWS_AUTHOR: _NEWS_AUTHOR + _NOTIFY,
     RoleCode.NEWS_EDITOR: _NEWS_EDITOR + _NOTIFY,
     RoleCode.NEWS_PUBLISHER: _NEWS_PUBLISHER + _NOTIFY,
@@ -68,7 +71,7 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
     # enforced in apps.organization.access (listing, cards, create/edit/archive, photo). add/change_employee are global Django
     # permissions; the views narrow them to the own institution's cards without an account, hide department/user/private fields,
     # and keep the director out of the import tool and the admin hub. No department structure, no other institutions.
-    RoleCode.SCHOOL_DIRECTOR: _DIRECTORY + _CONTACTS + ["organization.add_employee", "organization.change_employee"] + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    RoleCode.SCHOOL_DIRECTOR: _DIRECTORY + _CONTACTS + ["organization.add_employee", "organization.change_employee"] + _ACH_WRITE + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
 }
 
 

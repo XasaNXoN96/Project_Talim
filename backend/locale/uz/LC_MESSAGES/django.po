@@ -2970,3 +2970,244 @@ msgstr "Kamida bitta ijrochi yoki muassasa tanlang."
 
 msgid "Vaqt uchun avval sanani ko‘rsating."
 msgstr "Vaqt uchun avval sanani ko‘rsating."
+
+msgid "(boshqa saytda ochiladi)"
+msgstr "(boshqa saytda ochiladi)"
+
+msgid "Amallar"
+msgstr "Amallar"
+
+msgid "Barcha turlar"
+msgstr "Barcha turlar"
+
+msgid "Barcha yutuqlar"
+msgstr "Barcha yutuqlar"
+
+#, python-format
+msgid "Bitta yutuqqa ko‘pi bilan %(n)d ta rasm biriktiriladi."
+msgstr "Bitta yutuqqa ko‘pi bilan %(n)d ta rasm biriktiriladi."
+
+msgid "Bu yutuqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
+msgstr "Bu yutuqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
+
+msgid "Diplom"
+msgstr "Diplom"
+
+msgid "Faqat https havolasi qabul qilinadi."
+msgstr "Faqat https havolasi qabul qilinadi."
+
+msgid "Hozircha yutuqlar yo‘q"
+msgstr "Hozircha yutuqlar yo‘q"
+
+msgid "Ishtirokchi (voyaga yetmagan bo‘lsa, ota-onasi) ma’lumot va rasmni ochiq saytda nashr etishga rozilik bergan."
+msgstr "Ishtirokchi (voyaga yetmagan bo‘lsa, ota-onasi) ma’lumot va rasmni ochiq saytda nashr etishga rozilik bergan."
+
+msgid "Jamoa yoki muassasa"
+msgstr "Jamoa yoki muassasa"
+
+msgid "Ma’lumotlar to‘liq va to‘g‘ri bo‘lsin: yutuq administrator tekshirgandan va oldindan ko‘rib chiqqandan keyingina ochiq saytda ko‘rinadi."
+msgstr "Ma’lumotlar to‘liq va to‘g‘ri bo‘lsin: yutuq administrator tekshirgandan va oldindan ko‘rib chiqqandan keyingina ochiq saytda ko‘rinadi."
+
+msgid "Medal"
+msgstr "Medal"
+
+msgid "Muallif uchun izoh yozing."
+msgstr "Muallif uchun izoh yozing."
+
+msgid "Muassasa darajasi"
+msgstr "Muassasa darajasi"
+
+msgid "Muassasalar yuborgan yutuqlarni tekshiring, to‘ldiring va nashr eting. Nashrdan oldin har doim oldindan ko‘rish ko‘rsatiladi."
+msgstr "Muassasalar yuborgan yutuqlarni tekshiring, to‘ldiring va nashr eting. Nashrdan oldin har doim oldindan ko‘rish ko‘rsatiladi."
+
+msgid "Muassasangiz yutuqlarini yuboring. Administrator tekshirib, nashr etadi."
+msgstr "Muassasangiz yutuqlarini yuboring. Administrator tekshirib, nashr etadi."
+
+msgid "Mukofot"
+msgstr "Mukofot"
+
+msgid "Nashr etilgan yutuqlar shu yerda ko‘rinadi."
+msgstr "Nashr etilgan yutuqlar shu yerda ko‘rinadi."
+
+msgid "Nashr etish: avval oldindan ko‘rish"
+msgstr "Nashr etish: avval oldindan ko‘rish"
+
+msgid "Nashr etishdan oldin yutuqning joriy ko‘rinishini oldindan ko‘rib chiqing."
+msgstr "Nashr etishdan oldin yutuqning joriy ko‘rinishini oldindan ko‘rib chiqing."
+
+msgid "Nashr etishni tasdiqlasangiz, yutuq darhol ochiq saytda barcha uchun ko‘rinadi."
+msgstr "Nashr etishni tasdiqlasangiz, yutuq darhol ochiq saytda barcha uchun ko‘rinadi."
+
+msgid "Nashrga rozilik hali tasdiqlanmagan."
+msgstr "Nashrga rozilik hali tasdiqlanmagan."
+
+msgid "Nashrga rozilik tasdiqlanmagan: yutuqni tahrirlab, rozilikni belgilang."
+msgstr "Nashrga rozilik tasdiqlanmagan: yutuqni tahrirlab, rozilikni belgilang."
+
+msgid "Noma’lum amal."
+msgstr "Noma’lum amal."
+
+msgid "Ochiq saytda yutuq aynan shunday ko‘rinadi. U hali nashr etilmagan."
+msgstr "Ochiq saytda yutuq aynan shunday ko‘rinadi. U hali nashr etilmagan."
+
+msgid "Oldindan ko‘rish."
+msgstr "Oldindan ko‘rish."
+
+msgid "Olib tashlanadigan rasmlar"
+msgstr "Olib tashlanadigan rasmlar"
+
+msgid "Orqaga"
+msgstr "Orqaga"
+
+msgid "O‘quvchi"
+msgstr "O‘quvchi"
+
+msgid "Qaytarib olish"
+msgstr "Qaytarib olish"
+
+msgid "Qidirish: sarlavha, ism"
+msgstr "Qidirish: sarlavha, ism"
+
+msgid "Rasm"
+msgstr "Rasm"
+
+msgid "Rasm hajmi 8 MB dan oshmasligi kerak."
+msgstr "Rasm hajmi 8 MB dan oshmasligi kerak."
+
+msgid "Rasmlar (JPG yoki PNG)"
+msgstr "Rasmlar (JPG yoki PNG)"
+
+msgid "Respublika"
+msgstr "Respublika"
+
+msgid "Sana kelajakda bo‘lishi mumkin emas."
+msgstr "Sana kelajakda bo‘lishi mumkin emas."
+
+msgid "Sertifikat"
+msgstr "Sertifikat"
+
+msgid "Tasdiqlash va nashr etish"
+msgstr "Tasdiqlash va nashr etish"
+
+msgid "Tayyor qoralama"
+msgstr "Tayyor qoralama"
+
+msgid "Tayyor qoralama sifatida saqlandi"
+msgstr "Tayyor qoralama sifatida saqlandi"
+
+msgid "Tayyor qoralama sifatida saqlash"
+msgstr "Tayyor qoralama sifatida saqlash"
+
+msgid "Tuman"
+msgstr "Tuman"
+
+msgid "Ustoz"
+msgstr "Ustoz"
+
+msgid "Videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting. Video fayl yuklanmaydi."
+msgstr "Videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting. Video fayl yuklanmaydi."
+
+msgid "Videoni ko‘rish"
+msgstr "Videoni ko‘rish"
+
+msgid "Viloyat"
+msgstr "Viloyat"
+
+msgid "Xalqaro"
+msgstr "Xalqaro"
+
+msgid "Yuborilgan"
+msgstr "Yuborilgan"
+
+msgid "Yuborishdan oldin ishtirokchining nashrga roziligini tasdiqlang."
+msgstr "Yuborishdan oldin ishtirokchining nashrga roziligini tasdiqlang."
+
+msgid "Yutuq arxivdan tayyor qoralamaga qaytarildi."
+msgstr "Yutuq arxivdan tayyor qoralamaga qaytarildi."
+
+msgid "Yutuq arxivlandi."
+msgstr "Yutuq arxivlandi."
+
+msgid "Yutuq holati o‘zgardi"
+msgstr "Yutuq holati o‘zgardi"
+
+msgid "Yutuq holati o‘zgargan: sahifani yangilang."
+msgstr "Yutuq holati o‘zgargan: sahifani yangilang."
+
+msgid "Yutuq nashr etildi"
+msgstr "Yutuq nashr etildi"
+
+msgid "Yutuq nashr etildi."
+msgstr "Yutuq nashr etildi."
+
+msgid "Yutuq nashrdan olindi va tayyor qoralamaga qaytarildi."
+msgstr "Yutuq nashrdan olindi va tayyor qoralamaga qaytarildi."
+
+msgid "Yutuq o‘zgartirildi"
+msgstr "Yutuq o‘zgartirildi"
+
+msgid "Yutuq qoralama sifatida saqlandi. Tayyor bo‘lgach, tekshiruvga yuboring."
+msgstr "Yutuq qoralama sifatida saqlandi. Tayyor bo‘lgach, tekshiruvga yuboring."
+
+msgid "Yutuq qoralamaga qaytarildi."
+msgstr "Yutuq qoralamaga qaytarildi."
+
+msgid "Yutuq qo‘shish"
+msgstr "Yutuq qo‘shish"
+
+msgid "Yutuq tayyor qoralama sifatida saqlandi. U hali ochiq saytda ko‘rinmaydi."
+msgstr "Yutuq tayyor qoralama sifatida saqlandi. U hali ochiq saytda ko‘rinmaydi."
+
+msgid "Yutuq tekshiruvga yuborildi"
+msgstr "Yutuq tekshiruvga yuborildi"
+
+msgid "Yutuq tekshiruvga yuborildi."
+msgstr "Yutuq tekshiruvga yuborildi."
+
+msgid "Yutuq tuzatishga qaytarildi"
+msgstr "Yutuq tuzatishga qaytarildi"
+
+msgid "Yutuq tuzatishga qaytarildi."
+msgstr "Yutuq tuzatishga qaytarildi."
+
+msgid "Yutuq yaratildi"
+msgstr "Yutuq yaratildi"
+
+msgid "Yutuqlar yo‘q"
+msgstr "Yutuqlar yo‘q"
+
+msgid "Yutuqni tekshirish va nashr etish"
+msgstr "Yutuqni tekshirish va nashr etish"
+
+msgid "daraja"
+msgstr "daraja"
+
+msgid "ism-familiya yoki jamoa nomi"
+msgstr "ism-familiya yoki jamoa nomi"
+
+msgid "kim erishdi"
+msgstr "kim erishdi"
+
+msgid "lavozim, fan yoki sinf"
+msgstr "lavozim, fan yoki sinf"
+
+msgid "nashrga rozilik"
+msgstr "nashrga rozilik"
+
+msgid "olingan sana"
+msgstr "olingan sana"
+
+msgid "video havolasi"
+msgstr "video havolasi"
+
+msgid "yutuq"
+msgstr "yutuq"
+
+msgid "yutuqlar"
+msgstr "yutuqlar"
+
+msgid "Topshiriqlar, yangiliklar va yutuqlarni tekshirish bo‘yicha xabarlar."
+msgstr "Topshiriqlar, yangiliklar va yutuqlarni tekshirish bo‘yicha xabarlar."
+
+msgid "Muassasa"
+msgstr "Muassasa"

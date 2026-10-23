@@ -2970,3 +2970,244 @@ msgstr "Выберите хотя бы одного исполнителя ил�
 
 msgid "Vaqt uchun avval sanani ko‘rsating."
 msgstr "Для времени сначала укажите дату."
+
+msgid "(boshqa saytda ochiladi)"
+msgstr "(откроется на другом сайте)"
+
+msgid "Amallar"
+msgstr "Действия"
+
+msgid "Barcha turlar"
+msgstr "Все типы"
+
+msgid "Barcha yutuqlar"
+msgstr "Все достижения"
+
+#, python-format
+msgid "Bitta yutuqqa ko‘pi bilan %(n)d ta rasm biriktiriladi."
+msgstr "К одному достижению можно прикрепить не более %(n)d изображений."
+
+msgid "Bu yutuqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
+msgstr "У вас нет доступа к этому достижению, или оно удалено."
+
+msgid "Diplom"
+msgstr "Диплом"
+
+msgid "Faqat https havolasi qabul qilinadi."
+msgstr "Принимаются только ссылки https."
+
+msgid "Hozircha yutuqlar yo‘q"
+msgstr "Достижений пока нет"
+
+msgid "Ishtirokchi (voyaga yetmagan bo‘lsa, ota-onasi) ma’lumot va rasmni ochiq saytda nashr etishga rozilik bergan."
+msgstr "Участник (если несовершеннолетний — родитель) дал согласие на публикацию данных и фото на открытом сайте."
+
+msgid "Jamoa yoki muassasa"
+msgstr "Команда или учреждение"
+
+msgid "Ma’lumotlar to‘liq va to‘g‘ri bo‘lsin: yutuq administrator tekshirgandan va oldindan ko‘rib chiqqandan keyingina ochiq saytda ko‘rinadi."
+msgstr "Данные должны быть полными и верными: достижение появится на открытом сайте только после проверки администратором и предпросмотра."
+
+msgid "Medal"
+msgstr "Медаль"
+
+msgid "Muallif uchun izoh yozing."
+msgstr "Напишите комментарий для автора."
+
+msgid "Muassasa darajasi"
+msgstr "Уровень учреждения"
+
+msgid "Muassasalar yuborgan yutuqlarni tekshiring, to‘ldiring va nashr eting. Nashrdan oldin har doim oldindan ko‘rish ko‘rsatiladi."
+msgstr "Проверяйте присланные учреждениями достижения, дополняйте и публикуйте. Перед публикацией всегда показывается предпросмотр."
+
+msgid "Muassasangiz yutuqlarini yuboring. Administrator tekshirib, nashr etadi."
+msgstr "Отправляйте достижения вашего учреждения. Администратор проверит и опубликует."
+
+msgid "Mukofot"
+msgstr "Награда"
+
+msgid "Nashr etilgan yutuqlar shu yerda ko‘rinadi."
+msgstr "Опубликованные достижения появятся здесь."
+
+msgid "Nashr etish: avval oldindan ko‘rish"
+msgstr "Опубликовать: сначала предпросмотр"
+
+msgid "Nashr etishdan oldin yutuqning joriy ko‘rinishini oldindan ko‘rib chiqing."
+msgstr "Перед публикацией просмотрите текущий вид достижения в предпросмотре."
+
+msgid "Nashr etishni tasdiqlasangiz, yutuq darhol ochiq saytda barcha uchun ko‘rinadi."
+msgstr "Если подтвердите публикацию, достижение сразу станет видно всем на открытом сайте."
+
+msgid "Nashrga rozilik hali tasdiqlanmagan."
+msgstr "Согласие на публикацию ещё не подтверждено."
+
+msgid "Nashrga rozilik tasdiqlanmagan: yutuqni tahrirlab, rozilikni belgilang."
+msgstr "Согласие на публикацию не подтверждено: отредактируйте достижение и отметьте согласие."
+
+msgid "Noma’lum amal."
+msgstr "Неизвестное действие."
+
+msgid "Ochiq saytda yutuq aynan shunday ko‘rinadi. U hali nashr etilmagan."
+msgstr "Именно так достижение выглядит на открытом сайте. Оно ещё не опубликовано."
+
+msgid "Oldindan ko‘rish."
+msgstr "Предпросмотр."
+
+msgid "Olib tashlanadigan rasmlar"
+msgstr "Изображения для удаления"
+
+msgid "Orqaga"
+msgstr "Назад"
+
+msgid "O‘quvchi"
+msgstr "Ученик"
+
+msgid "Qaytarib olish"
+msgstr "Отозвать"
+
+msgid "Qidirish: sarlavha, ism"
+msgstr "Поиск: заголовок, имя"
+
+msgid "Rasm"
+msgstr "Изображение"
+
+msgid "Rasm hajmi 8 MB dan oshmasligi kerak."
+msgstr "Размер изображения не должен превышать 8 МБ."
+
+msgid "Rasmlar (JPG yoki PNG)"
+msgstr "Изображения (JPG или PNG)"
+
+msgid "Respublika"
+msgstr "Республика"
+
+msgid "Sana kelajakda bo‘lishi mumkin emas."
+msgstr "Дата не может быть в будущем."
+
+msgid "Sertifikat"
+msgstr "Сертификат"
+
+msgid "Tasdiqlash va nashr etish"
+msgstr "Подтвердить и опубликовать"
+
+msgid "Tayyor qoralama"
+msgstr "Готовый черновик"
+
+msgid "Tayyor qoralama sifatida saqlandi"
+msgstr "Сохранено как готовый черновик"
+
+msgid "Tayyor qoralama sifatida saqlash"
+msgstr "Сохранить как готовый черновик"
+
+msgid "Tuman"
+msgstr "Район"
+
+msgid "Ustoz"
+msgstr "Учитель"
+
+msgid "Videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting. Video fayl yuklanmaydi."
+msgstr "Разместите видео на другом сайте (например, YouTube) и вставьте https-ссылку. Видеофайлы не загружаются."
+
+msgid "Videoni ko‘rish"
+msgstr "Смотреть видео"
+
+msgid "Viloyat"
+msgstr "Область"
+
+msgid "Xalqaro"
+msgstr "Международный"
+
+msgid "Yuborilgan"
+msgstr "Отправлено"
+
+msgid "Yuborishdan oldin ishtirokchining nashrga roziligini tasdiqlang."
+msgstr "Перед отправкой подтвердите согласие участника на публикацию."
+
+msgid "Yutuq arxivdan tayyor qoralamaga qaytarildi."
+msgstr "Достижение возвращено из архива в готовый черновик."
+
+msgid "Yutuq arxivlandi."
+msgstr "Достижение отправлено в архив."
+
+msgid "Yutuq holati o‘zgardi"
+msgstr "Статус достижения изменён"
+
+msgid "Yutuq holati o‘zgargan: sahifani yangilang."
+msgstr "Статус достижения изменился: обновите страницу."
+
+msgid "Yutuq nashr etildi"
+msgstr "Достижение опубликовано"
+
+msgid "Yutuq nashr etildi."
+msgstr "Достижение опубликовано."
+
+msgid "Yutuq nashrdan olindi va tayyor qoralamaga qaytarildi."
+msgstr "Достижение снято с публикации и возвращено в готовый черновик."
+
+msgid "Yutuq o‘zgartirildi"
+msgstr "Достижение изменено"
+
+msgid "Yutuq qoralama sifatida saqlandi. Tayyor bo‘lgach, tekshiruvga yuboring."
+msgstr "Достижение сохранено как черновик. Когда будет готово, отправьте на проверку."
+
+msgid "Yutuq qoralamaga qaytarildi."
+msgstr "Достижение возвращено в черновик."
+
+msgid "Yutuq qo‘shish"
+msgstr "Добавить достижение"
+
+msgid "Yutuq tayyor qoralama sifatida saqlandi. U hali ochiq saytda ko‘rinmaydi."
+msgstr "Достижение сохранено как готовый черновик. На открытом сайте его ещё не видно."
+
+msgid "Yutuq tekshiruvga yuborildi"
+msgstr "Достижение отправлено на проверку"
+
+msgid "Yutuq tekshiruvga yuborildi."
+msgstr "Достижение отправлено на проверку."
+
+msgid "Yutuq tuzatishga qaytarildi"
+msgstr "Достижение возвращено на доработку"
+
+msgid "Yutuq tuzatishga qaytarildi."
+msgstr "Достижение возвращено на доработку."
+
+msgid "Yutuq yaratildi"
+msgstr "Достижение создано"
+
+msgid "Yutuqlar yo‘q"
+msgstr "Достижений нет"
+
+msgid "Yutuqni tekshirish va nashr etish"
+msgstr "Проверка и публикация достижений"
+
+msgid "daraja"
+msgstr "уровень"
+
+msgid "ism-familiya yoki jamoa nomi"
+msgstr "имя и фамилия или название команды"
+
+msgid "kim erishdi"
+msgstr "кто достиг"
+
+msgid "lavozim, fan yoki sinf"
+msgstr "должность, предмет или класс"
+
+msgid "nashrga rozilik"
+msgstr "согласие на публикацию"
+
+msgid "olingan sana"
+msgstr "дата получения"
+
+msgid "video havolasi"
+msgstr "ссылка на видео"
+
+msgid "yutuq"
+msgstr "достижение"
+
+msgid "yutuqlar"
+msgstr "достижения"
+
+msgid "Topshiriqlar, yangiliklar va yutuqlarni tekshirish bo‘yicha xabarlar."
+msgstr "Сообщения о заданиях, новостях и проверке достижений."
+
+msgid "Muassasa"
+msgstr "Учреждение"

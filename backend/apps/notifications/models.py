@@ -17,12 +17,16 @@ class Notification(UUIDModel):
         NEWS_SUBMITTED = "news_submitted", _("Yangilik tekshiruvga yuborildi")
         NEWS_CHANGES_REQUESTED = "news_changes_requested", _("Yangilik tuzatishga qaytarildi")
         NEWS_APPROVED = "news_approved", _("Yangilik ma’qullandi")
+        ACHIEVEMENT_SUBMITTED = "achievement_submitted", _("Yutuq tekshiruvga yuborildi")
+        ACHIEVEMENT_RETURNED = "achievement_returned", _("Yutuq tuzatishga qaytarildi")
+        ACHIEVEMENT_PUBLISHED = "achievement_published", _("Yutuq nashr etildi")
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="notifications")
     kind = models.CharField(max_length=24, choices=Kind.choices)
     title = models.CharField(max_length=200)  # task title at the time; shown only to someone who can still view the task
     task = models.ForeignKey("tasks.Task", null=True, blank=True, on_delete=models.CASCADE, related_name="+")
     news = models.ForeignKey("content.News", null=True, blank=True, on_delete=models.CASCADE, related_name="+")
+    achievement = models.ForeignKey("achievements.Achievement", null=True, blank=True, on_delete=models.CASCADE, related_name="+")
     # Automatic reminders carry a key so running the command twice cannot create a second notification.
     dedupe_key = models.CharField(max_length=120, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)

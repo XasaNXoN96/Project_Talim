@@ -1,0 +1,24 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+{% block title %}{% translate "Yutuqlar" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><span>{% translate "Yutuqlar" %}</span></div><h1>{% translate "Yutuqlar" %}</h1></div></section>
+<div class="container pub-body">
+  <div class="tabs" style="margin-bottom:16px"><a class="tab {% if not kind %}active{% endif %}" href="?">{% translate "Barchasi" %}</a>{% for code, label in kinds %}<a class="tab {% if kind == code %}active{% endif %}" href="?kind={{ code }}">{{ label }}</a>{% endfor %}</div>
+  {% if items %}
+    <div class="auto-grid">{% for a in items %}
+      <article class="card news-card">
+        {% with im=a.images.all.0 %}{% if im %}<img class="ratio-16-9" src="{% url 'achievements_public:image' im.pk %}" alt="" loading="lazy" style="object-fit:cover;width:100%">{% else %}<div class="ratio-16-9 ph-none"><span data-i="trophy"></span></div>{% endif %}{% endwith %}
+        <div class="body">
+          <div class="row wrap"><span class="badge plain b-info">{{ a.get_kind_display }}</span><span class="badge plain">{{ a.get_level_display }}</span></div>
+          <h3 class="clamp3"><a href="{% url 'achievements_public:detail' a.slug %}" style="color:inherit">{{ a.title }}</a></h3>
+          <span class="xs muted">{{ a.person_name }} · {{ a.institution.name }}</span>
+          <a class="go" href="{% url 'achievements_public:detail' a.slug %}">{% translate "Batafsil" %}</a>
+        </div>
+      </article>{% endfor %}</div>
+    {% include "includes/pagination.html" %}
+  {% else %}
+    <div class="card empty"><div class="ic-chip c-orange" data-i="trophy"></div><h3>{% translate "Hozircha yutuqlar yo‘q" %}</h3><p>{% translate "Nashr etilgan yutuqlar shu yerda ko‘rinadi." %}</p></div>
+  {% endif %}
+</div>
+{% endblock %}

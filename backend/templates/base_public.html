@@ -17,7 +17,7 @@
       <a href="{% url 'content:news_list' %}" {% if request.resolver_match.url_name == 'news_list' or request.resolver_match.url_name == 'news_detail' %}class="active" aria-current="page"{% endif %}>{% translate "Yangiliklar" %}</a>
       <a href="{% url 'content:home' %}#statistika">{% translate "Ta’lim muassasalari" context "menu" %}</a>
       <a href="{% url 'content:home' %}#yutuqlar">{% translate "Ustozlar" %}</a>
-      <a href="{% url 'content:home' %}#yutuqlar">{% translate "Yutuqlar" %}</a>
+      <a href="{% url 'achievements_public:list' %}">{% translate "Yutuqlar" %}</a>
       <a href="{% url 'content:home' %}#hujjatlar">{% translate "Hujjatlar" %}</a>
       <a href="{% url 'content:home' %}#media">{% translate "Media" %}</a>
       <a href="#boglanish">{% translate "Bog‘lanish" %}</a>

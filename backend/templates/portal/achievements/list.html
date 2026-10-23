@@ -1,0 +1,23 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Yutuqlar" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% if kind == "certificate" %}{% translate "Sertifikatlar" %}{% else %}{% translate "Yutuqlar" %}{% endif %}</h1><p>{% if is_staff %}{% translate "Muassasalar yuborgan yutuqlarni tekshiring, to‘ldiring va nashr eting. Nashrdan oldin har doim oldindan ko‘rish ko‘rsatiladi." %}{% else %}{% translate "Muassasangiz yutuqlarini yuboring. Administrator tekshirib, nashr etadi." %}{% endif %}</p></div>
+<div class="row wrap">{% if can_add %}<a class="btn btn-primary" href="{% url 'achievements:create' %}">{% translate "Yutuq qo‘shish" %}</a>{% endif %}</div></div>
+<div class="tabs" style="margin-bottom:16px"><a class="tab {% if not status %}active{% endif %}" href="?{% if kind %}kind={{ kind }}{% endif %}">{% translate "Barchasi" %}</a>{% for code, label, n in statuses %}{% if n or status == code %}<a class="tab {% if status == code %}active{% endif %}" href="?status={{ code }}{% if kind %}&amp;kind={{ kind }}{% endif %}">{{ label }} ({{ n }})</a>{% endif %}{% endfor %}</div>
+<form method="get" class="row wrap" style="margin-bottom:16px">
+  <input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Qidirish: sarlavha, ism' %}" style="max-width:240px" maxlength="100">
+  <select class="input" name="kind" style="max-width:180px" aria-label="{% translate 'Turi' %}"><option value="">{% translate "Barcha turlar" %}</option>{% for code, label in kinds %}<option value="{{ code }}" {% if kind == code %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+  {% if institutions %}<select class="input" name="institution" style="max-width:220px" aria-label="{% translate 'Ta’lim muassasalari' %}"><option value="">{% translate "Barcha muassasalar" %}</option>{% for i in institutions %}<option value="{{ i.pk }}" {% if institution == i.pk|stringformat:"s" %}selected{% endif %}>{{ i.name }}</option>{% endfor %}</select>{% endif %}
+  {% if status %}<input type="hidden" name="status" value="{{ status }}">{% endif %}
+  <button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button>
+</form>
+{% if items %}
+<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Sarlavha" %}</th><th>{% translate "Kim" %}</th><th>{% translate "Muassasa" %}</th><th>{% translate "Turi" %}</th><th>{% translate "Daraja" %}</th><th>{% translate "Holat" %}</th><th></th></tr></thead><tbody>
+{% for a in items %}<tr><td><b><a href="{% url 'achievements:detail' a.pk %}" style="color:inherit">{{ a.title }}</a></b></td><td>{{ a.person_name }}</td><td>{{ a.institution.name }}</td><td>{{ a.get_kind_display }}</td><td>{{ a.get_level_display }}</td>
+<td><span class="badge {% if a.status == 'published' %}b-ok{% elif a.status == 'changes_requested' %}b-warn{% elif a.status == 'archived' %}b-err{% elif a.status == 'draft' %}plain{% else %}b-info{% endif %}">{{ a.get_status_display }}</span></td>
+<td class="nw"><a class="btn btn-secondary btn-sm" href="{% url 'achievements:detail' a.pk %}">{% translate "Ko‘rish" %}</a></td></tr>{% endfor %}
+</tbody></table></div>
+{% include "includes/pagination.html" %}
+{% else %}<div class="card empty"><div class="ic-chip c-orange" data-i="trophy"></div><h3>{% translate "Yutuqlar yo‘q" %}</h3></div>{% endif %}
+{% endblock %}

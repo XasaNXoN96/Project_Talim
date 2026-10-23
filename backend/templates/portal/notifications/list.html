@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block title %}{% translate "Bildirishnomalar" %}{% endblock %}
 {% block content %}
-<div class="page-head"><div><h1>{% translate "Bildirishnomalar" %}</h1><p>{% translate "Topshiriqlar va yangiliklarni tekshirish bo‘yicha xabarlar." %}</p></div>
+<div class="page-head"><div><h1>{% translate "Bildirishnomalar" %}</h1><p>{% translate "Topshiriqlar, yangiliklar va yutuqlarni tekshirish bo‘yicha xabarlar." %}</p></div>
 <div class="row wrap"><a class="btn btn-secondary" href="{% if only_unread %}?{% else %}?unread=1{% endif %}">{% if only_unread %}{% translate "Barchasi" %}{% else %}{% translate "Faqat o‘qilmaganlar" %}{% endif %}</a>
 <form method="post" action="{% url 'notifications:read_all' %}">{% csrf_token %}<button class="btn btn-secondary" type="submit">{% translate "Barchasini o‘qilgan deb belgilash" %}</button></form></div></div>
 {% if notifications %}

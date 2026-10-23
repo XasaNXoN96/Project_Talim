@@ -54,13 +54,17 @@
 
   <div class="cols-3b sec">
     <section id="yutuqlar" aria-labelledby="h-t">
-      <div class="sec-head"><h2 id="h-t">{% translate "Ustozlar yutuqlari" %}</h2></div>
+      <div class="sec-head"><h2 id="h-t">{% translate "Ustozlar yutuqlari" %}</h2>{% if latest_achievements %}<a class="more" href="{% url 'achievements_public:list' %}">{% translate "Barchasi" %}</a>{% endif %}</div>
+      {% if latest_achievements %}
+      <div class="teachers">{% for a in latest_achievements %}<a class="card teacher" href="{% url 'achievements_public:detail' a.slug %}" style="color:inherit"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{{ a.person_name }}"></div><b>{{ a.person_name }}</b><span class="xs muted">{{ a.title }}</span></a>{% endfor %}</div>
+      {% else %}
       <div class="teachers">
         <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Ustoz' %}"></div><b>{% translate "Namuna Ustoz" %}</b><span class="xs muted">{% translate "Yilning eng yaxshi ustozi — 2026" %}</span></div>
         <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Muallim' %}"></div><b>{% translate "Namuna Muallim" %}</b><span class="xs muted">{% translate "Innovatsion loyihalar sovrindori" %}</span></div>
         <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Metodist' %}"></div><b>{% translate "Namuna Metodist" %}</b><span class="xs muted">{% translate "Metodik ishlanmalar g‘olibi" %}</span></div>
         <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna IT-mutaxassis' %}"></div><b>{% translate "Namuna IT-mutaxassis" %}</b><span class="xs muted">{% translate "IT yo‘nalishi bo‘yicha yutuq" %}</span></div>
       </div>
+      {% endif %}
     </section>
     <section id="media" aria-labelledby="h-g">
       <div class="sec-head"><h2 id="h-g">{% translate "Fotorasmlar galereyasi" %}</h2></div>

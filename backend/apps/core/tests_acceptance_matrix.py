@@ -21,7 +21,7 @@ from apps.tasks.models import Task, TaskAttachment
 
 from .acceptance import ACTORS, World, app_routes, required_permissions
 
-PUBLIC = {"healthz", "csp_report", "set_language", "content:home", "content:news_list", "content:news_detail", "accounts:login", "accounts:logout",
+PUBLIC = {"healthz", "csp_report", "set_language", "content:home", "content:news_list", "content:news_detail", "achievements_public:list", "achievements_public:detail", "achievements_public:image", "accounts:login", "accounts:logout",
           "accounts:two_factor_verify", "accounts:two_factor_setup", "accounts:password_reset", "accounts:password_reset_done",
           "accounts:password_reset_confirm", "accounts:password_reset_complete", "accounts:password_change"}
 CSRF_EXEMPT = {"csp_report"}
@@ -153,6 +153,8 @@ class RouteMatrixTests(TestCase):
                 tampered["fmt"] = "exe"
             if "slug" in tampered:
                 tampered["slug"] = "no-such-slug"
+            if "step" in tampered:
+                tampered["step"] = "no-such-step"
             if "section" in tampered:
                 tampered["section"] = "no-such-section"
             if "token" in tampered:

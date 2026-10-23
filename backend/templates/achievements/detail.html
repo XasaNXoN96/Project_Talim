@@ -1,0 +1,12 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+{% block title %}{{ a.title|truncatechars:70 }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><a href="{% url 'achievements_public:list' %}">{% translate "Yutuqlar" %}</a></div></div></section>
+<div class="container pub-body">
+  <article class="card article">
+    {% include "includes/achievement_body.html" %}
+    <div class="row wrap" style="margin-top:20px"><a class="btn btn-secondary" href="{% url 'achievements_public:list' %}">{% translate "Barcha yutuqlar" %}</a></div>
+  </article>
+</div>
+{% endblock %}

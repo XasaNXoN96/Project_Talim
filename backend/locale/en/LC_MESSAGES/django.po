@@ -2970,3 +2970,244 @@ msgstr "Choose at least one assignee or institution."
 
 msgid "Vaqt uchun avval sanani ko‘rsating."
 msgstr "Give a date before a time."
+
+msgid "(boshqa saytda ochiladi)"
+msgstr "(opens on another site)"
+
+msgid "Amallar"
+msgstr "Actions"
+
+msgid "Barcha turlar"
+msgstr "All types"
+
+msgid "Barcha yutuqlar"
+msgstr "All achievements"
+
+#, python-format
+msgid "Bitta yutuqqa ko‘pi bilan %(n)d ta rasm biriktiriladi."
+msgstr "At most %(n)d pictures can be attached to one achievement."
+
+msgid "Bu yutuqni ko‘rishga ruxsatingiz yo‘q yoki u o‘chirilgan."
+msgstr "You have no access to this achievement, or it was removed."
+
+msgid "Diplom"
+msgstr "Diploma"
+
+msgid "Faqat https havolasi qabul qilinadi."
+msgstr "Only https links are accepted."
+
+msgid "Hozircha yutuqlar yo‘q"
+msgstr "No achievements yet"
+
+msgid "Ishtirokchi (voyaga yetmagan bo‘lsa, ota-onasi) ma’lumot va rasmni ochiq saytda nashr etishga rozilik bergan."
+msgstr "The participant (a parent, if a minor) has consented to publishing the details and photos on the public site."
+
+msgid "Jamoa yoki muassasa"
+msgstr "Team or institution"
+
+msgid "Ma’lumotlar to‘liq va to‘g‘ri bo‘lsin: yutuq administrator tekshirgandan va oldindan ko‘rib chiqqandan keyingina ochiq saytda ko‘rinadi."
+msgstr "Keep the details complete and correct: an achievement appears on the public site only after an administrator has checked and previewed it."
+
+msgid "Medal"
+msgstr "Medal"
+
+msgid "Muallif uchun izoh yozing."
+msgstr "Write a comment for the author."
+
+msgid "Muassasa darajasi"
+msgstr "Institution level"
+
+msgid "Muassasalar yuborgan yutuqlarni tekshiring, to‘ldiring va nashr eting. Nashrdan oldin har doim oldindan ko‘rish ko‘rsatiladi."
+msgstr "Check the achievements sent by institutions, complete and publish them. A preview is always shown before publishing."
+
+msgid "Muassasangiz yutuqlarini yuboring. Administrator tekshirib, nashr etadi."
+msgstr "Send your institution's achievements. An administrator will check and publish them."
+
+msgid "Mukofot"
+msgstr "Award"
+
+msgid "Nashr etilgan yutuqlar shu yerda ko‘rinadi."
+msgstr "Published achievements appear here."
+
+msgid "Nashr etish: avval oldindan ko‘rish"
+msgstr "Publish: preview first"
+
+msgid "Nashr etishdan oldin yutuqning joriy ko‘rinishini oldindan ko‘rib chiqing."
+msgstr "Before publishing, open the preview of the achievement's current version."
+
+msgid "Nashr etishni tasdiqlasangiz, yutuq darhol ochiq saytda barcha uchun ko‘rinadi."
+msgstr "If you confirm, the achievement becomes visible to everyone on the public site at once."
+
+msgid "Nashrga rozilik hali tasdiqlanmagan."
+msgstr "Consent to publish has not been confirmed yet."
+
+msgid "Nashrga rozilik tasdiqlanmagan: yutuqni tahrirlab, rozilikni belgilang."
+msgstr "Consent to publish is not confirmed: edit the achievement and tick the consent."
+
+msgid "Noma’lum amal."
+msgstr "Unknown action."
+
+msgid "Ochiq saytda yutuq aynan shunday ko‘rinadi. U hali nashr etilmagan."
+msgstr "This is exactly how the achievement looks on the public site. It is not published yet."
+
+msgid "Oldindan ko‘rish."
+msgstr "Preview."
+
+msgid "Olib tashlanadigan rasmlar"
+msgstr "Pictures to remove"
+
+msgid "Orqaga"
+msgstr "Back"
+
+msgid "O‘quvchi"
+msgstr "Pupil"
+
+msgid "Qaytarib olish"
+msgstr "Withdraw"
+
+msgid "Qidirish: sarlavha, ism"
+msgstr "Search: title, name"
+
+msgid "Rasm"
+msgstr "Picture"
+
+msgid "Rasm hajmi 8 MB dan oshmasligi kerak."
+msgstr "The picture must not exceed 8 MB."
+
+msgid "Rasmlar (JPG yoki PNG)"
+msgstr "Pictures (JPG or PNG)"
+
+msgid "Respublika"
+msgstr "Republic"
+
+msgid "Sana kelajakda bo‘lishi mumkin emas."
+msgstr "The date cannot be in the future."
+
+msgid "Sertifikat"
+msgstr "Certificate"
+
+msgid "Tasdiqlash va nashr etish"
+msgstr "Confirm and publish"
+
+msgid "Tayyor qoralama"
+msgstr "Ready draft"
+
+msgid "Tayyor qoralama sifatida saqlandi"
+msgstr "Saved as a ready draft"
+
+msgid "Tayyor qoralama sifatida saqlash"
+msgstr "Save as a ready draft"
+
+msgid "Tuman"
+msgstr "District"
+
+msgid "Ustoz"
+msgstr "Teacher"
+
+msgid "Videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting. Video fayl yuklanmaydi."
+msgstr "Host the video on another site (for example YouTube) and paste the https link. Video files are not uploaded."
+
+msgid "Videoni ko‘rish"
+msgstr "Watch the video"
+
+msgid "Viloyat"
+msgstr "Region"
+
+msgid "Xalqaro"
+msgstr "International"
+
+msgid "Yuborilgan"
+msgstr "Submitted"
+
+msgid "Yuborishdan oldin ishtirokchining nashrga roziligini tasdiqlang."
+msgstr "Before sending, confirm the participant's consent to publish."
+
+msgid "Yutuq arxivdan tayyor qoralamaga qaytarildi."
+msgstr "The achievement was restored from the archive to a ready draft."
+
+msgid "Yutuq arxivlandi."
+msgstr "The achievement was archived."
+
+msgid "Yutuq holati o‘zgardi"
+msgstr "Achievement status changed"
+
+msgid "Yutuq holati o‘zgargan: sahifani yangilang."
+msgstr "The achievement's status has changed: reload the page."
+
+msgid "Yutuq nashr etildi"
+msgstr "Achievement published"
+
+msgid "Yutuq nashr etildi."
+msgstr "The achievement was published."
+
+msgid "Yutuq nashrdan olindi va tayyor qoralamaga qaytarildi."
+msgstr "The achievement was unpublished and returned to a ready draft."
+
+msgid "Yutuq o‘zgartirildi"
+msgstr "Achievement changed"
+
+msgid "Yutuq qoralama sifatida saqlandi. Tayyor bo‘lgach, tekshiruvga yuboring."
+msgstr "The achievement was saved as a draft. When it is ready, send it for review."
+
+msgid "Yutuq qoralamaga qaytarildi."
+msgstr "The achievement was returned to a draft."
+
+msgid "Yutuq qo‘shish"
+msgstr "Add achievement"
+
+msgid "Yutuq tayyor qoralama sifatida saqlandi. U hali ochiq saytda ko‘rinmaydi."
+msgstr "The achievement was saved as a ready draft. It is not yet visible on the public site."
+
+msgid "Yutuq tekshiruvga yuborildi"
+msgstr "Achievement sent for review"
+
+msgid "Yutuq tekshiruvga yuborildi."
+msgstr "The achievement was sent for review."
+
+msgid "Yutuq tuzatishga qaytarildi"
+msgstr "Achievement returned for changes"
+
+msgid "Yutuq tuzatishga qaytarildi."
+msgstr "The achievement was returned for changes."
+
+msgid "Yutuq yaratildi"
+msgstr "Achievement created"
+
+msgid "Yutuqlar yo‘q"
+msgstr "No achievements"
+
+msgid "Yutuqni tekshirish va nashr etish"
+msgstr "Check and publish achievements"
+
+msgid "daraja"
+msgstr "level"
+
+msgid "ism-familiya yoki jamoa nomi"
+msgstr "name or team name"
+
+msgid "kim erishdi"
+msgstr "achieved by"
+
+msgid "lavozim, fan yoki sinf"
+msgstr "position, subject or class"
+
+msgid "nashrga rozilik"
+msgstr "consent to publish"
+
+msgid "olingan sana"
+msgstr "date received"
+
+msgid "video havolasi"
+msgstr "video link"
+
+msgid "yutuq"
+msgstr "achievement"
+
+msgid "yutuqlar"
+msgstr "achievements"
+
+msgid "Topshiriqlar, yangiliklar va yutuqlarni tekshirish bo‘yicha xabarlar."
+msgstr "Notices about tasks, news and the review of achievements."
+
+msgid "Muassasa"
+msgstr "Institution"

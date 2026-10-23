@@ -19,8 +19,13 @@
       {% if perms.organization.view_employee_directory %}
       <a href="{% url 'employees:list' %}" title="{% translate 'Xodimlar' %}" {% if request.resolver_match.namespace == 'employees' and request.resolver_match.url_name != 'structure' %}class="active" aria-current="page"{% endif %}><i data-i="users" style="display:contents"></i><span>{% translate "Xodimlar" %}</span></a>
       {% endif %}
+      {% if perms.achievements.view_achievement %}
+      <a href="{% url 'achievements:list' %}" title="{% translate 'Yutuqlar' %}" {% if request.resolver_match.namespace == 'achievements' and request.GET.kind != 'certificate' %}class="active" aria-current="page"{% endif %}><i data-i="trophy" style="display:contents"></i><span>{% translate "Yutuqlar" %}</span></a>
+      <a href="{% url 'achievements:list' %}?kind=certificate" title="{% translate 'Sertifikatlar' %}" {% if request.resolver_match.namespace == 'achievements' and request.GET.kind == 'certificate' %}class="active" aria-current="page"{% endif %}><i data-i="award" style="display:contents"></i><span>{% translate "Sertifikatlar" %}</span></a>
+      {% else %}
       <a href="{% url 'portal:preview' 'yutuqlar' %}" title="{% translate 'Yutuqlar' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'yutuqlar' %}class="active" aria-current="page"{% endif %}><i data-i="trophy" style="display:contents"></i><span>{% translate "Yutuqlar" %}</span></a>
       <a href="{% url 'portal:preview' 'sertifikatlar' %}" title="{% translate 'Sertifikatlar' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'sertifikatlar' %}class="active" aria-current="page"{% endif %}><i data-i="award" style="display:contents"></i><span>{% translate "Sertifikatlar" %}</span></a>
+      {% endif %}
       {% if perms.tasks.view_task %}
       <a href="{% url 'tasks:list' %}" title="{% translate 'Topshiriqlar' %}" {% if request.resolver_match.namespace == 'tasks' %}class="active" aria-current="page"{% endif %}><i data-i="clipboard" style="display:contents"></i><span>{% translate "Topshiriqlar" %}</span></a>
       {% endif %}

@@ -66,6 +66,28 @@ class World:
         self.user_session = UserSession.objects.create(user=self.users["emp"], session_key="k" * 32)
         self.notification = Notification.objects.create(user=self.users["emp"], kind="task_assigned", task=self.task, title="Hisobot")
         self.news_category = NewsCategory.objects.create(name="Umumiy", slug="umumiy")
+        from django.core.files.base import ContentFile
+
+        from apps.achievements.models import Achievement, AchievementImage
+
+        def _jpeg():
+            import io
+
+            from PIL import Image
+
+            out = io.BytesIO()
+            Image.new("RGB", (8, 8), (10, 20, 30)).save(out, "JPEG")
+            return out.getvalue()
+
+        def _achievement(status, **extra):
+            a = Achievement.objects.create(institution=self.institution, created_by=self.users["admin"], title="Yutuq", person_name="Aliyev", status=status, consent_confirmed=True, **extra)
+            im = AchievementImage(achievement=a)
+            im.file.save("ab/test-image.jpg", ContentFile(_jpeg()), save=False)
+            im.save()
+            return a, im
+
+        self.achievement, self.achievement_image = _achievement("submitted")
+        self.pub_achievement, self.pub_image = _achievement("published", publish_at=timezone.now())
         self.news = News.objects.create(title="Yangilik", slug="yangilik", body="Matn", excerpt="Q", status="published", publish_at=timezone.now(), category=self.news_category)
         self.assignment = RoleAssignment.objects.get(user=self.users["emp"])
         self.uid = urlsafe_base64_encode(force_bytes(self.users["emp"].pk))
@@ -95,7 +117,7 @@ class World:
             "accounts:session_end": {"pk": self.user_session.pk},
             "news_admin:preview": {"pk": self.news.pk}, "news_admin:edit": {"pk": self.news.pk}, "news_admin:status": {"pk": self.news.pk, "action": "archive"},
             "news_admin:category_edit": {"pk": self.news_category.pk},
-            "reports:export": {"fmt": "xlsx"}, "content:news_detail": {"slug": self.news.slug}, "portal:preview": {"section": "media"},
+            "reports:export": {"fmt": "xlsx"}, "content:news_detail": {"slug": self.news.slug}, "achievements:detail": {"pk": self.achievement.pk}, "achievements:edit": {"pk": self.achievement.pk}, "achievements:preview": {"pk": self.achievement.pk}, "achievements:step": {"pk": self.achievement.pk, "step": "archive"}, "achievements:image": {"pk": self.achievement_image.pk}, "achievements_public:detail": {"slug": self.pub_achievement.slug}, "achievements_public:image": {"pk": self.pub_image.pk}, "portal:preview": {"section": "media"},
             "accounts:password_reset_confirm": {"uidb64": self.uid, "token": self.token},
         }
         return table.get(name, {})
