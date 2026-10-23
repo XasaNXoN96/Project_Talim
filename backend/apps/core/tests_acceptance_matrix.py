@@ -153,6 +153,8 @@ class RouteMatrixTests(TestCase):
                 tampered["fmt"] = "exe"
             if "slug" in tampered:
                 tampered["slug"] = "no-such-slug"
+            if "decision" in tampered:
+                tampered["decision"] = "no-such-decision"
             if "step" in tampered:
                 tampered["step"] = "no-such-step"
             if "section" in tampered:

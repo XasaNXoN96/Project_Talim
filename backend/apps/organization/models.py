@@ -126,3 +126,42 @@ class EmployeeImport(UUIDModel):
 
     class Meta:
         ordering = ["-created_at"]
+
+
+# Fields a person may ask to change about THEMSELVES. Never: department, position, institution, status, hire date, account link.
+SELF_EDITABLE_FIELDS = ("last_name", "first_name", "middle_name", "work_phone", "work_email", "personal_phone", "birth_date")
+
+
+class EmployeeChangeRequest(TimeStampedModel):
+    """A person's request to correct their own data. It changes nothing until HR or an administrator approves it.
+
+    The values (personal data) are kept only while the request is open: a decision empties them and leaves the field NAMES, who decided
+    and when, so the history stays useful without keeping old and new personal data around."""
+
+    class Status(models.TextChoices):
+        PENDING = "pending", _("Kutilmoqda")
+        APPROVED = "approved", _("Tasdiqlandi")
+        REJECTED = "rejected", _("Rad etildi")
+        CANCELLED = "cancelled", _("Bekor qilindi")
+
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="change_requests")
+    requested_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+")
+    status = models.CharField(max_length=12, choices=Status.choices, default=Status.PENDING)
+    fields = models.JSONField(default=list)  # names of the fields concerned (kept after the decision)
+    changes = models.JSONField(default=dict)  # {field: new value as text}; emptied by a decision
+    old_values = models.JSONField(default=dict)  # {field: value when asked}; emptied by a decision
+    decided_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
+    decided_at = models.DateTimeField(null=True, blank=True)
+    decision_comment = models.TextField(blank=True, max_length=1000)
+
+    class Meta:
+        verbose_name = _("ma’lumotni o‘zgartirish so‘rovi")
+        verbose_name_plural = _("ma’lumotni o‘zgartirish so‘rovlari")
+        ordering = ["-created_at"]
+        permissions = [
+            ("request_employee_change", _("O‘z ma’lumotlarini o‘zgartirishni so‘rash")),
+            ("review_employee_change", _("Ma’lumotni o‘zgartirish so‘rovlarini ko‘rib chiqish")),
+        ]
+        constraints = [
+            models.UniqueConstraint(fields=["employee"], condition=models.Q(status="pending"), name="one_pending_change_request_per_employee"),
+        ]

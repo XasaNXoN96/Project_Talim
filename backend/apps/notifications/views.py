@@ -21,7 +21,7 @@ class NotificationListView(PortalPermissionMixin, ListView):
     context_object_name = "notifications"
 
     def get_queryset(self):
-        qs = Notification.objects.filter(user=self.request.user).select_related("task", "news", "achievement")
+        qs = Notification.objects.filter(user=self.request.user).select_related("task", "news", "achievement", "change_request")
         if self.request.GET.get("unread") == "1":
             qs = qs.filter(read_at__isnull=True)
         return qs
@@ -36,6 +36,9 @@ class NotificationListView(PortalPermissionMixin, ListView):
         ach_ids = {n.achievement_id for n in ctx["notifications"] if n.achievement_id}
         visible_ach = set(ach_workflow.visible_achievements(user).filter(pk__in=ach_ids).values_list("pk", flat=True)) if ach_ids else set()
         for n in ctx["notifications"]:
+            if n.change_request_id:
+                n.target_visible = user.has_perm("organization.review_employee_change") or n.change_request.requested_by_id == user.pk
+                continue
             if n.achievement_id:
                 n.target_visible = n.achievement_id in visible_ach
                 continue
@@ -55,6 +58,12 @@ class NotificationOpenView(PortalPermissionMixin, View):
         if n.read_at is None:
             n.read_at = timezone.now()
             n.save(update_fields=["read_at"])
+        if n.change_request_id:
+            req = n.change_request
+            if request.user.has_perm("organization.review_employee_change") or req.requested_by_id == request.user.pk:
+                return redirect("employees:change_detail", pk=n.change_request_id)
+            messages.info(request, _("Bu so‘rovni ko‘rishga ruxsatingiz yo‘q."))
+            return redirect("notifications:list")
         if n.achievement_id:
             if ach_workflow.visible_achievements(request.user).filter(pk=n.achievement_id).exists():
                 return redirect("achievements:detail", pk=n.achievement_id)

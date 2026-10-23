@@ -3211,3 +3211,138 @@ msgstr "Notices about tasks, news and the review of achievements."
 
 msgid "Muassasa"
 msgstr "Institution"
+
+msgid "Arxivdagi karta uchun so‘rov yuborib bo‘lmaydi."
+msgstr "A request cannot be sent for an archived card."
+
+msgid "Faqat kutayotganlar"
+msgstr "Pending only"
+
+msgid "Faqat o‘z ma’lumotingizni o‘zgartirishni so‘rashingiz mumkin."
+msgstr "You can only ask to change your own data."
+
+msgid "Hozirgi qiymat"
+msgstr "Current value"
+
+msgid "Kutilmoqda"
+msgstr "Pending"
+
+msgid "Lavozim, bo‘lim va holatni o‘zgartirish uchun kadrlar bo‘limiga murojaat qiling."
+msgstr "To change the position, department or status, contact the HR department."
+
+msgid "Maydon"
+msgstr "Field"
+
+msgid "Maydonlar"
+msgstr "Fields"
+
+msgid "Ma’lumot o‘zgartirish so‘rovi rad etildi"
+msgstr "Data change request rejected"
+
+msgid "Ma’lumot o‘zgartirish so‘rovi tasdiqlandi"
+msgstr "Data change request approved"
+
+msgid "Ma’lumotlarimni o‘zgartirish"
+msgstr "Change my details"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovi"
+msgstr "Data change request"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovi bo‘yicha qaror"
+msgstr "Decision on a data change request"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovi keldi"
+msgstr "A data change request arrived"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovlari"
+msgstr "Data change requests"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovlarini ko‘rib chiqish"
+msgstr "Review data change requests"
+
+msgid "Oldingi so‘rovlar"
+msgstr "Earlier requests"
+
+msgid "O‘z ma’lumotlarini o‘zgartirishni so‘rash"
+msgstr "Ask to change one's own details"
+
+msgid "O‘z so‘rovingizni o‘zingiz ko‘rib chiqa olmaysiz."
+msgstr "You cannot review your own request."
+
+msgid "O‘z so‘rovingizni o‘zingiz tasdiqlay yoki rad eta olmaysiz: uni boshqa xodim ko‘rib chiqishi kerak."
+msgstr "You cannot approve or reject your own request: another employee must review it."
+
+msgid "O‘zgarish topilmadi: avval ma’lumotni o‘zgartiring."
+msgstr "No change found: change a value first."
+
+msgid "O‘zgartirish so‘rovlari"
+msgstr "Change requests"
+
+msgid "Qaror qabul qilingandan keyin shaxsiy qiymatlar saqlanmaydi."
+msgstr "After the decision the personal values are not kept."
+
+msgid "Qiymat yaroqsiz: so‘rovni rad eting yoki xodimdan qayta yuborishni so‘rang."
+msgstr "The value is invalid: reject the request or ask the person to send it again."
+
+msgid "Rad etildi"
+msgstr "Rejected"
+
+msgid "Rad etish"
+msgstr "Reject"
+
+msgid "Rad etish sababini yozing: xodim uni ko‘radi."
+msgstr "Write the reason for rejecting: the person will read it."
+
+msgid "So‘ralgan qiymat"
+msgstr "Requested value"
+
+msgid "So‘rov bekor qilindi."
+msgstr "The request was cancelled."
+
+msgid "So‘rov holati o‘zgargan: sahifani yangilang."
+msgstr "The request status has changed: reload the page."
+
+msgid "So‘rov rad etildi."
+msgstr "The request was rejected."
+
+msgid "So‘rov tasdiqlandi: xodim kartasi yangilandi."
+msgstr "The request was approved: the employee card was updated."
+
+msgid "So‘rov yuborildi. O‘zgarishlar tasdiqlangandan keyingina kuchga kiradi."
+msgstr "The request was sent. The changes take effect only after approval."
+
+msgid "So‘rovlar yo‘q"
+msgstr "No requests"
+
+msgid "So‘rovni bekor qilish"
+msgstr "Cancel the request"
+
+msgid "Tasdiqlandi"
+msgstr "Approved"
+
+msgid "Tasdiqlanishini kutayotgan so‘rov"
+msgstr "Request awaiting approval"
+
+msgid "Tasdiqlashga yuborish"
+msgstr "Send for approval"
+
+msgid "Xato kiritilgan ma’lumotni tuzating. O‘zgarishlar darhol kuchga kirmaydi: ularni kadrlar bo‘limi yoki administrator tasdiqlaydi."
+msgstr "Correct data entered by mistake. The changes do not take effect at once: HR or an administrator confirms them."
+
+msgid "Xodim o‘z ma’lumotini o‘zgartirishni so‘radi"
+msgstr "An employee asked to change their own details"
+
+msgid "Xodim uchun izoh"
+msgstr "Comment for the employee"
+
+msgid "Xodimlar o‘z ma’lumotlarini tuzatishni so‘ragan. Tasdiqlangandan keyingina xodim kartasi o‘zgaradi."
+msgstr "Employees ask to correct their data. The card changes only after approval."
+
+msgid "Yangi so‘rov yuborsangiz, bu so‘rov uning o‘rniga o‘tadi."
+msgstr "If you send a new request, it replaces this one."
+
+msgid "ma’lumotni o‘zgartirish so‘rovi"
+msgstr "data change request"
+
+msgid "ma’lumotni o‘zgartirish so‘rovlari"
+msgstr "data change requests"

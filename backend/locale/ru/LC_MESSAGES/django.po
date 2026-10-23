@@ -3211,3 +3211,138 @@ msgstr "Сообщения о заданиях, новостях и провер
 
 msgid "Muassasa"
 msgstr "Учреждение"
+
+msgid "Arxivdagi karta uchun so‘rov yuborib bo‘lmaydi."
+msgstr "Для карточки в архиве нельзя отправить запрос."
+
+msgid "Faqat kutayotganlar"
+msgstr "Только ожидающие"
+
+msgid "Faqat o‘z ma’lumotingizni o‘zgartirishni so‘rashingiz mumkin."
+msgstr "Вы можете запросить изменение только своих данных."
+
+msgid "Hozirgi qiymat"
+msgstr "Текущее значение"
+
+msgid "Kutilmoqda"
+msgstr "Ожидает"
+
+msgid "Lavozim, bo‘lim va holatni o‘zgartirish uchun kadrlar bo‘limiga murojaat qiling."
+msgstr "Чтобы изменить должность, отдел и статус, обратитесь в отдел кадров."
+
+msgid "Maydon"
+msgstr "Поле"
+
+msgid "Maydonlar"
+msgstr "Поля"
+
+msgid "Ma’lumot o‘zgartirish so‘rovi rad etildi"
+msgstr "Запрос на изменение данных отклонён"
+
+msgid "Ma’lumot o‘zgartirish so‘rovi tasdiqlandi"
+msgstr "Запрос на изменение данных подтверждён"
+
+msgid "Ma’lumotlarimni o‘zgartirish"
+msgstr "Изменить мои данные"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovi"
+msgstr "Запрос на изменение данных"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovi bo‘yicha qaror"
+msgstr "Решение по запросу на изменение данных"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovi keldi"
+msgstr "Поступил запрос на изменение данных"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovlari"
+msgstr "Запросы на изменение данных"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovlarini ko‘rib chiqish"
+msgstr "Рассмотрение запросов на изменение данных"
+
+msgid "Oldingi so‘rovlar"
+msgstr "Прежние запросы"
+
+msgid "O‘z ma’lumotlarini o‘zgartirishni so‘rash"
+msgstr "Запрашивать изменение своих данных"
+
+msgid "O‘z so‘rovingizni o‘zingiz ko‘rib chiqa olmaysiz."
+msgstr "Свой запрос вы не можете рассматривать сами."
+
+msgid "O‘z so‘rovingizni o‘zingiz tasdiqlay yoki rad eta olmaysiz: uni boshqa xodim ko‘rib chiqishi kerak."
+msgstr "Свой запрос нельзя подтвердить или отклонить самому: его должен рассмотреть другой сотрудник."
+
+msgid "O‘zgarish topilmadi: avval ma’lumotni o‘zgartiring."
+msgstr "Изменений не найдено: сначала измените данные."
+
+msgid "O‘zgartirish so‘rovlari"
+msgstr "Запросы на изменение"
+
+msgid "Qaror qabul qilingandan keyin shaxsiy qiymatlar saqlanmaydi."
+msgstr "После решения личные значения не хранятся."
+
+msgid "Qiymat yaroqsiz: so‘rovni rad eting yoki xodimdan qayta yuborishni so‘rang."
+msgstr "Значение недопустимо: отклоните запрос или попросите сотрудника отправить его заново."
+
+msgid "Rad etildi"
+msgstr "Отклонён"
+
+msgid "Rad etish"
+msgstr "Отклонить"
+
+msgid "Rad etish sababini yozing: xodim uni ko‘radi."
+msgstr "Напишите причину отказа: сотрудник её увидит."
+
+msgid "So‘ralgan qiymat"
+msgstr "Запрошенное значение"
+
+msgid "So‘rov bekor qilindi."
+msgstr "Запрос отменён."
+
+msgid "So‘rov holati o‘zgargan: sahifani yangilang."
+msgstr "Статус запроса изменился: обновите страницу."
+
+msgid "So‘rov rad etildi."
+msgstr "Запрос отклонён."
+
+msgid "So‘rov tasdiqlandi: xodim kartasi yangilandi."
+msgstr "Запрос подтверждён: карточка сотрудника обновлена."
+
+msgid "So‘rov yuborildi. O‘zgarishlar tasdiqlangandan keyingina kuchga kiradi."
+msgstr "Запрос отправлен. Изменения вступят в силу только после подтверждения."
+
+msgid "So‘rovlar yo‘q"
+msgstr "Запросов нет"
+
+msgid "So‘rovni bekor qilish"
+msgstr "Отменить запрос"
+
+msgid "Tasdiqlandi"
+msgstr "Подтверждён"
+
+msgid "Tasdiqlanishini kutayotgan so‘rov"
+msgstr "Запрос, ожидающий подтверждения"
+
+msgid "Tasdiqlashga yuborish"
+msgstr "Отправить на подтверждение"
+
+msgid "Xato kiritilgan ma’lumotni tuzating. O‘zgarishlar darhol kuchga kirmaydi: ularni kadrlar bo‘limi yoki administrator tasdiqlaydi."
+msgstr "Исправьте ошибочно введённые данные. Изменения вступят в силу не сразу: их подтверждает отдел кадров или администратор."
+
+msgid "Xodim o‘z ma’lumotini o‘zgartirishni so‘radi"
+msgstr "Сотрудник запросил изменение своих данных"
+
+msgid "Xodim uchun izoh"
+msgstr "Комментарий для сотрудника"
+
+msgid "Xodimlar o‘z ma’lumotlarini tuzatishni so‘ragan. Tasdiqlangandan keyingina xodim kartasi o‘zgaradi."
+msgstr "Сотрудники просят исправить свои данные. Карточка изменится только после подтверждения."
+
+msgid "Yangi so‘rov yuborsangiz, bu so‘rov uning o‘rniga o‘tadi."
+msgstr "Если отправите новый запрос, он заменит этот."
+
+msgid "ma’lumotni o‘zgartirish so‘rovi"
+msgstr "запрос на изменение данных"
+
+msgid "ma’lumotni o‘zgartirish so‘rovlari"
+msgstr "запросы на изменение данных"

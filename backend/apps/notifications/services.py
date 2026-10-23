@@ -61,6 +61,16 @@ def notify_achievement(user, kind, achievement, *, actor=None):
     return obj
 
 
+def notify_change(user, kind, change_request, *, actor=None):
+    """Same rules as notify(), for a profile change request. The title is only the person's name; no data values travel in a notification."""
+    if not user.is_active or (actor is not None and user.pk == actor.pk):
+        return None
+    e = change_request.employee
+    obj = Notification.objects.create(user=user, kind=kind, change_request=change_request, title=f"{e.last_name} {e.first_name}"[:200])
+    transaction.on_commit(lambda: send_email_copy(obj))
+    return obj
+
+
 def send_email_copy(notification):
     """Separate, optional layer. OFF by default; needs NOTIFICATION_EMAILS_ENABLED and a configured e-mail backend.
     The message has no link and no description: just the event and the task title."""

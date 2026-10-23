@@ -48,6 +48,11 @@ class World:
                                             personal_phone="+998 90 555 66 77", birth_date=datetime.date(1990, 5, 17), hired_at=datetime.date(2020, 1, 1))
         Employee.objects.create(last_name="Botirov", first_name="Sher", department=self.other, user=self.users["stranger"], status="active")
         Employee.objects.create(last_name="Head", first_name="H", department=self.root, user=self.users["head"], status="active")
+        from apps.organization.models import EmployeeChangeRequest
+
+        self.change_request = EmployeeChangeRequest.objects.create(
+            employee=self.card, requested_by=self.users["emp"], fields=["work_phone"], changes={"work_phone": "+998 90 000 00 01"}, old_values={"work_phone": "+998 71 111 22 33"}
+        )
         self.task = Task.objects.create(title="Hisobot", description="Matn", created_by=self.users["admin"], status="review", due_date=timezone.localdate())
         self.task.assignees.set([self.users["emp"]])
         self.attachment = TaskAttachment(task=self.task, original_name="a.pdf", extension="pdf", size=10, sha256="0" * 64, uploaded_by=self.users["emp"])
@@ -105,7 +110,7 @@ class World:
             "users:detail": {"pk": self.users["emp"].pk}, "users:edit": {"pk": self.users["emp"].pk}, "users:role_add": {"pk": self.users["emp"].pk},
             "users:role_remove": {"pk": self.users["emp"].pk, "assignment_id": self.assignment.pk}, "users:action": {"pk": self.users["emp"].pk, "action": "unlock"},
             "employees:detail": {"pk": self.card.pk}, "employees:photo": {"pk": self.card.pk}, "employees:edit": {"pk": self.card.pk}, "employees:archive": {"pk": self.card.pk}, "employees:restore": {"pk": self.card.pk},
-            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "employees:institution_edit": {"pk": self.institution.pk},
+            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "employees:change_detail": {"pk": self.change_request.pk}, "employees:change_decide": {"pk": self.change_request.pk, "decision": "reject"}, "employees:change_cancel": {"pk": self.change_request.pk}, "employees:institution_edit": {"pk": self.institution.pk},
             "tasks:detail": {"pk": t}, "tasks:edit": {"pk": t}, "tasks:comment": {"pk": t}, "tasks:attachment_add": {"pk": t},
             "tasks:attachment_download": {"pk": t, "attachment_id": self.attachment.pk}, "tasks:attachment_remove": {"pk": t, "attachment_id": self.attachment.pk},
             "tasks:transition": {"pk": t, "status": "done"},

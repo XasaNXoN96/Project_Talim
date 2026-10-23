@@ -1,0 +1,28 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Ma’lumotni o‘zgartirish so‘rovi" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs">{% if own %}<a href="{% url 'employees:me_edit' %}">{% translate "Ma’lumotlarimni o‘zgartirish" %}</a>{% else %}<a href="{% url 'employees:change_list' %}">{% translate "Ma’lumotni o‘zgartirish so‘rovlari" %}</a>{% endif %}</div>
+<h1>{{ r.employee.last_name }} {{ r.employee.first_name }}</h1>
+<p><span class="badge {% if r.status == 'approved' %}b-ok{% elif r.status == 'rejected' %}b-err{% elif r.status == 'cancelled' %}plain{% else %}b-warn{% endif %}">{{ r.get_status_display }}</span> <span class="muted small">{{ r.created_at|date:"d.m.Y H:i" }}</span></p></div></div>
+<div class="stack" style="max-width:760px">
+  <section class="card card-pad">
+    {% if pending %}
+    <div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Maydon" %}</th><th>{% translate "Hozirgi qiymat" %}</th><th>{% translate "So‘ralgan qiymat" %}</th></tr></thead><tbody>
+    {% for label, old, new in rows %}<tr><td>{{ label|capfirst }}</td><td>{{ old|default:"—" }}</td><td><b>{{ new|default:"—" }}</b></td></tr>{% endfor %}</tbody></table></div>
+    {% else %}
+    <p>{% translate "Maydonlar" %}: {% for label, old, new in rows %}{{ label }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <p class="muted small">{% translate "Qaror qabul qilingandan keyin shaxsiy qiymatlar saqlanmaydi." %}</p>
+    {% if r.decided_by %}<p>{{ r.decided_by.get_full_name|default:r.decided_by.get_username }}, {{ r.decided_at|date:"d.m.Y H:i" }}</p>{% endif %}
+    {% if r.decision_comment %}<div style="white-space:pre-wrap">{{ r.decision_comment }}</div>{% endif %}
+    {% endif %}
+  </section>
+  {% if can_decide %}
+  <section class="card card-pad"><div class="row wrap">
+    <form method="post" action="{% url 'employees:change_decide' r.pk 'approve' %}">{% csrf_token %}<button class="btn btn-primary" type="submit">{% translate "Tasdiqlash" %}</button></form></div>
+    <form method="post" action="{% url 'employees:change_decide' r.pk 'reject' %}" style="margin-top:16px;display:grid;gap:8px;max-width:520px">{% csrf_token %}
+      {% include "includes/field.html" with field=reject_form.comment %}<div><button class="btn btn-secondary" type="submit">{% translate "Rad etish" %}</button></div></form></section>
+  {% elif pending and not own %}<p class="muted">{% translate "O‘z so‘rovingizni o‘zingiz ko‘rib chiqa olmaysiz." %}</p>{% endif %}
+  {% if can_cancel %}<form method="post" action="{% url 'employees:change_cancel' r.pk %}">{% csrf_token %}<button class="btn btn-secondary" type="submit">{% translate "So‘rovni bekor qilish" %}</button></form>{% endif %}
+</div>
+{% endblock %}

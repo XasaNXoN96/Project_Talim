@@ -3211,3 +3211,138 @@ msgstr "Topshiriqlar, yangiliklar va yutuqlarni tekshirish bo‘yicha xabarlar."
 
 msgid "Muassasa"
 msgstr "Muassasa"
+
+msgid "Arxivdagi karta uchun so‘rov yuborib bo‘lmaydi."
+msgstr "Arxivdagi karta uchun so‘rov yuborib bo‘lmaydi."
+
+msgid "Faqat kutayotganlar"
+msgstr "Faqat kutayotganlar"
+
+msgid "Faqat o‘z ma’lumotingizni o‘zgartirishni so‘rashingiz mumkin."
+msgstr "Faqat o‘z ma’lumotingizni o‘zgartirishni so‘rashingiz mumkin."
+
+msgid "Hozirgi qiymat"
+msgstr "Hozirgi qiymat"
+
+msgid "Kutilmoqda"
+msgstr "Kutilmoqda"
+
+msgid "Lavozim, bo‘lim va holatni o‘zgartirish uchun kadrlar bo‘limiga murojaat qiling."
+msgstr "Lavozim, bo‘lim va holatni o‘zgartirish uchun kadrlar bo‘limiga murojaat qiling."
+
+msgid "Maydon"
+msgstr "Maydon"
+
+msgid "Maydonlar"
+msgstr "Maydonlar"
+
+msgid "Ma’lumot o‘zgartirish so‘rovi rad etildi"
+msgstr "Ma’lumot o‘zgartirish so‘rovi rad etildi"
+
+msgid "Ma’lumot o‘zgartirish so‘rovi tasdiqlandi"
+msgstr "Ma’lumot o‘zgartirish so‘rovi tasdiqlandi"
+
+msgid "Ma’lumotlarimni o‘zgartirish"
+msgstr "Ma’lumotlarimni o‘zgartirish"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovi"
+msgstr "Ma’lumotni o‘zgartirish so‘rovi"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovi bo‘yicha qaror"
+msgstr "Ma’lumotni o‘zgartirish so‘rovi bo‘yicha qaror"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovi keldi"
+msgstr "Ma’lumotni o‘zgartirish so‘rovi keldi"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovlari"
+msgstr "Ma’lumotni o‘zgartirish so‘rovlari"
+
+msgid "Ma’lumotni o‘zgartirish so‘rovlarini ko‘rib chiqish"
+msgstr "Ma’lumotni o‘zgartirish so‘rovlarini ko‘rib chiqish"
+
+msgid "Oldingi so‘rovlar"
+msgstr "Oldingi so‘rovlar"
+
+msgid "O‘z ma’lumotlarini o‘zgartirishni so‘rash"
+msgstr "O‘z ma’lumotlarini o‘zgartirishni so‘rash"
+
+msgid "O‘z so‘rovingizni o‘zingiz ko‘rib chiqa olmaysiz."
+msgstr "O‘z so‘rovingizni o‘zingiz ko‘rib chiqa olmaysiz."
+
+msgid "O‘z so‘rovingizni o‘zingiz tasdiqlay yoki rad eta olmaysiz: uni boshqa xodim ko‘rib chiqishi kerak."
+msgstr "O‘z so‘rovingizni o‘zingiz tasdiqlay yoki rad eta olmaysiz: uni boshqa xodim ko‘rib chiqishi kerak."
+
+msgid "O‘zgarish topilmadi: avval ma’lumotni o‘zgartiring."
+msgstr "O‘zgarish topilmadi: avval ma’lumotni o‘zgartiring."
+
+msgid "O‘zgartirish so‘rovlari"
+msgstr "O‘zgartirish so‘rovlari"
+
+msgid "Qaror qabul qilingandan keyin shaxsiy qiymatlar saqlanmaydi."
+msgstr "Qaror qabul qilingandan keyin shaxsiy qiymatlar saqlanmaydi."
+
+msgid "Qiymat yaroqsiz: so‘rovni rad eting yoki xodimdan qayta yuborishni so‘rang."
+msgstr "Qiymat yaroqsiz: so‘rovni rad eting yoki xodimdan qayta yuborishni so‘rang."
+
+msgid "Rad etildi"
+msgstr "Rad etildi"
+
+msgid "Rad etish"
+msgstr "Rad etish"
+
+msgid "Rad etish sababini yozing: xodim uni ko‘radi."
+msgstr "Rad etish sababini yozing: xodim uni ko‘radi."
+
+msgid "So‘ralgan qiymat"
+msgstr "So‘ralgan qiymat"
+
+msgid "So‘rov bekor qilindi."
+msgstr "So‘rov bekor qilindi."
+
+msgid "So‘rov holati o‘zgargan: sahifani yangilang."
+msgstr "So‘rov holati o‘zgargan: sahifani yangilang."
+
+msgid "So‘rov rad etildi."
+msgstr "So‘rov rad etildi."
+
+msgid "So‘rov tasdiqlandi: xodim kartasi yangilandi."
+msgstr "So‘rov tasdiqlandi: xodim kartasi yangilandi."
+
+msgid "So‘rov yuborildi. O‘zgarishlar tasdiqlangandan keyingina kuchga kiradi."
+msgstr "So‘rov yuborildi. O‘zgarishlar tasdiqlangandan keyingina kuchga kiradi."
+
+msgid "So‘rovlar yo‘q"
+msgstr "So‘rovlar yo‘q"
+
+msgid "So‘rovni bekor qilish"
+msgstr "So‘rovni bekor qilish"
+
+msgid "Tasdiqlandi"
+msgstr "Tasdiqlandi"
+
+msgid "Tasdiqlanishini kutayotgan so‘rov"
+msgstr "Tasdiqlanishini kutayotgan so‘rov"
+
+msgid "Tasdiqlashga yuborish"
+msgstr "Tasdiqlashga yuborish"
+
+msgid "Xato kiritilgan ma’lumotni tuzating. O‘zgarishlar darhol kuchga kirmaydi: ularni kadrlar bo‘limi yoki administrator tasdiqlaydi."
+msgstr "Xato kiritilgan ma’lumotni tuzating. O‘zgarishlar darhol kuchga kirmaydi: ularni kadrlar bo‘limi yoki administrator tasdiqlaydi."
+
+msgid "Xodim o‘z ma’lumotini o‘zgartirishni so‘radi"
+msgstr "Xodim o‘z ma’lumotini o‘zgartirishni so‘radi"
+
+msgid "Xodim uchun izoh"
+msgstr "Xodim uchun izoh"
+
+msgid "Xodimlar o‘z ma’lumotlarini tuzatishni so‘ragan. Tasdiqlangandan keyingina xodim kartasi o‘zgaradi."
+msgstr "Xodimlar o‘z ma’lumotlarini tuzatishni so‘ragan. Tasdiqlangandan keyingina xodim kartasi o‘zgaradi."
+
+msgid "Yangi so‘rov yuborsangiz, bu so‘rov uning o‘rniga o‘tadi."
+msgstr "Yangi so‘rov yuborsangiz, bu so‘rov uning o‘rniga o‘tadi."
+
+msgid "ma’lumotni o‘zgartirish so‘rovi"
+msgstr "ma’lumotni o‘zgartirish so‘rovi"
+
+msgid "ma’lumotni o‘zgartirish so‘rovlari"
+msgstr "ma’lumotni o‘zgartirish so‘rovlari"

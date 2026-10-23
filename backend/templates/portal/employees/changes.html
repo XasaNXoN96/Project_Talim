@@ -1,0 +1,15 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Ma’lumotni o‘zgartirish so‘rovlari" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Ma’lumotni o‘zgartirish so‘rovlari" %}</h1><p>{% translate "Xodimlar o‘z ma’lumotlarini tuzatishni so‘ragan. Tasdiqlangandan keyingina xodim kartasi o‘zgaradi." %}</p></div>
+<div class="row wrap"><a class="btn btn-secondary" href="{% if show_all %}?{% else %}?all=1{% endif %}">{% if show_all %}{% translate "Faqat kutayotganlar" %}{% else %}{% translate "Barchasi" %}{% endif %}</a></div></div>
+{% if requests %}
+<div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Xodim" %}</th><th>{% translate "Maydonlar" %}</th><th>{% translate "Sana" %}</th><th>{% translate "Holat" %}</th><th></th></tr></thead><tbody>
+{% for r in requests %}<tr><td><b>{{ r.employee.last_name }} {{ r.employee.first_name }}</b></td><td>{{ r.fields|length }}</td><td>{{ r.created_at|date:"d.m.Y H:i" }}</td>
+<td><span class="badge {% if r.status == 'approved' %}b-ok{% elif r.status == 'rejected' %}b-err{% elif r.status == 'cancelled' %}plain{% else %}b-warn{% endif %}">{{ r.get_status_display }}</span></td>
+<td class="nw"><a class="btn btn-secondary btn-sm" href="{% url 'employees:change_detail' r.pk %}">{% translate "Ko‘rish" %}</a></td></tr>{% endfor %}
+</tbody></table></div>
+{% include "includes/pagination.html" %}
+{% else %}<div class="card empty"><h3>{% translate "So‘rovlar yo‘q" %}</h3></div>{% endif %}
+{% endblock %}

@@ -7,7 +7,7 @@ from apps.documents.storage import new_storage_name
 from apps.documents.validation import UploadRejected
 
 from . import photos
-from .models import Department, Employee, Institution, Position
+from .models import SELF_EDITABLE_FIELDS, Department, Employee, Institution, Position
 
 INPUT = {"class": "input"}
 User = get_user_model()
@@ -148,3 +148,27 @@ class InstitutionForm(forms.ModelForm):
         if Institution.objects.filter(name__iexact=name).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError(_("Bu nomdagi muassasa allaqachon bor."))
         return name
+
+
+class SelfChangeForm(forms.ModelForm):
+    """What a person may ask to change about themselves. Bound to a COPY of their card: nothing is saved from here."""
+
+    class Meta:
+        model = Employee
+        fields = list(SELF_EDITABLE_FIELDS)
+        widgets = {"birth_date": forms.DateInput(attrs={**INPUT, "type": "date"}, format="%Y-%m-%d")}
+        labels = {"work_phone": _("Ish telefoni"), "work_email": _("Ish e-pochtasi"), "personal_phone": _("Shaxsiy telefon"), "birth_date": _("Tug‘ilgan sana")}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            if not isinstance(field.widget, forms.DateInput):
+                field.widget.attrs.setdefault("class", "input")
+
+    def changes(self):
+        """{field: cleaned value} for the fields that differ from the card. Call after is_valid()."""
+        return {f: self.cleaned_data[f] for f in self.changed_data if f in SELF_EDITABLE_FIELDS}
+
+
+class RejectForm(forms.Form):
+    comment = forms.CharField(label=_("Xodim uchun izoh"), max_length=1000, widget=forms.Textarea(attrs={**INPUT, "rows": 3}))

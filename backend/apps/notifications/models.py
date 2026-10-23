@@ -17,6 +17,9 @@ class Notification(UUIDModel):
         NEWS_SUBMITTED = "news_submitted", _("Yangilik tekshiruvga yuborildi")
         NEWS_CHANGES_REQUESTED = "news_changes_requested", _("Yangilik tuzatishga qaytarildi")
         NEWS_APPROVED = "news_approved", _("Yangilik ma’qullandi")
+        PROFILE_CHANGE_ASKED = "profile_change_asked", _("Ma’lumotni o‘zgartirish so‘rovi keldi")
+        PROFILE_CHANGE_DONE = "profile_change_done", _("Ma’lumot o‘zgartirish so‘rovi tasdiqlandi")
+        PROFILE_CHANGE_DENIED = "profile_change_denied", _("Ma’lumot o‘zgartirish so‘rovi rad etildi")
         ACHIEVEMENT_SUBMITTED = "achievement_submitted", _("Yutuq tekshiruvga yuborildi")
         ACHIEVEMENT_RETURNED = "achievement_returned", _("Yutuq tuzatishga qaytarildi")
         ACHIEVEMENT_PUBLISHED = "achievement_published", _("Yutuq nashr etildi")
@@ -27,6 +30,7 @@ class Notification(UUIDModel):
     task = models.ForeignKey("tasks.Task", null=True, blank=True, on_delete=models.CASCADE, related_name="+")
     news = models.ForeignKey("content.News", null=True, blank=True, on_delete=models.CASCADE, related_name="+")
     achievement = models.ForeignKey("achievements.Achievement", null=True, blank=True, on_delete=models.CASCADE, related_name="+")
+    change_request = models.ForeignKey("organization.EmployeeChangeRequest", null=True, blank=True, on_delete=models.CASCADE, related_name="+")
     # Automatic reminders carry a key so running the command twice cannot create a second notification.
     dedupe_key = models.CharField(max_length=120, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)

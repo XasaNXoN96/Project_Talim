@@ -82,6 +82,8 @@ class AuditLog(models.Model):
         EMPLOYEE_IMPORT_FAILED = "employee_import_failed", _("Xodimlar importi xatolik bilan to‘xtadi")
         SESSION_ENDED = "session_ended", _("Sessiya yakunlandi")
         SESSIONS_ENDED_OTHERS = "sessions_ended_others", _("Boshqa sessiyalar yakunlandi")
+        PROFILE_CHANGE_REQUESTED = "profile_change_requested", _("Xodim o‘z ma’lumotini o‘zgartirishni so‘radi")
+        PROFILE_CHANGE_DECIDED = "profile_change_decided", _("Ma’lumotni o‘zgartirish so‘rovi bo‘yicha qaror")
         ACHIEVEMENT_CREATED = "achievement_created", _("Yutuq yaratildi")
         ACHIEVEMENT_UPDATED = "achievement_updated", _("Yutuq o‘zgartirildi")
         ACHIEVEMENT_STEP = "achievement_step", _("Yutuq holati o‘zgardi")

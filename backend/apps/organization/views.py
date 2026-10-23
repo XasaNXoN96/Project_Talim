@@ -14,8 +14,9 @@ from apps.audit.services import record
 from apps.core.mixins import PortalPermissionMixin
 
 from . import access
-from .forms import DepartmentForm, EmployeeForm, InstitutionForm, PositionForm
-from .models import Department, Employee, Institution, Position
+from . import changes as change_service
+from .forms import DepartmentForm, EmployeeForm, InstitutionForm, PositionForm, RejectForm, SelfChangeForm
+from .models import Department, Employee, EmployeeChangeRequest, Institution, Position
 
 
 class EmployeeListView(PortalPermissionMixin, ListView):
@@ -55,6 +56,8 @@ class EmployeeListView(PortalPermissionMixin, ListView):
             departments=Department.objects.filter(is_active=True), statuses=Employee.Status.choices,
             institution=self.request.GET.get("institution", ""), institutions=Institution.objects.all(),
             can_add=self.request.user.has_perm("organization.add_employee"),
+            can_review_changes=self.request.user.has_perm("organization.review_employee_change"),
+            pending_changes=EmployeeChangeRequest.objects.filter(status=EmployeeChangeRequest.Status.PENDING).count() if self.request.user.has_perm("organization.review_employee_change") else 0,
             can_import=self.request.user.has_perm("organization.add_employee") and access.directory_institution_limit(self.request.user) is None,
         )
         return ctx
@@ -289,3 +292,126 @@ class InstitutionFormView(_OrgFormView):
     @property
     def permission_required(self):
         return "organization.change_institution" if self.kwargs.get("pk") else "organization.add_institution"
+
+
+# ---- a person corrects their own data (confirmed by HR / an administrator) ----------------------------------------------
+
+def _rows(req):
+    """[(label, old, new)] of an open request; after a decision the values are gone and only the field labels remain."""
+    out = []
+    for name in req.fields:
+        label = Employee._meta.get_field(name).verbose_name
+        out.append((label, req.old_values.get(name, ""), req.changes.get(name, "")))
+    return out
+
+
+class EmployeeSelfEditView(PortalPermissionMixin, View):
+    permission_required = "organization.request_employee_change"
+
+    def _card(self, request):
+        card = Employee.objects.filter(user=request.user).first()
+        if card is None:
+            raise Http404
+        return card
+
+    def _context(self, request, card, form):
+        pending = card.change_requests.filter(status=EmployeeChangeRequest.Status.PENDING).first()
+        return {"form": form, "e": card, "pending": pending, "pending_rows": _rows(pending) if pending else [],
+                "history": card.change_requests.exclude(status=EmployeeChangeRequest.Status.PENDING).select_related("decided_by")[:10]}
+
+    def get(self, request):
+        card = self._card(request)
+        return render(request, "portal/employees/self_edit.html", self._context(request, card, SelfChangeForm(instance=Employee.objects.get(pk=card.pk))))
+
+    def post(self, request):
+        card = self._card(request)
+        form = SelfChangeForm(request.POST, instance=Employee.objects.get(pk=card.pk))  # a copy: nothing is saved by this form
+        if form.is_valid():
+            try:
+                change_service.submit(card, request.user, form.changes(), request=request)
+            except change_service.ChangeError as exc:
+                form.add_error(None, str(exc))
+            else:
+                messages.success(request, _("So‘rov yuborildi. O‘zgarishlar tasdiqlangandan keyingina kuchga kiradi."))
+                return redirect("employees:me_edit")
+        return render(request, "portal/employees/self_edit.html", self._context(request, card, form))
+
+
+class _ChangeBase(PortalPermissionMixin, View):
+    def get_request(self, request, pk):
+        req = get_object_or_404(EmployeeChangeRequest.objects.select_related("employee", "requested_by", "decided_by"), pk=pk)
+        if not (request.user.has_perm("organization.review_employee_change") or req.requested_by_id == request.user.pk):
+            raise Http404  # somebody else's request: it does not exist for you
+        return req
+
+
+class EmployeeChangeListView(PortalPermissionMixin, ListView):
+    permission_required = "organization.review_employee_change"
+    template_name = "portal/employees/changes.html"
+    paginate_by = 30
+    context_object_name = "requests"
+
+    def get_queryset(self):
+        qs = EmployeeChangeRequest.objects.select_related("employee", "decided_by", "requested_by")
+        if self.request.GET.get("all") != "1":
+            qs = qs.filter(status=EmployeeChangeRequest.Status.PENDING)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["show_all"] = self.request.GET.get("all") == "1"
+        return ctx
+
+
+class EmployeeChangeDetailView(_ChangeBase):
+    permission_required = "organization.request_employee_change"
+
+    def has_permission(self):
+        u = self.request.user
+        return u.is_authenticated and (u.has_perm("organization.request_employee_change") or u.has_perm("organization.review_employee_change"))
+
+    def get(self, request, pk):
+        req = self.get_request(request, pk)
+        pending = req.status == EmployeeChangeRequest.Status.PENDING
+        reviewer = request.user.has_perm("organization.review_employee_change")
+        return render(request, "portal/employees/change_detail.html", {
+            "r": req, "rows": _rows(req), "pending": pending,
+            "can_decide": pending and reviewer and req.requested_by_id != request.user.pk,
+            "can_cancel": pending and req.requested_by_id == request.user.pk,
+            "own": req.requested_by_id == request.user.pk, "reject_form": RejectForm(),
+        })
+
+
+class EmployeeChangeDecideView(_ChangeBase):
+    http_method_names = ["post"]
+    permission_required = "organization.review_employee_change"
+
+    def post(self, request, pk, decision):
+        req = self.get_request(request, pk)
+        try:
+            if decision == "approve":
+                change_service.approve(req.pk, request.user, request=request)
+                messages.success(request, _("So‘rov tasdiqlandi: xodim kartasi yangilandi."))
+            elif decision == "reject":
+                change_service.reject(req.pk, request.user, request.POST.get("comment", ""), request=request)
+                messages.success(request, _("So‘rov rad etildi."))
+            else:
+                raise Http404
+        except change_service.ChangeError as exc:
+            messages.error(request, str(exc))
+            return redirect("employees:change_detail", pk=req.pk)
+        return redirect("employees:change_list")
+
+
+class EmployeeChangeCancelView(PortalPermissionMixin, View):
+    http_method_names = ["post"]
+    permission_required = "organization.request_employee_change"
+
+    def post(self, request, pk):
+        req = get_object_or_404(EmployeeChangeRequest, pk=pk, requested_by=request.user)  # only your own request
+        try:
+            change_service.cancel(req.pk, request.user, request=request)
+            messages.success(request, _("So‘rov bekor qilindi."))
+        except change_service.ChangeError as exc:
+            messages.error(request, str(exc))
+        return redirect("employees:me_edit")
