@@ -241,3 +241,21 @@ class OffsiteExampleStaysHonest(SimpleTestCase):
         self.assertIn("NOT TESTED", text)
         self.assertIn("StrictHostKeyChecking=yes", text)
         self.assertNotIn("PASSPHRASE", text.replace("the passphrase file is never sent", ""))
+
+
+class AchievementVideoUploadLimits(SimpleTestCase):
+    """The video of an achievement is uploaded through ONE pair of URLs that get a bigger body limit; everything else keeps the small cap.
+    The regex is quoted because it contains braces (nginx would read an unquoted `{36}` as a block and refuse to start: found with nginx -t)."""
+
+    def test_both_nginx_templates_open_a_bigger_limit_for_the_two_achievement_form_urls_only(self):
+        from django.conf import settings
+
+        for name in ("talim.conf.template", "talim-production.conf.template"):
+            conf = text(DEPLOY / "nginx" / name)
+            self.assertIn('location ~ "^/portal/achievements/(new/|[0-9a-f-]{36}/edit/)$" {', conf, name)
+            block = conf[conf.index('location ~ "^/portal/achievements/'):]
+            block = block[:block.index("\n    }")]
+            self.assertIn("client_max_body_size 22m;", block, name)
+            self.assertEqual(conf.count("client_max_body_size 11m;"), 1, name)  # the general cap stays small
+        self.assertLess(settings.ACHIEVEMENT_VIDEO_MAX_BYTES, 22 * 1024 * 1024)  # the cap leaves room for the form fields
+        self.assertLess(settings.ACHIEVEMENT_VIDEO_MAX_BYTES, 25 * 1024 * 1024)  # and stays below clamd's StreamMaxLength of docs/CLAMAV.md

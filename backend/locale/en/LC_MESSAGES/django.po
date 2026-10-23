@@ -3535,3 +3535,32 @@ msgstr "Late"
 
 msgid "Direktor hisobi yo‘q"
 msgstr "No director account"
+
+msgid "Brauzeringiz videoni ko‘rsata olmaydi."
+msgstr "Your browser cannot play the video."
+
+#, python-format
+msgid "Eng ko‘pi bilan %(mb)d MB. Brauzerda ochiladigan kodek tavsiya etiladi: MP4 uchun H.264/AAC."
+msgstr "At most %(mb)d MB. Use a codec that browsers play: H.264/AAC for MP4."
+
+msgid "Faqat MP4 yoki WebM video yuklash mumkin."
+msgstr "Only an MP4 or WebM video can be uploaded."
+
+msgid "Fayl mazmuni video formatiga mos kelmaydi."
+msgstr "The file content does not match a video format."
+
+msgid "Video fayl (MP4 yoki WebM)"
+msgstr "Video file (MP4 or WebM)"
+
+msgid "Video fayli buzilgan yoki to‘liq emas."
+msgstr "The video file is damaged or incomplete."
+
+#, python-format
+msgid "Video hajmi %(mb)d MB dan oshmasligi kerak."
+msgstr "The video must not exceed %(mb)d MB."
+
+msgid "Videoni olib tashlash"
+msgstr "Remove the video"
+
+msgid "Yoki videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting."
+msgstr "Or host the video on another site (for example YouTube) and paste the https link."

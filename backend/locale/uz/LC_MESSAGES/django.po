@@ -3535,3 +3535,32 @@ msgstr "Kechikkan"
 
 msgid "Direktor hisobi yo‘q"
 msgstr "Direktor hisobi yo‘q"
+
+msgid "Brauzeringiz videoni ko‘rsata olmaydi."
+msgstr "Brauzeringiz videoni ko‘rsata olmaydi."
+
+#, python-format
+msgid "Eng ko‘pi bilan %(mb)d MB. Brauzerda ochiladigan kodek tavsiya etiladi: MP4 uchun H.264/AAC."
+msgstr "Eng ko‘pi bilan %(mb)d MB. Brauzerda ochiladigan kodek tavsiya etiladi: MP4 uchun H.264/AAC."
+
+msgid "Faqat MP4 yoki WebM video yuklash mumkin."
+msgstr "Faqat MP4 yoki WebM video yuklash mumkin."
+
+msgid "Fayl mazmuni video formatiga mos kelmaydi."
+msgstr "Fayl mazmuni video formatiga mos kelmaydi."
+
+msgid "Video fayl (MP4 yoki WebM)"
+msgstr "Video fayl (MP4 yoki WebM)"
+
+msgid "Video fayli buzilgan yoki to‘liq emas."
+msgstr "Video fayli buzilgan yoki to‘liq emas."
+
+#, python-format
+msgid "Video hajmi %(mb)d MB dan oshmasligi kerak."
+msgstr "Video hajmi %(mb)d MB dan oshmasligi kerak."
+
+msgid "Videoni olib tashlash"
+msgstr "Videoni olib tashlash"
+
+msgid "Yoki videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting."
+msgstr "Yoki videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting."

@@ -194,6 +194,7 @@ CSP_DIRECTIVES = {
     "style-src": ["'self'"],
     "style-src-attr": ["'unsafe-inline'"],
     "img-src": ["'self'", "data:"],
+    "media-src": ["'self'"],  # achievement videos are served by this site only
     "font-src": ["'self'"],
     "connect-src": ["'self'"],
     "object-src": ["'none'"],
@@ -264,6 +265,10 @@ NOTIFICATION_EMAILS_ENABLED = env_bool("NOTIFICATION_EMAILS_ENABLED", False)
 
 # --- Antivirus for uploads (ClamAV, local daemon only). Fail-closed: if the scan cannot finish, the upload is refused.
 # "disabled" exists for local development and tests ONLY; production refuses to start with it.
+# Achievement videos: the cap must stay BELOW clamd's StreamMaxLength (25M in docs/CLAMAV.md) and nginx client_max_body_size for /portal/achievements/
+# (see deploy/nginx); a larger file is then refused, never accepted unscanned. Raise all three together.
+ACHIEVEMENT_VIDEO_MAX_BYTES = int(env("ACHIEVEMENT_VIDEO_MAX_BYTES", str(20 * 1024 * 1024)))
+CLAMAV_VIDEO_TIMEOUT = float(env("CLAMAV_VIDEO_TIMEOUT", "90"))  # seconds for scanning one video
 DOCUMENT_SCAN_MODE = env("DOCUMENT_SCAN_MODE", "clamav")
 CLAMAV_SOCKET = env("CLAMAV_SOCKET", "")  # e.g. /run/clamav/clamd.ctl ; empty = use host/port below
 CLAMAV_HOST = env("CLAMAV_HOST", "127.0.0.1")

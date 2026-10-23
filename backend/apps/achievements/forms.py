@@ -9,8 +9,8 @@ from apps.documents.storage import new_storage_name
 from apps.documents.validation import UploadRejected
 from apps.organization.models import Institution
 
-from . import images
-from .models import Achievement, AchievementImage
+from . import images, videos
+from .models import Achievement, AchievementImage, AchievementVideo
 
 INPUT = {"class": "input"}
 
@@ -37,6 +37,11 @@ class AchievementForm(forms.ModelForm):
         queryset=AchievementImage.objects.none(), required=False, label=_("Olib tashlanadigan rasmlar"), widget=forms.CheckboxSelectMultiple
     )
 
+    new_video = forms.FileField(
+        label=_("Video fayl (MP4 yoki WebM)"), required=False, widget=forms.FileInput(attrs={"accept": "video/mp4,video/webm"}),
+    )
+    remove_video = forms.BooleanField(label=_("Videoni olib tashlash"), required=False)
+
     class Meta:
         model = Achievement
         fields = [
@@ -50,7 +55,7 @@ class AchievementForm(forms.ModelForm):
             "description": forms.Textarea(attrs={**INPUT, "rows": 6}), "video_url": forms.URLInput(attrs={**INPUT, "placeholder": "https://"}),
         }
         help_texts = {
-            "video_url": _("Videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting. Video fayl yuklanmaydi."),
+            "video_url": _("Yoki videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting."),
             "consent_confirmed": _("Ishtirokchi (voyaga yetmagan bo‘lsa, ota-onasi) ma’lumot va rasmni ochiq saytda nashr etishga rozilik bergan."),
         }
 
@@ -58,11 +63,15 @@ class AchievementForm(forms.ModelForm):
         self._request = request
         self._school = school  # the Institution of a school user: fixed, not chosen
         self._image_bytes = []
+        self._video = None
         super().__init__(*args, **kwargs)
         if staff:
             self.fields["institution"].queryset = Institution.objects.all()
         else:
             del self.fields["institution"]
+        self.fields["new_video"].help_text = _("Eng ko‘pi bilan %(mb)d MB. Brauzerda ochiladigan kodek tavsiya etiladi: MP4 uchun H.264/AAC.") % {"mb": videos.mb(videos.max_bytes())}
+        if not (self.instance.pk and hasattr(self.instance, "video")):
+            del self.fields["remove_video"]
         if self.instance.pk:
             self.fields["remove_images"].queryset = self.instance.images.all()
             self.fields["remove_images"].label_from_instance = lambda im: _("Rasm") + f" {im.position + 1}"
@@ -96,6 +105,15 @@ class AchievementForm(forms.ModelForm):
         self._image_bytes = out
         return uploaded
 
+    def clean_new_video(self):
+        uploaded = self.cleaned_data.get("new_video")
+        if uploaded:
+            try:
+                self._video = videos.prepare_video(uploaded, request=self._request, user=getattr(self._request, "user", None))
+            except UploadRejected as exc:
+                raise forms.ValidationError(str(exc)) from exc
+        return uploaded
+
     def save(self, commit=True):
         a = super().save(commit=False)
         if self._school is not None:
@@ -112,8 +130,20 @@ class AchievementForm(forms.ModelForm):
                 im = AchievementImage(achievement=a, position=start + i)
                 im.file.save(new_storage_name("jpg"), ContentFile(data), save=False)
                 im.save()
-            if removed or self._image_bytes:
-                a.save(update_fields=["updated_at"])  # the pictures belong to the version a preview refers to
+            video_changed = False
+            current = AchievementVideo.objects.filter(achievement=a).first()
+            if current is not None and (self._video is not None or self.cleaned_data.get("remove_video")):
+                name = current.file.name
+                current.delete()
+                current.file.storage.delete(name)  # a replaced or removed video must not linger on disk
+                video_changed = True
+            if self._video is not None:
+                v = AchievementVideo(achievement=a, content_type=self._video.content_type, size=len(self._video.data), sha256=self._video.sha256, scan_status=self._video.scan_status)
+                v.file.save(new_storage_name(self._video.ext), ContentFile(self._video.data), save=False)
+                v.save()
+                video_changed = True
+            if removed or self._image_bytes or video_changed:
+                a.save(update_fields=["updated_at"])  # the pictures and the video belong to the version a preview refers to
         return a
 
 

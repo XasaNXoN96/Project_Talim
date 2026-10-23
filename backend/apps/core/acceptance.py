@@ -90,11 +90,24 @@ class World:
             Image.new("RGB", (8, 8), (10, 20, 30)).save(out, "JPEG")
             return out.getvalue()
 
+        def _mp4():
+            import struct
+
+            ftyp = struct.pack(">I4s4sI4s", 20, b"ftyp", b"isom", 0, b"isom")
+            moov = struct.pack(">I4s", 8, b"moov")
+            mdat = struct.pack(">I4s", 12, b"mdat") + b"\0\0\0\0"
+            return ftyp + moov + mdat
+
         def _achievement(status, **extra):
+            from apps.achievements.models import AchievementVideo
+
             a = Achievement.objects.create(institution=self.institution, created_by=self.users["admin"], title="Yutuq", person_name="Aliyev", status=status, consent_confirmed=True, **extra)
             im = AchievementImage(achievement=a)
             im.file.save("ab/test-image.jpg", ContentFile(_jpeg()), save=False)
             im.save()
+            vid = AchievementVideo(achievement=a, content_type="video/mp4", size=len(_mp4()), sha256="0" * 64)
+            vid.file.save("ab/test-video.mp4", ContentFile(_mp4()), save=False)
+            vid.save()
             return a, im
 
         self.achievement, self.achievement_image = _achievement("submitted")
@@ -128,7 +141,7 @@ class World:
             "accounts:session_end": {"pk": self.user_session.pk},
             "news_admin:preview": {"pk": self.news.pk}, "news_admin:edit": {"pk": self.news.pk}, "news_admin:status": {"pk": self.news.pk, "action": "archive"},
             "news_admin:category_edit": {"pk": self.news_category.pk},
-            "reports:export": {"fmt": "xlsx"}, "content:news_detail": {"slug": self.news.slug}, "achievements:detail": {"pk": self.achievement.pk}, "achievements:edit": {"pk": self.achievement.pk}, "achievements:preview": {"pk": self.achievement.pk}, "achievements:step": {"pk": self.achievement.pk, "step": "archive"}, "achievements:image": {"pk": self.achievement_image.pk}, "achievements_public:detail": {"slug": self.pub_achievement.slug}, "achievements_public:image": {"pk": self.pub_image.pk}, "portal:preview": {"section": "media"},
+            "reports:export": {"fmt": "xlsx"}, "content:news_detail": {"slug": self.news.slug}, "achievements:detail": {"pk": self.achievement.pk}, "achievements:edit": {"pk": self.achievement.pk}, "achievements:preview": {"pk": self.achievement.pk}, "achievements:step": {"pk": self.achievement.pk, "step": "archive"}, "achievements:image": {"pk": self.achievement_image.pk}, "achievements:video": {"pk": self.achievement.video.pk}, "achievements_public:detail": {"slug": self.pub_achievement.slug}, "achievements_public:image": {"pk": self.pub_image.pk}, "achievements_public:video": {"pk": self.pub_achievement.video.pk}, "portal:preview": {"section": "media"},
             "accounts:password_reset_confirm": {"uidb64": self.uid, "token": self.token},
         }
         return table.get(name, {})

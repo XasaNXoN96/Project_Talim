@@ -5,4 +5,5 @@
 <p class="muted">{{ a.institution.name }}</p>
 {% if a.description %}{{ a.description|linebreaks }}{% endif %}
 {% if images %}<div class="auto-grid" style="margin:16px 0">{% for im in images %}<img src="{% if public %}{% url 'achievements_public:image' im.pk %}{% else %}{% url 'achievements:image' im.pk %}{% endif %}" alt="{{ a.title }}" loading="lazy" style="width:100%;height:auto;border-radius:12px">{% endfor %}</div>{% endif %}
+{% if a.video %}<video controls preload="metadata" playsinline style="width:100%;max-height:70vh;border-radius:12px;background:#000;margin:8px 0" src="{% if public %}{% url 'achievements_public:video' a.video.pk %}{% else %}{% url 'achievements:video' a.video.pk %}{% endif %}">{% translate "Brauzeringiz videoni ko‘rsata olmaydi." %}</video>{% endif %}
 {% if a.video_url %}<p><a class="btn btn-secondary" href="{{ a.video_url }}" target="_blank" rel="noopener noreferrer nofollow">{% translate "Videoni ko‘rish" %}</a> <span class="small muted">{% translate "(boshqa saytda ochiladi)" %}</span></p>{% endif %}

@@ -3535,3 +3535,32 @@ msgstr "С опозданием"
 
 msgid "Direktor hisobi yo‘q"
 msgstr "Нет аккаунта директора"
+
+msgid "Brauzeringiz videoni ko‘rsata olmaydi."
+msgstr "Ваш браузер не может показать видео."
+
+#, python-format
+msgid "Eng ko‘pi bilan %(mb)d MB. Brauzerda ochiladigan kodek tavsiya etiladi: MP4 uchun H.264/AAC."
+msgstr "Не более %(mb)d МБ. Рекомендуется кодек, который открывается в браузере: для MP4 — H.264/AAC."
+
+msgid "Faqat MP4 yoki WebM video yuklash mumkin."
+msgstr "Можно загрузить только видео MP4 или WebM."
+
+msgid "Fayl mazmuni video formatiga mos kelmaydi."
+msgstr "Содержимое файла не соответствует формату видео."
+
+msgid "Video fayl (MP4 yoki WebM)"
+msgstr "Видеофайл (MP4 или WebM)"
+
+msgid "Video fayli buzilgan yoki to‘liq emas."
+msgstr "Видеофайл повреждён или неполный."
+
+#, python-format
+msgid "Video hajmi %(mb)d MB dan oshmasligi kerak."
+msgstr "Размер видео не должен превышать %(mb)d МБ."
+
+msgid "Videoni olib tashlash"
+msgstr "Удалить видео"
+
+msgid "Yoki videoni boshqa saytga (masalan, YouTube) joylab, https havolasini kiriting."
+msgstr "Или разместите видео на другом сайте (например, YouTube) и вставьте https-ссылку."

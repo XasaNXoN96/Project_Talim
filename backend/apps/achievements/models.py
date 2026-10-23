@@ -124,3 +124,18 @@ class AchievementReview(TimeStampedModel):
     class Meta:
         ordering = ["created_at"]
         indexes = [models.Index(fields=["achievement", "created_at"])]
+
+
+class AchievementVideo(UUIDModel):
+    """The one video FILE of an achievement (a link to a video hosted elsewhere stays possible in Achievement.video_url).
+
+    Checked by apps.achievements.videos (format by content, structure, antivirus, camera metadata neutralised), kept in the private storage
+    under a random name, served only by the achievement views (portal by permission, public only once published), with Range support."""
+
+    achievement = models.OneToOneField(Achievement, on_delete=models.CASCADE, related_name="video")
+    file = models.FileField(storage=PrivateStorage(), max_length=120)
+    content_type = models.CharField(max_length=20)  # video/mp4 | video/webm: decided by OUR detection, never by the client
+    size = models.PositiveBigIntegerField()
+    sha256 = models.CharField(max_length=64)
+    scan_status = models.CharField(max_length=12, default="not_scanned")
+    created_at = models.DateTimeField(auto_now_add=True)

@@ -52,6 +52,28 @@ server {
     location ~* ^/(private_media|media)(/|$) { return 404; }
     location /static/ { alias {{STATIC_DIR}}/; expires 1h; access_log off; }
 
+    # Achievement create/edit forms may carry a video (ACHIEVEMENT_VIDEO_MAX_BYTES, 20 MB by default): a larger body limit and longer timeouts
+    # for THESE two URLs only; every other URL keeps the 11 MB cap. Keep this above ACHIEVEMENT_VIDEO_MAX_BYTES + form fields, and keep clamd's
+    # StreamMaxLength above ACHIEVEMENT_VIDEO_MAX_BYTES (docs/CLAMAV.md): a video clamd cannot scan is refused, never accepted.
+    location ~ "^/portal/achievements/(new/|[0-9a-f-]{36}/edit/)$" {
+        client_max_body_size 22m;
+        client_body_timeout 120s;
+        proxy_pass http://talim_app;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_bind 127.0.0.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP "";
+        proxy_set_header Forwarded "";
+
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 120s;
+        proxy_read_timeout 120s;
+        proxy_request_buffering on;
+    }
+
     location / {
         proxy_pass http://talim_app;
         proxy_http_version 1.1;

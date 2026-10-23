@@ -72,9 +72,10 @@ def _recv_reply(sock, deadline):
     return buf.rstrip(b"\0\n").decode("utf-8", "replace")
 
 
-def scan_bytes(data: bytes) -> ScanResult:
-    """Scan `data`. Returns ScanResult; raises ScanFailed whenever a clean verdict was not obtained."""
-    timeout = float(getattr(settings, "CLAMAV_TIMEOUT", 20))
+def scan_bytes(data: bytes, *, timeout: float | None = None) -> ScanResult:
+    """Scan `data`. Returns ScanResult; raises ScanFailed whenever a clean verdict was not obtained.
+    `timeout` (seconds, whole scan) overrides CLAMAV_TIMEOUT for large files such as videos."""
+    timeout = float(timeout if timeout is not None else getattr(settings, "CLAMAV_TIMEOUT", 20))
     deadline = time.monotonic() + timeout
     sock = None
     try:
