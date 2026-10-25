@@ -284,3 +284,13 @@ input[type="date"], input[type="time"], input[type="datetime-local"] { min-heigh
 .page-head .av.xl, .page-head .av.lg { background: var(--navy-700); }
 .content h1, .content .card h1, .login-form h1 { font-family: var(--font-display); font-weight: 600; letter-spacing: -.005em; }
 .content .card h1 { font-size: clamp(24px, 2.6vw, 32px); line-height: 1.2; }
+
+/* every field of the shared field include looks the same, even if a form forgot the "input" class (password reset, change forms) */
+.field > input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not(.input),
+.field > select:not(.select), .field > textarea:not(.textarea) { width: 100%; height: var(--ctl-h); padding: 0 12px; border: 1.5px solid var(--border-strong); border-radius: var(--r-sm); background: var(--surface); font: inherit; color: var(--text); }
+.field > textarea:not(.textarea) { height: auto; min-height: 110px; padding: 10px 12px; }
+.field > input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus, .field > select:focus, .field > textarea:focus { outline: none; border-color: var(--brand-500); box-shadow: 0 0 0 3px rgba(15, 118, 110, .2); }
+/* file pickers */
+input[type="file"] { max-width: 100%; font: inherit; color: var(--text-2); }
+input[type="file"]::file-selector-button { height: 36px; margin-right: 12px; padding: 0 14px; border: 1.5px solid var(--border-strong); border-radius: var(--r-sm); background: var(--surface); color: var(--text); font: 700 13px var(--font); cursor: pointer; }
+input[type="file"]::file-selector-button:hover { background: var(--surface-2); }
