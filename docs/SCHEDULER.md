@@ -10,6 +10,7 @@
 | `purge_employee_imports` | стереть разобранные строки (ПДн) непотверждённых предпросмотров импорта | каждые 15 мин | БД | advisory-блокировка | код 1 | `job_status`; счётчик `wiped` |
 | `clear_expired_sessions` | удалить просроченные сессии Django и устаревшие записи указателя «активных сессий» | раз в сутки | БД | advisory-блокировка | код 1 | `job_status` |
 | `purge_throttles` | удалить строки ограничителя попыток, у которых блокировка кончилась и окно прошло | каждый час | БД | advisory-блокировка | код 1 | `job_status` |
+| `purge_attendance_locations` | стереть координаты отметок «Kirish-chiqish» старше срока хранения (`ATTENDANCE_LOCATION_RETENTION_DAYS`, по умолчанию 90 дней); время и признак «в зоне / вне зоны» остаются | раз в сутки | БД | advisory-блокировка | код 1 — координаты остаются дольше срока: проверить задачу | `job_status` |
 | `check_scanner` | проверка антивируса (PING + пробная проверка) | каждые 5 мин | clamd (сокет/порт) | advisory-блокировка | код 1 — загрузки файлов в это время **отклоняются** (fail-closed) | `job_status` / оповещение `OnFailure` |
 | `verify_document_files` | целостность хранилища: файл есть, размер и SHA-256 совпадают | раз в неделю (и после восстановления) | БД + чтение `PRIVATE_MEDIA_ROOT` | advisory-блокировка | код 1 при любом расхождении | `job_status` |
 | `scan_documents` | повторная проверка версий, загруженных при выключенном сканере (`--all` — после обновления сигнатур) | **по требованию**, не по расписанию | БД + clamd + файлы | advisory-блокировка | сканер недоступен → ничего не меняется, код 1; нечитаемый файл — ошибка записи, код 1 | `job_status` |
@@ -60,7 +61,7 @@ sudo cp backend/deploy/logrotate/talim /etc/logrotate.d/talim
 sudo cp backend/deploy/systemd/talim-job*.service backend/deploy/systemd/talim-*.timer /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl start talim-job@send_task_reminders.service && journalctl -u talim-job@send_task_reminders.service -n 20   # ручной пробный запуск
-sudo systemctl enable --now talim-send_task_reminders.timer talim-purge_employee_imports.timer talim-purge_throttles.timer \
+sudo systemctl enable --now talim-send_task_reminders.timer talim-purge_employee_imports.timer talim-purge_throttles.timer talim-purge_attendance_locations.timer \
      talim-clear_expired_sessions.timer talim-check_scanner.timer talim-verify_document_files.timer
 systemctl list-timers 'talim-*'
 # 3) контроль

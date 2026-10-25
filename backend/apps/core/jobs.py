@@ -34,6 +34,7 @@ JOBS = {
     "check_scanner": {"label": _("Antivirus xizmatini tekshirish"), "every": 5, "lock": 7_310_005},
     "verify_document_files": {"label": _("Hujjat fayllari yaxlitligini tekshirish"), "every": 7 * 24 * 60, "lock": 7_310_006},
     "scan_documents": {"label": _("Hujjatlarni antivirus bilan qayta tekshirish"), "every": None, "lock": 7_310_007},
+    "purge_attendance_locations": {"label": _("Kirish-chiqish koordinatalarini muddati bo‘yicha tozalash"), "every": 24 * 60, "lock": 7_310_010},
     # Two DIFFERENT facts about backups: an archive was written and is readable (backup_create), and a restore of it into a scratch
     # database and directory was actually verified (backup_restore_check). Neither says the copy is off this server.
     "backup_create": {"command": "run_backup", "label": _("Zaxira nusxa yaratildi (arxiv o‘qiladi)"), "every": 24 * 60, "lock": 7_310_008},

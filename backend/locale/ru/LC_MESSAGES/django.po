@@ -3729,3 +3729,291 @@ msgstr "Общение между школами и сотрудниками"
 
 msgid "Hisob administrator tomonidan yaratiladi. Maktab nomidan portalga faqat direktor kiradi."
 msgstr "Учётную запись создаёт администратор. От имени школы в портал входит только директор."
+
+msgid "Bo‘sh qoldirsangiz, hudud hamma uchun amal qiladi."
+msgstr "Если оставить пустым, зона действует для всех."
+
+msgid "30 dan 5000 metrgacha. Maktab hovlisi uchun odatda 100–200 m."
+msgstr "От 30 до 5000 метров. Для школьного двора обычно 100–200 м."
+
+msgid "Amal"
+msgstr "Действие"
+
+msgid "Tuzatish sababi"
+msgstr "Причина исправления"
+
+msgid "kenglik"
+msgstr "широта"
+
+msgid "uzunlik"
+msgstr "долгота"
+
+msgid "radius (metr)"
+msgstr "радиус (метры)"
+
+msgid "ish hududi"
+msgstr "рабочая зона"
+
+msgid "ish hududlari"
+msgstr "рабочие зоны"
+
+msgid "O‘zi belgiladi"
+msgstr "Отметил сам"
+
+msgid "Qo‘lda kiritildi"
+msgstr "Внесено вручную"
+
+msgid "kirish-chiqish belgisi"
+msgstr "отметка прихода-ухода"
+
+msgid "kirish-chiqish belgilari"
+msgstr "отметки прихода-ухода"
+
+msgid "Kirish-chiqishni belgilash"
+msgstr "Отмечать приход и уход"
+
+msgid "Xodimlarning kirish-chiqishini ko‘rish (qamrov bo‘yicha, ko‘rish jurnalga yoziladi)"
+msgstr "Просмотр прихода и ухода сотрудников (в пределах охвата; просмотр записывается в журнал)"
+
+msgid "Kirish-chiqishni qo‘lda tuzatish va aniq koordinatalarni ko‘rish"
+msgstr "Ручная правка прихода-ухода и просмотр точных координат"
+
+msgid "Joylashuv ma’lumoti noto‘g‘ri."
+msgstr "Данные о местоположении неверны."
+
+msgid "Noto‘g‘ri amal."
+msgstr "Неверное действие."
+
+msgid "Hisobingiz xodim kartasiga ulanmagan. Kadrlar bo‘limiga murojaat qiling."
+msgstr "Ваша учётная запись не связана с карточкой сотрудника. Обратитесь в отдел кадров."
+
+msgid "Xodim holati bo‘yicha belgilab bo‘lmaydi."
+msgstr "При текущем статусе сотрудника отметиться нельзя."
+
+msgid "Juda tez bosdingiz. Bir necha soniyadan keyin qayta urinib ko‘ring."
+msgstr "Слишком быстро. Повторите через несколько секунд."
+
+msgid "Siz allaqachon kirgansiz."
+msgstr "Вы уже отметили приход."
+
+msgid "Siz allaqachon chiqqansiz."
+msgstr "Вы уже отметили уход."
+
+msgid "Avval «Kirish» ni bosing."
+msgstr "Сначала нажмите «Приход»."
+
+msgid "Joylashuv aniqlanmadi. Brauzerda joylashuvga ruxsat bering va qayta urinib ko‘ring."
+msgstr "Местоположение не определено. Разрешите доступ к геолокации в браузере и повторите."
+
+#, python-format
+msgid "Joylashuv aniqligi past (%(m)d m). Ochiq joyda qayta urinib ko‘ring."
+msgstr "Низкая точность определения места (%(m)d м). Повторите на открытом месте."
+
+#, python-format
+msgid "Siz ish hududidan taxminan %(m)d m tashqaridasiz. Sababini «Izoh» maydoniga yozib, qayta bosing."
+msgstr "Вы примерно в %(m)d м за пределами рабочей зоны. Напишите причину в поле «Примечание» и нажмите снова."
+
+msgid "Tuzatish sababini yozing."
+msgstr "Укажите причину исправления."
+
+msgid "Kelajak vaqtini kiritib bo‘lmaydi."
+msgstr "Нельзя указать время в будущем."
+
+msgid "Belgilandi. Siz ish hududidan tashqaridasiz: izohingiz saqlandi."
+msgstr "Отмечено. Вы за пределами рабочей зоны: ваше примечание сохранено."
+
+msgid "Kirish belgilandi."
+msgstr "Приход отмечен."
+
+msgid "Chiqish belgilandi."
+msgstr "Уход отмечен."
+
+msgid "Ma’lumotlarni tekshiring: vaqt va sabab to‘ldirilishi kerak."
+msgstr "Проверьте данные: нужно указать время и причину."
+
+msgid "Tuzatish qo‘shildi."
+msgstr "Исправление добавлено."
+
+msgid "Ish hududi saqlandi."
+msgstr "Рабочая зона сохранена."
+
+msgid "Kirish-chiqish haqidagi ogohlantirish qabul qilindi"
+msgstr "Принято предупреждение о приходе-уходе"
+
+msgid "Kirish yoki chiqish belgilandi"
+msgstr "Отмечен приход или уход"
+
+msgid "Xodimlarning kirish-chiqishi ko‘rildi"
+msgstr "Просмотрен приход-уход сотрудников"
+
+msgid "Kirish-chiqish qo‘lda tuzatildi"
+msgstr "Приход-уход исправлен вручную"
+
+msgid "Kirish-chiqish koordinatalarini muddati bo‘yicha tozalash"
+msgstr "Очистка координат прихода-ухода по сроку"
+
+msgid "Hududda"
+msgstr "В зоне"
+
+msgid "Hududdan tashqarida"
+msgstr "Вне зоны"
+
+msgid "Ishda"
+msgstr "На работе"
+
+msgid "Ketgan"
+msgstr "Ушёл"
+
+msgid "Belgilanmagan"
+msgstr "Не отмечен"
+
+msgid "Ishga kelganingizda va ketayotganingizda tugmani bosing."
+msgstr "Нажмите кнопку, когда приходите на работу и когда уходите."
+
+msgid "Xodimlar belgilari"
+msgstr "Отметки сотрудников"
+
+msgid "Hisobingiz xodim kartasiga ulanmagan"
+msgstr "Ваша учётная запись не связана с карточкой сотрудника"
+
+msgid "Kadrlar bo‘limiga murojaat qiling."
+msgstr "Обратитесь в отдел кадров."
+
+msgid "Joylashuv aniqlanmoqda…"
+msgstr "Определяется местоположение…"
+
+msgid "Izoh (hududdan tashqarida majburiy)"
+msgstr "Примечание (обязательно за пределами зоны)"
+
+msgid "Joylashuv faqat tugma bosilganda olinadi."
+msgstr "Местоположение считывается только при нажатии кнопки."
+
+msgid "Sizga ish hududi belgilanmagan: joylashuv olinmaydi."
+msgstr "Для вас не задана рабочая зона: местоположение не считывается."
+
+msgid "So‘nggi 30 kun"
+msgstr "Последние 30 дней"
+
+msgid "Ishlagan vaqt"
+msgstr "Отработано"
+
+msgid "ishda"
+msgstr "на работе"
+
+msgid "Hali belgilar yo‘q."
+msgstr "Отметок пока нет."
+
+msgid "qo‘lda"
+msgstr "вручную"
+
+msgid "hududdan tashqarida"
+msgstr "вне зоны"
+
+msgid "Qo‘lda tuzatish"
+msgstr "Ручное исправление"
+
+msgid "Mavjud belgi o‘zgartirilmaydi: qo‘shimcha yozuv sabab bilan qo‘shiladi."
+msgstr "Существующая отметка не меняется: добавляется дополнительная запись с причиной."
+
+msgid "Qo‘shish"
+msgstr "Добавить"
+
+msgid "Kirish-chiqish haqida ogohlantirish"
+msgstr "Предупреждение о приходе и уходе"
+
+msgid "Belgilashdan oldin quyidagi qoidalar bilan tanishing."
+msgstr "Перед отметкой ознакомьтесь со следующими правилами."
+
+msgid "Faqat siz «Kirish» yoki «Chiqish» tugmasini bosgan paytdagi joylashuv olinadi."
+msgstr "Берётся только местоположение в момент, когда вы нажимаете «Приход» или «Уход»."
+
+msgid "Tizim sizni fonda kuzatmaydi va yo‘lingizni yozmaydi."
+msgstr "Система не следит за вами в фоне и не записывает ваш маршрут."
+
+msgid "Joylashuv ish hududi (maktab, bo‘lim binosi) bilan solishtiriladi. Hududdan tashqarida bosilsa, sababni yozishingiz kerak."
+msgstr "Местоположение сравнивается с рабочей зоной (школа, здание отдела). Если нажать вне зоны, нужно написать причину."
+
+#, python-format
+msgid "Aniq koordinatalar %(days)s kundan keyin o‘chiriladi. Vaqt va «hudud ichida / tashqarida» belgisi saqlanib qoladi."
+msgstr "Точные координаты удаляются через %(days)s дн. Время и отметка «в зоне / вне зоны» сохраняются."
+
+msgid "Belgilaringizni rahbaringiz (qamrovi doirasida), kadrlar bo‘limi va administrator ko‘rishi mumkin."
+msgstr "Ваши отметки могут видеть руководитель (в пределах своего охвата), отдел кадров и администратор."
+
+msgid "Har bir ko‘rish jurnalga yoziladi."
+msgstr "Каждый просмотр записывается в журнал."
+
+msgid "Belgilarni o‘zingiz o‘zgartira yoki o‘chira olmaysiz; xato bo‘lsa, kadrlar bo‘limi sabab ko‘rsatib tuzatish kiritadi."
+msgstr "Вы не можете сами менять или удалять отметки; при ошибке отдел кадров вносит исправление с указанием причины."
+
+msgid "Joylashuvga ruxsat berish brauzer sozlamalarida har safar so‘raladi; rad etsangiz, belgilash mumkin bo‘lmasligi mumkin."
+msgstr "Разрешение на геолокацию запрашивает ваш браузер; если вы откажете, отметиться может быть нельзя."
+
+msgid "Davom etish"
+msgstr "Продолжить"
+
+msgid "Faqat qamrovingizdagi xodimlar ko‘rinadi. Har bir ko‘rish jurnalga yoziladi."
+msgstr "Видны только сотрудники в вашем охвате. Каждый просмотр записывается в журнал."
+
+msgid "Oldingi kun"
+msgstr "Предыдущий день"
+
+msgid "Keyingi kun"
+msgstr "Следующий день"
+
+msgid "Muassasa / bo‘lim"
+msgstr "Учреждение / отдел"
+
+msgid "Xodimlar topilmadi"
+msgstr "Сотрудники не найдены"
+
+msgid "Xaritada ochish (boshqa saytda)"
+msgstr "Открыть на карте (на другом сайте)"
+
+msgid "Hudud sxemasi"
+msgstr "Схема зоны"
+
+#, python-format
+msgid "So‘nggi 7 kundagi belgilar: %(n)s. Ismlar ko‘rsatilmaydi. Yashil — hudud ichida, to‘q sariq — tashqarida."
+msgstr "Отметки за последние 7 дней: %(n)s. Имена не показываются. Зелёный — в зоне, золотой — вне зоны."
+
+msgid "Hududni tahrirlash"
+msgstr "Редактировать зону"
+
+msgid "Yangi ish hududi"
+msgstr "Новая рабочая зона"
+
+msgid "Markaz koordinatalarini xaritadan (masalan, OpenStreetMap yoki Google Maps) nusxalang: kenglik va uzunlik."
+msgstr "Скопируйте координаты центра с карты (например, OpenStreetMap или Google Maps): широта и долгота."
+
+msgid "Ish hududlari va xodimlarning bugungi holati. Joylashuv faqat tugma bosilganda olinadi."
+msgstr "Рабочие зоны и сегодняшнее состояние сотрудников. Местоположение считывается только при нажатии кнопки."
+
+msgid "Hudud qo‘shish"
+msgstr "Добавить зону"
+
+msgid "Ish hududlari"
+msgstr "Рабочие зоны"
+
+msgid "Radius (metr)"
+msgstr "Радиус (метры)"
+
+msgid "O‘chirilgan"
+msgstr "Отключена"
+
+msgid "Sxema"
+msgstr "Схема"
+
+msgid "Hali ish hududi belgilanmagan: joylashuv tekshirilmaydi."
+msgstr "Рабочие зоны ещё не заданы: местоположение не проверяется."
+
+msgid "Xodimlar holati"
+msgstr "Состояние сотрудников"
+
+msgctxt "attendance"
+msgid "Kirish"
+msgstr "Приход"
+
+msgctxt "attendance"
+msgid "Chiqish"
+msgstr "Уход"

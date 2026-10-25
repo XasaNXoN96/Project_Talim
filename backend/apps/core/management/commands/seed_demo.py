@@ -118,6 +118,22 @@ class Command(BaseCommand):
             task("Yoz tadbirlari rejasi", [directors[0], directors[1]], "new", 9)
             task("Bino holatini tekshirish", [directors[1]], "new", -1, None, "high")
             task("Metodik tavsiyalarni o‘rganish", [directors[1]], "done", 4, None, "normal", True)
+        from apps.attendance.models import AttendanceEvent, WorkZone
+
+        if not WorkZone.objects.filter(name__startswith="DEMO").exists():
+            general = WorkZone.objects.create(name="DEMO: bo‘lim binosi (umumiy)", latitude="40.850000", longitude="68.350000", radius_m=200)
+            school_zone = WorkZone.objects.create(name="DEMO: 1-maktab hovlisi", institution=s1, latitude="40.860000", longitude="68.360000", radius_m=150)
+            yesterday = timezone.make_aware(datetime.datetime.combine(timezone.localdate() - datetime.timedelta(days=1), datetime.time(9, 0)))
+            ev = lambda who, kind, at, zone, lat, lon, inside, note="": AttendanceEvent.objects.create(
+                employee=who, kind=kind, at=at, zone=zone, latitude=lat, longitude=lon, accuracy_m=15, inside_zone=inside, distance_m=0 if inside else 900, note=note)
+            emp = Employee.objects.filter(user__username="demo_employee").first()
+            if emp:
+                ev(emp, "in", yesterday + datetime.timedelta(minutes=2), general, "40.850200", "68.350100", True)
+                ev(emp, "out", yesterday + datetime.timedelta(hours=9, minutes=5), general, "40.850100", "68.350200", True)
+            d1 = Employee.objects.filter(user=directors[0]).first()
+            if d1:
+                ev(d1, "in", yesterday - datetime.timedelta(minutes=5), school_zone, "40.870000", "68.370000", False, "Tuman bo‘limiga chaqirilgan edim")
+                ev(d1, "out", yesterday + datetime.timedelta(hours=8, minutes=30), school_zone, "40.860100", "68.360100", True)
         if not Achievement.objects.filter(title__startswith="DEMO:").exists():
             mk = lambda title, status, **kw: Achievement.objects.create(
                 institution=s1, created_by=directors[0], title="DEMO: " + title, person_name="Namunaviy Ustoz A", person_position="Matematika", level="district", kind="medal",

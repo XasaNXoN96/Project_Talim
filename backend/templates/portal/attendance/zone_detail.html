@@ -1,0 +1,16 @@
+{% extends "base_portal.html" %}
+{% load i18n l10n %}
+{% block title %}{{ zone.name }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'attendance:zones' %}">{% translate "Geolokatsiya" %}</a></div><h1>{{ zone.name }}</h1><p>{{ zone.institution.name|default:"—" }} · {{ zone.radius_m }} m</p></div>
+  <a class="btn btn-secondary" href="https://www.openstreetmap.org/?mlat={{ zone.latitude|unlocalize }}&mlon={{ zone.longitude|unlocalize }}#map=17/{{ zone.latitude|unlocalize }}/{{ zone.longitude|unlocalize }}" target="_blank" rel="noopener noreferrer">{% translate "Xaritada ochish (boshqa saytda)" %}</a></div>
+<section class="card card-pad" style="max-width:520px">
+  <svg viewBox="0 0 300 300" role="img" aria-label="{% translate 'Hudud sxemasi' %}" class="zone-plot">
+    <rect width="300" height="300" class="zp-bg"/>
+    <circle cx="150" cy="150" r="{{ r|unlocalize }}" class="zp-zone"/>
+    <circle cx="150" cy="150" r="2.5" class="zp-center"/>
+    {% for p in points %}<circle cx="{{ p.x|unlocalize }}" cy="{{ p.y|unlocalize }}" r="4" class="{% if p.in %}zp-in{% else %}zp-out{% endif %}"/>{% endfor %}
+  </svg>
+  <p class="small muted" style="margin-top:8px">{% blocktranslate with n=count %}So‘nggi 7 kundagi belgilar: {{ n }}. Ismlar ko‘rsatilmaydi. Yashil — hudud ichida, to‘q sariq — tashqarida.{% endblocktranslate %}</p>
+</section>
+{% endblock %}

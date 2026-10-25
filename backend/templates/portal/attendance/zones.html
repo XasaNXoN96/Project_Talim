@@ -1,0 +1,24 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Geolokatsiya" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Geolokatsiya" %}</h1><p>{% translate "Ish hududlari va xodimlarning bugungi holati. Joylashuv faqat tugma bosilganda olinadi." %}</p></div>
+  {% if can_add %}<a class="btn btn-primary" href="{% url 'attendance:zone_new' %}">{% translate "Hudud qo‘shish" %}</a>{% endif %}</div>
+<div class="split even">
+  <section class="card"><div class="card-head"><h2>{% translate "Ish hududlari" %}</h2></div><div class="card-body">
+    {% if zones %}
+    <div class="table-wrap"><table class="t"><thead><tr><th>{% translate "Nomi" %}</th><th>{% translate "Ta’lim muassasasi" %}</th><th>{% translate "Radius (metr)" %}</th><th>{% translate "Holat" %}</th><th></th></tr></thead><tbody>
+    {% for z in zones %}<tr><td><b>{{ z.name }}</b></td><td>{{ z.institution.name|default:"—" }}</td><td>{{ z.radius_m }}</td>
+      <td>{% if z.is_active %}<span class="badge b-ok">{% translate "Faol" %}</span>{% else %}<span class="badge">{% translate "O‘chirilgan" %}</span>{% endif %}</td>
+      <td class="nw">{% if can_team %}<a class="btn btn-secondary btn-sm" href="{% url 'attendance:zone_detail' z.pk %}">{% translate "Sxema" %}</a>{% endif %}{% if can_change %} <a class="btn btn-ghost btn-sm" href="{% url 'attendance:zone_edit' z.pk %}">{% translate "Tahrirlash" %}</a>{% endif %}</td></tr>{% endfor %}
+    </tbody></table></div>
+    {% else %}<p class="muted">{% translate "Hali ish hududi belgilanmagan: joylashuv tekshirilmaydi." %}</p>{% endif %}
+  </div></section>
+  {% if can_team %}
+  <section class="card"><div class="card-head"><h2>{% translate "Xodimlar holati" %}</h2></div><div class="card-body list-rows">
+    {% for s in statuses %}<div class="li"><span class="t1 grow"><b>{{ s.emp.last_name }} {{ s.emp.first_name }}</b><div class="xs muted">{{ s.emp.institution.name|default:s.emp.department.name }}</div></span>{% include "portal/attendance/_state.html" with state=s.state %}</div>
+    {% empty %}<p class="muted">{% translate "Xodimlar topilmadi" %}</p>{% endfor %}
+  </div></section>
+  {% endif %}
+</div>
+{% endblock %}

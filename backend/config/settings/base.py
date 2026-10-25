@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "apps.content",
     "apps.achievements",
     "apps.chat",
+    "apps.attendance",
     "apps.gallery",
     "apps.audit",
     "apps.tasks",
@@ -283,6 +284,9 @@ if DOCUMENT_SCAN_MODE not in ("clamav", "disabled"):
 # Employee import from Excel (apps.organization.importer)
 EMPLOYEE_IMPORT_MAX_BYTES = 2 * 1024 * 1024
 EMPLOYEE_IMPORT_MAX_ROWS = 500
+# Attendance ("Kirish-chiqish"): the position is read only when the person presses the button; coordinates are wiped after this many days.
+ATTENDANCE_LOCATION_RETENTION_DAYS = int(os.environ.get("ATTENDANCE_LOCATION_RETENTION_DAYS", "90"))
+ATTENDANCE_REQUIRE_LOCATION = env_bool("ATTENDANCE_REQUIRE_LOCATION", True)  # when a zone applies, a press without a position is refused
 EMPLOYEE_IMPORT_TTL_MINUTES = 60   # how long parsed rows (personal data) wait for the confirmation
 REPORT_MAX_DAYS = 366          # longest date range
 REPORT_MAX_ROWS = 500          # rows per table on screen and in Excel/PDF (the rest is summarised as "and N more")

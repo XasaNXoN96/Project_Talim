@@ -1,0 +1,14 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% if obj %}{% translate "Hududni tahrirlash" %}{% else %}{% translate "Yangi ish hududi" %}{% endif %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'attendance:zones' %}">{% translate "Geolokatsiya" %}</a></div><h1>{% if obj %}{% translate "Hududni tahrirlash" %}{% else %}{% translate "Yangi ish hududi" %}{% endif %}</h1>
+  <p>{% translate "Markaz koordinatalarini xaritadan (masalan, OpenStreetMap yoki Google Maps) nusxalang: kenglik va uzunlik." %}</p></div></div>
+<form method="post" class="card card-pad" style="display:grid;gap:14px;max-width:560px">{% csrf_token %}
+  {% for f in form %}
+    {% if f.name == "is_active" %}<label class="check">{{ f }} <span>{{ f.label }}</span></label>{% else %}{% include "includes/field.html" with field=f %}{% endif %}
+  {% endfor %}
+  {% if form.non_field_errors %}<div class="alert err">{{ form.non_field_errors.0 }}</div>{% endif %}
+  <div class="row"><button class="btn btn-primary" type="submit">{% translate "Saqlash" %}</button><a class="btn btn-secondary" href="{% url 'attendance:zones' %}">{% translate "Bekor qilish" %}</a></div>
+</form>
+{% endblock %}

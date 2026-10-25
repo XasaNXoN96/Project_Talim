@@ -126,7 +126,7 @@ class JobsView(PortalPermissionMixin, TemplateView):
         return super().get_context_data(jobs=[{**s, "healthy": jobs.is_healthy(s)} for s in states], **kwargs)
 
 
-PREVIEW_SECTIONS = ("yutuqlar", "sertifikatlar", "media", "kirish-chiqish", "geolokatsiya", "chat")
+PREVIEW_SECTIONS = ("yutuqlar", "sertifikatlar", "media", "chat")  # "kirish-chiqish" and "geolokatsiya" are real pages now (apps.attendance)
 
 
 class PreviewView(LoginRequiredMixin, TemplateView):

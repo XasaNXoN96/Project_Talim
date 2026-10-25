@@ -3729,3 +3729,291 @@ msgstr "Communication between schools and staff"
 
 msgid "Hisob administrator tomonidan yaratiladi. Maktab nomidan portalga faqat direktor kiradi."
 msgstr "Accounts are created by the administrator. Only the director signs in on behalf of a school."
+
+msgid "Bo‘sh qoldirsangiz, hudud hamma uchun amal qiladi."
+msgstr "If left empty, the zone applies to everyone."
+
+msgid "30 dan 5000 metrgacha. Maktab hovlisi uchun odatda 100–200 m."
+msgstr "From 30 to 5000 metres. For a school yard usually 100–200 m."
+
+msgid "Amal"
+msgstr "Action"
+
+msgid "Tuzatish sababi"
+msgstr "Reason for the correction"
+
+msgid "kenglik"
+msgstr "latitude"
+
+msgid "uzunlik"
+msgstr "longitude"
+
+msgid "radius (metr)"
+msgstr "radius (metres)"
+
+msgid "ish hududi"
+msgstr "work zone"
+
+msgid "ish hududlari"
+msgstr "work zones"
+
+msgid "O‘zi belgiladi"
+msgstr "Marked by the person"
+
+msgid "Qo‘lda kiritildi"
+msgstr "Entered manually"
+
+msgid "kirish-chiqish belgisi"
+msgstr "attendance mark"
+
+msgid "kirish-chiqish belgilari"
+msgstr "attendance marks"
+
+msgid "Kirish-chiqishni belgilash"
+msgstr "Mark arrival and departure"
+
+msgid "Xodimlarning kirish-chiqishini ko‘rish (qamrov bo‘yicha, ko‘rish jurnalga yoziladi)"
+msgstr "View staff arrivals and departures (within scope; each view is logged)"
+
+msgid "Kirish-chiqishni qo‘lda tuzatish va aniq koordinatalarni ko‘rish"
+msgstr "Correct attendance manually and view exact coordinates"
+
+msgid "Joylashuv ma’lumoti noto‘g‘ri."
+msgstr "The location data is invalid."
+
+msgid "Noto‘g‘ri amal."
+msgstr "Invalid action."
+
+msgid "Hisobingiz xodim kartasiga ulanmagan. Kadrlar bo‘limiga murojaat qiling."
+msgstr "Your account is not linked to an employee card. Contact the HR department."
+
+msgid "Xodim holati bo‘yicha belgilab bo‘lmaydi."
+msgstr "Marking is not possible with this employee status."
+
+msgid "Juda tez bosdingiz. Bir necha soniyadan keyin qayta urinib ko‘ring."
+msgstr "Too fast. Try again in a few seconds."
+
+msgid "Siz allaqachon kirgansiz."
+msgstr "You have already checked in."
+
+msgid "Siz allaqachon chiqqansiz."
+msgstr "You have already checked out."
+
+msgid "Avval «Kirish» ni bosing."
+msgstr "Press “Check in” first."
+
+msgid "Joylashuv aniqlanmadi. Brauzerda joylashuvga ruxsat bering va qayta urinib ko‘ring."
+msgstr "Location could not be determined. Allow location access in the browser and try again."
+
+#, python-format
+msgid "Joylashuv aniqligi past (%(m)d m). Ochiq joyda qayta urinib ko‘ring."
+msgstr "Location accuracy is low (%(m)d m). Try again in an open area."
+
+#, python-format
+msgid "Siz ish hududidan taxminan %(m)d m tashqaridasiz. Sababini «Izoh» maydoniga yozib, qayta bosing."
+msgstr "You are about %(m)d m outside the work zone. Write the reason in the “Note” field and press again."
+
+msgid "Tuzatish sababini yozing."
+msgstr "Enter the reason for the correction."
+
+msgid "Kelajak vaqtini kiritib bo‘lmaydi."
+msgstr "A time in the future cannot be entered."
+
+msgid "Belgilandi. Siz ish hududidan tashqaridasiz: izohingiz saqlandi."
+msgstr "Marked. You are outside the work zone: your note was saved."
+
+msgid "Kirish belgilandi."
+msgstr "Arrival marked."
+
+msgid "Chiqish belgilandi."
+msgstr "Departure marked."
+
+msgid "Ma’lumotlarni tekshiring: vaqt va sabab to‘ldirilishi kerak."
+msgstr "Check the data: the time and the reason are required."
+
+msgid "Tuzatish qo‘shildi."
+msgstr "Correction added."
+
+msgid "Ish hududi saqlandi."
+msgstr "Work zone saved."
+
+msgid "Kirish-chiqish haqidagi ogohlantirish qabul qilindi"
+msgstr "Attendance notice accepted"
+
+msgid "Kirish yoki chiqish belgilandi"
+msgstr "Arrival or departure marked"
+
+msgid "Xodimlarning kirish-chiqishi ko‘rildi"
+msgstr "Staff attendance was viewed"
+
+msgid "Kirish-chiqish qo‘lda tuzatildi"
+msgstr "Attendance corrected manually"
+
+msgid "Kirish-chiqish koordinatalarini muddati bo‘yicha tozalash"
+msgstr "Wipe attendance coordinates after the retention period"
+
+msgid "Hududda"
+msgstr "In the zone"
+
+msgid "Hududdan tashqarida"
+msgstr "Outside the zone"
+
+msgid "Ishda"
+msgstr "At work"
+
+msgid "Ketgan"
+msgstr "Left"
+
+msgid "Belgilanmagan"
+msgstr "Not marked"
+
+msgid "Ishga kelganingizda va ketayotganingizda tugmani bosing."
+msgstr "Press the button when you arrive at work and when you leave."
+
+msgid "Xodimlar belgilari"
+msgstr "Staff attendance"
+
+msgid "Hisobingiz xodim kartasiga ulanmagan"
+msgstr "Your account is not linked to an employee card"
+
+msgid "Kadrlar bo‘limiga murojaat qiling."
+msgstr "Contact the HR department."
+
+msgid "Joylashuv aniqlanmoqda…"
+msgstr "Determining your location…"
+
+msgid "Izoh (hududdan tashqarida majburiy)"
+msgstr "Note (required outside the zone)"
+
+msgid "Joylashuv faqat tugma bosilganda olinadi."
+msgstr "Your location is read only when you press the button."
+
+msgid "Sizga ish hududi belgilanmagan: joylashuv olinmaydi."
+msgstr "No work zone is set for you: your location is not read."
+
+msgid "So‘nggi 30 kun"
+msgstr "Last 30 days"
+
+msgid "Ishlagan vaqt"
+msgstr "Time worked"
+
+msgid "ishda"
+msgstr "at work"
+
+msgid "Hali belgilar yo‘q."
+msgstr "No marks yet."
+
+msgid "qo‘lda"
+msgstr "manual"
+
+msgid "hududdan tashqarida"
+msgstr "outside the zone"
+
+msgid "Qo‘lda tuzatish"
+msgstr "Manual correction"
+
+msgid "Mavjud belgi o‘zgartirilmaydi: qo‘shimcha yozuv sabab bilan qo‘shiladi."
+msgstr "The existing mark is not changed: an extra entry with a reason is added."
+
+msgid "Qo‘shish"
+msgstr "Add"
+
+msgid "Kirish-chiqish haqida ogohlantirish"
+msgstr "Notice about check-in and check-out"
+
+msgid "Belgilashdan oldin quyidagi qoidalar bilan tanishing."
+msgstr "Read the following rules before marking."
+
+msgid "Faqat siz «Kirish» yoki «Chiqish» tugmasini bosgan paytdagi joylashuv olinadi."
+msgstr "Only your location at the moment you press “Check in” or “Check out” is taken."
+
+msgid "Tizim sizni fonda kuzatmaydi va yo‘lingizni yozmaydi."
+msgstr "The system does not follow you in the background and does not record your route."
+
+msgid "Joylashuv ish hududi (maktab, bo‘lim binosi) bilan solishtiriladi. Hududdan tashqarida bosilsa, sababni yozishingiz kerak."
+msgstr "Your location is compared with the work zone (school, department building). If you press outside the zone you must write the reason."
+
+#, python-format
+msgid "Aniq koordinatalar %(days)s kundan keyin o‘chiriladi. Vaqt va «hudud ichida / tashqarida» belgisi saqlanib qoladi."
+msgstr "Exact coordinates are deleted after %(days)s days. The time and the “inside / outside the zone” flag are kept."
+
+msgid "Belgilaringizni rahbaringiz (qamrovi doirasida), kadrlar bo‘limi va administrator ko‘rishi mumkin."
+msgstr "Your marks may be seen by your manager (within their scope), the HR department and the administrator."
+
+msgid "Har bir ko‘rish jurnalga yoziladi."
+msgstr "Every view is written to the log."
+
+msgid "Belgilarni o‘zingiz o‘zgartira yoki o‘chira olmaysiz; xato bo‘lsa, kadrlar bo‘limi sabab ko‘rsatib tuzatish kiritadi."
+msgstr "You cannot change or delete marks yourself; if there is a mistake, the HR department adds a correction with a reason."
+
+msgid "Joylashuvga ruxsat berish brauzer sozlamalarida har safar so‘raladi; rad etsangiz, belgilash mumkin bo‘lmasligi mumkin."
+msgstr "Your browser asks for permission to use your location; if you refuse, marking may not be possible."
+
+msgid "Davom etish"
+msgstr "Continue"
+
+msgid "Faqat qamrovingizdagi xodimlar ko‘rinadi. Har bir ko‘rish jurnalga yoziladi."
+msgstr "Only staff within your scope are shown. Every view is logged."
+
+msgid "Oldingi kun"
+msgstr "Previous day"
+
+msgid "Keyingi kun"
+msgstr "Next day"
+
+msgid "Muassasa / bo‘lim"
+msgstr "Institution / department"
+
+msgid "Xodimlar topilmadi"
+msgstr "No staff found"
+
+msgid "Xaritada ochish (boshqa saytda)"
+msgstr "Open on a map (another site)"
+
+msgid "Hudud sxemasi"
+msgstr "Zone diagram"
+
+#, python-format
+msgid "So‘nggi 7 kundagi belgilar: %(n)s. Ismlar ko‘rsatilmaydi. Yashil — hudud ichida, to‘q sariq — tashqarida."
+msgstr "Marks in the last 7 days: %(n)s. Names are not shown. Green — inside the zone, gold — outside."
+
+msgid "Hududni tahrirlash"
+msgstr "Edit zone"
+
+msgid "Yangi ish hududi"
+msgstr "New work zone"
+
+msgid "Markaz koordinatalarini xaritadan (masalan, OpenStreetMap yoki Google Maps) nusxalang: kenglik va uzunlik."
+msgstr "Copy the coordinates of the centre from a map (for example OpenStreetMap or Google Maps): latitude and longitude."
+
+msgid "Ish hududlari va xodimlarning bugungi holati. Joylashuv faqat tugma bosilganda olinadi."
+msgstr "Work zones and the staff's status today. Location is read only when a button is pressed."
+
+msgid "Hudud qo‘shish"
+msgstr "Add zone"
+
+msgid "Ish hududlari"
+msgstr "Work zones"
+
+msgid "Radius (metr)"
+msgstr "Radius (metres)"
+
+msgid "O‘chirilgan"
+msgstr "Switched off"
+
+msgid "Sxema"
+msgstr "Diagram"
+
+msgid "Hali ish hududi belgilanmagan: joylashuv tekshirilmaydi."
+msgstr "No work zone has been set yet: location is not checked."
+
+msgid "Xodimlar holati"
+msgstr "Staff status"
+
+msgctxt "attendance"
+msgid "Kirish"
+msgstr "Check in"
+
+msgctxt "attendance"
+msgid "Chiqish"
+msgstr "Check out"

@@ -3729,3 +3729,291 @@ msgstr "Maktablar va xodimlar o‘rtasida muloqot"
 
 msgid "Hisob administrator tomonidan yaratiladi. Maktab nomidan portalga faqat direktor kiradi."
 msgstr "Hisob administrator tomonidan yaratiladi. Maktab nomidan portalga faqat direktor kiradi."
+
+msgid "Bo‘sh qoldirsangiz, hudud hamma uchun amal qiladi."
+msgstr "Bo‘sh qoldirsangiz, hudud hamma uchun amal qiladi."
+
+msgid "30 dan 5000 metrgacha. Maktab hovlisi uchun odatda 100–200 m."
+msgstr "30 dan 5000 metrgacha. Maktab hovlisi uchun odatda 100–200 m."
+
+msgid "Amal"
+msgstr "Amal"
+
+msgid "Tuzatish sababi"
+msgstr "Tuzatish sababi"
+
+msgid "kenglik"
+msgstr "kenglik"
+
+msgid "uzunlik"
+msgstr "uzunlik"
+
+msgid "radius (metr)"
+msgstr "radius (metr)"
+
+msgid "ish hududi"
+msgstr "ish hududi"
+
+msgid "ish hududlari"
+msgstr "ish hududlari"
+
+msgid "O‘zi belgiladi"
+msgstr "O‘zi belgiladi"
+
+msgid "Qo‘lda kiritildi"
+msgstr "Qo‘lda kiritildi"
+
+msgid "kirish-chiqish belgisi"
+msgstr "kirish-chiqish belgisi"
+
+msgid "kirish-chiqish belgilari"
+msgstr "kirish-chiqish belgilari"
+
+msgid "Kirish-chiqishni belgilash"
+msgstr "Kirish-chiqishni belgilash"
+
+msgid "Xodimlarning kirish-chiqishini ko‘rish (qamrov bo‘yicha, ko‘rish jurnalga yoziladi)"
+msgstr "Xodimlarning kirish-chiqishini ko‘rish (qamrov bo‘yicha, ko‘rish jurnalga yoziladi)"
+
+msgid "Kirish-chiqishni qo‘lda tuzatish va aniq koordinatalarni ko‘rish"
+msgstr "Kirish-chiqishni qo‘lda tuzatish va aniq koordinatalarni ko‘rish"
+
+msgid "Joylashuv ma’lumoti noto‘g‘ri."
+msgstr "Joylashuv ma’lumoti noto‘g‘ri."
+
+msgid "Noto‘g‘ri amal."
+msgstr "Noto‘g‘ri amal."
+
+msgid "Hisobingiz xodim kartasiga ulanmagan. Kadrlar bo‘limiga murojaat qiling."
+msgstr "Hisobingiz xodim kartasiga ulanmagan. Kadrlar bo‘limiga murojaat qiling."
+
+msgid "Xodim holati bo‘yicha belgilab bo‘lmaydi."
+msgstr "Xodim holati bo‘yicha belgilab bo‘lmaydi."
+
+msgid "Juda tez bosdingiz. Bir necha soniyadan keyin qayta urinib ko‘ring."
+msgstr "Juda tez bosdingiz. Bir necha soniyadan keyin qayta urinib ko‘ring."
+
+msgid "Siz allaqachon kirgansiz."
+msgstr "Siz allaqachon kirgansiz."
+
+msgid "Siz allaqachon chiqqansiz."
+msgstr "Siz allaqachon chiqqansiz."
+
+msgid "Avval «Kirish» ni bosing."
+msgstr "Avval «Kirish» ni bosing."
+
+msgid "Joylashuv aniqlanmadi. Brauzerda joylashuvga ruxsat bering va qayta urinib ko‘ring."
+msgstr "Joylashuv aniqlanmadi. Brauzerda joylashuvga ruxsat bering va qayta urinib ko‘ring."
+
+#, python-format
+msgid "Joylashuv aniqligi past (%(m)d m). Ochiq joyda qayta urinib ko‘ring."
+msgstr "Joylashuv aniqligi past (%(m)d m). Ochiq joyda qayta urinib ko‘ring."
+
+#, python-format
+msgid "Siz ish hududidan taxminan %(m)d m tashqaridasiz. Sababini «Izoh» maydoniga yozib, qayta bosing."
+msgstr "Siz ish hududidan taxminan %(m)d m tashqaridasiz. Sababini «Izoh» maydoniga yozib, qayta bosing."
+
+msgid "Tuzatish sababini yozing."
+msgstr "Tuzatish sababini yozing."
+
+msgid "Kelajak vaqtini kiritib bo‘lmaydi."
+msgstr "Kelajak vaqtini kiritib bo‘lmaydi."
+
+msgid "Belgilandi. Siz ish hududidan tashqaridasiz: izohingiz saqlandi."
+msgstr "Belgilandi. Siz ish hududidan tashqaridasiz: izohingiz saqlandi."
+
+msgid "Kirish belgilandi."
+msgstr "Kirish belgilandi."
+
+msgid "Chiqish belgilandi."
+msgstr "Chiqish belgilandi."
+
+msgid "Ma’lumotlarni tekshiring: vaqt va sabab to‘ldirilishi kerak."
+msgstr "Ma’lumotlarni tekshiring: vaqt va sabab to‘ldirilishi kerak."
+
+msgid "Tuzatish qo‘shildi."
+msgstr "Tuzatish qo‘shildi."
+
+msgid "Ish hududi saqlandi."
+msgstr "Ish hududi saqlandi."
+
+msgid "Kirish-chiqish haqidagi ogohlantirish qabul qilindi"
+msgstr "Kirish-chiqish haqidagi ogohlantirish qabul qilindi"
+
+msgid "Kirish yoki chiqish belgilandi"
+msgstr "Kirish yoki chiqish belgilandi"
+
+msgid "Xodimlarning kirish-chiqishi ko‘rildi"
+msgstr "Xodimlarning kirish-chiqishi ko‘rildi"
+
+msgid "Kirish-chiqish qo‘lda tuzatildi"
+msgstr "Kirish-chiqish qo‘lda tuzatildi"
+
+msgid "Kirish-chiqish koordinatalarini muddati bo‘yicha tozalash"
+msgstr "Kirish-chiqish koordinatalarini muddati bo‘yicha tozalash"
+
+msgid "Hududda"
+msgstr "Hududda"
+
+msgid "Hududdan tashqarida"
+msgstr "Hududdan tashqarida"
+
+msgid "Ishda"
+msgstr "Ishda"
+
+msgid "Ketgan"
+msgstr "Ketgan"
+
+msgid "Belgilanmagan"
+msgstr "Belgilanmagan"
+
+msgid "Ishga kelganingizda va ketayotganingizda tugmani bosing."
+msgstr "Ishga kelganingizda va ketayotganingizda tugmani bosing."
+
+msgid "Xodimlar belgilari"
+msgstr "Xodimlar belgilari"
+
+msgid "Hisobingiz xodim kartasiga ulanmagan"
+msgstr "Hisobingiz xodim kartasiga ulanmagan"
+
+msgid "Kadrlar bo‘limiga murojaat qiling."
+msgstr "Kadrlar bo‘limiga murojaat qiling."
+
+msgid "Joylashuv aniqlanmoqda…"
+msgstr "Joylashuv aniqlanmoqda…"
+
+msgid "Izoh (hududdan tashqarida majburiy)"
+msgstr "Izoh (hududdan tashqarida majburiy)"
+
+msgid "Joylashuv faqat tugma bosilganda olinadi."
+msgstr "Joylashuv faqat tugma bosilganda olinadi."
+
+msgid "Sizga ish hududi belgilanmagan: joylashuv olinmaydi."
+msgstr "Sizga ish hududi belgilanmagan: joylashuv olinmaydi."
+
+msgid "So‘nggi 30 kun"
+msgstr "So‘nggi 30 kun"
+
+msgid "Ishlagan vaqt"
+msgstr "Ishlagan vaqt"
+
+msgid "ishda"
+msgstr "ishda"
+
+msgid "Hali belgilar yo‘q."
+msgstr "Hali belgilar yo‘q."
+
+msgid "qo‘lda"
+msgstr "qo‘lda"
+
+msgid "hududdan tashqarida"
+msgstr "hududdan tashqarida"
+
+msgid "Qo‘lda tuzatish"
+msgstr "Qo‘lda tuzatish"
+
+msgid "Mavjud belgi o‘zgartirilmaydi: qo‘shimcha yozuv sabab bilan qo‘shiladi."
+msgstr "Mavjud belgi o‘zgartirilmaydi: qo‘shimcha yozuv sabab bilan qo‘shiladi."
+
+msgid "Qo‘shish"
+msgstr "Qo‘shish"
+
+msgid "Kirish-chiqish haqida ogohlantirish"
+msgstr "Kirish-chiqish haqida ogohlantirish"
+
+msgid "Belgilashdan oldin quyidagi qoidalar bilan tanishing."
+msgstr "Belgilashdan oldin quyidagi qoidalar bilan tanishing."
+
+msgid "Faqat siz «Kirish» yoki «Chiqish» tugmasini bosgan paytdagi joylashuv olinadi."
+msgstr "Faqat siz «Kirish» yoki «Chiqish» tugmasini bosgan paytdagi joylashuv olinadi."
+
+msgid "Tizim sizni fonda kuzatmaydi va yo‘lingizni yozmaydi."
+msgstr "Tizim sizni fonda kuzatmaydi va yo‘lingizni yozmaydi."
+
+msgid "Joylashuv ish hududi (maktab, bo‘lim binosi) bilan solishtiriladi. Hududdan tashqarida bosilsa, sababni yozishingiz kerak."
+msgstr "Joylashuv ish hududi (maktab, bo‘lim binosi) bilan solishtiriladi. Hududdan tashqarida bosilsa, sababni yozishingiz kerak."
+
+#, python-format
+msgid "Aniq koordinatalar %(days)s kundan keyin o‘chiriladi. Vaqt va «hudud ichida / tashqarida» belgisi saqlanib qoladi."
+msgstr "Aniq koordinatalar %(days)s kundan keyin o‘chiriladi. Vaqt va «hudud ichida / tashqarida» belgisi saqlanib qoladi."
+
+msgid "Belgilaringizni rahbaringiz (qamrovi doirasida), kadrlar bo‘limi va administrator ko‘rishi mumkin."
+msgstr "Belgilaringizni rahbaringiz (qamrovi doirasida), kadrlar bo‘limi va administrator ko‘rishi mumkin."
+
+msgid "Har bir ko‘rish jurnalga yoziladi."
+msgstr "Har bir ko‘rish jurnalga yoziladi."
+
+msgid "Belgilarni o‘zingiz o‘zgartira yoki o‘chira olmaysiz; xato bo‘lsa, kadrlar bo‘limi sabab ko‘rsatib tuzatish kiritadi."
+msgstr "Belgilarni o‘zingiz o‘zgartira yoki o‘chira olmaysiz; xato bo‘lsa, kadrlar bo‘limi sabab ko‘rsatib tuzatish kiritadi."
+
+msgid "Joylashuvga ruxsat berish brauzer sozlamalarida har safar so‘raladi; rad etsangiz, belgilash mumkin bo‘lmasligi mumkin."
+msgstr "Joylashuvga ruxsat berish brauzer sozlamalarida har safar so‘raladi; rad etsangiz, belgilash mumkin bo‘lmasligi mumkin."
+
+msgid "Davom etish"
+msgstr "Davom etish"
+
+msgid "Faqat qamrovingizdagi xodimlar ko‘rinadi. Har bir ko‘rish jurnalga yoziladi."
+msgstr "Faqat qamrovingizdagi xodimlar ko‘rinadi. Har bir ko‘rish jurnalga yoziladi."
+
+msgid "Oldingi kun"
+msgstr "Oldingi kun"
+
+msgid "Keyingi kun"
+msgstr "Keyingi kun"
+
+msgid "Muassasa / bo‘lim"
+msgstr "Muassasa / bo‘lim"
+
+msgid "Xodimlar topilmadi"
+msgstr "Xodimlar topilmadi"
+
+msgid "Xaritada ochish (boshqa saytda)"
+msgstr "Xaritada ochish (boshqa saytda)"
+
+msgid "Hudud sxemasi"
+msgstr "Hudud sxemasi"
+
+#, python-format
+msgid "So‘nggi 7 kundagi belgilar: %(n)s. Ismlar ko‘rsatilmaydi. Yashil — hudud ichida, to‘q sariq — tashqarida."
+msgstr "So‘nggi 7 kundagi belgilar: %(n)s. Ismlar ko‘rsatilmaydi. Yashil — hudud ichida, to‘q sariq — tashqarida."
+
+msgid "Hududni tahrirlash"
+msgstr "Hududni tahrirlash"
+
+msgid "Yangi ish hududi"
+msgstr "Yangi ish hududi"
+
+msgid "Markaz koordinatalarini xaritadan (masalan, OpenStreetMap yoki Google Maps) nusxalang: kenglik va uzunlik."
+msgstr "Markaz koordinatalarini xaritadan (masalan, OpenStreetMap yoki Google Maps) nusxalang: kenglik va uzunlik."
+
+msgid "Ish hududlari va xodimlarning bugungi holati. Joylashuv faqat tugma bosilganda olinadi."
+msgstr "Ish hududlari va xodimlarning bugungi holati. Joylashuv faqat tugma bosilganda olinadi."
+
+msgid "Hudud qo‘shish"
+msgstr "Hudud qo‘shish"
+
+msgid "Ish hududlari"
+msgstr "Ish hududlari"
+
+msgid "Radius (metr)"
+msgstr "Radius (metr)"
+
+msgid "O‘chirilgan"
+msgstr "O‘chirilgan"
+
+msgid "Sxema"
+msgstr "Sxema"
+
+msgid "Hali ish hududi belgilanmagan: joylashuv tekshirilmaydi."
+msgstr "Hali ish hududi belgilanmagan: joylashuv tekshirilmaydi."
+
+msgid "Xodimlar holati"
+msgstr "Xodimlar holati"
+
+msgctxt "attendance"
+msgid "Kirish"
+msgstr "Kirish"
+
+msgctxt "attendance"
+msgid "Chiqish"
+msgstr "Chiqish"

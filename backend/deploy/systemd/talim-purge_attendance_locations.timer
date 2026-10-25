@@ -1,0 +1,12 @@
+# Daily: coordinates of attendance presses older than ATTENDANCE_LOCATION_RETENTION_DAYS are wiped (the times and the inside/outside flag stay).
+[Unit]
+Description=Talim portal schedule: purge_attendance_locations
+
+[Timer]
+OnCalendar=*-*-* 03:41:00
+Persistent=true
+RandomizedDelaySec=300
+Unit=talim-job@purge_attendance_locations.service
+
+[Install]
+WantedBy=timers.target
