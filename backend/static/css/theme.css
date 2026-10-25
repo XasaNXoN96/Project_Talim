@@ -294,3 +294,12 @@ input[type="date"], input[type="time"], input[type="datetime-local"] { min-heigh
 input[type="file"] { max-width: 100%; font: inherit; color: var(--text-2); }
 input[type="file"]::file-selector-button { height: 36px; margin-right: 12px; padding: 0 14px; border: 1.5px solid var(--border-strong); border-radius: var(--r-sm); background: var(--surface); color: var(--text); font: 700 13px var(--font); cursor: pointer; }
 input[type="file"]::file-selector-button:hover { background: var(--surface-2); }
+
+/* map placeholders and design-mockup pages (attendance / geolocation) follow the theme palette */
+.map-card, .mapbox { background: #e3ece9; }
+.map-card svg > rect:first-child, .mapbox svg > rect:first-child { fill: #e3ece9; }
+.map-card svg path, .mapbox svg path { stroke: #fbf9f4; }
+.mapbox .me-pin { background: var(--brand-500); box-shadow: 0 0 0 14px rgba(15, 118, 110, .2); }
+.clock { font-family: var(--font-display); font-weight: 600; }
+.clock-btns .btn-ok { background: var(--brand-500); } .clock-btns .btn-ok:hover { background: var(--brand-600); }
+.alert.warn { background: var(--warn-bg); color: var(--gold-ink); }
