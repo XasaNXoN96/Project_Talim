@@ -24,6 +24,7 @@ from apps.core.acceptance import World
 from apps.organization.models import Department, Employee
 
 User = get_user_model()
+from django.db.models.fields.files import FieldFile
 
 
 def perm(name):
@@ -40,6 +41,8 @@ def form_data(response, **over):
             continue
         value = adminform.form.initial.get(name, field.initial)
         if value is None:
+            continue
+        if isinstance(value, FieldFile):  # a browser posts files only when one is chosen: the stored one is left alone
             continue
         if hasattr(value, "all"):
             value = [o.pk for o in value.all()]

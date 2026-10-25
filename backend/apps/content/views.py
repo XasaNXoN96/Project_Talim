@@ -1,8 +1,11 @@
+from django.shortcuts import get_object_or_404
+from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 
 from apps.achievements.models import Achievement
 from apps.gallery.models import MediaItem
 
+from .covers import cover_response
 from .models import News
 
 
@@ -33,3 +36,10 @@ class NewsDetailView(DetailView):
 
     def get_queryset(self):
         return News.objects.published().select_related("category")
+
+
+class NewsCoverView(View):
+    """The cover of a PUBLISHED news item, for everybody. Anything else (draft, archived, not yet due) does not exist."""
+
+    def get(self, request, pk):
+        return cover_response(get_object_or_404(News.objects.published(), pk=pk), public=True)

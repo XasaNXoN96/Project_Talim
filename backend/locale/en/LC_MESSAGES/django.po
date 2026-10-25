@@ -4033,3 +4033,12 @@ msgstr "You can see your own marks on the “Check-in and check-out” page at a
 
 msgid "Tanishib chiqdim"
 msgstr "I have read this"
+
+msgid "Muqova rasmi (ixtiyoriy)"
+msgstr "Cover picture (optional)"
+
+msgid "JPG yoki PNG, 8 MB gacha. Rasm tekshiriladi va qayta ishlanadi."
+msgstr "JPG or PNG, up to 8 MB. The picture is checked and re-encoded."
+
+msgid "Muqova rasmini olib tashlash"
+msgstr "Remove the cover picture"

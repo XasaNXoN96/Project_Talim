@@ -1,5 +1,5 @@
 {% load i18n %}<article class="card news-card">
-  <div class="ratio-16-9 ph-none">{% translate "Rasm yo‘q" %}</div>
+  {% if item.cover %}<img class="ratio-16-9 cover-img" src="{% url 'content:news_cover' item.pk %}" alt="" loading="lazy">{% else %}<div class="ratio-16-9 ph-none">{% translate "Rasm yo‘q" %}</div>{% endif %}
   <div class="body">
     {% if item.category %}<div class="row wrap"><span class="badge plain b-info">{{ item.category.name }}</span></div>{% endif %}
     <h3 class="clamp3"><a href="{% url 'content:news_detail' item.slug %}" style="color:inherit">{{ item.title }}</a></h3>

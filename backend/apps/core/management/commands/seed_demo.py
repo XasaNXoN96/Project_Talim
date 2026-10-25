@@ -9,7 +9,6 @@ import io
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.core.files.base import ContentFile
 from django.core.management import call_command
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
@@ -17,8 +16,6 @@ from django.utils import timezone
 from apps.access.models import RoleAssignment
 from apps.accounts import services
 from apps.achievements.models import Achievement
-from apps.documents.storage import new_storage_name
-from apps.gallery.models import MediaItem
 from apps.organization.models import Department, Employee, Institution, Position
 from apps.tasks.models import Task
 
@@ -118,22 +115,11 @@ class Command(BaseCommand):
             task("Yoz tadbirlari rejasi", [directors[0], directors[1]], "new", 9)
             task("Bino holatini tekshirish", [directors[1]], "new", -1, None, "high")
             task("Metodik tavsiyalarni o‘rganish", [directors[1]], "done", 4, None, "normal", True)
-        from apps.attendance.models import AttendanceEvent, WorkZone
+        from apps.attendance.models import WorkZone
 
         if not WorkZone.objects.filter(name__startswith="DEMO").exists():
-            general = WorkZone.objects.create(name="DEMO: bo‘lim binosi (umumiy)", latitude="40.850000", longitude="68.350000", radius_m=200)
-            school_zone = WorkZone.objects.create(name="DEMO: 1-maktab hovlisi", institution=s1, latitude="40.860000", longitude="68.360000", radius_m=150)
-            yesterday = timezone.make_aware(datetime.datetime.combine(timezone.localdate() - datetime.timedelta(days=1), datetime.time(9, 0)))
-            ev = lambda who, kind, at, zone, lat, lon, inside, note="": AttendanceEvent.objects.create(
-                employee=who, kind=kind, at=at, zone=zone, latitude=lat, longitude=lon, accuracy_m=15, inside_zone=inside, distance_m=0 if inside else 900, note=note)
-            emp = Employee.objects.filter(user__username="demo_employee").first()
-            if emp:
-                ev(emp, "in", yesterday + datetime.timedelta(minutes=2), general, "40.850200", "68.350100", True)
-                ev(emp, "out", yesterday + datetime.timedelta(hours=9, minutes=5), general, "40.850100", "68.350200", True)
-            d1 = Employee.objects.filter(user=directors[0]).first()
-            if d1:
-                ev(d1, "in", yesterday - datetime.timedelta(minutes=5), school_zone, "40.870000", "68.370000", False, "Tuman bo‘limiga chaqirilgan edim")
-                ev(d1, "out", yesterday + datetime.timedelta(hours=8, minutes=30), school_zone, "40.860100", "68.360100", True)
+            WorkZone.objects.create(name="DEMO: bo‘lim binosi (umumiy)", latitude="40.850000", longitude="68.350000", radius_m=200)
+            WorkZone.objects.create(name="DEMO: 1-maktab hovlisi", institution=s1, latitude="40.860000", longitude="68.360000", radius_m=150)
         if not Achievement.objects.filter(title__startswith="DEMO:").exists():
             mk = lambda title, status, **kw: Achievement.objects.create(
                 institution=s1, created_by=directors[0], title="DEMO: " + title, person_name="Namunaviy Ustoz A", person_position="Matematika", level="district", kind="medal",
@@ -141,14 +127,9 @@ class Command(BaseCommand):
             mk("Tuman olimpiadasi, 1-o‘rin", "published", publish_at=now)
             mk("Respublika tanlovi, ishtirokchi sertifikati", "submitted")
             mk("Qoralama yutuq", "draft")
-        if not MediaItem.objects.filter(title__startswith="DEMO:").exists():
-            for n, (color, status) in enumerate([((46, 98, 180), "published"), ((190, 90, 50), "published"), ((40, 140, 110), "draft")], 1):
-                full, thumb = _picture(color, f"DEMO {n}")
-                item = MediaItem(kind="photo", title=f"DEMO: Namunaviy rasm {n}", content_type="image/jpeg", size=len(full), sha256="0" * 64, scan_status="not_scanned",
-                                 consent_confirmed=True, status=status, publish_at=now if status == "published" else None, uploaded_by=admin)
-                item.file.save(new_storage_name("jpg"), ContentFile(full), save=False)
-                item.thumb.save(new_storage_name("jpg"), ContentFile(thumb), save=False)
-                item.save()
+        from apps.core.demo_content import seed_rich
+
+        seed_rich(admin, {u.username: u for u in User.objects.filter(username__startswith="demo_")}, schools, directors, self.stdout)
         self.stdout.write(self.style.SUCCESS("Demo data is ready." + (f" New accounts: {', '.join(created)}." if created else " Nothing new to add.")))
         self.stdout.write(f"Password of every demo account: {PASSWORD}")
         self.stdout.write("Accounts: " + ", ".join([p[0] for p in PEOPLE] + ["demo_director1", "demo_director2"]))

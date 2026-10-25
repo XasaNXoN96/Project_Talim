@@ -4033,3 +4033,12 @@ msgstr "Свои отметки вы можете в любой момент п�
 
 msgid "Tanishib chiqdim"
 msgstr "Ознакомился(лась)"
+
+msgid "Muqova rasmi (ixtiyoriy)"
+msgstr "Обложка (необязательно)"
+
+msgid "JPG yoki PNG, 8 MB gacha. Rasm tekshiriladi va qayta ishlanadi."
+msgstr "JPG или PNG, до 8 МБ. Изображение проверяется и перекодируется."
+
+msgid "Muqova rasmini olib tashlash"
+msgstr "Убрать обложку"

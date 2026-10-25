@@ -4033,3 +4033,12 @@ msgstr "O‘z belgilaringizni «Kirish-chiqish» sahifasida istalgan vaqtda ko�
 
 msgid "Tanishib chiqdim"
 msgstr "Tanishib chiqdim"
+
+msgid "Muqova rasmi (ixtiyoriy)"
+msgstr "Muqova rasmi (ixtiyoriy)"
+
+msgid "JPG yoki PNG, 8 MB gacha. Rasm tekshiriladi va qayta ishlanadi."
+msgstr "JPG yoki PNG, 8 MB gacha. Rasm tekshiriladi va qayta ishlanadi."
+
+msgid "Muqova rasmini olib tashlash"
+msgstr "Muqova rasmini olib tashlash"

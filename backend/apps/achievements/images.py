@@ -14,11 +14,11 @@ MAX_EDGE = 1600
 ALLOWED_KINDS = {"png", "jpeg"}
 
 
-def prepare_image(uploaded, *, request=None, user=None) -> bytes:
+def prepare_image(uploaded, *, request=None, user=None, object_type="Achievement") -> bytes:
     if uploaded.size > MAX_BYTES:
         raise UploadRejected("too_large", _("Rasm hajmi 8 MB dan oshmasligi kerak."))
     if request is not None:
-        checked = files.check_or_audit(uploaded, request=request, user=user, object_type="Achievement")
+        checked = files.check_or_audit(uploaded, request=request, user=user, object_type=object_type)
     else:
         checked = files.screen_upload(uploaded)
     if checked.kind not in ALLOWED_KINDS:

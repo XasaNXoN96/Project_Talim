@@ -9,6 +9,7 @@
 <div class="alert {% if live %}ok{% else %}warn{% endif %}" role="status"><span>{% translate "Holat" %}: <b>{{ news.get_status_display }}</b>{% if news.status == 'published' and not live %} — {% translate "Rejalashtirilgan" %}: {{ news.publish_at|date:"d.m.Y H:i" }}{% elif live %} — {% translate "ochiq saytda ko‘rinadi" %}{% else %} — {% translate "ochiq saytda ko‘rinmaydi" %}{% endif %}</span></div>
 {% if last_return %}<div class="alert warn" role="alert" style="margin-top:16px"><span><b>{% translate "Tekshiruvchi izohi" %}:</b> {{ last_return.comment|linebreaksbr }}</span></div>{% endif %}
 <article class="card article" style="max-width:820px;margin-top:16px">
+  {% if news.cover %}<img class="article-cover" src="{% url 'news_admin:cover' news.pk %}" alt="{{ news.title }}">{% endif %}
   <div class="row wrap">{% if news.category %}<span class="badge plain b-info">{{ news.category.name }}</span>{% endif %}<span class="small muted">{{ news.publish_at|date:"d.m.Y"|default:"—" }}</span></div>
   <h2 style="font-size:26px;margin:8px 0">{{ news.title }}</h2>
   {% if news.excerpt %}<p class="muted">{{ news.excerpt }}</p>{% endif %}

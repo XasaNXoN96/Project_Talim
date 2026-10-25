@@ -5,6 +5,7 @@
 <section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><a href="{% url 'content:news_list' %}">{% translate "Yangiliklar" %}</a></div></div></section>
 <div class="container pub-body">
   <article class="card article">
+    {% if news.cover %}<img class="article-cover" src="{% url 'content:news_cover' news.pk %}" alt="{{ news.title }}">{% endif %}
     <div class="row wrap">{% if news.category %}<span class="badge plain b-info">{{ news.category.name }}</span>{% endif %}<span class="small muted">{{ news.publish_at|date:"d.m.Y" }}</span></div>
     <h1>{{ news.title }}</h1>
     {# Plain text, auto-escaped. Rich text only after an HTML sanitiser is added. #}

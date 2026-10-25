@@ -16,7 +16,12 @@ from django.utils.translation import gettext_lazy as _
 from apps.organization.access import covered_departments_for, covered_institutions_for
 from apps.organization.models import Employee
 
-from .models import NOTICE_VERSION, AttendanceEvent, AttendanceNoticeAcceptance, WorkZone
+from .models import (
+    NOTICE_VERSION,
+    AttendanceEvent,
+    AttendanceNoticeAcceptance,
+    WorkZone,
+)
 
 MIN_GAP_SECONDS = 20       # two presses closer than this are a double click
 MAX_ACCURACY_M = 200       # a reading less precise than this is refused

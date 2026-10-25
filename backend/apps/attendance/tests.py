@@ -1,11 +1,10 @@
 import datetime
-from decimal import Decimal
 
 from django.contrib.auth.models import Group
 from django.core.management import call_command
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone, translation
 
 from apps.access.models import RoleAssignment
 from apps.accounts.testing import login_with_two_factor, make_user
@@ -26,6 +25,7 @@ def url(name, *args):
 
 class AttendanceBase(TestCase):
     def setUp(self):
+        self.enterContext(translation.override("uz"))  # messages are asserted in the source language
         call_command("seed_roles", verbosity=0)
         self.dept = Department.objects.create(name="Bo‘lim A")
         self.other_dept = Department.objects.create(name="Bo‘lim B")

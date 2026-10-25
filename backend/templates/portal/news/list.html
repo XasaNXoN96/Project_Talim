@@ -18,7 +18,7 @@
 {% if items %}
 <div class="news-views" data-mode="grid">
 <div class="auto-grid vw-grid">
-{% for n in items %}<article class="card news-card"><div class="ratio-16-9 ph-none">{% translate "Rasm yo‘q" %}</div><div class="body">
+{% for n in items %}<article class="card news-card">{% if n.cover %}<img class="ratio-16-9 cover-img" src="{% url 'news_admin:cover' n.pk %}" alt="" loading="lazy">{% else %}<div class="ratio-16-9 ph-none">{% translate "Rasm yo‘q" %}</div>{% endif %}<div class="body">
   <div class="row wrap">{% if n.category %}<span class="badge plain b-info">{{ n.category.name }}</span>{% endif %}<span class="badge {% if n.status == 'published' or n.status == 'approved' %}b-ok{% elif n.status == 'archived' %}b-err{% elif n.status == 'review' %}b-info{% else %}b-warn{% endif %} plain">{{ n.get_status_display }}</span></div>
   <h3 class="clamp3"><a href="{% url 'news_admin:preview' n.pk %}" style="color:inherit">{{ n.title }}</a></h3><span class="xs muted">{{ n.publish_at|date:"d.m.Y"|default:"—" }}</span>
   {% if n.excerpt %}<p class="clamp3">{{ n.excerpt }}</p>{% endif %}

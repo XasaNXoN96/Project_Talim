@@ -28,7 +28,7 @@
     <section class="card"><div class="card-head"><h2>{% translate "So‘nggi yangiliklar" %}</h2><a class="more" href="{% url 'news_admin:list' %}">{% translate "Barchasi" %}</a></div>
       <div class="card-body news-3">
         {% for item in latest_news %}
-        <a href="{% url 'content:news_detail' item.slug %}" style="color:inherit;text-decoration:none"><div class="ratio-16-9 ph-none r">{% translate "Rasm yo‘q" %}</div><span class="xs muted">{{ item.publish_at|date:"d.m.Y" }}</span><h3 class="clamp2" style="font-size:14px">{{ item.title }}</h3></a>
+        <a href="{% url 'content:news_detail' item.slug %}" style="color:inherit;text-decoration:none">{% if item.cover %}<img class="ratio-16-9 cover-img r" src="{% url 'content:news_cover' item.pk %}" alt="" loading="lazy">{% else %}<div class="ratio-16-9 ph-none r">{% translate "Rasm yo‘q" %}</div>{% endif %}<span class="xs muted">{{ item.publish_at|date:"d.m.Y" }}</span><h3 class="clamp2" style="font-size:14px">{{ item.title }}</h3></a>
         {% empty %}<p class="muted">{% translate "Hozircha yangiliklar yo‘q" %}</p>{% endfor %}
       </div></section>
     {% endif %}

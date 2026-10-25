@@ -24,8 +24,9 @@ from apps.audit.models import AuditLog
 from apps.audit.services import record
 from apps.core.mixins import PortalPermissionMixin
 
-from .manage_forms import NewsCategoryForm, NewsForm
 from . import workflow
+from .covers import cover_response
+from .manage_forms import NewsCategoryForm, NewsForm
 from .models import News, NewsCategory
 
 S = News.Status
@@ -78,7 +79,7 @@ class NewsCreateView(PortalPermissionMixin, View):
         return render(request, "portal/news/form.html", {"form": NewsForm(), "creating": True})
 
     def post(self, request):
-        form = NewsForm(request.POST)
+        form = NewsForm(request.POST, request.FILES, request=request)
         if form.is_valid():
             with transaction.atomic():
                 news = form.save(commit=False)
@@ -116,9 +117,11 @@ class NewsEditView(_NewsBase):
         with transaction.atomic():
             news = self._news(pk, request.user, lock=True)  # the row is locked: a parallel submit/approve waits, then sees the new status
             old_date = news.publish_at
-            form = NewsForm(request.POST, instance=news)
+            form = NewsForm(request.POST, request.FILES, instance=news, request=request)
             if form.is_valid():
-                changed = sorted(f for f in form.changed_data if f != "publish_at")
+                changed = sorted(f for f in form.changed_data if f not in ("publish_at", "cover_new", "cover_remove"))
+                if form.cleaned_data.get("cover_new") or form.cleaned_data.get("cover_remove"):
+                    changed.append("cover")
                 new_date = form.cleaned_data["publish_at"]
                 if new_date != old_date and (old_date is None or new_date is None or abs(new_date - old_date).total_seconds() >= 60):
                     changed.append("publish_at")  # the form only knows minutes: a re-submitted value is not a change
@@ -131,6 +134,13 @@ class NewsEditView(_NewsBase):
                 return redirect("news_admin:preview", pk=news.pk)
         messages.error(request, _("Formada xatolar bor. Kiritilgan ma’lumotlar saqlanib turibdi."))
         return render(request, "portal/news/form.html", {"form": form, "news": news})
+
+
+class NewsCoverView(_NewsBase):
+    """The cover of an item the person may see in the portal (drafts included)."""
+
+    def get(self, request, pk):
+        return cover_response(self.get_news(pk), public=False)
 
 
 class NewsPreviewView(_NewsBase):

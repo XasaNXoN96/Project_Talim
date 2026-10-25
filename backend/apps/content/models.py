@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import TimeStampedModel
+from apps.documents.storage import PrivateStorage
 
 
 class NewsCategory(TimeStampedModel):
@@ -46,6 +47,9 @@ class News(TimeStampedModel):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
     )
+
+    # Cover picture: re-encoded JPEG in the private storage (like achievement pictures), served only through the views; public only once published.
+    cover = models.FileField(storage=PrivateStorage(), max_length=120, blank=True)
 
     objects = NewsQuerySet.as_manager()
 

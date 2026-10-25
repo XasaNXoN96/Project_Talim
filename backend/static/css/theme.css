@@ -311,3 +311,8 @@ input[type="file"]::file-selector-button:hover { background: var(--surface-2); }
 .clock-btns .btn { text-transform: uppercase; }
 .clock-card { text-align: center; }
 .clock-card .field { text-align: left; }
+
+/* news cover pictures */
+img.cover-img { width: 100%; height: auto; object-fit: cover; display: block; background: var(--surface-2); }
+.news-card img.cover-img { border-radius: 0; }
+.article-cover { width: 100%; max-height: 460px; object-fit: cover; border-radius: var(--r); margin-bottom: 18px; display: block; }

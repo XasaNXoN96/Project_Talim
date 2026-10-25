@@ -43,9 +43,14 @@ class SeedDemoTests(TestCase):
         counts = (User.objects.count(), Institution.objects.count(), Task.objects.count(), Achievement.objects.count(), MediaItem.objects.count())
         self.run_it()
         self.assertEqual(counts, (User.objects.count(), Institution.objects.count(), Task.objects.count(), Achievement.objects.count(), MediaItem.objects.count()))
-        self.assertEqual(Institution.objects.filter(name__startswith="DEMO").count(), 3)
-        self.assertEqual(sorted(Achievement.objects.values_list("status", flat=True)), ["draft", "published", "submitted"])
-        self.assertEqual(sorted(MediaItem.objects.values_list("status", flat=True)), ["draft", "published", "published"])
+        self.assertEqual(Institution.objects.filter(name__startswith="DEMO").count(), 8)  # three schools of the walkthrough and five more of other kinds
+        statuses = list(Achievement.objects.values_list("status", flat=True))
+        for status in ("draft", "submitted", "changes_requested", "published"):
+            self.assertIn(status, statuses)
+        self.assertGreaterEqual(statuses.count("published"), 13)
+        media = list(MediaItem.objects.values_list("status", flat=True))
+        self.assertEqual((media.count("published"), media.count("draft")), (15, 4))  # 16 photos (3 drafts) and 3 videos (1 draft)
+        self.assertEqual(MediaItem.objects.filter(kind="video").count(), 3)
         self.assertTrue(any(t.is_overdue for t in Task.objects.all()))  # the walkthrough relies on one overdue task
 
     def test_the_demo_world_behaves_as_the_walkthrough_says(self):
@@ -58,7 +63,7 @@ class SeedDemoTests(TestCase):
         for name in ("employees:structure", "users:list", "reports:schools", "portal:audit", "portal:admin_hub", "chat:archive"):
             self.assertEqual(director.get(reverse(name)).status_code, 403, name)
         guest = Client()
-        self.assertEqual(guest.get(reverse("gallery_public:list")).content.decode().count("data-lbx"), 2)
+        self.assertEqual(guest.get(reverse("gallery_public:list")).content.decode().count("data-lbx"), 13)  # the published photos
         page = guest.get(reverse("achievements_public:list")).content.decode()
         self.assertIn("Tuman olimpiadasi", page)
         self.assertNotIn("Respublika tanlovi", page)

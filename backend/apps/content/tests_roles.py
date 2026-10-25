@@ -406,6 +406,7 @@ class Migrations(TransactionTestCase):
         executor.migrate([("content", "0003_newsreview_internal_note")])
         row = NewsReview.objects.get(news_id=news.pk)
         self.assertEqual((row.comment, row.internal_note, row.action), ("Eski izoh", "", "request_changes"))
+        call_command("migrate", verbosity=0)  # the current News model has columns added later
         self.assertEqual(workflow.history_for(News.objects.get(pk=news.pk), make_user("anyone"))[0].comment, "Eski izoh")
 
 

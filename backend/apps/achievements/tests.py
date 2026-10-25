@@ -11,6 +11,7 @@ from PIL import Image
 from apps.accounts import services
 from apps.accounts.testing import login_with_two_factor, make_user
 from apps.audit.models import AuditLog
+from apps.documents.storage import new_storage_name
 from apps.notifications.models import Notification
 from apps.organization.models import Department, Institution
 
@@ -259,7 +260,7 @@ class AchievementLanguageTests(TestCase):
         from django.core.files.base import ContentFile
 
         im = AchievementImage(achievement=a)
-        im.file.save("ab/x.jpg", ContentFile(png((40, 40))), save=False)
+        im.file.save(new_storage_name("jpg"), ContentFile(png((40, 40))), save=False)
         im.save()
         pub = Achievement.objects.create(institution=school, created_by=d, title="Medalist", person_name="Anna", status="published", consent_confirmed=True, publish_at=a.created_at)
         for lang in ("ru", "en"):

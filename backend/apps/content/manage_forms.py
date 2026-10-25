@@ -1,8 +1,13 @@
 import secrets
 
 from django import forms
+from django.core.files.base import ContentFile
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+
+from apps.achievements.images import prepare_image
+from apps.documents.storage import new_storage_name
+from apps.documents.validation import UploadRejected
 
 from .models import News, NewsCategory
 
@@ -27,6 +32,12 @@ class NewsForm(forms.ModelForm):
         help_text=_("Kelajakdagi sana bersangiz, yangilik shu vaqtdan boshlab ko‘rinadi. Bo‘sh qoldirsangiz, nashr qilingan zahoti ko‘rinadi."),
     )
 
+    cover_new = forms.FileField(
+        label=_("Muqova rasmi (ixtiyoriy)"), required=False, widget=forms.ClearableFileInput(attrs={"accept": "image/jpeg,image/png"}),
+        help_text=_("JPG yoki PNG, 8 MB gacha. Rasm tekshiriladi va qayta ishlanadi."),
+    )
+    cover_remove = forms.BooleanField(label=_("Muqova rasmini olib tashlash"), required=False)
+
     class Meta:
         model = News
         fields = ["title", "excerpt", "body", "category", "publish_at"]
@@ -37,8 +48,12 @@ class NewsForm(forms.ModelForm):
             "category": forms.Select(attrs=INPUT),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, request=None, **kwargs):
+        self.request = request
+        self._cover_bytes = None
         super().__init__(*args, **kwargs)
+        if not (self.instance.pk and self.instance.cover):
+            del self.fields["cover_remove"]
         self.fields["title"].label = _("Sarlavha")
         self.fields["excerpt"].label = _("Qisqa tavsif")
         self.fields["body"].label = _("Matn")
@@ -56,6 +71,17 @@ class NewsForm(forms.ModelForm):
         if value is None and self.instance.pk and self.instance.status == News.Status.PUBLISHED:
             return self.instance.publish_at  # a live item always keeps a date (and an empty field must not unpublish it)
         return value
+
+    def clean_cover_new(self):
+        uploaded = self.cleaned_data.get("cover_new")
+        if not uploaded:
+            return None
+        try:
+            user = getattr(self.request, "user", None)
+            self._cover_bytes = prepare_image(uploaded, request=self.request, user=user, object_type="News")
+        except UploadRejected as exc:
+            raise forms.ValidationError(str(exc)) from exc
+        return uploaded
 
     def clean_title(self):
         title = " ".join(self.cleaned_data["title"].split())
@@ -81,6 +107,12 @@ class NewsForm(forms.ModelForm):
         news = super().save(commit=False)
         if not news.slug:
             news.slug = unique_slug(News, news.title, "yangilik", max_length=320)
+        if self._cover_bytes:
+            if news.cover:
+                news.cover.delete(save=False)
+            news.cover.save(new_storage_name("jpg"), ContentFile(self._cover_bytes), save=False)
+        elif self.cleaned_data.get("cover_remove") and news.cover:
+            news.cover.delete(save=False)
         if commit:
             news.save()
         return news

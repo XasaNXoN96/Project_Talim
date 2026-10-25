@@ -26,6 +26,8 @@ from apps.tasks.models import Task, TaskAttachment
 User = get_user_model()
 ACTORS = ("anon", "emp", "stranger", "content", "head", "hr", "admin", "sysadmin", "superuser")
 
+from apps.documents.storage import new_storage_name
+
 
 class World:
     def __init__(self):
@@ -107,18 +109,18 @@ class World:
 
             a = Achievement.objects.create(institution=self.institution, created_by=self.users["admin"], title="Yutuq", person_name="Aliyev", status=status, consent_confirmed=True, **extra)
             im = AchievementImage(achievement=a)
-            im.file.save("ab/test-image.jpg", ContentFile(_jpeg()), save=False)
+            im.file.save(new_storage_name("jpg"), ContentFile(_jpeg()), save=False)
             im.save()
             vid = AchievementVideo(achievement=a, content_type="video/mp4", size=len(_mp4()), sha256="0" * 64)
-            vid.file.save("ab/test-video.mp4", ContentFile(_mp4()), save=False)
+            vid.file.save(new_storage_name("mp4"), ContentFile(_mp4()), save=False)
             vid.save()
             return a, im
 
         from apps.gallery.models import MediaItem
 
         self.media_item = MediaItem(kind="photo", title="Rasm", content_type="image/jpeg", size=len(_jpeg()), sha256="0" * 64, status="published", publish_at=timezone.now(), consent_confirmed=True)
-        self.media_item.file.save("ab/test-media.jpg", ContentFile(_jpeg()), save=False)
-        self.media_item.thumb.save("ab/test-media-thumb.jpg", ContentFile(_jpeg()), save=False)
+        self.media_item.file.save(new_storage_name("jpg"), ContentFile(_jpeg()), save=False)
+        self.media_item.thumb.save(new_storage_name("jpg"), ContentFile(_jpeg()), save=False)
         self.media_item.save()
         self.achievement, self.achievement_image = _achievement("submitted")
         self.pub_achievement, self.pub_image = _achievement("published", publish_at=timezone.now())
@@ -149,7 +151,7 @@ class World:
             "notifications:open": {"pk": self.notification.pk}, "notifications:read": {"pk": self.notification.pk},
             "employees:import_detail": {"pk": self.emp_import.pk}, "employees:import_confirm": {"pk": self.emp_import.pk}, "employees:import_cancel": {"pk": self.emp_import.pk},
             "accounts:session_end": {"pk": self.user_session.pk},
-            "news_admin:preview": {"pk": self.news.pk}, "news_admin:edit": {"pk": self.news.pk}, "news_admin:status": {"pk": self.news.pk, "action": "archive"},
+            "news_admin:preview": {"pk": self.news.pk}, "news_admin:cover": {"pk": self.news.pk}, "content:news_cover": {"pk": self.news.pk}, "news_admin:edit": {"pk": self.news.pk}, "news_admin:status": {"pk": self.news.pk, "action": "archive"},
             "news_admin:category_edit": {"pk": self.news_category.pk},
             "reports:export": {"fmt": "xlsx"}, "content:news_detail": {"slug": self.news.slug}, "achievements:detail": {"pk": self.achievement.pk}, "achievements:edit": {"pk": self.achievement.pk}, "achievements:preview": {"pk": self.achievement.pk}, "achievements:step": {"pk": self.achievement.pk, "step": "archive"}, "achievements:image": {"pk": self.achievement_image.pk}, "achievements:video": {"pk": self.achievement.video.pk}, "achievements_public:detail": {"slug": self.pub_achievement.slug}, "achievements_public:image": {"pk": self.pub_image.pk}, "achievements_public:video": {"pk": self.pub_achievement.video.pk}, "portal:preview": {"section": "media"},
             "accounts:password_reset_confirm": {"uidb64": self.uid, "token": self.token},
