@@ -4017,3 +4017,19 @@ msgstr "Kirish"
 msgctxt "attendance"
 msgid "Chiqish"
 msgstr "Chiqish"
+
+msgid "Maqsad: ish vaqtini hisobga olish. Ma’lumotlar boshqa maqsadda ishlatilmaydi."
+msgstr "Maqsad: ish vaqtini hisobga olish. Ma’lumotlar boshqa maqsadda ishlatilmaydi."
+
+#, python-format
+msgid "Aniq koordinatalar %(days)s kundan keyin o‘chiriladi (zaxira nusxalarda yana taxminan ikki hafta saqlanishi mumkin). Vaqt va «hudud ichida / tashqarida» belgisi saqlanib qoladi."
+msgstr "Aniq koordinatalar %(days)s kundan keyin o‘chiriladi (zaxira nusxalarda yana taxminan ikki hafta saqlanishi mumkin). Vaqt va «hudud ichida / tashqarida» belgisi saqlanib qoladi."
+
+msgid "Belgilangan vaqt va «hudud ichida / tashqarida» belgisini rahbaringiz (o‘z qamrovi doirasida), kadrlar bo‘limi va administrator ko‘rishi mumkin. Aniq koordinatalarni faqat kadrlar bo‘limi va administrator ko‘radi."
+msgstr "Belgilangan vaqt va «hudud ichida / tashqarida» belgisini rahbaringiz (o‘z qamrovi doirasida), kadrlar bo‘limi va administrator ko‘rishi mumkin. Aniq koordinatalarni faqat kadrlar bo‘limi va administrator ko‘radi."
+
+msgid "O‘z belgilaringizni «Kirish-chiqish» sahifasida istalgan vaqtda ko‘rishingiz mumkin."
+msgstr "O‘z belgilaringizni «Kirish-chiqish» sahifasida istalgan vaqtda ko‘rishingiz mumkin."
+
+msgid "Tanishib chiqdim"
+msgstr "Tanishib chiqdim"

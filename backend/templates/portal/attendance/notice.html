@@ -6,17 +6,19 @@
 <div class="stack" style="max-width:760px">
   <section class="card card-pad">
     <ul class="stack" style="margin:0;padding-left:20px">
+      <li>{% translate "Maqsad: ish vaqtini hisobga olish. Ma’lumotlar boshqa maqsadda ishlatilmaydi." %}</li>
       <li><b>{% translate "Faqat siz «Kirish» yoki «Chiqish» tugmasini bosgan paytdagi joylashuv olinadi." %}</b> {% translate "Tizim sizni fonda kuzatmaydi va yo‘lingizni yozmaydi." %}</li>
       <li>{% translate "Joylashuv ish hududi (maktab, bo‘lim binosi) bilan solishtiriladi. Hududdan tashqarida bosilsa, sababni yozishingiz kerak." %}</li>
-      <li>{% blocktranslate with days=retention %}Aniq koordinatalar {{ days }} kundan keyin o‘chiriladi. Vaqt va «hudud ichida / tashqarida» belgisi saqlanib qoladi.{% endblocktranslate %}</li>
-      <li><b>{% translate "Belgilaringizni rahbaringiz (qamrovi doirasida), kadrlar bo‘limi va administrator ko‘rishi mumkin." %}</b> {% translate "Har bir ko‘rish jurnalga yoziladi." %}</li>
+      <li>{% blocktranslate with days=retention %}Aniq koordinatalar {{ days }} kundan keyin o‘chiriladi (zaxira nusxalarda yana taxminan ikki hafta saqlanishi mumkin). Vaqt va «hudud ichida / tashqarida» belgisi saqlanib qoladi.{% endblocktranslate %}</li>
+      <li><b>{% translate "Belgilangan vaqt va «hudud ichida / tashqarida» belgisini rahbaringiz (o‘z qamrovi doirasida), kadrlar bo‘limi va administrator ko‘rishi mumkin. Aniq koordinatalarni faqat kadrlar bo‘limi va administrator ko‘radi." %}</b> {% translate "Har bir ko‘rish jurnalga yoziladi." %}</li>
+      <li>{% translate "O‘z belgilaringizni «Kirish-chiqish» sahifasida istalgan vaqtda ko‘rishingiz mumkin." %}</li>
       <li>{% translate "Belgilarni o‘zingiz o‘zgartira yoki o‘chira olmaysiz; xato bo‘lsa, kadrlar bo‘limi sabab ko‘rsatib tuzatish kiritadi." %}</li>
       <li>{% translate "Joylashuvga ruxsat berish brauzer sozlamalarida har safar so‘raladi; rad etsangiz, belgilash mumkin bo‘lmasligi mumkin." %}</li>
     </ul>
   </section>
   <form method="post" class="card card-pad" style="display:grid;gap:12px">
     {% csrf_token %}
-    <label class="check"><input type="checkbox" name="agree" value="1" required> <span>{% translate "Tanishdim va roziman" %}</span></label>
+    <label class="check"><input type="checkbox" name="agree" value="1" required> <span>{% translate "Tanishib chiqdim" %}</span></label>
     <div class="row"><button class="btn btn-primary" type="submit">{% if accepted %}{% translate "Qayta tasdiqlash" %}{% else %}{% translate "Davom etish" %}{% endif %}</button></div>
   </form>
 </div>

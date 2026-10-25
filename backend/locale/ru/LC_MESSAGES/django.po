@@ -4017,3 +4017,19 @@ msgstr "Приход"
 msgctxt "attendance"
 msgid "Chiqish"
 msgstr "Уход"
+
+msgid "Maqsad: ish vaqtini hisobga olish. Ma’lumotlar boshqa maqsadda ishlatilmaydi."
+msgstr "Цель: учёт рабочего времени. Данные не используются для других целей."
+
+#, python-format
+msgid "Aniq koordinatalar %(days)s kundan keyin o‘chiriladi (zaxira nusxalarda yana taxminan ikki hafta saqlanishi mumkin). Vaqt va «hudud ichida / tashqarida» belgisi saqlanib qoladi."
+msgstr "Точные координаты удаляются через %(days)s дн. (в резервных копиях могут храниться ещё примерно две недели). Время и отметка «в зоне / вне зоны» сохраняются."
+
+msgid "Belgilangan vaqt va «hudud ichida / tashqarida» belgisini rahbaringiz (o‘z qamrovi doirasida), kadrlar bo‘limi va administrator ko‘rishi mumkin. Aniq koordinatalarni faqat kadrlar bo‘limi va administrator ko‘radi."
+msgstr "Время отметки и признак «в зоне / вне зоны» могут видеть ваш руководитель (в пределах своего охвата), отдел кадров и администратор. Точные координаты видят только отдел кадров и администратор."
+
+msgid "O‘z belgilaringizni «Kirish-chiqish» sahifasida istalgan vaqtda ko‘rishingiz mumkin."
+msgstr "Свои отметки вы можете в любой момент посмотреть на странице «Приход и уход»."
+
+msgid "Tanishib chiqdim"
+msgstr "Ознакомился(лась)"

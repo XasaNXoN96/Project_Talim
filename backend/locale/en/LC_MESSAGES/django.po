@@ -4017,3 +4017,19 @@ msgstr "Check in"
 msgctxt "attendance"
 msgid "Chiqish"
 msgstr "Check out"
+
+msgid "Maqsad: ish vaqtini hisobga olish. Ma’lumotlar boshqa maqsadda ishlatilmaydi."
+msgstr "Purpose: recording working time. The data is not used for any other purpose."
+
+#, python-format
+msgid "Aniq koordinatalar %(days)s kundan keyin o‘chiriladi (zaxira nusxalarda yana taxminan ikki hafta saqlanishi mumkin). Vaqt va «hudud ichida / tashqarida» belgisi saqlanib qoladi."
+msgstr "Exact coordinates are deleted after %(days)s days (they may stay in backup copies for about two more weeks). The time and the “inside / outside the zone” flag are kept."
+
+msgid "Belgilangan vaqt va «hudud ichida / tashqarida» belgisini rahbaringiz (o‘z qamrovi doirasida), kadrlar bo‘limi va administrator ko‘rishi mumkin. Aniq koordinatalarni faqat kadrlar bo‘limi va administrator ko‘radi."
+msgstr "The time of the mark and the “inside / outside the zone” flag may be seen by your manager (within their scope), the HR department and the administrator. Only the HR department and the administrator see the exact coordinates."
+
+msgid "O‘z belgilaringizni «Kirish-chiqish» sahifasida istalgan vaqtda ko‘rishingiz mumkin."
+msgstr "You can see your own marks on the “Check-in and check-out” page at any time."
+
+msgid "Tanishib chiqdim"
+msgstr "I have read this"
