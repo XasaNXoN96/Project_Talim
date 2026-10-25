@@ -267,3 +267,20 @@ a { color: var(--brand-600); }
 .err-code { font-family: var(--font-display); font-weight: 600; font-size: clamp(64px, 12vw, 112px); line-height: 1; color: var(--gold); }
 .err-title { margin: 8px 0; font-family: var(--font-display); font-weight: 600; }
 .err-actions { margin-top: 20px; }
+
+/* detail pages: article headings use the display face */
+.pub-body h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 3vw, 38px); line-height: 1.2; margin: 12px 0 8px; }
+.pub-body .card h2, .pub-body h2 { font-family: var(--font-display); font-weight: 600; }
+.pub-page-head:not(:has(h1)) { padding-block: 18px 40px; }
+.pub-body > .card { padding: clamp(18px, 3vw, 36px); }
+.pub-body video { width: 100%; max-width: 100%; }
+/* forms: multi-selects show several rows (the shared control height cut them to two lines) */
+select[multiple], .select[multiple] { height: auto; min-height: 148px; padding: 6px; }
+select[multiple] option { padding: 6px 8px; border-radius: 6px; }
+select[multiple] option:checked { background: var(--brand-100); color: var(--text); }
+input[type="date"], input[type="time"], input[type="datetime-local"] { min-height: var(--ctl-h); }
+.form-narrow, form.card.card-pad, .card.card-pad > form { max-width: 760px; }
+/* profile header on person pages */
+.page-head .av.xl, .page-head .av.lg { background: var(--navy-700); }
+.content h1, .content .card h1, .login-form h1 { font-family: var(--font-display); font-weight: 600; letter-spacing: -.005em; }
+.content .card h1 { font-size: clamp(24px, 2.6vw, 32px); line-height: 1.2; }
