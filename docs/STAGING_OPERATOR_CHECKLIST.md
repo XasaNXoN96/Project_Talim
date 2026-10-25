@@ -143,7 +143,7 @@
     sudo cp backend/deploy/systemd/talim-job*.service backend/deploy/systemd/talim-*.timer /etc/systemd/system/
     sudo cp -r backend/deploy/systemd/talim-job@run_backup.service.d backend/deploy/systemd/talim-job@run_restore_check.service.d /etc/systemd/system/
     sudo systemctl daemon-reload
-    sudo systemctl enable --now talim-send_task_reminders.timer talim-purge_employee_imports.timer talim-purge_throttles.timer talim-purge_attendance_locations.timer talim-clear_expired_sessions.timer talim-check_scanner.timer talim-verify_document_files.timer talim-backup_create.timer talim-backup_restore_check.timer
+    sudo systemctl enable --now talim-send_task_reminders.timer talim-purge_employee_imports.timer talim-purge_throttles.timer talim-clear_expired_sessions.timer talim-check_scanner.timer talim-verify_document_files.timer talim-backup_create.timer talim-backup_restore_check.timer
     systemctl list-timers 'talim-*'
     ```
     (Каталоги drop-in и их установку сверить с `SCHEDULER.md` §8 — в проверке файлов `verify_deploy_files.sh` они учтены, на сервере установка **[не проверено]**.)

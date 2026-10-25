@@ -41,12 +41,6 @@
       {% if perms.organization.view_department %}
       <a href="{% url 'employees:structure' %}" title="{% translate 'Tashkilot' %}" {% if request.resolver_match.url_name == 'structure' %}class="active" aria-current="page"{% endif %}><i data-i="building" style="display:contents"></i><span>{% translate "Tashkilot" %}</span></a>
       {% endif %}
-      {% if perms.attendance.use_attendance %}
-      <a href="{% url 'attendance:clock' %}" title="{% translate 'Kirish-chiqish' %}" {% if request.resolver_match.namespace == 'attendance' and request.resolver_match.url_name in 'clock notice team member' %}class="active" aria-current="page"{% endif %}><i data-i="login" style="display:contents"></i><span>{% translate "Kirish-chiqish" %}</span></a>
-      {% endif %}
-      {% if perms.attendance.view_workzone %}
-      <a href="{% url 'attendance:zones' %}" title="{% translate 'Geolokatsiya' %}" {% if request.resolver_match.namespace == 'attendance' and request.resolver_match.url_name in 'zones zone_new zone_edit zone_detail' %}class="active" aria-current="page"{% endif %}><i data-i="pin" style="display:contents"></i><span>{% translate "Geolokatsiya" %}</span></a>
-      {% endif %}
       {% if perms.chat.use_chat %}
       <a href="{% url 'chat:inbox' %}" title="{% translate 'Chat' %}" {% if request.resolver_match.namespace == 'chat' %}class="active" aria-current="page"{% endif %}><i data-i="chat" style="display:contents"></i><span>{% translate "Chat" %}</span>{% if unread_chat %}<span class="badge b-err plain" style="margin-left:auto">{{ unread_chat }}</span>{% endif %}</a>
       {% else %}

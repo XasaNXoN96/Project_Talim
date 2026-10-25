@@ -55,10 +55,6 @@ class World:
         self.change_request = EmployeeChangeRequest.objects.create(
             employee=self.card, requested_by=self.users["emp"], fields=["work_phone"], changes={"work_phone": "+998 90 000 00 01"}, old_values={"work_phone": "+998 71 111 22 33"}
         )
-        from apps.attendance.models import AttendanceEvent, WorkZone
-
-        self.work_zone = WorkZone.objects.create(name="Namuna hudud", institution=self.institution, latitude="40.850000", longitude="68.350000", radius_m=150)
-        AttendanceEvent.objects.create(employee=self.card, kind="in", inside_zone=True, zone=self.work_zone, latitude="40.850100", longitude="68.350100", accuracy_m=10)
         from apps.chat import services as chat_services
         from apps.chat.models import ChatNoticeAcceptance
 
@@ -141,7 +137,7 @@ class World:
             "users:detail": {"pk": self.users["emp"].pk}, "users:edit": {"pk": self.users["emp"].pk}, "users:role_add": {"pk": self.users["emp"].pk},
             "users:role_remove": {"pk": self.users["emp"].pk, "assignment_id": self.assignment.pk}, "users:action": {"pk": self.users["emp"].pk, "action": "unlock"},
             "employees:detail": {"pk": self.card.pk}, "employees:photo": {"pk": self.card.pk}, "employees:edit": {"pk": self.card.pk}, "employees:archive": {"pk": self.card.pk}, "employees:restore": {"pk": self.card.pk},
-            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "gallery:file": {"pk": self.media_item.pk, "variant": "thumb"}, "gallery:edit": {"pk": self.media_item.pk}, "gallery:delete": {"pk": self.media_item.pk}, "gallery_public:file": {"pk": self.media_item.pk, "variant": "thumb"}, "reports:school": {"pk": self.institution.pk}, "chat:thread": {"pk": self.conversation.pk}, "attendance:member": {"pk": self.card.pk}, "attendance:correct": {"pk": self.card.pk}, "attendance:zone_detail": {"pk": self.work_zone.pk}, "attendance:zone_edit": {"pk": self.work_zone.pk}, "chat:archive_thread": {"pk": self.conversation.pk}, "employees:change_detail": {"pk": self.change_request.pk}, "employees:change_decide": {"pk": self.change_request.pk, "decision": "reject"}, "employees:change_cancel": {"pk": self.change_request.pk}, "employees:institution_edit": {"pk": self.institution.pk},
+            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "gallery:file": {"pk": self.media_item.pk, "variant": "thumb"}, "gallery:edit": {"pk": self.media_item.pk}, "gallery:delete": {"pk": self.media_item.pk}, "gallery_public:file": {"pk": self.media_item.pk, "variant": "thumb"}, "reports:school": {"pk": self.institution.pk}, "chat:thread": {"pk": self.conversation.pk}, "chat:archive_thread": {"pk": self.conversation.pk}, "employees:change_detail": {"pk": self.change_request.pk}, "employees:change_decide": {"pk": self.change_request.pk, "decision": "reject"}, "employees:change_cancel": {"pk": self.change_request.pk}, "employees:institution_edit": {"pk": self.institution.pk},
             "tasks:detail": {"pk": t}, "tasks:edit": {"pk": t}, "tasks:comment": {"pk": t}, "tasks:attachment_add": {"pk": t},
             "tasks:attachment_download": {"pk": t, "attachment_id": self.attachment.pk}, "tasks:attachment_remove": {"pk": t, "attachment_id": self.attachment.pk},
             "tasks:transition": {"pk": t, "status": "done"},

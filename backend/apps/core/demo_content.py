@@ -1,11 +1,10 @@
 """Rich fictitious content for the demo site (LOCAL DEVELOPMENT ONLY; called by seed_demo).
 
 News with cover pictures, achievements with certificates, photos and videos, a media gallery, documents, more tasks with comments, chat
-conversations, notifications, staff cards with portraits and a week of attendance. Everything is fictitious and drawn (apps.core.demo_art);
+conversations, notifications, staff cards with portraits. Everything is fictitious and drawn (apps.core.demo_art);
 nothing here is a real person, award or photograph. Idempotent: each block runs only when its own marker is missing."""
 import datetime
 import hashlib
-import random
 from pathlib import Path
 
 from django.contrib.auth import get_user_model
@@ -13,7 +12,6 @@ from django.core.files.base import ContentFile
 from django.utils import timezone
 
 from apps.achievements.models import Achievement, AchievementImage, AchievementVideo
-from apps.attendance.models import AttendanceEvent, AttendanceNoticeAcceptance, WorkZone
 from apps.chat import services as chat_services
 from apps.content.models import News, NewsCategory
 from apps.core import demo_art as art
@@ -306,38 +304,6 @@ def _chat(users, directors):
     return made
 
 
-def _attendance(users, directors):
-    zones = list(WorkZone.objects.filter(is_active=True))
-    if not zones:
-        return 0
-    rng = random.Random(42)
-    made = 0
-    for user in (users["demo_employee"], users["demo_head"], users["demo_hr"], users["demo_content"], *directors):
-        emp = Employee.objects.filter(user=user).first()
-        if emp is None or AttendanceEvent.objects.filter(employee=emp, source="self").exists():
-            continue
-        AttendanceNoticeAcceptance.objects.get_or_create(user=user)
-        zone = next((z for z in zones if z.institution_id and z.institution_id == emp.institution_id), None) or next((z for z in zones if z.institution_id is None), zones[0])
-        for back in range(1, 9):
-            day = timezone.localdate() - datetime.timedelta(days=back)
-            if day.weekday() >= 5:
-                continue
-            start = timezone.make_aware(datetime.datetime.combine(day, datetime.time(8, 45))) + datetime.timedelta(minutes=rng.randint(0, 30))
-            end = timezone.make_aware(datetime.datetime.combine(day, datetime.time(17, 40))) + datetime.timedelta(minutes=rng.randint(0, 40))
-            outside = rng.random() < 0.12
-            lat0, lon0 = float(zone.latitude), float(zone.longitude)
-            def pos(far, lat0=lat0, lon0=lon0):
-                k = 0.012 if far else 0.0006
-                return f"{lat0 + rng.uniform(-k, k):.6f}", f"{lon0 + rng.uniform(-k, k):.6f}"
-            la, lo = pos(outside)
-            AttendanceEvent.objects.create(employee=emp, kind="in", at=start, zone=zone, latitude=la, longitude=lo, accuracy_m=rng.randint(8, 40), inside_zone=not outside,
-                                           distance_m=900 if outside else 0, note="Tuman bo‘limiga chaqirilgan edim" if outside else "")
-            la, lo = pos(False)
-            AttendanceEvent.objects.create(employee=emp, kind="out", at=end, zone=zone, latitude=la, longitude=lo, accuracy_m=rng.randint(8, 40), inside_zone=True, distance_m=0)
-            made += 2
-    return made
-
-
 def _notifications(users, directors):
     made = 0
     for ach in Achievement.objects.filter(status="published")[:3]:
@@ -360,7 +326,6 @@ def seed_rich(admin, users, schools, directors, stdout=None):
         "documents": _documents(admin),
         "tasks": _tasks(admin, users, directors),
         "chats": _chat(users, directors),
-        "attendance marks": _attendance(users, directors),
         "notifications": _notifications(users, directors),
     }
     if stdout is not None:

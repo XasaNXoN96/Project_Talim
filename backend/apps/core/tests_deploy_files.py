@@ -41,7 +41,7 @@ class Files(SimpleTestCase):
     def test_the_timer_schedule_matches_the_interval_the_status_page_expects(self):
         # a job is "overdue" after 2 x its interval: the schedule must run at least that often
         every = {"send_task_reminders": "*:07:00", "purge_employee_imports": "*:00/15:00", "purge_throttles": "*:37:00", "check_scanner": "*:00/5:00",
-                 "clear_expired_sessions": "03:23:00", "purge_attendance_locations": "03:41:00", "verify_document_files": "Sun *-*-* 04:11:00",
+                 "clear_expired_sessions": "03:23:00", "verify_document_files": "Sun *-*-* 04:11:00",
                  "backup_create": "*-*-* 02:15:00", "backup_restore_check": "Sun *-*-* 05:40:00"}
         for name, fragment in every.items():
             self.assertIn(fragment, text(SYSTEMD / f"talim-{name}.timer"), name)

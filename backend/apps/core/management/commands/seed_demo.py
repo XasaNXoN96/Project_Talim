@@ -115,11 +115,6 @@ class Command(BaseCommand):
             task("Yoz tadbirlari rejasi", [directors[0], directors[1]], "new", 9)
             task("Bino holatini tekshirish", [directors[1]], "new", -1, None, "high")
             task("Metodik tavsiyalarni o‘rganish", [directors[1]], "done", 4, None, "normal", True)
-        from apps.attendance.models import WorkZone
-
-        if not WorkZone.objects.filter(name__startswith="DEMO").exists():
-            WorkZone.objects.create(name="DEMO: bo‘lim binosi (umumiy)", latitude="40.850000", longitude="68.350000", radius_m=200)
-            WorkZone.objects.create(name="DEMO: 1-maktab hovlisi", institution=s1, latitude="40.860000", longitude="68.360000", radius_m=150)
         if not Achievement.objects.filter(title__startswith="DEMO:").exists():
             mk = lambda title, status, **kw: Achievement.objects.create(
                 institution=s1, created_by=directors[0], title="DEMO: " + title, person_name="Namunaviy Ustoz A", person_position="Matematika", level="district", kind="medal",

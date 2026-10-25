@@ -138,7 +138,7 @@ flowchart LR
 | `xodimlar` | `users`/`employees`: CRUD, фильтры, профиль, права | добавление — «Maket» |
 | `yangiliklar` | `news`: редактор, статусы (черновик/опубликовано) | сохранение — «Maket» |
 | `topshiriqlar` | `tasks`: создание, назначение, статусы, комментарии, вложения, история | создание — «Maket» |
-| `kirish-chiqish`, `geolokatsiya` | `attendance`: отметка прихода/ухода, геозоны, отчёты | отметка — «Maket» |
+| ~~`kirish-chiqish`, `geolokatsiya`~~ (отменено владельцем, разделов нет) | `attendance`: отметка прихода/ухода, геозоны, отчёты | отметка — «Maket» |
 | `yutuqlar`, `sertifikatlar` | `achievements`, `certificates`: файлы, сроки действия | заглушки |
 | `chat` | `chat`: диалоги, сообщения, непрочитанные (WebSocket) | в памяти страницы |
 | `bildirishnomalar` | `notifications`: лента, прочитано/нет, привязка к объектам | заглушки |

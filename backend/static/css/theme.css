@@ -304,11 +304,6 @@ input[type="file"]::file-selector-button:hover { background: var(--surface-2); }
 .clock-btns .btn-ok { background: var(--brand-500); } .clock-btns .btn-ok:hover { background: var(--brand-600); }
 .alert.warn { background: var(--warn-bg); color: var(--gold-ink); }
 
-/* attendance: the schematic of a work zone */
-.zone-plot { width: 100%; height: auto; display: block; border-radius: var(--r); }
-.zone-plot .zp-bg { fill: #e3ece9; } .zone-plot .zp-zone { fill: rgba(15, 118, 110, .14); stroke: var(--brand-500); stroke-width: 2; stroke-dasharray: 6 4; }
-.zone-plot .zp-center { fill: var(--navy-800); } .zone-plot .zp-in { fill: var(--ok); } .zone-plot .zp-out { fill: var(--gold); stroke: var(--gold-ink); stroke-width: 1; }
-.clock-btns .btn { text-transform: uppercase; }
 .clock-card { text-align: center; }
 .clock-card .field { text-align: left; }
 

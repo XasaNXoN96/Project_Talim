@@ -46,12 +46,6 @@ _CHAT_AUDIT = ["chat.audit_chat"]
 # Gallery ("Media"): everybody with a portal account may look at what is published; whoever curates content uploads, publishes and removes.
 _MEDIA_VIEW = ["gallery.view_mediaitem"]
 _MEDIA_CURATE = _MEDIA_VIEW + ["gallery.add_mediaitem", "gallery.change_mediaitem", "gallery.erase_mediaitem", "gallery.publish_mediaitem"]
-# Attendance: everybody with a portal account and an employee card presses in/out; scope-limited people see the team; HR/admin correct.
-_ATT_USE = ["attendance.use_attendance"]
-_ATT_TEAM = ["attendance.view_team_attendance"]
-_ATT_CORRECT = ["attendance.correct_attendance"]
-_ZONES_VIEW = ["attendance.view_workzone"]
-_ZONES_WRITE = ["attendance.add_workzone", "attendance.change_workzone"]
 _ORG_VIEW = ["organization.view_department", "organization.view_position"]
 _DIRECTORY = ["organization.view_employee_directory"]
 _CONTACTS = ["organization.view_employee_contacts"]
@@ -73,11 +67,11 @@ _USER_ADMIN = ["accounts.view_user", "accounts.manage_users", "accounts.assign_r
 
 ROLE_PERMISSIONS: dict[str, list[str]] = {
     # Contacts/private data are further limited by SCOPE (own / department / all) in apps.organization.access.
-    RoleCode.EMPLOYEE: _ATT_USE + _CHAT + _MEDIA_VIEW + _DIRECTORY + _SELF_CHANGE + _ORG_VIEW + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
-    RoleCode.DEPARTMENT_HEAD: _ATT_USE + _ATT_TEAM + _CHAT + _MEDIA_VIEW + _DIRECTORY + _SELF_CHANGE + _CONTACTS + _ORG_VIEW + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
-    RoleCode.CONTENT_MANAGER: _ATT_USE + _MEDIA_CURATE + _CHAT + _CONTENT + _ACH_PUBLISH + _SELF_CHANGE + ["organization.view_institution"] + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
-    RoleCode.HR: _ATT_USE + _ATT_TEAM + _ATT_CORRECT + _ZONES_VIEW + _CHAT + _MEDIA_VIEW + _DIRECTORY + _SELF_CHANGE + _REVIEW_CHANGE + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + ["accounts.view_user"] + _TASKS_BASIC + ["tasks.add_task"] + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _NOTIFY,
-    RoleCode.ADMIN: _ATT_USE + _ATT_TEAM + _ATT_CORRECT + _ZONES_VIEW + _ZONES_WRITE + _MEDIA_CURATE + _CHAT + _CHAT_AUDIT + _CONTENT + _ACH_PUBLISH + _SELF_CHANGE + _REVIEW_CHANGE + _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + _USER_ADMIN + ["audit.view_auditlog"] + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
+    RoleCode.EMPLOYEE: _CHAT + _MEDIA_VIEW + _DIRECTORY + _SELF_CHANGE + _ORG_VIEW + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    RoleCode.DEPARTMENT_HEAD: _CHAT + _MEDIA_VIEW + _DIRECTORY + _SELF_CHANGE + _CONTACTS + _ORG_VIEW + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
+    RoleCode.CONTENT_MANAGER: _MEDIA_CURATE + _CHAT + _CONTENT + _ACH_PUBLISH + _SELF_CHANGE + ["organization.view_institution"] + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    RoleCode.HR: _CHAT + _MEDIA_VIEW + _DIRECTORY + _SELF_CHANGE + _REVIEW_CHANGE + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + ["accounts.view_user"] + _TASKS_BASIC + ["tasks.add_task"] + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _NOTIFY,
+    RoleCode.ADMIN: _MEDIA_CURATE + _CHAT + _CHAT_AUDIT + _CONTENT + _ACH_PUBLISH + _SELF_CHANGE + _REVIEW_CHANGE + _DIRECTORY + _CONTACTS + _PRIVATE + _ORG_VIEW + _ORG_WRITE + _USER_ADMIN + ["audit.view_auditlog"] + _TASKS_BASIC + _TASKS_MANAGE + _DOCS_VIEW + _DOCS_WRITE + _DOCS_ALL + _REPORTS + _REPORTS_PEOPLE + _NOTIFY,
     RoleCode.NEWS_AUTHOR: _NEWS_AUTHOR + _NOTIFY,
     RoleCode.NEWS_EDITOR: _NEWS_EDITOR + _NOTIFY,
     RoleCode.NEWS_PUBLISHER: _NEWS_PUBLISHER + _NOTIFY,
@@ -86,7 +80,7 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
     # enforced in apps.organization.access (listing, cards, create/edit/archive, photo). add/change_employee are global Django
     # permissions; the views narrow them to the own institution's cards without an account, hide department/user/private fields,
     # and keep the director out of the import tool and the admin hub. No department structure, no other institutions.
-    RoleCode.SCHOOL_DIRECTOR: _ATT_USE + _ATT_TEAM + _DIRECTORY + _CONTACTS + ["organization.add_employee", "organization.change_employee"] + _ACH_WRITE + _SELF_CHANGE + _CHAT + _MEDIA_VIEW + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
+    RoleCode.SCHOOL_DIRECTOR: _DIRECTORY + _CONTACTS + ["organization.add_employee", "organization.change_employee"] + _ACH_WRITE + _SELF_CHANGE + _CHAT + _MEDIA_VIEW + _TASKS_BASIC + _DOCS_VIEW + _NOTIFY,
 }
 
 

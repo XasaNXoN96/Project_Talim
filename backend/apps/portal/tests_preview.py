@@ -38,8 +38,6 @@ class PreviewSectionTests(TestCase):
         user = make_user("viewer3", role="employee")
         login_with_two_factor(self.client, user)
         body = self.client.get(reverse("portal:preview", args=["sertifikatlar"])).content.decode()
-        self.assertIn(reverse("attendance:clock"), body)  # attendance is a real section for everybody who may press in/out
-        self.assertNotIn(reverse("attendance:zones"), body)  # zones only for those who may see them
         for slug in PREVIEW_SECTIONS:
             if slug == "chat":  # a real section for everybody with the chat right (an employee has it)
                 self.assertIn(reverse("chat:inbox"), body)
@@ -121,8 +119,6 @@ class AdminHubAndMenuTests(TestCase):
         positions = [body.index(f'href="{reverse(n)}"') for n in order]
         self.assertEqual(positions, sorted(positions))
         sidebar = body[body.index('class="sb-nav"'):body.index("</nav>", body.index('class="sb-nav"'))]
-        for name in ("attendance:clock", "attendance:zones"):  # the attendance pages are real now (the mock-ups were removed)
-            self.assertIn(f'href="{reverse(name)}"', sidebar, name)
         self.assertIn(f'href="{reverse("gallery:list")}"', sidebar)  # Media is real now
         self.assertIn(f'href="{reverse("chat:inbox")}"', sidebar)  # Chat is real now
         # Yutuqlar and Sertifikatlar are real now (the achievements section); the mock pages stay for people without access to it
