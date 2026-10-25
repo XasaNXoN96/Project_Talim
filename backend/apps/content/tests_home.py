@@ -20,7 +20,7 @@ class HomePageTests(TestCase):
         for anchor in ("yutuqlar", "hujjatlar"):
             self.assertIn(f"#{anchor}", body)
         self.assertIn('href="/media/"', body)  # the menu's Media is the real gallery page now (the "media" section stays on the home page)
-        for marker in ('class="hero"', 'class="stats"', 'class="gallery"', 'class="video"', 'class="teachers"', 'class="map-card"'):
+        for marker in ('class="hero2"', 'class="stats"', 'class="gallery"', 'class="video"', 'class="teachers"', 'class="map-card"'):
             self.assertIn(marker, body, marker)
 
     def test_there_are_no_links_to_pages_that_do_not_exist_yet(self):

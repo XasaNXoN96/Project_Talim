@@ -3717,3 +3717,15 @@ msgstr "Полное удаление медиафайла с сервера"
 #, python-format
 msgid "Topshiriqlar yaratildi: %(n)d ta (har bir muassasa uchun alohida)."
 msgstr "Созданы задания: %(n)d (отдельное для каждого учреждения)."
+
+msgid "Topshiriqlar va muddatlar"
+msgstr "Задания и сроки"
+
+msgid "Yutuqlarni yuborish va nashr etish"
+msgstr "Отправка и публикация достижений"
+
+msgid "Maktablar va xodimlar o‘rtasida muloqot"
+msgstr "Общение между школами и сотрудниками"
+
+msgid "Hisob administrator tomonidan yaratiladi. Maktab nomidan portalga faqat direktor kiradi."
+msgstr "Учётную запись создаёт администратор. От имени школы в портал входит только директор."

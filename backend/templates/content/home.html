@@ -1,20 +1,33 @@
 {% extends "base_public.html" %}
 {% load i18n %}
 {% block content %}
-<section class="hero" id="top">
-  <div data-ph="building"></div>
+<section class="hero2" id="top">
   <div class="container">
-    <div>
-      <h1>{{ SITE_DISTRICT }}<br>{{ SITE_SHORT }}</h1>
+    <div style="display:flex;flex-direction:column;min-width:0">
+      <span class="eyebrow">{{ SITE_DISTRICT }}</span>
+      <h1>{{ SITE_SHORT }}</h1>
       <p class="sub">{% translate "Ta’lim — kelajak poydevori" %}</p>
       <p class="lead">{% translate "Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!" %}</p>
-      <a class="btn btn-primary btn-lg" href="{% url 'content:news_list' %}">{% translate "Batafsil ma’lumot" %} <span data-i="arrow" data-c="sm"></span></a>
+      <div class="cta">
+        <a class="btn btn-primary btn-lg" href="{% url 'content:news_list' %}">{% translate "Batafsil ma’lumot" %} <span data-i="arrow" data-c="sm"></span></a>
+        {% if user.is_authenticated %}<a class="btn btn-lg btn-line" href="{% url 'portal:dashboard' %}">{% translate "Portal" %}</a>{% else %}<a class="btn btn-lg btn-line" href="{% url 'accounts:login' %}">{% translate "Kirish" %}</a>{% endif %}
+      </div>
     </div>
-    <aside class="hero-quote"><span data-i="quote"></span><p>{% translate "Yaxshi ustoz — yorqin kelajak yo‘lboshchisi." %}</p></aside>
+    <div class="hero-visual">
+      <div class="hero-frame"><div class="ph" data-ph="building"></div></div>
+      <aside class="hero-badge"><span class="ic-chip" data-i="quote"></span><div><b>{% translate "Yaxshi ustoz — yorqin kelajak yo‘lboshchisi." %}</b></div></aside>
+    </div>
   </div>
 </section>
 
 <div class="container">
+  <nav class="quick" aria-label="{% translate 'Asosiy menyu' %}">
+    <a href="{% url 'content:news_list' %}"><span class="ic-chip" data-i="news"></span><b>{% translate "Yangiliklar" %}</b></a>
+    <a href="{% url 'achievements_public:list' %}"><span class="ic-chip" data-i="trophy"></span><b>{% translate "Yutuqlar" %}</b></a>
+    <a href="{% url 'gallery_public:list' %}"><span class="ic-chip" data-i="image"></span><b>{% translate "Media" %}</b></a>
+    <a href="#hujjatlar"><span class="ic-chip" data-i="file"></span><b>{% translate "Hujjatlar" %}</b></a>
+    <a href="#boglanish"><span class="ic-chip" data-i="phone"></span><b>{% translate "Bog‘lanish" %}</b></a>
+  </nav>
   <div class="stats" id="statistika" aria-label="{% translate 'Statistika (namunaviy qiymatlar)' %}">
     <div class="card stat"><div class="ic-chip c-blue" data-i="school"></div><div><div class="n">00</div><div class="l">{% translate "Ta’lim muassasalari" %}</div></div></div>
     <div class="card stat"><div class="ic-chip c-blue" data-i="users"></div><div><div class="n">00</div><div class="l">{% translate "O‘qituvchilar va xodimlar" %}</div></div></div>

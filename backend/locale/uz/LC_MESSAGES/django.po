@@ -3717,3 +3717,15 @@ msgstr "Media faylni serverdan butunlay o‘chirish"
 #, python-format
 msgid "Topshiriqlar yaratildi: %(n)d ta (har bir muassasa uchun alohida)."
 msgstr "Topshiriqlar yaratildi: %(n)d ta (har bir muassasa uchun alohida)."
+
+msgid "Topshiriqlar va muddatlar"
+msgstr "Topshiriqlar va muddatlar"
+
+msgid "Yutuqlarni yuborish va nashr etish"
+msgstr "Yutuqlarni yuborish va nashr etish"
+
+msgid "Maktablar va xodimlar o‘rtasida muloqot"
+msgstr "Maktablar va xodimlar o‘rtasida muloqot"
+
+msgid "Hisob administrator tomonidan yaratiladi. Maktab nomidan portalga faqat direktor kiradi."
+msgstr "Hisob administrator tomonidan yaratiladi. Maktab nomidan portalga faqat direktor kiradi."

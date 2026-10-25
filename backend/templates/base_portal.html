@@ -6,11 +6,12 @@
 <title>{% block title %}{% translate "Portal" %}{% endblock %} — {{ SITE_NAME }}</title>
 <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
 <link rel="stylesheet" href="{% static 'css/backend.css' %}">
+<link rel="stylesheet" href="{% static 'css/theme.css' %}">
 </head>
 <body>
 <div class="app">
   <aside class="sidebar" aria-label="{% translate 'Asosiy navigatsiya' %}">
-    <a class="sb-brand" href="{% url 'portal:dashboard' %}" title="{{ SITE_NAME }}"><span data-logo style="display:block;width:40px;height:40px;flex:none"></span><div><b>{{ SITE_SHORT }}<br>{{ SITE_DISTRICT }}</b><small>{% translate "Xodimlar portali" %}</small></div></a>
+    <a class="sb-brand" href="{% url 'portal:dashboard' %}" title="{{ SITE_NAME }}">{% include "includes/logo.html" with size=40 dark=True %}<div><b>{{ SITE_SHORT }}<br>{{ SITE_DISTRICT }}</b><small>{% translate "Xodimlar portali" %}</small></div></a>
     <nav class="sb-nav" aria-label="{% translate 'Bo‘limlar' %}">
       <a href="{% url 'portal:dashboard' %}" title="{% translate 'Bosh sahifa' %}" {% if request.resolver_match.url_name == 'dashboard' %}class="active" aria-current="page"{% endif %}><i data-i="home" style="display:contents"></i><span>{% translate "Bosh sahifa" %}</span></a>
       {% if perms.content.view_news %}

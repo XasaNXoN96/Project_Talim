@@ -6,16 +6,17 @@
 <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
 <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
 <link rel="stylesheet" href="{% static 'css/backend.css' %}">
+<link rel="stylesheet" href="{% static 'css/theme.css' %}">
 </head>
 <body>
 <div class="login">
   <main class="login-form">
     <div class="login-lang">{% include "includes/language_switcher.html" %}</div>
-    <a class="brand" href="{% url 'content:home' %}"><span data-logo style="display:block;width:52px;height:52px;flex:none"></span><div><b>{{ SITE_DISTRICT }}</b><span>{{ SITE_SHORT }}</span></div></a>
+    <a class="brand" href="{% url 'content:home' %}">{% include "includes/logo.html" with size=52 %}<div><b>{{ SITE_DISTRICT }}</b><span>{{ SITE_SHORT }}</span></div></a>
     {% include "includes/messages.html" %}
     {% block content %}{% endblock %}
   </main>
-  <aside class="login-art"><div data-ph="building"></div><div><h2>{% translate "Ta’lim — kelajak poydevori" %}</h2><p>{{ SITE_NAME }}</p></div></aside>
+  {% include "includes/login_art.html" %}
 </div>
 <script src="{% static 'assets/js/app.js' %}"></script>
 </body>
