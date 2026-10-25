@@ -54,3 +54,6 @@ if not env("DEFAULT_FROM_EMAIL"):  # noqa: F405
 
 if DOCUMENT_SCAN_MODE != "clamav":  # noqa: F405
     raise ImproperlyConfigured("DOCUMENT_SCAN_MODE must be 'clamav' in production (uploads are never accepted unscanned).")
+
+if DEV_SKIP_TWO_FACTOR:  # noqa: F405
+    raise ImproperlyConfigured("DEV_SKIP_TWO_FACTOR must not be set in production: administrators always need the second factor.")

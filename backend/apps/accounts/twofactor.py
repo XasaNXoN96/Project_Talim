@@ -25,6 +25,8 @@ def requires_two_factor(user) -> bool:
     """Privileged accounts: superusers and holders of the roles in settings.TWO_FACTOR_REQUIRED_ROLES."""
     if not getattr(user, "is_authenticated", False) or not user.is_active:
         return False
+    if settings.DEBUG and getattr(settings, "DEV_SKIP_TWO_FACTOR", False):
+        return False  # local walkthrough only; a person who enrolled a device is still asked (see must_verify_two_factor)
     if user.is_superuser:
         return True
     return user.groups.filter(name__in=settings.TWO_FACTOR_REQUIRED_ROLES).exists()

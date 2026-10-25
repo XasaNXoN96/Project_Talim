@@ -165,6 +165,9 @@ THROTTLE_POLICIES = {
 
 # --- Two-factor authentication (TOTP)
 TWO_FACTOR_REQUIRED_ROLES = ["admin", "sysadmin"]  # superusers are always required as well
+# LOCAL DEVELOPMENT ONLY: skip the second factor so a walkthrough can sign in as an administrator without a phone app. It has an effect only while
+# DEBUG is on (never on a server: production.py also refuses to start with it set).
+DEV_SKIP_TWO_FACTOR = env_bool("DEV_SKIP_TWO_FACTOR", False)
 TWO_FACTOR_PENDING_SECONDS = 300  # time allowed between the password step and the code step
 TWO_FACTOR_ISSUER = "Mirzacho‘l XTB"
 # Comma-separated Fernet keys (newest first) used to encrypt TOTP secrets at rest. Never commit real keys.
