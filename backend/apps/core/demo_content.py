@@ -44,7 +44,7 @@ STAFF = [  # last, first, middle, position, school index (0-based into the schoo
     ("Ergasheva", "Sevinch", "Nodirovna", "O‘qituvchi", 3), ("Abdullayev", "Otabek", "Ilhomovich", "Ijtimoiy pedagog", 3),
     ("Sodiqova", "Zilola", "Ravshanovna", "Tarbiyachi", 5), ("Hamidov", "Jamshid", "Umidovich", "O‘qituvchi", 4),
     ("Ismoilova", "Nargiza", "Alisherovna", "Metodist", None), ("Ortiqov", "Farhod", "Davronovich", "Buxgalter", None),
-    ("Mamatqulova", "Shahnoza", "Otabekovna", "Inspektor", None), ("Zokirov", "Ulug‘bek", "Sanjarovich", "Bosh mutaxassis", None),
+    ("Mamatqulova", "Shahnoza", "Otabekovna", "Inspektor", None), ("Zokirov", "Jahongir", "Sanjarovich", "Bosh mutaxassis", None),
     ("Nazarova", "Feruza", "Jahongirovna", "O‘qituvchi", 6), ("Saidov", "Doston", "Mirzoyevich", "Direktor o‘rinbosari (moliya-xo‘jalik ishlari bo‘yicha)", 4),
 ]
 
