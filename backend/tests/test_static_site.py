@@ -12,7 +12,7 @@ STATIC_PAGES = [
     "index.html", "login.html", "news.html", "news-detail.html", "ustozlar.html", "ustoz.html",
     "media.html", "tashkilot.html", "hujjatlar.html",
     "app/dashboard.html", "app/xodimlar.html", "app/yangiliklar.html", "app/topshiriqlar.html",
-    "app/kirish-chiqish.html", "app/geolokatsiya.html", "app/hujjatlar.html", "app/yutuqlar.html",
+    "app/hujjatlar.html", "app/yutuqlar.html",
     "app/sertifikatlar.html", "app/media.html", "app/tashkilot.html", "app/chat.html",
     "app/bildirishnomalar.html", "app/hisobotlar.html", "app/admin.html",
 ]

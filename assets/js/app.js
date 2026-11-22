@@ -119,7 +119,7 @@
     ['dashboard', 'nav.home', 'home'], ['yangiliklar', 'nav.news', 'news'], ['xodimlar', 'nav.staff', 'users'],
     ['yutuqlar', 'nav.achievements', 'trophy'], ['sertifikatlar', 'nav.certs', 'award'], ['topshiriqlar', 'nav.tasks', 'clipboard'],
     ['hujjatlar', 'nav.docs', 'file'], ['media', 'nav.media', 'image'], ['tashkilot', 'nav.org', 'building'],
-    ['kirish-chiqish', 'nav.attendance', 'login'], ['geolokatsiya', 'nav.geo', 'pin'], ['chat', 'nav.chat', 'chat'],
+    ['chat', 'nav.chat', 'chat'],
     ['bildirishnomalar', 'nav.notifs', 'bell'], ['hisobotlar', 'nav.reports', 'chart'], ['admin', 'nav.admin', 'shield']
   ];
   if (body.dataset.shell === 'app') {
