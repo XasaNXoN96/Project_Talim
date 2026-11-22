@@ -1,8 +1,8 @@
 {% extends "base_public.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block content %}
 <section class="hero" id="top">
-  <div data-ph="building"></div>
+  <img class="hero-photo" src="{% static 'img/hero.jpg' %}" alt="">
   <div class="container">
     <div>
       <h1>{{ SITE_DISTRICT }}<br>{{ SITE_SHORT }}</h1>
@@ -16,11 +16,11 @@
 
 <div class="container">
   <div class="stats" id="statistika" aria-label="{% translate 'Statistika (namunaviy qiymatlar)' %}">
-    <div class="card stat"><div class="ic-chip c-blue" data-i="school"></div><div><div class="n">00</div><div class="l">{% translate "Ta’lim muassasalari" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-blue" data-i="users"></div><div><div class="n">00</div><div class="l">{% translate "O‘qituvchilar va xodimlar" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-teal" data-i="book"></div><div><div class="n">00</div><div class="l">{% translate "O‘quvchilar" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-green" data-i="layers"></div><div><div class="n">00</div><div class="l">{% translate "To‘garak va loyihalar" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-orange" data-i="trophy"></div><div><div class="n">00</div><div class="l">{% translate "Ustozlar yutuqlari" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-blue" data-i="school"></div><div><div class="n">48</div><div class="l">{% translate "Ta’lim muassasalari" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-blue" data-i="users"></div><div><div class="n">2 850</div><div class="l">{% translate "O‘qituvchilar va xodimlar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-teal" data-i="book"></div><div><div class="n">42 300</div><div class="l">{% translate "O‘quvchilar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-green" data-i="layers"></div><div><div class="n">120+</div><div class="l">{% translate "To‘garak va loyihalar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-orange" data-i="trophy"></div><div><div class="n">250+</div><div class="l">{% translate "Ustozlar yutuqlari" %}</div></div></div>
   </div>
   <p class="xs muted" style="margin-top:8px"><span class="demo-tag">{% translate "Maket" %}</span> {% translate "Raqamlar haqiqiy ma’lumot bilan almashtiriladi." %}</p>
 
@@ -56,7 +56,7 @@
     <section id="yutuqlar" aria-labelledby="h-t">
       <div class="sec-head"><h2 id="h-t">{% translate "Ustozlar yutuqlari" %}</h2>{% if latest_achievements %}<a class="more" href="{% url 'achievements_public:list' %}">{% translate "Barchasi" %}</a>{% endif %}</div>
       {% if latest_achievements %}
-      <div class="teachers">{% for a in latest_achievements %}<a class="card teacher" href="{% url 'achievements_public:detail' a.slug %}" style="color:inherit"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{{ a.person_name }}"></div><b>{{ a.person_name }}</b><span class="xs muted">{{ a.title }}</span></a>{% endfor %}</div>
+      <div class="teachers">{% for a in latest_achievements %}<a class="card teacher" href="{% url 'achievements_public:detail' a.slug %}" style="color:inherit"><span class="award" data-i="trophy" data-c="sm"></span>{% with im=a.images.all.0 %}{% if im and a.person_kind != "team" %}<div class="av av-photo"><img src="{% url 'achievements_public:image' im.pk %}" alt="{{ a.person_name }}" loading="lazy"></div>{% else %}<div class="av" data-name="{{ a.person_name }}"></div>{% endif %}{% endwith %}<b>{{ a.person_name }}</b><span class="xs muted">{{ a.title }}</span></a>{% endfor %}</div>
       {% else %}
       <div class="teachers">
         <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Ustoz' %}"></div><b>{% translate "Namuna Ustoz" %}</b><span class="xs muted">{% translate "Yilning eng yaxshi ustozi — 2026" %}</span></div>

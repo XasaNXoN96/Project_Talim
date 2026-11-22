@@ -23,6 +23,7 @@
       <a href="#boglanish">{% translate "Bog‘lanish" %}</a>
     </nav>
     <div class="pub-actions">
+      <form class="pub-search" role="search" method="get" action="{% url 'content:news_list' %}"><span data-i="search" data-c="sm"></span><input type="search" name="q" value="{{ request.GET.q }}" maxlength="80" aria-label="{% translate 'Qidirish' %}" placeholder="{% translate 'Qidirish' %}"></form>
       {% include "includes/language_switcher.html" %}
       {% if user.is_authenticated %}
         <a class="btn btn-primary" href="{% url 'portal:dashboard' %}"><span data-i="user" data-c="sm"></span><span>{% translate "Portal" %}</span></a>

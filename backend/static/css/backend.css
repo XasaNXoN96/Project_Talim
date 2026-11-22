@@ -157,3 +157,13 @@ img.av { object-fit: cover; background: var(--n-200, #e5eaf2); }
 img.cover-img { width: 100%; height: auto; object-fit: cover; display: block; background: var(--surface-2); }
 .news-card img.cover-img { border-radius: 0; }
 .article-cover { width: 100%; max-height: 460px; object-fit: cover; border-radius: var(--r); margin-bottom: 18px; display: block; }
+
+/* Real photographs (demo content): hero picture, round portraits, header search */
+.hero .hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+.hero::after { background: linear-gradient(90deg, rgba(8,25,64,.86) 0%, rgba(10,40,100,.5) 42%, rgba(10,40,100,.06) 100%); }
+.teacher .av.av-photo { width: 92px; height: 92px; border-radius: 12px; background: #e8edf5; overflow: hidden; }
+.teacher .av.av-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+.pub-search { display: flex; align-items: center; gap: 8px; background: #f1f4f9; border-radius: 999px; padding: 0 14px; height: 40px; color: var(--text-3); }
+.pub-search input { border: 0; background: transparent; outline: 0; width: 110px; font: inherit; color: var(--text); }
+.pub-search:focus-within { box-shadow: 0 0 0 2px var(--brand-500); }
+@media (max-width: 1099px) { .pub-search { display: none; } }

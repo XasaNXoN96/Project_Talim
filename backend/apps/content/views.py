@@ -17,7 +17,7 @@ class HomeView(TemplateView):
         context["latest_news"] = News.objects.published().select_related("category")[:6]
         context["latest_video"] = MediaItem.objects.published().filter(kind=MediaItem.Kind.VIDEO).first()
         context["latest_photos"] = list(MediaItem.objects.published().filter(kind=MediaItem.Kind.PHOTO)[:5])
-        context["latest_achievements"] = Achievement.objects.published().select_related("institution")[:4]
+        context["latest_achievements"] = Achievement.objects.published().select_related("institution").prefetch_related("images")[:4]
         return context
 
 
@@ -27,7 +27,9 @@ class NewsListView(ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        return News.objects.published().select_related("category")
+        qs = News.objects.published().select_related("category")
+        q = (self.request.GET.get("q") or "").strip()[:80]
+        return qs.filter(title__icontains=q) if q else qs
 
 
 class NewsDetailView(DetailView):

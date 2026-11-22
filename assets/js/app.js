@@ -53,7 +53,7 @@
   window.TALIM = { icon, ORG };
 
   /* ---- logo (temporary brand mark: open book + spark) ---- */
-  const LOGO = `<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#1f6bff"/><path d="M8 17c5-2 11-1 16 3v18c-5-4-11-5-16-3z" fill="#fff"/><path d="M40 17c-5-2-11-1-16 3v18c5-4 11-5 16-3z" fill="#cfe0ff"/><circle cx="24" cy="12" r="4" fill="#ffc83d"/><path d="M24 5v2M17 8l1.4 1.4M31 8l-1.4 1.4" stroke="#ffc83d" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+  const LOGO = `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 18c7-3 14-2 20 3v21c-6-5-13-6-20-3z" fill="#1f6bff"/><path d="M44 18c-7-3-14-2-20 3v21c6-5 13-6 20-3z" fill="#1fa971"/><path d="M24 21v-8" stroke="#1fa971" stroke-width="2.4" stroke-linecap="round"/><path d="M24 15c-1-5-5-7-9-6 0 4 3 7 9 6z" fill="#34c38f"/><path d="M24 13c1-4 4-6 8-5 0 4-3 6-8 5z" fill="#1f6bff"/></svg>`;
   window.TALIM.LOGO = LOGO;
 
   /* ---- placeholder scenes (no real photos — clearly illustrative) ---- */

@@ -129,6 +129,11 @@ def _now_minus(days, hour=10):
     return timezone.now().replace(hour=hour, minute=0, second=0, microsecond=0) - datetime.timedelta(days=days)
 
 
+def _is_female(patronymic):
+    p = (patronymic or "").lower()
+    return p.endswith(("ovna", "evna", "qizi")) if p else None
+
+
 def _staff_cards(schools):
     dept = Department.objects.get_or_create(name="DEMO bo‘lim", parent=None)[0]
     school_dept = school_staff_department()
@@ -142,10 +147,10 @@ def _staff_cards(schools):
             position=Position.objects.filter(name=pos).first(), status=Employee.Status.ACTIVE, work_phone=f"+998 00 000 {10 + i:02d} {20 + i:02d}",
             hired_at=datetime.date(2015 + i % 9, 1 + i % 12, 1 + i % 27),
         )
-        emp.photo.save(new_storage_name("jpg"), ContentFile(art.portrait_jpeg(100 + i)), save=True)
+        emp.photo.save(new_storage_name("jpg"), ContentFile(art.portrait_jpeg(100 + i, female=_is_female(middle))), save=True)
         made += 1
     for k, emp in enumerate(Employee.objects.filter(user__isnull=False, photo="")):  # demo accounts get portraits too
-        emp.photo.save(new_storage_name("jpg"), ContentFile(art.portrait_jpeg(200 + k)), save=True)
+        emp.photo.save(new_storage_name("jpg"), ContentFile(art.portrait_jpeg(200 + k, female=_is_female(emp.middle_name))), save=True)
         made += 1
     return made
 
@@ -179,6 +184,8 @@ def _achievements(admin, schools, directors):
             consent_confirmed=True, status="published", publish_at=_now_minus(days),
         )
         pics = []
+        if person_kind in ("teacher", "student"):  # the person's own picture goes first: it is the face on the home page card
+            pics.append(art.portrait_jpeg(days + len(title), "adult" if person_kind == "teacher" else "student", female=name.split()[0].lower().endswith(("ova", "eva", "ina", "ova,"))))
         if kind in ("certificate", "diploma", "medal", "award"):
             pics.append(art.certificate_jpeg(kind, title, name, LEVEL_LABEL[level], timezone.localdate().year, seed=days))
         pics.append(art.scene_jpeg(scene_kind, days)[0])

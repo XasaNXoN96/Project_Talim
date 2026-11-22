@@ -9,7 +9,7 @@ import math
 import random
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 FONT_DIR = Path(__file__).resolve().parents[2] / "assets" / "fonts"
 W, H = 1600, 1000
@@ -216,8 +216,28 @@ def scene(kind, seed=0, banner=""):
     return im.filter(ImageFilter.SMOOTH)
 
 
+PHOTOS = Path(__file__).resolve().parent / "demo_assets" / "photos"
+# which supplied picture shows which kind of scene (several kinds can share one picture; the seed picks between the alternatives)
+SCENE_PHOTOS = {
+    "ceremony": ["firstgraders", "staff", "olympiad"], "classroom": ["classroom", "computer"], "sport": ["sport"], "library": ["library", "classroom"],
+    "lab": ["computer", "classroom"], "building": ["building", "school"], "computer": ["computer", "classroom"], "music": ["dance"],
+    "olympiad": ["olympiad", "staff"], "garden": ["firstgraders", "school"],
+}
+
+
+def photo_scene(kind, seed=0, size=(1600, 1000)):
+    """A supplied demo photo for this kind of scene, or None when the files are not there."""
+    names = SCENE_PHOTOS.get(kind)
+    if not names:
+        return None
+    f = PHOTOS / f"scene_{names[seed % len(names)]}.jpg"
+    if not f.exists():
+        return None
+    return ImageOps.fit(Image.open(f).convert("RGB"), size, Image.Resampling.LANCZOS, centering=(0.5, 0.4))
+
+
 def scene_jpeg(kind, seed=0, banner=""):
-    im = scene(kind, seed, banner)
+    im = photo_scene(kind, seed) or scene(kind, seed, banner)
     return jpeg(im), jpeg(im.resize((480, 300), Image.Resampling.LANCZOS), 80)
 
 
@@ -256,8 +276,26 @@ def portrait(seed, size=720):
     return im
 
 
-def portrait_jpeg(seed):
-    return jpeg(portrait(seed, 720), 88)
+FEMALE = {"portrait_adult_c1", "portrait_adult_c3", "portrait_adult_c4", "portrait_adult_s65", "portrait_student_c1", "portrait_student_c3",
+          "portrait_student_s63", "portrait_student_s64"}
+
+
+def portrait_photo(seed, kind="adult", female=None):
+    """A supplied portrait photo (kind: adult | student; female True/False picks the matching gender, None = any); mirrored on later rounds so a
+    long staff list does not repeat exactly. None when the files are missing."""
+    files = sorted(PHOTOS.glob(f"portrait_{kind}_*.jpg"))
+    if female is not None:
+        files = [f for f in files if (f.stem in FEMALE) == female]
+    if not files:
+        return None
+    im = Image.open(files[seed % len(files)]).convert("RGB")
+    if (seed // len(files)) % 2:
+        im = ImageOps.mirror(im)
+    return im
+
+
+def portrait_jpeg(seed, kind="adult", female=None):
+    return jpeg(portrait_photo(seed, kind, female) or portrait(seed, 720), 88)
 
 
 def _star(d, cx, cy, r, fill):
