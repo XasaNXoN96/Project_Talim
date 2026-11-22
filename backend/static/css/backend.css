@@ -167,3 +167,50 @@ img.cover-img { width: 100%; height: auto; object-fit: cover; display: block; ba
 .pub-search input { border: 0; background: transparent; outline: 0; width: 110px; font: inherit; color: var(--text); }
 .pub-search:focus-within { box-shadow: 0 0 0 2px var(--brand-500); }
 @media (max-width: 1099px) { .pub-search { display: none; } }
+
+/* Filled, colourful icons (as in the approved mock-up): the line icons inside the coloured chips get a solid tint of their own colour */
+.ic-chip .ico, .teacher .award .ico { fill: currentColor; fill-opacity: .28; stroke-width: 1.6; width: 22px; height: 22px; }
+.teacher .award .ico { width: 16px; height: 16px; }
+.stat .ic-chip { width: 46px; height: 46px; border-radius: 14px; }
+.stat .ic-chip .ico { width: 26px; height: 26px; }
+.ic-chip.c-blue { background: #e3edff; color: #1f6bff; } .ic-chip.c-teal { background: #dff5f6; color: #0e9aa7; } .ic-chip.c-green { background: #dcf5e8; color: #17a05d; }
+.ic-chip.c-orange { background: #fff0d9; color: #f08a00; } .ic-chip.c-red { background: #ffe3e3; color: #e0382f; } .ic-chip.c-violet { background: #ece6ff; color: #7a4fe0; }
+.links .lk .ic-chip .ico, .list-rows .ic-chip .ico { fill-opacity: .3; }
+.links a.lk .ic-chip .ico, .list-rows .ic-chip .ico { color: inherit; }
+.banner .banner-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+
+/* ---- Home page as in the approved mock-up (desktop): compact hero, flat stat tiles under it, 4 portrait cards, dense blocks ---- */
+@media (min-width: 1100px) {
+  main { background: #fff; }
+  .hero { min-height: 230px; }
+  .hero .container { padding-block: 24px; grid-template-columns: 1.5fr .55fr; }
+  .hero h1 { font-size: 38px; line-height: 1.12; } .hero .sub { font-size: 18px; margin-top: 8px; } .hero .lead { margin: 4px 0 14px; font-size: 13px; }
+  .hero .btn-lg { height: 38px; padding-inline: 16px; font-size: 13px; }
+  .hero-quote { padding: 14px 18px; } .hero-quote p { font-size: 15px; }
+  .hero::after { background: linear-gradient(90deg, rgba(8,25,64,.78) 0%, rgba(10,40,100,.35) 40%, rgba(10,40,100,0) 70%); }
+  .stats { margin-top: 12px; gap: 12px; }
+  .stats .stat { background: #f3f6fb; border: 0; box-shadow: none; min-height: 58px; padding: 8px 14px; border-radius: 12px; }
+  .stats .stat .n { font-size: 20px; } .stats .stat .l { font-size: 12px; }
+  .stats .stat .ic-chip { background: transparent; }
+  main > .container > p.xs { margin-top: 4px !important; }
+  .sec { margin-top: 18px; } .sec-head h2, .sec-head h2[style] { font-size: 16px !important; } .sec-head { margin-bottom: 8px; } .more { font-size: 12px; }
+  .cols-3 { grid-template-columns: 2.2fr 1.25fr .85fr; gap: 20px; }
+  .news-grid { gap: 12px; }
+  .news-card { box-shadow: none; } .news-card .ratio-16-9 { aspect-ratio: 16 / 6; } .news-card .news-cat { display: none; }
+  .news-card h3 { font-size: 13px; line-height: 1.3; } .news-card .body { padding: 8px 10px 10px; gap: 3px; } .news-card p { font-size: 11.5px; -webkit-line-clamp: 3; } .news-card .go { padding-top: 4px; font-size: 12px; }
+  section[aria-labelledby="h-ann"] { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; }
+  .list-rows .li { padding: 6px 0; gap: 8px; } .list-rows .li .t1 { font-size: 12px; line-height: 1.3; } .list-rows .li .date { font-size: 11px; } .list-rows .ic-chip { width: 26px; height: 26px; border-radius: 8px; } .list-rows .ic-chip .ico { width: 15px; height: 15px; }
+  .links a.lk { padding: 6px 10px; font-size: 12.5px; margin-bottom: 6px; } .links a.lk .ic-chip { width: 28px; height: 28px; border-radius: 8px; } .links a.lk .ic-chip .ico { width: 16px; height: 16px; }
+  .cols-3b { grid-template-columns: 1.3fr 1.1fr .8fr; gap: 20px; }
+  .teachers { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .teacher { padding: 6px; text-align: left; box-shadow: none; }
+  .teacher .av.av-photo, .teacher .av { position: relative; width: 100%; height: auto; aspect-ratio: 4 / 5; border-radius: 8px; margin: 0 0 6px; }
+  .teacher .av .award { position: absolute; left: 6px; bottom: 6px; top: auto; width: 24px; height: 24px; background: #fff3d6; color: #f08a00; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  .teacher b { font-size: 11.5px; line-height: 1.25; } .teacher .xs { font-size: 10.5px; line-height: 1.3; display: block; }
+  .gallery { height: 200px; }
+  .pub-footer { padding-block: 0; } .pub-footer .container { padding-block: 18px 8px; } .foot-grid { gap: 20px; } .pub-footer .foot-grid p { font-size: 12.5px !important; margin-top: 8px !important; }
+  .pub-footer h4 { margin-bottom: 6px; font-size: 13px; } .pub-footer a, .foot-row { font-size: 12.5px; } .map-card { height: 110px; } .pub-footer .copy { margin-top: 8px; padding-top: 8px; }
+}
+.teacher .av .award .ico { width: 14px; height: 14px; }
+.pub-footer .soc { display: flex; gap: 10px; margin-top: 10px; } .pub-footer .soc > span { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.12); display: grid; place-items: center; color: #fff; }
+.map-card { position: relative; } .map-open { position: absolute; right: 10px; bottom: 10px; background: #1f6bff; color: #fff !important; padding: 6px 12px !important; border-radius: 999px; font-size: 12px !important; font-weight: 600; display: inline-block !important; }

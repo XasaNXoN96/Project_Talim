@@ -17,7 +17,7 @@ class HomeView(TemplateView):
         context["latest_news"] = News.objects.published().select_related("category")[:6]
         context["latest_video"] = MediaItem.objects.published().filter(kind=MediaItem.Kind.VIDEO).first()
         context["latest_photos"] = list(MediaItem.objects.published().filter(kind=MediaItem.Kind.PHOTO)[:5])
-        context["latest_achievements"] = Achievement.objects.published().select_related("institution").prefetch_related("images")[:4]
+        context["latest_achievements"] = Achievement.objects.published().filter(images__isnull=False).distinct().select_related("institution").prefetch_related("images")[:4]
         return context
 
 
