@@ -152,3 +152,8 @@ img.av { object-fit: cover; background: var(--n-200, #e5eaf2); }
 .lightbox .lb-count { max-width: 90%; text-align: center; }
 .photo .g { display: block; }
 .gallery a.g { display: block; border-radius: 12px; overflow: hidden; }
+
+/* news cover pictures */
+img.cover-img { width: 100%; height: auto; object-fit: cover; display: block; background: var(--surface-2); }
+.news-card img.cover-img { border-radius: 0; }
+.article-cover { width: 100%; max-height: 460px; object-fit: cover; border-radius: var(--r); margin-bottom: 18px; display: block; }
