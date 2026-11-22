@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(sys.argv[1])
-SKIP = {"__pycache__", ".venv", ".ruff_cache", "staticfiles", ".env", ".dev_mail", "tests", "deploy"}
+SKIP = {"__pycache__", ".venv", ".ruff_cache", "staticfiles", ".env", ".dev_mail", "tests", "deploy", "private_media"}
 
 
 def ignore(_d, names):
@@ -25,6 +25,8 @@ if OUT.exists():
     shutil.rmtree(OUT)
 (OUT / "api").mkdir(parents=True)
 shutil.copytree(ROOT / "backend", OUT / "backend", ignore=ignore)
+# the uploaded demo files: from the folder the demo data was created in (DJANGO_PRIVATE_MEDIA_ROOT), so old leftovers are not shipped
+shutil.copytree(os.environ.get("DJANGO_PRIVATE_MEDIA_ROOT") or ROOT / "backend" / "private_media", OUT / "backend" / "private_media")
 shutil.copytree(ROOT / "assets", OUT / "assets", ignore=ignore)
 shutil.copytree(ROOT / "backend" / "staticfiles", OUT / "public" / "static")
 for f in ("index.py", "setup.py"):

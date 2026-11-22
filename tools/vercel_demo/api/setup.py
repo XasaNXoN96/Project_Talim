@@ -28,6 +28,8 @@ def app(environ, start_response):
     try:
         if step == "migrate":
             call_command("migrate", interactive=False, stdout=out, verbosity=1)
+        elif step == "reset":
+            call_command("flush", interactive=False, stdout=out, verbosity=1)  # empties every table, the demo file is then loaded again
         elif step == "load":
             from apps.documents.models import DocumentCategory
 
@@ -40,7 +42,7 @@ def app(environ, start_response):
 
             out.write(f"users={User.objects.count()} news={News.objects.count()} achievements={Achievement.objects.count()}")
         else:
-            return reply("400 Bad Request", "step=migrate|load|status")
+            return reply("400 Bad Request", "step=migrate|reset|load|status")
     except Exception as exc:  # noqa: BLE001 - the operator needs the class and message of any failure
         return reply("500 Internal Server Error", f"{type(exc).__name__}: {str(exc)[:600]}")
     return reply("200 OK", out.getvalue() or "ok")
