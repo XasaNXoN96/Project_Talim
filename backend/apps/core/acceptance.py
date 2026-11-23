@@ -37,6 +37,9 @@ class World:
         self.other = Department.objects.create(name="B")
         self.position = Position.objects.create(name="Metodist")
         self.institution = Institution.objects.create(name="1-sonli maktab", kind="school")
+        from apps.appeals.models import Appeal
+
+        self.appeal = Appeal.objects.create(full_name="Sinov Foydalanuvchi", phone="+998 90 000 00 00", message="Sinov uchun murojaat matni yetarlicha uzun.")
         self.users = {
             "emp": make_user("emp", role="employee"), "stranger": make_user("stranger", role="employee"),
             "content": make_user("content", role="content_manager"), "hr": make_user("hrista", role="hr"),
@@ -137,7 +140,7 @@ class World:
             "users:detail": {"pk": self.users["emp"].pk}, "users:edit": {"pk": self.users["emp"].pk}, "users:role_add": {"pk": self.users["emp"].pk},
             "users:role_remove": {"pk": self.users["emp"].pk, "assignment_id": self.assignment.pk}, "users:action": {"pk": self.users["emp"].pk, "action": "unlock"},
             "employees:detail": {"pk": self.card.pk}, "employees:photo": {"pk": self.card.pk}, "employees:edit": {"pk": self.card.pk}, "employees:archive": {"pk": self.card.pk}, "employees:restore": {"pk": self.card.pk},
-            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "gallery:file": {"pk": self.media_item.pk, "variant": "thumb"}, "gallery:edit": {"pk": self.media_item.pk}, "gallery:delete": {"pk": self.media_item.pk}, "gallery_public:file": {"pk": self.media_item.pk, "variant": "thumb"}, "reports:school": {"pk": self.institution.pk}, "chat:thread": {"pk": self.conversation.pk}, "chat:archive_thread": {"pk": self.conversation.pk}, "employees:change_detail": {"pk": self.change_request.pk}, "employees:change_decide": {"pk": self.change_request.pk, "decision": "reject"}, "employees:change_cancel": {"pk": self.change_request.pk}, "employees:institution_edit": {"pk": self.institution.pk},
+            "employees:department_edit": {"pk": self.child.pk}, "employees:position_edit": {"pk": self.position.pk}, "gallery:file": {"pk": self.media_item.pk, "variant": "thumb"}, "gallery:edit": {"pk": self.media_item.pk}, "gallery:delete": {"pk": self.media_item.pk}, "gallery_public:file": {"pk": self.media_item.pk, "variant": "thumb"}, "reports:school": {"pk": self.institution.pk}, "chat:thread": {"pk": self.conversation.pk}, "chat:archive_thread": {"pk": self.conversation.pk}, "employees:change_detail": {"pk": self.change_request.pk}, "employees:change_decide": {"pk": self.change_request.pk, "decision": "reject"}, "employees:change_cancel": {"pk": self.change_request.pk}, "employees:institution_edit": {"pk": self.institution.pk}, "appeals_admin:detail": {"pk": self.appeal.pk}, "content:institution": {"pk": self.institution.pk}, "content:teacher_photo": {"pk": self.appeal.pk},
             "tasks:detail": {"pk": t}, "tasks:edit": {"pk": t}, "tasks:comment": {"pk": t}, "tasks:attachment_add": {"pk": t},
             "tasks:attachment_download": {"pk": t, "attachment_id": self.attachment.pk}, "tasks:attachment_remove": {"pk": t, "attachment_id": self.attachment.pk},
             "tasks:transition": {"pk": t, "status": "done"},

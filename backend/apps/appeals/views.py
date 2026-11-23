@@ -94,9 +94,6 @@ class AppealDetailView(PortalPermissionMixin, View):
 
     def get(self, request, pk):
         appeal = get_object_or_404(Appeal, pk=pk)
-        if appeal.status == Appeal.Status.NEW and request.user.has_perm("appeals.answer_appeal"):
-            Appeal.objects.filter(pk=pk, status=Appeal.Status.NEW).update(status=Appeal.Status.IN_PROGRESS)
-            appeal.status = Appeal.Status.IN_PROGRESS
         form = AnswerForm(initial={"status": appeal.status if appeal.status != Appeal.Status.NEW else Appeal.Status.IN_PROGRESS, "answer": appeal.answer})
         return render(request, "appeals/detail.html", {"appeal": appeal, "form": form, "can_answer": request.user.has_perm("appeals.answer_appeal")})
 

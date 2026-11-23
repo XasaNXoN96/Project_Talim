@@ -360,3 +360,5 @@ table.t.stack-m td a, table.t.stack-m td b, table.t.stack-m td span:not(.badge) 
 .nav-extra { display: none !important; }
 @media (max-width: 1099px) { .nav-extra { display: block !important; } }
 @media (max-width: 640px) { .pub-search-btn { display: none; } .pub-header .brand { min-width: 120px; } }
+/* a person's portrait is shown whole (face and shoulders), a certificate or group photo keeps the wide frame */
+.ach-card .ach-img.ach-person { aspect-ratio: 1 / 1; object-position: center top; }

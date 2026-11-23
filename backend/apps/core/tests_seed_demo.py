@@ -43,7 +43,7 @@ class SeedDemoTests(TestCase):
         counts = (User.objects.count(), Institution.objects.count(), Task.objects.count(), Achievement.objects.count(), MediaItem.objects.count())
         self.run_it()
         self.assertEqual(counts, (User.objects.count(), Institution.objects.count(), Task.objects.count(), Achievement.objects.count(), MediaItem.objects.count()))
-        self.assertEqual(Institution.objects.filter(name__startswith="DEMO").count(), 8)  # three schools of the walkthrough and five more of other kinds
+        self.assertEqual(Institution.objects.count(), 8)  # three schools of the walkthrough and five more of other kinds
         statuses = list(Achievement.objects.values_list("status", flat=True))
         for status in ("draft", "submitted", "changes_requested", "published"):
             self.assertIn(status, statuses)

@@ -81,7 +81,7 @@ class PortalAppealTests(TestCase):
         self.assertContains(c.get(reverse("appeals_admin:list")), self.appeal.code)
         self.assertEqual(c.get(reverse("appeals_admin:detail", args=[self.appeal.pk])).status_code, 200)
         self.appeal.refresh_from_db()
-        self.assertEqual(self.appeal.status, "in_progress")  # opening takes it into work
+        self.assertEqual(self.appeal.status, "new")  # reading never changes data
         c.post(reverse("appeals_admin:detail", args=[self.appeal.pk]), {"status": "answered", "answer": "Rahmat, hal qilindi."})
         self.appeal.refresh_from_db()
         self.assertEqual((self.appeal.status, self.appeal.answer), ("answered", "Rahmat, hal qilindi."))
