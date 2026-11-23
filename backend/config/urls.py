@@ -20,6 +20,7 @@ urlpatterns = [
     path("portal/tasks/", include("apps.tasks.urls")),
     path("portal/documents/", include("apps.documents.urls")),
     path("portal/reports/", include("apps.reports.urls")),
+    path("portal/site/", include("apps.content.site_urls")),
     path("portal/appeals/", include("apps.appeals.manage_urls")),
     path("portal/notifications/", include("apps.notifications.urls")),
     path("portal/", include("apps.portal.urls")),

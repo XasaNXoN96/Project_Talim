@@ -15,6 +15,8 @@
   </div>
 </section>
 
+{% if ticker %}<div class="ticker" role="region" aria-label="{% translate 'E’lonlar' %}"><div class="container"><span class="ticker-tag">{% translate "E’lon" %}</span><div class="ticker-view"><div class="ticker-track">{% for _i in "12" %}{% for a in ticker %}{% if a.safe_link %}<a href="{{ a.safe_link }}">{{ a.text }}</a>{% else %}<span>{{ a.text }}</span>{% endif %}<i aria-hidden="true">•</i>{% endfor %}{% endfor %}</div></div></div></div>{% endif %}
+
 <div class="container">
   <div class="stats" id="statistika" aria-label="{% translate 'Statistika (namunaviy qiymatlar)' %}">
     <div class="card stat"><div class="ic-chip c-blue" data-i="f-school"></div><div><div class="n" data-count="48">48</div><div class="l">{% translate "Ta’lim muassasalari" %}</div></div></div>
@@ -95,6 +97,33 @@
       <p class="xs muted" style="margin-top:2px">01.10.2026 · <span class="demo-tag">{% translate "Maket" %}</span> {% translate "ko‘rishlar va izohlar soni tizim ulanganda ko‘rsatiladi" %}</p>
           {% endif %}
     </section>
+  </div>
+
+
+  <div class="cols-2 sec" id="tadbirlar">
+    <section aria-labelledby="h-ev">
+      <div class="sec-head"><h2 id="h-ev">{% translate "Tadbirlar kalendari" %}</h2><a class="more" href="{% url 'content:events' %}">{% translate "Barchasi" %}</a></div>
+      {% if events %}<div class="events">{% for e in events %}<div class="card event"><div class="ev-date"><b>{{ e.date|date:"d" }}</b><span>{{ e.date|date:"M" }}</span></div><div class="ev-body"><h3>{{ e.title }}</h3>{% if e.description %}<p>{{ e.description }}</p>{% endif %}<span class="xs muted">{% if e.time %}<span data-i="clock" data-c="sm"></span> {{ e.time|time:"H:i" }}{% endif %}{% if e.place %} · <span data-i="f-pin" data-c="sm"></span> {{ e.place }}{% endif %}</span></div></div>{% endfor %}</div>
+      {% else %}<div class="card empty"><div class="ic-chip c-blue" data-i="f-doc"></div><h3>{% translate "Yaqin tadbirlar yo‘q" %}</h3></div>{% endif %}
+    </section>
+    {% if leaders %}<section aria-labelledby="h-ld">
+      <div class="sec-head"><h2 id="h-ld">{% translate "Rahbariyat" %}</h2></div>
+      <div class="leaders">{% for l in leaders %}<div class="card leader">{% if l.photo %}<img src="{% url 'content:leader_photo' l.pk %}" alt="{{ l.full_name }}" loading="lazy">{% else %}<div class="av lg" data-name="{{ l.full_name }}"></div>{% endif %}<div><b>{{ l.full_name }}</b><span class="xs muted">{{ l.position }}</span>{% if l.reception %}<span class="xs"><span data-i="clock" data-c="sm"></span> {{ l.reception }}</span>{% endif %}{% if l.phone %}<span class="xs"><span data-i="f-phone" data-c="sm"></span> {{ l.phone }}</span>{% endif %}</div></div>{% endfor %}</div>
+    </section>{% endif %}
+  </div>
+
+  <div class="cols-2 sec" id="xarita">
+    <section aria-labelledby="h-map">
+      <div class="sec-head"><h2 id="h-map">{% translate "Tuman xaritasi" %}</h2><a class="more" href="{% url 'content:institutions' %}">{% translate "Barcha muassasalar" %}</a></div>
+      <div class="card district-map" role="img" aria-label="{% translate 'Tuman sxemasi: muassasalar joylashuvi' %}">
+        <svg viewBox="0 0 100 60" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100" height="60" fill="#e9f1fb"/><path d="M-5 42C15 36 25 46 45 40S75 30 105 38V70H-5z" fill="#d6e8d2"/><path d="M0 22C20 14 30 24 52 18S82 8 100 14" fill="none" stroke="#9ec5ee" stroke-width="3.5" stroke-linecap="round"/><path d="M8 58L38 6M40 58L55 4M70 58L85 8" stroke="#fff" stroke-width="1.6" fill="none"/><path d="M0 30L100 34" stroke="#fff" stroke-width="2" fill="none"/></svg>
+        {% for i in map_schools %}<a class="map-pin" style="left:{{ i.map_x }}%;top:{{ i.map_y }}%" href="{% url 'content:institution' i.pk %}" title="{{ i.name }}"><span data-i="f-pin"></span><span class="sr-only">{{ i.name }}</span></a>{% endfor %}
+      </div>
+    </section>
+    {% if faqs %}<section aria-labelledby="h-faq">
+      <div class="sec-head"><h2 id="h-faq">{% translate "Ko‘p beriladigan savollar" %}</h2></div>
+      <div class="faq">{% for f in faqs %}<details class="card"><summary>{{ f.question }}</summary><p>{{ f.answer|linebreaksbr }}</p></details>{% endfor %}</div>
+    </section>{% endif %}
   </div>
 
   <section class="sec" id="hujjatlar" aria-labelledby="h-d">

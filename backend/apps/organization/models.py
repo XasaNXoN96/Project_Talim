@@ -99,6 +99,8 @@ class Institution(TimeStampedModel):
     email = models.EmailField(_("e-pochta"), blank=True)
     description = models.TextField(_("qisqacha ma’lumot"), max_length=2000, blank=True)
     students_count = models.PositiveIntegerField(_("o‘quvchilar soni"), null=True, blank=True)
+    map_x = models.PositiveSmallIntegerField(_("xaritada: chapdan (0-100)"), null=True, blank=True)
+    map_y = models.PositiveSmallIntegerField(_("xaritada: yuqoridan (0-100)"), null=True, blank=True)
 
     class Meta:
         verbose_name = _("ta’lim muassasasi")

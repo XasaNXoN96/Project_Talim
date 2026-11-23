@@ -4273,3 +4273,99 @@ msgstr "You are not allowed to view this request."
 
 msgid "Ta’lim muassasalari ro‘yxati"
 msgstr "List of educational institutions"
+
+msgid "Tadbirlar kalendari"
+msgstr "Events calendar"
+
+msgid "Yaqin tadbirlar yo‘q"
+msgstr "No upcoming events"
+
+msgid "Rahbariyat"
+msgstr "Leadership"
+
+msgid "Tuman xaritasi"
+msgstr "District map"
+
+msgid "Tuman sxemasi: muassasalar joylashuvi"
+msgstr "District scheme: location of institutions"
+
+msgid "Ko‘p beriladigan savollar"
+msgstr "Frequently asked questions"
+
+msgid "E’lon"
+msgstr "Notice"
+
+msgid "Bosh sahifa bloklari"
+msgstr "Home page blocks"
+
+msgid "Saytning bosh sahifasidagi yugurma qator, tadbirlar, rahbariyat va savol-javoblarni shu yerda tahrirlang."
+msgstr "Edit the announcement strip, events, leadership and FAQ of the home page here."
+
+msgid "ta yozuv"
+msgstr "entries"
+
+msgid "Yugurma qator (e’lonlar)"
+msgstr "Announcement strip"
+
+msgid "Ko‘p beriladigan savollar "
+msgstr "FAQ"
+
+msgid "Yozuv"
+msgstr "Entry"
+
+msgid "Saytda"
+msgstr "On the site"
+
+msgid "Yashirin"
+msgstr "Hidden"
+
+msgid "O‘chirilsinmi?"
+msgstr "Delete this entry?"
+
+msgid "Hozircha yozuv yo‘q"
+msgstr "No entries yet"
+
+msgid "Yangi yozuv"
+msgstr "New entry"
+
+msgid "O‘chirildi."
+msgstr "Deleted."
+
+msgid "Havola / bilan yoki https:// bilan boshlansin."
+msgstr "The link must start with / or https://."
+
+msgid "havola (ixtiyoriy)"
+msgstr "link (optional)"
+
+msgid "Saytning ichki manzili, masalan /murojaat/ yoki to‘liq https:// havola."
+msgstr "An internal address such as /murojaat/ or a full https:// link."
+
+msgid "tartib"
+msgstr "order"
+
+msgid "sana"
+msgstr "date"
+
+msgid "vaqt"
+msgstr "time"
+
+msgid "joy"
+msgstr "place"
+
+msgid "qisqacha tavsif"
+msgstr "short description"
+
+msgid "F.I.Sh. "
+msgstr "Full name"
+
+msgid "qabul vaqti"
+msgstr "reception hours"
+
+msgid "savol"
+msgstr "question"
+
+msgid "xaritada: chapdan (0-100)"
+msgstr "on the map: from left (0–100)"
+
+msgid "xaritada: yuqoridan (0-100)"
+msgstr "on the map: from top (0–100)"

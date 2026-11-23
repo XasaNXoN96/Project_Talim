@@ -21,7 +21,7 @@ from apps.tasks.models import Task, TaskAttachment
 
 from .acceptance import ACTORS, World, app_routes, required_permissions
 
-PUBLIC = {"healthz", "csp_report", "set_language", "content:home", "content:institutions", "content:institution", "content:teachers", "content:teacher_photo", "content:search", "appeals:create", "appeals:status", "content:news_list", "content:news_detail", "content:news_cover", "achievements_public:list", "achievements_public:detail", "achievements_public:image", "achievements_public:video", "gallery_public:list", "gallery_public:file", "accounts:login", "accounts:logout",
+PUBLIC = {"healthz", "csp_report", "set_language", "content:home", "content:institutions", "content:institution", "content:teachers", "content:teacher_photo", "content:search", "content:events", "content:leader_photo", "appeals:create", "appeals:status", "content:news_list", "content:news_detail", "content:news_cover", "achievements_public:list", "achievements_public:detail", "achievements_public:image", "achievements_public:video", "gallery_public:list", "gallery_public:file", "accounts:login", "accounts:logout",
           "accounts:two_factor_verify", "accounts:two_factor_setup", "accounts:password_reset", "accounts:password_reset_done",
           "accounts:password_reset_confirm", "accounts:password_reset_complete", "accounts:password_change"}
 CSRF_EXEMPT = {"csp_report"}
@@ -161,6 +161,8 @@ class RouteMatrixTests(TestCase):
                 tampered["step"] = "no-such-step"
             if "section" in tampered:
                 tampered["section"] = "no-such-section"
+            if "kind" in tampered:
+                tampered["kind"] = "no-such-kind"
             if "token" in tampered:
                 tampered["token"] = "bad-token"
             for method in ("get", "post"):

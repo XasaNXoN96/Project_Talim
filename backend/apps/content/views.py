@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 
@@ -9,7 +10,7 @@ from apps.gallery.models import MediaItem
 from apps.organization.models import Employee, Institution
 
 from .covers import cover_response
-from .models import News
+from .models import Announcement, Faq, Leader, News, SiteEvent
 
 
 class HomeView(TemplateView):
@@ -20,6 +21,12 @@ class HomeView(TemplateView):
         context["latest_news"] = News.objects.published().select_related("category")[:6]
         context["latest_video"] = MediaItem.objects.published().filter(kind=MediaItem.Kind.VIDEO).first()
         context["latest_photos"] = list(MediaItem.objects.published().filter(kind=MediaItem.Kind.PHOTO)[:5])
+        today = timezone.localdate()
+        context["ticker"] = [a for a in Announcement.objects.filter(is_published=True)[:8] if a.text]
+        context["events"] = SiteEvent.objects.filter(is_published=True, date__gte=today)[:4]
+        context["leaders"] = Leader.objects.filter(is_published=True)[:3]
+        context["faqs"] = Faq.objects.filter(is_published=True)[:8]
+        context["map_schools"] = Institution.objects.filter(is_published=True, map_x__isnull=False, map_y__isnull=False)[:40]
         context["latest_achievements"] = Achievement.objects.published().filter(images__isnull=False).distinct().select_related("institution").prefetch_related("images")[:4]
         return context
 
@@ -153,3 +160,30 @@ class SearchView(TemplateView):
             context["people"] = _public_staff().filter(Q(last_name__icontains=q) | Q(first_name__icontains=q) | Q(position__name__icontains=q))[:8]
             context["found"] = any(context[k] for k in ("news", "achievements", "institutions", "people"))
         return context
+
+
+class EventListView(ListView):
+    template_name = "content/event_list.html"
+    context_object_name = "events"
+    paginate_by = 20
+
+    def get_queryset(self):
+        return SiteEvent.objects.filter(is_published=True, date__gte=timezone.localdate())
+
+
+class LeaderPhotoView(View):
+    """Public photo of a leader, only while the entry is published."""
+
+    def get(self, request, pk):
+        leader = Leader.objects.filter(pk=pk, is_published=True).exclude(photo="").first()
+        if leader is None:
+            raise Http404
+        try:
+            handle = leader.photo.storage.open(leader.photo.name, "rb")
+        except (FileNotFoundError, ValueError, OSError) as exc:
+            raise Http404 from exc
+        response = FileResponse(handle, content_type="image/jpeg")
+        response["X-Content-Type-Options"] = "nosniff"
+        response["Cache-Control"] = "public, max-age=3600"
+        response["Content-Security-Policy"] = "default-src 'none'; sandbox"
+        return response

@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (HomeView, InstitutionDetailView, InstitutionListView, NewsCoverView, NewsDetailView, NewsListView, SearchView, TeacherListView,
-                    TeacherPhotoView)
+                    TeacherPhotoView, LeaderPhotoView, EventListView)
 
 app_name = "content"
 
@@ -13,6 +13,8 @@ urlpatterns = [
     path("muassasalar/<uuid:pk>/", InstitutionDetailView.as_view(), name="institution"),
     path("ustozlar/", TeacherListView.as_view(), name="teachers"),
     path("ustozlar/rasm/<uuid:pk>/", TeacherPhotoView.as_view(), name="teacher_photo"),
+    path("tadbirlar/", EventListView.as_view(), name="events"),
+    path("rahbariyat/rasm/<uuid:pk>/", LeaderPhotoView.as_view(), name="leader_photo"),
     path("qidiruv/", SearchView.as_view(), name="search"),
     path("yangiliklar/<slug:slug>/", NewsDetailView.as_view(), name="news_detail"),
 ]

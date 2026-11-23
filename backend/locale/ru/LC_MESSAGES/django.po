@@ -4273,3 +4273,99 @@ msgstr "У вас нет права просматривать этот запр
 
 msgid "Ta’lim muassasalari ro‘yxati"
 msgstr "Список образовательных учреждений"
+
+msgid "Tadbirlar kalendari"
+msgstr "Календарь событий"
+
+msgid "Yaqin tadbirlar yo‘q"
+msgstr "Ближайших событий нет"
+
+msgid "Rahbariyat"
+msgstr "Руководство"
+
+msgid "Tuman xaritasi"
+msgstr "Карта района"
+
+msgid "Tuman sxemasi: muassasalar joylashuvi"
+msgstr "Схема района: расположение учреждений"
+
+msgid "Ko‘p beriladigan savollar"
+msgstr "Часто задаваемые вопросы"
+
+msgid "E’lon"
+msgstr "Объявление"
+
+msgid "Bosh sahifa bloklari"
+msgstr "Блоки главной страницы"
+
+msgid "Saytning bosh sahifasidagi yugurma qator, tadbirlar, rahbariyat va savol-javoblarni shu yerda tahrirlang."
+msgstr "Здесь редактируются бегущая строка, события, руководство и вопросы-ответы главной страницы."
+
+msgid "ta yozuv"
+msgstr "записей"
+
+msgid "Yugurma qator (e’lonlar)"
+msgstr "Бегущая строка (объявления)"
+
+msgid "Ko‘p beriladigan savollar "
+msgstr "Часто задаваемые вопросы"
+
+msgid "Yozuv"
+msgstr "Запись"
+
+msgid "Saytda"
+msgstr "На сайте"
+
+msgid "Yashirin"
+msgstr "Скрыто"
+
+msgid "O‘chirilsinmi?"
+msgstr "Удалить запись?"
+
+msgid "Hozircha yozuv yo‘q"
+msgstr "Записей пока нет"
+
+msgid "Yangi yozuv"
+msgstr "Новая запись"
+
+msgid "O‘chirildi."
+msgstr "Удалено."
+
+msgid "Havola / bilan yoki https:// bilan boshlansin."
+msgstr "Ссылка должна начинаться с / или https://."
+
+msgid "havola (ixtiyoriy)"
+msgstr "ссылка (необязательно)"
+
+msgid "Saytning ichki manzili, masalan /murojaat/ yoki to‘liq https:// havola."
+msgstr "Внутренний адрес сайта, например /murojaat/, или полная ссылка https://."
+
+msgid "tartib"
+msgstr "порядок"
+
+msgid "sana"
+msgstr "дата"
+
+msgid "vaqt"
+msgstr "время"
+
+msgid "joy"
+msgstr "место"
+
+msgid "qisqacha tavsif"
+msgstr "краткое описание"
+
+msgid "F.I.Sh. "
+msgstr "Ф.И.О."
+
+msgid "qabul vaqti"
+msgstr "время приёма"
+
+msgid "savol"
+msgstr "вопрос"
+
+msgid "xaritada: chapdan (0-100)"
+msgstr "на карте: слева (0–100)"
+
+msgid "xaritada: yuqoridan (0-100)"
+msgstr "на карте: сверху (0–100)"

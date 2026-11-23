@@ -136,11 +136,11 @@ class PositionForm(forms.ModelForm):
 class InstitutionForm(forms.ModelForm):
     class Meta:
         model = Institution
-        fields = ["name", "kind", "head_name", "address", "phone", "email", "description", "students_count", "is_published"]
+        fields = ["name", "kind", "head_name", "address", "phone", "email", "description", "students_count", "map_x", "map_y", "is_published"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for name in ("name", "kind", "head_name", "address", "phone", "email", "description", "students_count"):
+        for name in ("name", "kind", "head_name", "address", "phone", "email", "description", "students_count", "map_x", "map_y"):
             self.fields[name].widget.attrs["class"] = "input"
 
     def clean_name(self):

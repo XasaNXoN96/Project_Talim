@@ -1,0 +1,7 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Bosh sahifa bloklari" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Bosh sahifa bloklari" %}</h1><p>{% translate "Saytning bosh sahifasidagi yugurma qator, tadbirlar, rahbariyat va savol-javoblarni shu yerda tahrirlang." %}</p></div></div>
+<div class="auto-grid">{% for code, label, n in cards %}<a class="card admin-tile" href="{% url 'site_admin:list' code %}"><span class="ic-chip c-blue" data-i="f-doc"></span><div><b>{{ label }}</b><small>{{ n }} {% translate "ta yozuv" %}</small></div></a>{% endfor %}</div>
+{% endblock %}

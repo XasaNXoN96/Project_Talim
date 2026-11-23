@@ -1,0 +1,13 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{{ label }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'site_admin:index' %}">{% translate "Bosh sahifa bloklari" %}</a></div><h1>{{ label }}</h1></div><a class="btn btn-primary" href="{% url 'site_admin:new' kind %}">{% translate "Qo‘shish" %}</a></div>
+{% if items %}
+<div class="table-wrap"><table class="t stack-m"><thead><tr><th>{% translate "Yozuv" %}</th><th>{% translate "Holat" %}</th><th></th></tr></thead><tbody>
+{% for o in items %}<tr><td><b>{{ o }}</b></td><td>{% if o.is_published %}<span class="badge b-ok">{% translate "Saytda" %}</span>{% else %}<span class="badge plain">{% translate "Yashirin" %}</span>{% endif %}</td>
+<td class="nw"><a class="btn btn-secondary btn-sm" href="{% url 'site_admin:edit' kind o.pk %}">{% translate "Tahrirlash" %}</a>
+<form method="post" action="{% url 'site_admin:delete' kind o.pk %}" style="display:inline" data-confirm="{% translate 'O‘chirilsinmi?' %}">{% csrf_token %}<button class="btn btn-ghost btn-sm" type="submit">{% translate "O‘chirish" %}</button></form></td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<div class="card empty"><div class="ic-chip c-blue" data-i="f-doc"></div><h3>{% translate "Hozircha yozuv yo‘q" %}</h3></div>{% endif %}
+{% endblock %}

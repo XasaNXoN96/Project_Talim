@@ -45,6 +45,9 @@
       {% else %}
       <a href="{% url 'portal:preview' 'chat' %}" title="{% translate 'Chat' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'chat' %}class="active" aria-current="page"{% endif %}><i data-i="chat" style="display:contents"></i><span>{% translate "Chat" %}</span></a>
       {% endif %}
+      {% if perms.content.manage_site %}
+      <a href="{% url 'site_admin:index' %}" title="{% translate 'Bosh sahifa bloklari' %}" {% if request.resolver_match.namespace == 'site_admin' %}class="active" aria-current="page"{% endif %}><i data-i="grid" style="display:contents"></i><span>{% translate "Bosh sahifa bloklari" %}</span></a>
+      {% endif %}
       {% if perms.appeals.view_appeal %}
       <a href="{% url 'appeals_admin:list' %}" title="{% translate 'Murojaatlar' %}" {% if request.resolver_match.namespace == 'appeals_admin' %}class="active" aria-current="page"{% endif %}><i data-i="msg" style="display:contents"></i><span>{% translate "Murojaatlar" %}</span></a>
       {% endif %}
@@ -96,5 +99,6 @@
 <script src="{% static 'assets/js/app.js' %}?v={{ ASSET_V }}"></script>
 <script src="{% static 'js/shell.js' %}"></script>
 <script src="{% static 'js/gallery.js' %}?v={{ ASSET_V }}"></script>
+<script src="{% static 'js/portal.js' %}?v={{ ASSET_V }}"></script>
 </body>
 </html>

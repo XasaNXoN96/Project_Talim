@@ -1,0 +1,11 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+{% block title %}{% translate "Tadbirlar kalendari" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><span>{% translate "Tadbirlar kalendari" %}</span></div><h1>{% translate "Tadbirlar kalendari" %}</h1></div></section>
+<div class="container pub-body">
+  {% if events %}<div class="events">{% for e in events %}<div class="card event"><div class="ev-date"><b>{{ e.date|date:"d" }}</b><span>{{ e.date|date:"M" }}</span></div><div class="ev-body"><h3>{{ e.title }}</h3>{% if e.description %}<p>{{ e.description }}</p>{% endif %}<span class="xs muted">{{ e.date|date:"d.m.Y" }}{% if e.time %} · {{ e.time|time:"H:i" }}{% endif %}{% if e.place %} · {{ e.place }}{% endif %}</span></div></div>{% endfor %}</div>
+  {% include "includes/pagination.html" %}
+  {% else %}<div class="card empty"><div class="ic-chip c-blue" data-i="f-doc"></div><h3>{% translate "Yaqin tadbirlar yo‘q" %}</h3></div>{% endif %}
+</div>
+{% endblock %}

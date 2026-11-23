@@ -4273,3 +4273,99 @@ msgstr "Bu so‘rovni ko‘rishga ruxsatingiz yo‘q."
 
 msgid "Ta’lim muassasalari ro‘yxati"
 msgstr "Ta’lim muassasalari ro‘yxati"
+
+msgid "Tadbirlar kalendari"
+msgstr "Tadbirlar kalendari"
+
+msgid "Yaqin tadbirlar yo‘q"
+msgstr "Yaqin tadbirlar yo‘q"
+
+msgid "Rahbariyat"
+msgstr "Rahbariyat"
+
+msgid "Tuman xaritasi"
+msgstr "Tuman xaritasi"
+
+msgid "Tuman sxemasi: muassasalar joylashuvi"
+msgstr "Tuman sxemasi: muassasalar joylashuvi"
+
+msgid "Ko‘p beriladigan savollar"
+msgstr "Ko‘p beriladigan savollar"
+
+msgid "E’lon"
+msgstr "E’lon"
+
+msgid "Bosh sahifa bloklari"
+msgstr "Bosh sahifa bloklari"
+
+msgid "Saytning bosh sahifasidagi yugurma qator, tadbirlar, rahbariyat va savol-javoblarni shu yerda tahrirlang."
+msgstr "Saytning bosh sahifasidagi yugurma qator, tadbirlar, rahbariyat va savol-javoblarni shu yerda tahrirlang."
+
+msgid "ta yozuv"
+msgstr "ta yozuv"
+
+msgid "Yugurma qator (e’lonlar)"
+msgstr "Yugurma qator (e’lonlar)"
+
+msgid "Ko‘p beriladigan savollar "
+msgstr "Ko‘p beriladigan savollar "
+
+msgid "Yozuv"
+msgstr "Yozuv"
+
+msgid "Saytda"
+msgstr "Saytda"
+
+msgid "Yashirin"
+msgstr "Yashirin"
+
+msgid "O‘chirilsinmi?"
+msgstr "O‘chirilsinmi?"
+
+msgid "Hozircha yozuv yo‘q"
+msgstr "Hozircha yozuv yo‘q"
+
+msgid "Yangi yozuv"
+msgstr "Yangi yozuv"
+
+msgid "O‘chirildi."
+msgstr "O‘chirildi."
+
+msgid "Havola / bilan yoki https:// bilan boshlansin."
+msgstr "Havola / bilan yoki https:// bilan boshlansin."
+
+msgid "havola (ixtiyoriy)"
+msgstr "havola (ixtiyoriy)"
+
+msgid "Saytning ichki manzili, masalan /murojaat/ yoki to‘liq https:// havola."
+msgstr "Saytning ichki manzili, masalan /murojaat/ yoki to‘liq https:// havola."
+
+msgid "tartib"
+msgstr "tartib"
+
+msgid "sana"
+msgstr "sana"
+
+msgid "vaqt"
+msgstr "vaqt"
+
+msgid "joy"
+msgstr "joy"
+
+msgid "qisqacha tavsif"
+msgstr "qisqacha tavsif"
+
+msgid "F.I.Sh. "
+msgstr "F.I.Sh. "
+
+msgid "qabul vaqti"
+msgstr "qabul vaqti"
+
+msgid "savol"
+msgstr "savol"
+
+msgid "xaritada: chapdan (0-100)"
+msgstr "xaritada: chapdan (0-100)"
+
+msgid "xaritada: yuqoridan (0-100)"
+msgstr "xaritada: yuqoridan (0-100)"

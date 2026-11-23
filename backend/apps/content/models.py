@@ -104,3 +104,80 @@ class NewsReview(TimeStampedModel):
     class Meta:
         ordering = ["created_at"]
         indexes = [models.Index(fields=["news", "created_at"])]
+
+
+class Announcement(TimeStampedModel):
+    """A short line in the running strip under the header of the home page."""
+
+    text = models.CharField(_("matn"), max_length=200)
+    link = models.CharField(_("havola (ixtiyoriy)"), max_length=300, blank=True, help_text=_("Saytning ichki manzili, masalan /murojaat/ yoki to‘liq https:// havola."))
+    is_published = models.BooleanField(_("saytda ko‘rsatish"), default=True)
+    position = models.PositiveSmallIntegerField(_("tartib"), default=0)
+
+    class Meta:
+        ordering = ["position", "-created_at"]
+        verbose_name = _("e’lon (yugurma qator)")
+        verbose_name_plural = _("e’lonlar (yugurma qator)")
+        permissions = [("manage_site", "Can edit the home page blocks (events, leaders, FAQ, announcement strip)")]
+
+    def __str__(self):
+        return self.text
+
+    def safe_link(self):
+        link = (self.link or "").strip()
+        return link if link.startswith(("/", "https://", "http://")) and not link.startswith("//") else ""
+
+
+class SiteEvent(TimeStampedModel):
+    """An upcoming event of the district (olympiad, meeting, holiday) for the calendar block."""
+
+    title = models.CharField(_("nomi"), max_length=200)
+    date = models.DateField(_("sana"))
+    time = models.TimeField(_("vaqt"), null=True, blank=True)
+    place = models.CharField(_("joy"), max_length=200, blank=True)
+    description = models.CharField(_("qisqacha tavsif"), max_length=300, blank=True)
+    is_published = models.BooleanField(_("saytda ko‘rsatish"), default=True)
+
+    class Meta:
+        ordering = ["date", "time"]
+        verbose_name = _("tadbir")
+        verbose_name_plural = _("tadbirlar")
+
+    def __str__(self):
+        return f"{self.date:%d.%m.%Y} · {self.title}"
+
+
+class Leader(TimeStampedModel):
+    """A member of the department's leadership shown on the home page (photo is public only while published)."""
+
+    full_name = models.CharField(_("F.I.Sh."), max_length=150)
+    position = models.CharField(_("lavozim"), max_length=200)
+    reception = models.CharField(_("qabul vaqti"), max_length=200, blank=True)
+    phone = models.CharField(_("telefon"), max_length=32, blank=True)
+    email = models.EmailField(_("e-pochta"), blank=True)
+    photo = models.FileField(storage=PrivateStorage(), max_length=120, blank=True)
+    is_published = models.BooleanField(_("saytda ko‘rsatish"), default=True)
+    position_order = models.PositiveSmallIntegerField(_("tartib"), default=0)
+
+    class Meta:
+        ordering = ["position_order", "full_name"]
+        verbose_name = _("rahbar")
+        verbose_name_plural = _("rahbariyat")
+
+    def __str__(self):
+        return f"{self.full_name} ({self.position})"
+
+
+class Faq(TimeStampedModel):
+    question = models.CharField(_("savol"), max_length=250)
+    answer = models.TextField(_("javob"), max_length=2000)
+    is_published = models.BooleanField(_("saytda ko‘rsatish"), default=True)
+    position = models.PositiveSmallIntegerField(_("tartib"), default=0)
+
+    class Meta:
+        ordering = ["position", "created_at"]
+        verbose_name = _("savol-javob")
+        verbose_name_plural = _("ko‘p beriladigan savollar")
+
+    def __str__(self):
+        return self.question

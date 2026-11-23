@@ -420,3 +420,24 @@ img.av { object-fit: cover; object-position: center 12%; }
 /* the shared rule that pushes the LAST icon of a link to the right edge (the arrow) must not move the glyph inside the coloured tile */
 .links a.lk .ic-chip .ico:last-child { margin: 0 !important; color: inherit; }
 .links a.lk > span[data-i="right"] { margin-left: auto; display: inline-flex; color: var(--text-3); }
+
+/* ---- Home page extra blocks: announcement strip, calendar, leadership, district map, FAQ ---- */
+.ticker { background: #0f2a5c; color: #fff; } .ticker .container { display: flex; align-items: center; gap: 14px; height: 40px; overflow: hidden; }
+.ticker-tag { flex: none; background: #f59a0c; color: #fff; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; padding: 4px 10px; border-radius: 6px; }
+.ticker-view { overflow: hidden; flex: 1; min-width: 0; mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); }
+.ticker-track { display: inline-flex; gap: 22px; white-space: nowrap; animation: ticker 55s linear infinite; padding-left: 100%; } .ticker-track a, .ticker-track span { color: #fff; font-size: 14px; } .ticker-track a:hover { text-decoration: underline; } .ticker-track i { color: #f59a0c; font-style: normal; }
+.ticker-view:hover .ticker-track { animation-play-state: paused; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; padding-left: 0; white-space: normal; flex-wrap: wrap; } }
+.cols-2 { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; align-items: start; } @media (max-width: 899px) { .cols-2 { grid-template-columns: minmax(0, 1fr); } }
+.events { display: grid; gap: 12px; } .event { display: flex; gap: 14px; padding: 14px; align-items: flex-start; }
+.ev-date { flex: none; width: 58px; height: 62px; border-radius: 12px; background: linear-gradient(135deg, #2f80ff, #1558e6); color: #fff; display: grid; place-items: center; align-content: center; line-height: 1.05; } .ev-date b { font-size: 24px; } .ev-date span { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+.ev-body h3 { font-size: 16px; margin-bottom: 2px; } .ev-body p { color: var(--text-2); font-size: 14px; margin: 0 0 4px; } .ev-body .xs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.leaders { display: grid; gap: 12px; } .leader { display: flex; gap: 14px; padding: 12px; align-items: center; } .leader img, .leader .av { width: 86px; height: 104px; border-radius: 12px; object-fit: cover; object-position: center top; flex: none; }
+.leader div > b { display: block; font-size: 16px; } .leader .xs { display: flex; gap: 6px; align-items: center; margin-top: 4px; }
+.district-map { position: relative; overflow: hidden; aspect-ratio: 100 / 60; padding: 0; } .district-map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-pin { position: absolute; transform: translate(-50%, -100%); color: #e5383b; width: 30px; height: 30px; display: block; filter: drop-shadow(0 2px 2px rgba(0,0,0,.3)); transition: transform .15s; } .map-pin:hover, .map-pin:focus-visible { transform: translate(-50%, -112%) scale(1.15); z-index: 2; }
+.map-pin .ico { width: 30px; height: 30px; }
+.faq { display: grid; gap: 10px; } .faq details { padding: 0; } .faq summary { cursor: pointer; padding: 14px 16px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 10px; } .faq summary::-webkit-details-marker { display: none; } .faq summary::after { content: "+"; font-size: 22px; line-height: 1; color: var(--brand-600); transition: transform .2s; } .faq details[open] summary::after { content: "–"; }
+.faq details p { margin: 0; padding: 0 16px 16px; color: var(--text-2); }
+.district-map { aspect-ratio: 100 / 44; }

@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 @lru_cache(maxsize=1)
 def asset_version():
     """Short hash of the shipped CSS/JS: it goes into every stylesheet/script URL (?v=...), so a new deployment is never shown with stale cached files."""
-    files = [settings.BASE_DIR / "static" / "css" / "backend.css", settings.BASE_DIR / "static" / "js" / "site.js", settings.BASE_DIR / "static" / "js" / "gallery.js",
+    files = [settings.BASE_DIR / "static" / "css" / "backend.css", settings.BASE_DIR / "static" / "js" / "site.js", settings.BASE_DIR / "static" / "js" / "gallery.js", settings.BASE_DIR / "static" / "js" / "portal.js",
              settings.BASE_DIR.parent / "assets" / "css" / "styles.css", settings.BASE_DIR.parent / "assets" / "js" / "app.js"]
     digest = hashlib.sha1()
     for f in files:

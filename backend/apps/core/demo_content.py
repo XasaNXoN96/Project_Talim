@@ -365,6 +365,50 @@ def _appeals(users):
     return made
 
 
+_MAP_POINTS = [(22, 58), (48, 46), (70, 62), (36, 30), (62, 28), (82, 44), (14, 36), (56, 74)]
+
+
+def _site_blocks():
+    """Announcement strip, calendar, leadership with portraits, FAQ and the pins of the district map."""
+    from apps.content.models import Announcement, Faq, Leader, SiteEvent
+
+    made = 0
+    for k, text in enumerate(["1-sinfga qabul 1-iyundan boshlanadi: hujjatlar maktablarda qabul qilinadi", "Fan olimpiadalarining tuman bosqichi 5-oktyabrda o‘tkaziladi",
+                              "Yangi o‘quv yili uchun metodik tavsiyalar «Hujjatlar» bo‘limida e’lon qilindi", "Fuqarolarning murojaatlari sayt orqali qabul qilinadi"]):
+        _o, c = Announcement.objects.get_or_create(text=text, defaults={"position": k, "link": "/murojaat/" if k == 3 else ""})
+        made += c
+    today = timezone.localdate()
+    for k, (title, days, hh, place, desc) in enumerate([
+        ("Fan olimpiadasi (tuman bosqichi)", 9, 10, "1-sonli maktab", "Matematika, fizika va ona tili fanlaridan."),
+        ("Maktab direktorlari yig‘ilishi", 14, 11, "Bo‘lim majlislar zali", "Yangi o‘quv yiliga tayyorgarlik holati."),
+        ("O‘qituvchilar malaka oshirish seminari", 21, 9, "Madaniyat markazi", "Zamonaviy o‘qitish usullari."),
+        ("Ota-onalar kuni", 30, 15, "Barcha maktablar", "Ochiq eshiklar kuni.")]):
+        _o, c = SiteEvent.objects.get_or_create(title=title, defaults={"date": today + datetime.timedelta(days=days), "time": datetime.time(hh, 0), "place": place, "description": desc})
+        made += c
+    for k, (name, pos, rec, phone) in enumerate([
+        ("Rahmonov Sherzod Ismoilovich", "Bo‘lim boshlig‘i", "Dushanba, chorshanba: 10:00–13:00", "+998 71 123 45 67"),
+        ("Karimova Dilfuza Anvarovna", "Boshliq o‘rinbosari", "Seshanba, payshanba: 14:00–17:00", "+998 71 123 45 68")]):
+        if Leader.objects.filter(full_name=name).exists():
+            continue
+        leader = Leader(full_name=name, position=pos, reception=rec, phone=phone, position_order=k)
+        leader.photo.save(new_storage_name("jpg"), ContentFile(art.portrait_jpeg(500 + k, "adult", female=bool(k))), save=False)
+        leader.save()
+        made += 1
+    for k, (q, a) in enumerate([
+        ("1-sinfga farzandimni qanday yozdiraman?", "Ariza 1-iyundan 31-avgustgacha qabul qilinadi. Tug‘ilganlik haqida guvohnoma, tibbiy ma’lumotnoma va ota-onaning pasporti kerak."),
+        ("Darsliklar qayerdan olinadi?", "Darsliklar maktab kutubxonasidan bepul beriladi."),
+        ("Maktabni almashtirish uchun nima qilish kerak?", "Joriy maktab direktoriga ariza yozing, so‘ng yangi maktabga hujjatlarni topshiring."),
+        ("Murojaatim qachon ko‘rib chiqiladi?", "Murojaatlar 15 kun ichida ko‘rib chiqiladi. Holatni kod bilan sayt orqali kuzatasiz.")]):
+        _o, c = Faq.objects.get_or_create(question=q, defaults={"answer": a, "position": k})
+        made += c
+    for k, inst in enumerate(Institution.objects.filter(is_published=True).order_by("name")):
+        if inst.map_x is None:
+            inst.map_x, inst.map_y = _MAP_POINTS[k % len(_MAP_POINTS)]
+            inst.save(update_fields=["map_x", "map_y"])
+            made += 1
+    return made
+
+
 def seed_rich(admin, users, schools, directors, stdout=None):
     """Add the large demo content. `schools` = the three base schools; the extra ones are created here."""
     extra = [Institution.objects.get_or_create(name=n, defaults={"kind": k, "head_name": h, "is_published": p})[0] for n, k, h, p in MORE_SCHOOLS]
@@ -380,6 +424,7 @@ def seed_rich(admin, users, schools, directors, stdout=None):
         "chats": _chat(users, directors),
         "notifications": _notifications(users, directors),
         "appeals": _appeals(users),
+        "home blocks": _site_blocks(),
     }
     if stdout is not None:
         stdout.write("Rich content added: " + ", ".join(f"{k}: {v}" for k, v in counts.items()))
