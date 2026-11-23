@@ -415,3 +415,8 @@ img.av { object-fit: cover; object-position: center 12%; }
 @media (min-width: 1500px) { .pub-actions .pub-search { width: 150px; } }
 .links a.lk .ic-chip.c-blue { --cut: #1d6df0; } .links a.lk .ic-chip.c-green { --cut: #14b36a; } .links a.lk .ic-chip.c-violet { --cut: #8650e2; } .links a.lk .ic-chip.c-orange { --cut: #f98f0b; }
 .links a.lk .ic-chip .ico [fill="#fff"] { fill: var(--cut) !important; }
+.ic-chip { display: grid; place-items: center; } .ic-chip > .ico, .ic-chip > svg { display: block; margin: 0; }
+.ic-chip { display: flex !important; align-items: center; justify-content: center; } .ic-chip::before, .ic-chip::after { content: none !important; }
+/* the shared rule that pushes the LAST icon of a link to the right edge (the arrow) must not move the glyph inside the coloured tile */
+.links a.lk .ic-chip .ico:last-child { margin: 0 !important; color: inherit; }
+.links a.lk > span[data-i="right"] { margin-left: auto; display: inline-flex; color: var(--text-3); }

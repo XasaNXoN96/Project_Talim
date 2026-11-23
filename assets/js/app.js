@@ -59,7 +59,9 @@
     'f-news': '<path d="M4 3h13v15.500c0 1.100.9 2 2 2H6a2 2 0 0 1-2-2zM19 7h2v11.500a2 2 0 0 1-2 2z"/><path fill="#fff" d="M6.500 6h8v2h-8zM6.500 10h8v1.600h-8zM6.500 13.500h8v1.600h-8z"/>',
     'f-pin': '<path d="M12 1.500a7.500 7.500 0 0 0-7.500 7.500c0 5.300 7.500 13.500 7.500 13.500s7.500-8.200 7.500-13.500A7.500 7.500 0 0 0 12 1.500zm0 10.300a2.800 2.800 0 1 1 0-5.600 2.800 2.800 0 0 1 0 5.600z"/>',
   };
-  const icon = (n, c = '') => `<svg class="ico ${c}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
+  /* optical centring of the solid icons: offset (x, y) that moves each glyph's centre to 12,12 */
+  const NUDGE = { 'f-school': [0, 1], 'f-phone': [0, 1.6], 'f-chat': [0, -0.75], 'f-news': [-0.5, 0.25], 'f-doc': [-0.25, 0], 'f-trophy': [0, 0.25], 'f-lock': [0, 0.05], 'f-cap': [0.1, 0.4] };
+  const icon = (n, c = '') => { const k = NUDGE[n], body = ICONS[n] || ''; return `<svg class="ico ${c}" viewBox="0 0 24 24" aria-hidden="true">${k ? `<g transform="translate(${k[0]} ${k[1]})">${body}</g>` : body}</svg>`; };
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const body = document.body;
   window.TALIM = { icon, ORG };
