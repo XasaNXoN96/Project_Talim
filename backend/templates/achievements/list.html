@@ -6,9 +6,9 @@
 <div class="container pub-body">
   <div class="tabs" style="margin-bottom:16px"><a class="tab {% if not kind %}active{% endif %}" href="?">{% translate "Barchasi" %}</a>{% for code, label in kinds %}<a class="tab {% if kind == code %}active{% endif %}" href="?kind={{ code }}">{{ label }}</a>{% endfor %}</div>
   {% if items %}
-    <div class="auto-grid">{% for a in items %}
-      <article class="card news-card">
-        {% with im=a.images.all.0 %}{% if im %}<img class="ratio-16-9" src="{% url 'achievements_public:image' im.pk %}" alt="" loading="lazy" style="object-fit:cover;width:100%">{% else %}<div class="ratio-16-9 ph-none"><span data-i="trophy"></span></div>{% endif %}{% endwith %}
+    <div class="ach-grid">{% for a in items %}
+      <article class="card news-card ach-card">
+        {% with im=a.images.all.0 %}{% if im %}<img class="ach-img" src="{% url 'achievements_public:image' im.pk %}" alt="{{ a.person_name }}" loading="lazy">{% else %}<div class="ach-img ph-none"><span data-i="trophy"></span></div>{% endif %}{% endwith %}
         <div class="body">
           <div class="row wrap"><span class="badge plain b-info">{{ a.get_kind_display }}</span><span class="badge plain">{{ a.get_level_display }}</span></div>
           <h3 class="clamp3"><a href="{% url 'achievements_public:detail' a.slug %}" style="color:inherit">{{ a.title }}</a></h3>

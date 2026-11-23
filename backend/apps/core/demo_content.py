@@ -190,6 +190,10 @@ def _news(admin):
 
 def _achievements(admin, schools, directors):
     made = 0
+    for k, a in enumerate(Achievement.objects.filter(images__isnull=True, status="published")):  # the short base demo items get a picture too
+        img = AchievementImage(achievement=a, position=0)
+        img.file.save(new_storage_name("jpg"), ContentFile(art.portrait_jpeg(300 + k, "adult")), save=False)
+        img.save()
     for title, kind, level, person_kind, name, position, school_idx, scene_kind, days, video_idx in ACHIEVEMENTS:
         institution = schools[min(school_idx, len(schools) - 1)]
         if Achievement.objects.filter(title=title).exists():

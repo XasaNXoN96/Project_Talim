@@ -21,6 +21,8 @@
       <a href="{% url 'content:home' %}#hujjatlar">{% translate "Hujjatlar" %}</a>
       <a href="{% url 'gallery_public:list' %}">{% translate "Media" %}</a>
       <a href="#boglanish">{% translate "Bog‘lanish" %}</a>
+      <a class="nav-extra" href="{% url 'appeals:create' %}">{% translate "Murojaat" %}</a>
+      <a class="nav-extra" href="{% url 'content:search' %}">{% translate "Qidirish" %}</a>
     </nav>
     <div class="pub-actions">
       <div class="a11y" role="group" aria-label="{% translate 'Ko‘rish qulayligi' %}"><button type="button" data-a11y="bigger" title="{% translate 'Matnni kattalashtirish' %}" aria-label="{% translate 'Matnni kattalashtirish' %}">A+</button><button type="button" data-a11y="contrast" aria-pressed="false" title="{% translate 'Yuqori kontrast' %}" aria-label="{% translate 'Yuqori kontrast' %}"><span data-i="eye" data-c="sm"></span></button><button type="button" data-a11y="reset" title="{% translate 'Asl holatiga qaytarish' %}" aria-label="{% translate 'Asl holatiga qaytarish' %}">A</button></div>
