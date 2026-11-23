@@ -295,3 +295,13 @@ form.card-pad, .stack { grid-template-columns: minmax(0, 1fr); }
 .kpi .ic-chip { width: 50px; height: 50px; border-radius: 14px; } .kpi .ic-chip .ico { width: 26px; height: 26px; }
 .kpi .ic-chip.c-blue { background: #e3edff; color: #2a7bff; } .kpi .ic-chip.c-teal { background: #dcf3f6; color: #0e9aa7; } .kpi .ic-chip.c-red { background: #ffe4e4; color: #e5383b; } .kpi .ic-chip.c-orange { background: #fff0d6; color: #f59a0c; }
 .kpi { box-shadow: 0 4px 16px rgba(16,36,77,.07); border-color: transparent; }
+
+/* ---- Taller header picture (the whole building is visible, as in the mock-up) and the cabinet start page order ---- */
+@media (min-width: 1100px) {
+  .hero { min-height: clamp(430px, 36vw, 560px); }
+  .hero .container { padding-block: 56px; }
+  .hero h1 { font-size: 46px; } .hero .sub { font-size: 21px; } .hero .lead { font-size: 15px; }
+  .hero .hero-photo { object-position: center 24%; }
+  .banner { min-height: 260px; }
+  .dash .dash-news { order: -1; }
+}
