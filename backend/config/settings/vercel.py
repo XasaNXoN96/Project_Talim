@@ -32,7 +32,8 @@ CSRF_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")  # Vercel's edge sets it
 DATABASES["default"]["OPTIONS"] = {"sslmode": "require"}  # noqa: F405
 DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True  # noqa: F405  (a pooled connection)
-DATABASES["default"]["CONN_MAX_AGE"] = 0  # noqa: F405
+DATABASES["default"]["CONN_MAX_AGE"] = 120  # noqa: F405  (a warm instance reuses its database connection instead of opening a new TLS one per request)
+DATABASES["default"]["CONN_HEALTH_CHECKS"] = True  # noqa: F405  (a connection the database closed meanwhile is replaced, not an error)
 
 # The pictures that ship with the deployment are read-only; copy them to /tmp once per instance.
 _SHIPPED = Path(__file__).resolve().parents[2] / "private_media"

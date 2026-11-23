@@ -4042,3 +4042,6 @@ msgstr "JPG or PNG, up to 8 MB. The picture is checked and re-encoded."
 
 msgid "Muqova rasmini olib tashlash"
 msgstr "Remove the cover picture"
+
+msgid "Xaritada ochish"
+msgstr "Open in maps"

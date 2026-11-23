@@ -4042,3 +4042,6 @@ msgstr "JPG или PNG, до 8 МБ. Изображение проверяетс
 
 msgid "Muqova rasmini olib tashlash"
 msgstr "Убрать обложку"
+
+msgid "Xaritada ochish"
+msgstr "Открыть на карте"

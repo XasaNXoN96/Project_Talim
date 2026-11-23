@@ -225,7 +225,7 @@ SCENE_PHOTOS = {
 }
 
 
-def photo_scene(kind, seed=0, size=(1600, 1000)):
+def photo_scene(kind, seed=0, size=(1200, 750)):
     """A supplied demo photo for this kind of scene, or None when the files are not there."""
     names = SCENE_PHOTOS.get(kind)
     if not names:
@@ -238,7 +238,7 @@ def photo_scene(kind, seed=0, size=(1600, 1000)):
 
 def scene_jpeg(kind, seed=0, banner=""):
     im = photo_scene(kind, seed) or scene(kind, seed, banner)
-    return jpeg(im), jpeg(im.resize((480, 300), Image.Resampling.LANCZOS), 80)
+    return jpeg(im, 78), jpeg(im.resize((480, 300), Image.Resampling.LANCZOS), 74)
 
 
 def portrait(seed, size=720):
@@ -295,7 +295,8 @@ def portrait_photo(seed, kind="adult", female=None):
 
 
 def portrait_jpeg(seed, kind="adult", female=None):
-    return jpeg(portrait_photo(seed, kind, female) or portrait(seed, 720), 88)
+    im = portrait_photo(seed, kind, female) or portrait(seed, 720)
+    return jpeg(im.resize((480, 480), Image.Resampling.LANCZOS), 82)
 
 
 def _star(d, cx, cy, r, fill):
@@ -351,7 +352,7 @@ def certificate(kind, title, recipient, level, year, seed=0):
 
 def certificate_jpeg(kind, title, recipient, level, year, seed=0):
     im = certificate(kind, title, recipient, level, year, seed)
-    return jpeg(im, 88)
+    return jpeg(im, 82)
 
 
 def pdf_bytes(title, lines):
