@@ -393,3 +393,25 @@ img.av { object-fit: cover; object-position: center 12%; }
 .pub-actions .lang-switch { height: 42px; align-items: center; }
 .pub-actions .btn { height: 42px; }
 @media (min-width: 1100px) and (max-width: 1399px) { .pub-search-btn { display: none; } .pub-actions { gap: 6px; } .pub-actions .btn { padding-inline: 14px; } }
+
+/* ---- Header right side as in the mock-up: wide search pill, language, eye menu, Kirish with a solid lock ---- */
+.pub-actions .a11y { display: none !important; } .pub-search-btn { display: none !important; }
+.pub-actions .pub-search { display: flex !important; align-items: center; gap: 8px; width: 190px; height: 42px; padding: 0 14px; border-radius: 999px; background: #f1f4f9; color: var(--text-2); }
+.pub-actions .pub-search input { border: 0; background: transparent; outline: 0; width: 100%; min-width: 0; font: inherit; color: var(--text); height: 100%; } .pub-actions .pub-search input::placeholder { color: transparent; }
+.pub-actions .pub-search:focus-within { box-shadow: 0 0 0 2px var(--brand-500); background: #fff; }
+.a11y-menu { position: relative; } .a11y-toggle { width: 42px; height: 42px; border-radius: 50%; border: 0; background: #f1f4f9; color: var(--text-2); display: grid; place-items: center; cursor: pointer; } .a11y-toggle:hover, .a11y-toggle[aria-expanded="true"] { background: var(--brand-50); color: var(--brand-600); }
+.a11y-pop { position: absolute; right: 0; top: calc(100% + 10px); min-width: 250px; background: #fff; border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 16px 40px rgba(16,36,77,.18); padding: 6px; z-index: 80; display: grid; gap: 2px; }
+.a11y-pop[hidden] { display: none; }
+.a11y-pop button { display: flex; align-items: center; gap: 10px; width: 100%; border: 0; background: transparent; padding: 10px 12px; border-radius: 10px; font: inherit; font-weight: 700; color: var(--text); cursor: pointer; text-align: left; }
+.a11y-pop button span { font-weight: 500; color: var(--text-2); } .a11y-pop button:hover, .a11y-pop button[aria-pressed="true"] { background: var(--brand-50); }
+.pub-actions .btn-primary [data-i="f-lock"] .ico { width: 18px; height: 18px; fill: #fff !important; }
+@media (max-width: 1499px) { .pub-actions .pub-search { width: 42px; padding: 0; justify-content: center; } .pub-actions .pub-search input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; } }
+@media (max-width: 1099px) { .pub-actions .pub-search, .a11y-menu { display: none !important; } }
+/* Important links: solid coloured rounded squares with SOLID white glyphs (as in the mock-up) */
+.links a.lk .ic-chip { width: 34px; height: 34px; border-radius: 10px; }
+.links a.lk .ic-chip .ico { width: 20px; height: 20px; fill: #fff !important; stroke: none !important; fill-opacity: 1 !important; }
+.links a.lk .ic-chip.c-blue { background: linear-gradient(135deg, #2f80ff, #1558e6) !important; } .links a.lk .ic-chip.c-green { background: linear-gradient(135deg, #22c97a, #0e9f5e) !important; }
+.links a.lk .ic-chip.c-violet { background: linear-gradient(135deg, #9b5cf0, #7240d8) !important; } .links a.lk .ic-chip.c-orange { background: linear-gradient(135deg, #ffa21f, #f07d00) !important; }
+@media (min-width: 1500px) { .pub-actions .pub-search { width: 150px; } }
+.links a.lk .ic-chip.c-blue { --cut: #1d6df0; } .links a.lk .ic-chip.c-green { --cut: #14b36a; } .links a.lk .ic-chip.c-violet { --cut: #8650e2; } .links a.lk .ic-chip.c-orange { --cut: #f98f0b; }
+.links a.lk .ic-chip .ico [fill="#fff"] { fill: var(--cut) !important; }

@@ -4270,3 +4270,6 @@ msgstr "обращения"
 
 msgid "Bu so‘rovni ko‘rishga ruxsatingiz yo‘q."
 msgstr "У вас нет права просматривать этот запрос."
+
+msgid "Ta’lim muassasalari ro‘yxati"
+msgstr "Список образовательных учреждений"

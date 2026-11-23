@@ -27,6 +27,15 @@
     });
   });
 
+  /* ---- accessibility menu (opens under the eye button) ---- */
+  var toggle = d.querySelector('.a11y-toggle'), pop = d.querySelector('.a11y-pop');
+  if (toggle && pop) {
+    var closePop = function () { pop.hidden = true; toggle.setAttribute('aria-expanded', 'false'); };
+    toggle.addEventListener('click', function (e) { e.stopPropagation(); var open = pop.hidden; pop.hidden = !open; toggle.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+    d.addEventListener('click', function (e) { if (!pop.contains(e.target)) closePop(); });
+    d.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePop(); toggle.focus(); } });
+  }
+
   /* ---- header picture slider ---- */
   var slider = d.querySelector('[data-slider]');
   if (slider) {

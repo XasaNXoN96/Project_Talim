@@ -4270,3 +4270,6 @@ msgstr "murojaatlar"
 
 msgid "Bu so‘rovni ko‘rishga ruxsatingiz yo‘q."
 msgstr "Bu so‘rovni ko‘rishga ruxsatingiz yo‘q."
+
+msgid "Ta’lim muassasalari ro‘yxati"
+msgstr "Ta’lim muassasalari ro‘yxati"

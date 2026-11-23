@@ -4270,3 +4270,6 @@ msgstr "appeals"
 
 msgid "Bu so‘rovni ko‘rishga ruxsatingiz yo‘q."
 msgstr "You are not allowed to view this request."
+
+msgid "Ta’lim muassasalari ro‘yxati"
+msgstr "List of educational institutions"
