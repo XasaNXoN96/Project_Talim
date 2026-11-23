@@ -45,7 +45,15 @@
     edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/>', trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
     tag: '<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1"/>', globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/>',
     tg: '<path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/>', fb: '<path d="M14 8h3V4h-3a4 4 0 00-4 4v3H7v4h3v5h4v-5h3l1-4h-4V8z"/>', ig: '<rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.5"/>', yt: '<rect x="3" y="6" width="18" height="12" rx="4"/><path d="M10 9.5v5l4.5-2.5z"/>',
-    msg: '<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21l3-4"/>', lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>', layers: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>', history: '<path d="M3 12a9 9 0 109-9 9 9 0 00-7 3.3L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>'
+    msg: '<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21l3-4"/>', lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>', layers: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>', history: '<path d="M3 12a9 9 0 109-9 9 9 0 00-7 3.3L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>',
+    /* filled icons (the solid coloured style of the approved design) */
+    'f-school': '<path d="M2 21V11l5-2.5V21zM9 21V3l6-2v20zM17 21V10l5 2.5V21z"/><path fill="#fff" d="M11 6h2v2h-2zM11 10h2v2h-2zM11 14h2v2h-2zM4 13h1.600v1.600H4zM4 16.500h1.600v1.600H4zM18.400 13H20v1.600h-1.600zM18.400 16.500H20v1.600h-1.600z"/>',
+    'f-users': '<circle cx="12" cy="7.500" r="3.500"/><path d="M5.500 20c0-4 2.800-6 6.500-6s6.500 2 6.500 6z"/><circle cx="4.800" cy="9.500" r="2.400"/><path d="M0.500 19c0-2.800 1.800-4.500 4.300-4.500.8 0 1.500.2 2.100.5-1.400 1.200-2.100 2.700-2.300 4z"/><circle cx="19.200" cy="9.500" r="2.400"/><path d="M23.500 19c0-2.800-1.800-4.500-4.300-4.500-.8 0-1.500.2-2.100.5 1.400 1.200 2.100 2.700 2.300 4z"/>',
+    'f-cap': '<path d="M12 3 0.800 9 12 15l9-4.800V17h2V9z"/><path d="M5 13.400V17c0 1.800 3.100 3.200 7 3.200s7-1.400 7-3.200v-3.600L12 17.200z"/>',
+    'f-book': '<path d="M1.500 5C5 3.400 8.700 3.600 12 5.800V20C8.700 18 5 17.800 1.500 19.400z"/><path d="M22.500 5C19 3.400 15.300 3.600 12 5.800V20c3.300-2 7-2.200 10.500-.6z" opacity=".78"/><path fill="#fff" d="M4 8.200c2-.6 4-.5 6 .5v1.200c-2-.9-4-1-6-.4zM4 11.700c2-.6 4-.5 6 .5v1.200c-2-.9-4-1-6-.4z"/>',
+    'f-trophy': '<path d="M7 2.500h10V8a5 5 0 0 1-10 0z"/><path d="M2.500 4H6v2.200A2.800 2.800 0 0 1 3.200 9H2.500zM21.500 4H18v2.200A2.800 2.800 0 0 0 20.800 9h.7z" opacity=".85"/><path d="M10.500 13h3v4h-3z"/><path d="M7 17.500h10V21H7z"/>',
+    'f-doc': '<path d="M5.500 2h9l4.500 4.500V22h-13.500z"/><path fill="#fff" d="M8.500 11h7v1.600h-7zM8.500 14.500h7v1.600h-7zM8.500 18h4.500v1.600H8.500z"/>',
+    'f-pin': '<path d="M12 1.500a7.500 7.500 0 0 0-7.500 7.500c0 5.300 7.500 13.500 7.500 13.500s7.500-8.200 7.500-13.500A7.500 7.500 0 0 0 12 1.500zm0 10.300a2.800 2.800 0 1 1 0-5.600 2.800 2.800 0 0 1 0 5.600z"/>',
   };
   const icon = (n, c = '') => `<svg class="ico ${c}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -54,6 +62,7 @@
 
   /* ---- logo (temporary brand mark: open book + spark) ---- */
   const LOGO = `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 18c7-3 14-2 20 3v21c-6-5-13-6-20-3z" fill="#1f6bff"/><path d="M44 18c-7-3-14-2-20 3v21c6-5 13-6 20-3z" fill="#1fa971"/><path d="M24 21v-8" stroke="#1fa971" stroke-width="2.4" stroke-linecap="round"/><path d="M24 15c-1-5-5-7-9-6 0 4 3 7 9 6z" fill="#34c38f"/><path d="M24 13c1-4 4-6 8-5 0 4-3 6-8 5z" fill="#1f6bff"/></svg>`;
+  const LOGO_SHIELD = `<svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="shg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd76a"/><stop offset="1" stop-color="#d79a1b"/></linearGradient></defs><path d="M24 2 42 8v14c0 11-7.5 19.5-18 24C13.5 41.5 6 33 6 22V8z" fill="url(#shg)"/><path d="M24 6.5 38.5 11v11c0 8.8-5.8 15.8-14.5 19.8C15.3 37.8 9.5 30.8 9.5 22V11z" fill="#12356f"/><path d="M14.5 20c3.5-1.3 7-.9 9.5 1.7V35c-2.5-2.2-6-2.7-9.5-1.5zM33.5 20c-3.5-1.3-7-.9-9.5 1.7V35c2.5-2.2 6-2.7 9.5-1.5z" fill="#fff"/><path d="M24 13v6" stroke="#ffd76a" stroke-width="2.2" stroke-linecap="round"/><circle cx="24" cy="11.5" r="2.2" fill="#ffd76a"/></svg>`;
   window.TALIM.LOGO = LOGO;
 
   /* ---- placeholder scenes (no real photos — clearly illustrative) ---- */
@@ -160,7 +169,7 @@
   const fillIcons = () => $$('[data-i]:not([data-d])').forEach(el => { el.dataset.d = 1; el.insertAdjacentHTML('afterbegin', icon(el.dataset.i, el.dataset.c || '')); });
   fillIcons();
   window.TALIM.refresh = () => { initVisuals(); fillIcons(); };
-  $$('[data-logo]').forEach(el => el.innerHTML = LOGO);
+  $$('[data-logo]').forEach(el => el.innerHTML = el.closest('.sb-brand') ? LOGO_SHIELD : LOGO);
 
   /* ---- toast ---- */
   const toast = msg => { let c = $('#toasts'); if (!c) { c = document.createElement('div'); c.id = 'toasts'; c.setAttribute('role', 'status'); document.body.append(c); } const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = icon('check') + `<span>${msg}</span>`; c.append(t); setTimeout(() => t.remove(), 3200); };

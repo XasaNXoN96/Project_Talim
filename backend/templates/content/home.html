@@ -16,11 +16,11 @@
 
 <div class="container">
   <div class="stats" id="statistika" aria-label="{% translate 'Statistika (namunaviy qiymatlar)' %}">
-    <div class="card stat"><div class="ic-chip c-blue" data-i="school"></div><div><div class="n">48</div><div class="l">{% translate "Ta’lim muassasalari" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-blue" data-i="users"></div><div><div class="n">2 850</div><div class="l">{% translate "O‘qituvchilar va xodimlar" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-teal" data-i="book"></div><div><div class="n">42 300</div><div class="l">{% translate "O‘quvchilar" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-green" data-i="layers"></div><div><div class="n">120+</div><div class="l">{% translate "To‘garak va loyihalar" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-orange" data-i="trophy"></div><div><div class="n">250+</div><div class="l">{% translate "Ustozlar yutuqlari" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-blue" data-i="f-school"></div><div><div class="n">48</div><div class="l">{% translate "Ta’lim muassasalari" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-blue" data-i="f-users"></div><div><div class="n">2 850</div><div class="l">{% translate "O‘qituvchilar va xodimlar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-blue" data-i="f-cap"></div><div><div class="n">42 300</div><div class="l">{% translate "O‘quvchilar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-green" data-i="f-book"></div><div><div class="n">120+</div><div class="l">{% translate "To‘garak va loyihalar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-orange" data-i="f-trophy"></div><div><div class="n">250+</div><div class="l">{% translate "Ustozlar yutuqlari" %}</div></div></div>
   </div>
   <p class="xs muted" style="margin-top:8px"><span class="demo-tag">{% translate "Maket" %}</span> {% translate "Raqamlar haqiqiy ma’lumot bilan almashtiriladi." %}</p>
 
@@ -36,11 +36,11 @@
     <section class="card card-pad" aria-labelledby="h-ann" style="padding:18px 20px">
       <div class="sec-head" style="margin-bottom:6px"><h2 id="h-ann" style="font-size:20px">{% translate "E’lonlar" %}</h2><a class="more" href="{% url 'content:news_list' %}">{% translate "Barchasi" %}</a></div>
       <div class="list-rows">
-        <div class="li"><span class="ic-chip c-orange" data-i="users"></span><span class="t1 grow">{% translate "O‘qituvchilar uchun attestatsiyaga tayyorgarlik seminari" %}</span><span class="date">01.10.2026</span></div>
-        <div class="li"><span class="ic-chip c-red" data-i="trophy"></span><span class="t1 grow">{% translate "Tuman bosqichidagi fan olimpiadasi" %}</span><span class="date">29.09.2026</span></div>
-        <div class="li"><span class="ic-chip c-orange" data-i="file"></span><span class="t1 grow">{% translate "Maktablar uchun metodik tavsiyalar" %}</span><span class="date">27.09.2026</span></div>
-        <div class="li"><span class="ic-chip c-blue" data-i="clipboard"></span><span class="t1 grow">{% translate "Yangi o‘quv yiliga oid tartib-qoidalar" %}</span><span class="date">25.09.2026</span></div>
-        <div class="li"><span class="ic-chip c-red" data-i="alert"></span><span class="t1 grow">{% translate "Bo‘sh ish o‘rinlari haqida ma’lumot" %}</span><span class="date">20.09.2026</span></div>
+        <div class="li"><span class="ic-chip c-orange" data-i="f-users"></span><span class="t1 grow">{% translate "O‘qituvchilar uchun attestatsiyaga tayyorgarlik seminari" %}</span><span class="date">01.10.2026</span></div>
+        <div class="li"><span class="ic-chip c-red" data-i="f-trophy"></span><span class="t1 grow">{% translate "Tuman bosqichidagi fan olimpiadasi" %}</span><span class="date">29.09.2026</span></div>
+        <div class="li"><span class="ic-chip c-orange" data-i="f-doc"></span><span class="t1 grow">{% translate "Maktablar uchun metodik tavsiyalar" %}</span><span class="date">27.09.2026</span></div>
+        <div class="li"><span class="ic-chip c-blue" data-i="f-doc"></span><span class="t1 grow">{% translate "Yangi o‘quv yiliga oid tartib-qoidalar" %}</span><span class="date">25.09.2026</span></div>
+        <div class="li"><span class="ic-chip c-red" data-i="f-pin"></span><span class="t1 grow">{% translate "Bo‘sh ish o‘rinlari haqida ma’lumot" %}</span><span class="date">20.09.2026</span></div>
       </div>
     </section>
     <section class="links" aria-labelledby="h-links">
@@ -56,13 +56,13 @@
     <section id="yutuqlar" aria-labelledby="h-t">
       <div class="sec-head"><h2 id="h-t">{% translate "Ustozlar yutuqlari" %}</h2>{% if latest_achievements %}<a class="more" href="{% url 'achievements_public:list' %}">{% translate "Barchasi" %}</a>{% endif %}</div>
       {% if latest_achievements %}
-      <div class="teachers">{% for a in latest_achievements %}<a class="card teacher" href="{% url 'achievements_public:detail' a.slug %}" style="color:inherit">{% with im=a.images.all.0 %}{% if im and a.person_kind != "team" %}<div class="av av-photo"><img src="{% url 'achievements_public:image' im.pk %}" alt="{{ a.person_name }}" loading="lazy"><span class="award" data-i="trophy" data-c="sm"></span></div>{% else %}<div class="av" data-name="{{ a.person_name }}"><span class="award" data-i="trophy" data-c="sm"></span></div>{% endif %}{% endwith %}<b>{{ a.person_name }}</b><span class="xs muted">{{ a.title }}</span></a>{% endfor %}</div>
+      <div class="teachers">{% for a in latest_achievements %}<a class="card teacher" href="{% url 'achievements_public:detail' a.slug %}" style="color:inherit">{% with im=a.images.all.0 %}{% if im and a.person_kind != "team" %}<div class="av av-photo"><img src="{% url 'achievements_public:image' im.pk %}" alt="{{ a.person_name }}" loading="lazy"><span class="award" data-i="f-trophy" data-c="sm"></span></div>{% else %}<div class="av" data-name="{{ a.person_name }}"><span class="award" data-i="f-trophy" data-c="sm"></span></div>{% endif %}{% endwith %}<b>{{ a.person_name }}</b><span class="xs muted">{{ a.title }}</span></a>{% endfor %}</div>
       {% else %}
       <div class="teachers">
-        <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Ustoz' %}"></div><b>{% translate "Namuna Ustoz" %}</b><span class="xs muted">{% translate "Yilning eng yaxshi ustozi — 2026" %}</span></div>
-        <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Muallim' %}"></div><b>{% translate "Namuna Muallim" %}</b><span class="xs muted">{% translate "Innovatsion loyihalar sovrindori" %}</span></div>
-        <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Metodist' %}"></div><b>{% translate "Namuna Metodist" %}</b><span class="xs muted">{% translate "Metodik ishlanmalar g‘olibi" %}</span></div>
-        <div class="card teacher"><span class="award" data-i="trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna IT-mutaxassis' %}"></div><b>{% translate "Namuna IT-mutaxassis" %}</b><span class="xs muted">{% translate "IT yo‘nalishi bo‘yicha yutuq" %}</span></div>
+        <div class="card teacher"><span class="award" data-i="f-trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Ustoz' %}"></div><b>{% translate "Namuna Ustoz" %}</b><span class="xs muted">{% translate "Yilning eng yaxshi ustozi — 2026" %}</span></div>
+        <div class="card teacher"><span class="award" data-i="f-trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Muallim' %}"></div><b>{% translate "Namuna Muallim" %}</b><span class="xs muted">{% translate "Innovatsion loyihalar sovrindori" %}</span></div>
+        <div class="card teacher"><span class="award" data-i="f-trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna Metodist' %}"></div><b>{% translate "Namuna Metodist" %}</b><span class="xs muted">{% translate "Metodik ishlanmalar g‘olibi" %}</span></div>
+        <div class="card teacher"><span class="award" data-i="f-trophy" data-c="sm"></span><div class="av" data-name="{% translate 'Namuna IT-mutaxassis' %}"></div><b>{% translate "Namuna IT-mutaxassis" %}</b><span class="xs muted">{% translate "IT yo‘nalishi bo‘yicha yutuq" %}</span></div>
       </div>
       {% endif %}
     </section>

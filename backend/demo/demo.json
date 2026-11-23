@@ -983,7 +983,7 @@
 "pk": "142e2ebf-6a7f-494d-93a7-df1f24946c31",
 "fields": {
 "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$dnQ5aHF1RDZyeWh4T2gxZTdVd25weA$bva8c70UlShWCmFwK/dKVv+mgVrEfdFz0n8FW3pVH0s",
-"last_login": null,
+"last_login": "2026-11-23T03:52:50.267Z",
 "is_superuser": false,
 "username": "demo_admin",
 "first_name": "Administrator",

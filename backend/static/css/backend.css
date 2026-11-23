@@ -166,7 +166,7 @@ img.cover-img { width: 100%; height: auto; object-fit: cover; display: block; ba
 .pub-search { display: flex; align-items: center; gap: 8px; background: #f1f4f9; border-radius: 999px; padding: 0 14px; height: 40px; color: var(--text-3); }
 .pub-search input { border: 0; background: transparent; outline: 0; width: 110px; font: inherit; color: var(--text); }
 .pub-search:focus-within { box-shadow: 0 0 0 2px var(--brand-500); }
-.pub-search { display: none; } @media (min-width: 1500px) { .pub-search { display: flex; } }
+.pub-search { display: flex; }
 
 /* Filled, colourful icons (as in the approved mock-up): the line icons inside the coloured chips get a solid tint of their own colour */
 .ic-chip .ico, .teacher .award .ico { fill: currentColor; fill-opacity: .28; stroke-width: 1.6; width: 22px; height: 22px; }
@@ -220,7 +220,7 @@ img.cover-img { width: 100%; height: auto; object-fit: cover; display: block; ba
 .stats .stat, .stats .stat > div { min-width: 0; } .stat .l { overflow-wrap: break-word; word-break: normal; hyphens: auto; }
 @media (max-width: 1099px) { .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } .stats .stat:last-child { grid-column: auto; } }
 @media (max-width: 767px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stats .stat:last-child { grid-column: 1 / -1; } .stat .n { font-size: 20px; } }
-@media (min-width: 1100px) and (max-width: 1439px) { .pub-nav a { padding: 8px 6px; font-size: 12.5px; } .pub-header .container { gap: 10px; } .brand b { font-size: 14px; } }
+@media (min-width: 1100px) { .pub-nav a { padding: 8px 7px; font-size: 13px; } .pub-header .container { gap: 10px; } .brand b { font-size: 14px; } }
 @media (max-width: 767px) { .form-grid { grid-template-columns: minmax(0, 1fr); } }
 .field, .form-grid > * { min-width: 0; } .input, select.input, textarea.input { max-width: 100%; }
 .content, .portal-main { min-width: 0; max-width: 100%; } .table-wrap { max-width: 100%; }
@@ -231,3 +231,67 @@ form.card-pad, .stack { grid-template-columns: minmax(0, 1fr); }
 .kpi, .kpis > * { min-width: 0; } .kpis, .kpi-grid { grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); }
 .rbar-lab { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
 @media (max-width: 767px) { .rbar-col:nth-child(even) .rbar-lab { visibility: hidden; } }
+
+/* ---- Wide screens: the whole interface scales up with the screen (as in the mock-up), so large monitors show a wide, full page instead of a narrow strip ---- */
+.container { width: min(1280px, 100% - 48px); }
+@media (min-width: 1550px) { html { zoom: 1.1; } }
+@media (min-width: 1750px) { html { zoom: 1.2; } }
+@media (min-width: 1900px) { html { zoom: 1.32; } }
+@media (min-width: 2300px) { html { zoom: 1.6; } }
+@media (min-width: 2900px) { html { zoom: 2; } }
+@media (min-width: 1100px) { .hero { min-height: 340px; } .hero .hero-photo { object-position: center 38%; } }
+
+/* Header search: a short pill as in the mock-up (icon + a small field), so the menu, languages and the Kirish button always fit */
+.pub-search { width: 104px; padding: 0 12px; } .pub-search input { width: 100%; min-width: 0; } .pub-search input::placeholder { color: transparent; }
+@media (min-width: 1100px) and (max-width: 1279px) { .pub-search { display: none; } }
+
+/* ---- Fidelity pass against the approved mock-up (home page) ---- */
+.pub-header .brand span[data-logo] { width: 52px !important; height: 52px !important; }
+.pub-header .brand b { font-size: 16px; font-weight: 700; } .pub-header .brand span:not([data-logo]) { font-size: 14px; color: var(--text); font-weight: 500; }
+.hero::after { background: linear-gradient(90deg, rgba(7,22,58,.82) 0%, rgba(10,38,96,.5) 38%, rgba(10,38,96,.05) 70%, rgba(0,0,0,0) 100%); }
+.hero-quote { background: rgba(20,30,48,.46); border: 1px solid rgba(255,255,255,.35); backdrop-filter: blur(3px); }
+.hero-quote .ico { fill: #fff; stroke: none; width: 30px; height: 30px; }
+/* stat tiles: white, soft shadow, big bare filled icons */
+@media (min-width: 1100px) { .stats .stat { background: #fff; box-shadow: 0 4px 18px rgba(16,36,77,.09); } }
+.stat .ic-chip { background: none !important; width: 46px; height: 46px; }
+.stat .ic-chip .ico { width: 40px; height: 40px; }
+[data-i^="f-"] > .ico { fill: currentColor; fill-opacity: 1; stroke: none; }
+.stat .ic-chip.c-blue { color: #2a7bff; } .stat .ic-chip.c-teal { color: #1c6fe0; } .stat .ic-chip.c-green { color: #17a86a; } .stat .ic-chip.c-orange { color: #f59a0c; }
+/* announcements: small filled coloured icons, no tile */
+.list-rows .ic-chip { background: none !important; } .list-rows .ic-chip .ico { width: 22px; height: 22px; }
+.list-rows .ic-chip.c-orange { color: #f5a623; } .list-rows .ic-chip.c-red { color: #e5383b; } .list-rows .ic-chip.c-blue { color: #2a6fe0; }
+/* important links: solid coloured rounded squares with white glyphs */
+.links a.lk { background: #fff; box-shadow: 0 2px 10px rgba(16,36,77,.07); }
+.links a.lk .ic-chip { width: 32px; height: 32px; border-radius: 9px; color: #fff !important; }
+.links a.lk .ic-chip .ico { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2; }
+.links a.lk .ic-chip.c-blue { background: #1f6bff !important; } .links a.lk .ic-chip.c-green { background: #12b76a !important; } .links a.lk .ic-chip.c-violet { background: #8a4fe8 !important; } .links a.lk .ic-chip.c-orange { background: #f58a0a !important; }
+/* teachers' achievements: portrait on a pale panel, big gold cup over the corner */
+.teacher .av.av-photo { background: linear-gradient(180deg, #f3f5f9, #e7ebf3); }
+.teacher .av .award { width: 34px; height: 34px; background: none !important; box-shadow: none !important; left: 4px; bottom: -14px; color: #f2a60d !important; filter: drop-shadow(0 2px 3px rgba(120,80,0,.35)); }
+.teacher .av .award .ico { width: 34px; height: 34px !important; }
+.teacher .award + * , .teacher b { margin-top: 10px; }
+.teacher { padding-bottom: 12px; }
+/* footer */
+.pub-footer { background: linear-gradient(135deg, #0b1b3b, #0f2a5c 60%, #0b2250); }
+.pub-footer .foot-row .ico, .pub-footer h4 + a { color: #fff; }
+.pub-footer .map-card { background: #eaf0fb; }
+.map-card .pin { filter: drop-shadow(0 2px 3px rgba(0,0,0,.3)); }
+[data-i^="f-"] > .ico { fill: currentColor !important; fill-opacity: 1 !important; stroke: none !important; }
+.teacher .av.av-photo { overflow: visible; } .teacher .av.av-photo img { border-radius: 8px; }
+.teacher .av .award { z-index: 3; bottom: -16px; left: 2px; }
+
+/* ---- Cabinet as in the approved mock-up: a floating dark menu panel and a white rounded work area on a pale background (desktop) ---- */
+@media (min-width: 1100px) {
+  body:has(.app) { background: #e8edf6; }
+  .app { padding: 12px; gap: 12px; }
+  .sidebar { top: 12px; height: calc(100vh - 24px); border-radius: 18px; box-shadow: 0 8px 28px rgba(8,22,56,.22); }
+  .main { background: #fff; border-radius: 18px; box-shadow: 0 6px 24px rgba(16,36,77,.07); overflow: clip; min-height: calc(100vh - 24px); }
+  .topbar { border-bottom: 0; top: 0; background: #fff; }
+  .topbar .search input { background: #f1f4f9; border-color: transparent; border-radius: 999px; }
+  .content { padding-top: 8px; }
+  .banner { border-radius: 16px; min-height: 200px; }
+}
+.sb-brand svg { width: 44px; height: 44px; }
+.kpi .ic-chip { width: 50px; height: 50px; border-radius: 14px; } .kpi .ic-chip .ico { width: 26px; height: 26px; }
+.kpi .ic-chip.c-blue { background: #e3edff; color: #2a7bff; } .kpi .ic-chip.c-teal { background: #dcf3f6; color: #0e9aa7; } .kpi .ic-chip.c-red { background: #ffe4e4; color: #e5383b; } .kpi .ic-chip.c-orange { background: #fff0d6; color: #f59a0c; }
+.kpi { box-shadow: 0 4px 16px rgba(16,36,77,.07); border-color: transparent; }

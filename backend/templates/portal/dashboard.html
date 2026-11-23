@@ -10,7 +10,7 @@
 {% if stats %}
 <div class="stat-grid">
   {% for icon, color, number, label in stats %}
-  <div class="card kpi"><div class="ic-chip {{ color }}" data-i="{{ icon }}"></div><div><div class="n">{{ number }}</div><div class="l">{% trans label %}</div></div></div>
+  <div class="card kpi"><div class="ic-chip {{ color }}" data-i="{% if icon == 'users' %}f-users{% elif icon == 'building' %}f-school{% elif icon == 'news' %}f-doc{% elif icon == 'clipboard' %}f-doc{% elif icon == 'trophy' %}f-trophy{% else %}{{ icon }}{% endif %}"></div><div><div class="n">{{ number }}</div><div class="l">{% trans label %}</div></div></div>
   {% endfor %}
 </div>
 {% endif %}
