@@ -15,15 +15,16 @@
     <nav class="pub-nav" aria-label="{% translate 'Asosiy menyu' %}">
       <a href="{% url 'content:home' %}" {% if request.resolver_match.url_name == 'home' %}class="active" aria-current="page"{% endif %}>{% translate "Bosh sahifa" %}</a>
       <a href="{% url 'content:news_list' %}" {% if request.resolver_match.url_name == 'news_list' or request.resolver_match.url_name == 'news_detail' %}class="active" aria-current="page"{% endif %}>{% translate "Yangiliklar" %}</a>
-      <a href="{% url 'content:home' %}#statistika">{% translate "Ta’lim muassasalari" context "menu" %}</a>
-      <a href="{% url 'content:home' %}#yutuqlar">{% translate "Ustozlar" %}</a>
+      <a href="{% url 'content:institutions' %}" {% if request.resolver_match.url_name == 'institutions' or request.resolver_match.url_name == 'institution' %}class="active" aria-current="page"{% endif %}>{% translate "Ta’lim muassasalari" context "menu" %}</a>
+      <a href="{% url 'content:teachers' %}" {% if request.resolver_match.url_name == 'teachers' %}class="active" aria-current="page"{% endif %}>{% translate "Ustozlar" %}</a>
       <a href="{% url 'achievements_public:list' %}">{% translate "Yutuqlar" %}</a>
       <a href="{% url 'content:home' %}#hujjatlar">{% translate "Hujjatlar" %}</a>
       <a href="{% url 'gallery_public:list' %}">{% translate "Media" %}</a>
       <a href="#boglanish">{% translate "Bog‘lanish" %}</a>
     </nav>
     <div class="pub-actions">
-      <form class="pub-search" role="search" method="get" action="{% url 'content:news_list' %}"><span data-i="search" data-c="sm"></span><input type="search" name="q" value="{{ request.GET.q }}" maxlength="80" aria-label="{% translate 'Qidirish' %}" placeholder="{% translate 'Qidirish' %}"></form>
+      <div class="a11y" role="group" aria-label="{% translate 'Ko‘rish qulayligi' %}"><button type="button" data-a11y="bigger" title="{% translate 'Matnni kattalashtirish' %}" aria-label="{% translate 'Matnni kattalashtirish' %}">A+</button><button type="button" data-a11y="contrast" aria-pressed="false" title="{% translate 'Yuqori kontrast' %}" aria-label="{% translate 'Yuqori kontrast' %}"><span data-i="eye" data-c="sm"></span></button><button type="button" data-a11y="reset" title="{% translate 'Asl holatiga qaytarish' %}" aria-label="{% translate 'Asl holatiga qaytarish' %}">A</button></div>
+      <a class="pub-search-btn" href="{% url 'content:search' %}" title="{% translate 'Qidirish' %}" aria-label="{% translate 'Qidirish' %}"><span data-i="search"></span></a>
       {% include "includes/language_switcher.html" %}
       {% if user.is_authenticated %}
         <a class="btn btn-primary" href="{% url 'portal:dashboard' %}"><span data-i="user" data-c="sm"></span><span>{% translate "Portal" %}</span></a>
@@ -40,7 +41,7 @@
     <div class="foot-grid">
       <div><a class="brand" href="{% url 'content:home' %}"><span data-logo style="display:block;width:44px;height:44px;flex:none"></span><div><b>{{ SITE_SHORT }}</b><span>{{ SITE_DISTRICT }}</span></div></a>
         <p style="margin-top:14px;font-size:14px">{% translate "Ta’lim — kelajak poydevori. Sifatli ta’lim, barkamol avlod va yuksalish sari birgalikda!" %}</p></div>
-      <div><h4>{% translate "Foydali havolalar" %}</h4><a href="{% url 'content:news_list' %}">{% translate "Yangiliklar" %}</a><a href="{% url 'content:home' %}#statistika">{% translate "Ta’lim muassasalari" %}</a><a href="{% url 'content:home' %}#yutuqlar">{% translate "Ustozlar" %}</a><a href="{% url 'content:home' %}#hujjatlar">{% translate "Hujjatlar" %}</a></div>
+      <div><h4>{% translate "Foydali havolalar" %}</h4><a href="{% url 'content:news_list' %}">{% translate "Yangiliklar" %}</a><a href="{% url 'content:institutions' %}">{% translate "Ta’lim muassasalari" %}</a><a href="{% url 'content:teachers' %}">{% translate "Ustozlar" %}</a><a href="{% url 'content:home' %}#hujjatlar">{% translate "Hujjatlar" %}</a><a href="{% url 'appeals:create' %}">{% translate "Murojaat" %}</a></div>
       <div><h4>{% translate "Aloqa" %}</h4>
         <div class="foot-row"><span data-i="pin" data-c="sm"></span><span>{% translate "Manzil: tasdiqlangan ma’lumot kiritiladi" %}</span></div>
         <div class="foot-row"><span data-i="phone" data-c="sm"></span><span>+998 71 123 45 67</span></div>
@@ -53,5 +54,6 @@
 </footer>
 <script src="{% static 'assets/js/app.js' %}"></script>
 <script src="{% static 'js/gallery.js' %}"></script>
+<script src="{% static 'js/site.js' %}"></script>
 </body>
 </html>

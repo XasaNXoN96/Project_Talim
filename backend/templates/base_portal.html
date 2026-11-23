@@ -45,6 +45,9 @@
       {% else %}
       <a href="{% url 'portal:preview' 'chat' %}" title="{% translate 'Chat' %}" {% if request.resolver_match.url_name == 'preview' and request.resolver_match.kwargs.section == 'chat' %}class="active" aria-current="page"{% endif %}><i data-i="chat" style="display:contents"></i><span>{% translate "Chat" %}</span></a>
       {% endif %}
+      {% if perms.appeals.view_appeal %}
+      <a href="{% url 'appeals_admin:list' %}" title="{% translate 'Murojaatlar' %}" {% if request.resolver_match.namespace == 'appeals_admin' %}class="active" aria-current="page"{% endif %}><i data-i="msg" style="display:contents"></i><span>{% translate "Murojaatlar" %}</span></a>
+      {% endif %}
       {% if perms.notifications.view_notification %}
       <a href="{% url 'notifications:list' %}" title="{% translate 'Bildirishnomalar' %}" {% if request.resolver_match.namespace == 'notifications' %}class="active" aria-current="page"{% endif %}><i data-i="bell" style="display:contents"></i><span>{% translate "Bildirishnomalar" %}</span></a>
       {% endif %}

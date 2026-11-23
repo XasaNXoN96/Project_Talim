@@ -30,12 +30,28 @@ ASSETS = Path(__file__).resolve().parent / "demo_assets"
 VIDEOS = ["video_ceremony.mp4", "video_sport.mp4", "video_lesson.mp4"]
 
 MORE_SCHOOLS = [
-    ("DEMO 4-sonli maktab", "school", "Namunaviy Direktor 4", True),
-    ("DEMO 5-ixtisoslashtirilgan maktab", "specialized", "Namunaviy Direktor 5", True),
-    ("DEMO 12-sonli maktabgacha ta’lim muassasasi", "preschool", "Namunaviy Mudira 12", True),
-    ("DEMO Ijod maktabi", "arts", "Namunaviy Rahbar", True),
-    ("DEMO Kasb-hunar maktabi", "vocational", "Namunaviy Direktor KH", True),
+    ("4-sonli umumiy o‘rta ta’lim maktabi", "school", "Namunaviy Direktor 4", True),
+    ("5-sonli ixtisoslashtirilgan maktab", "specialized", "Namunaviy Direktor 5", True),
+    ("12-sonli maktabgacha ta’lim muassasasi", "preschool", "Namunaviy Mudira 12", True),
+    ("Bolalar ijod maktabi", "arts", "Namunaviy Rahbar", True),
+    ("Kasb-hunar maktabi", "vocational", "Namunaviy Direktor KH", True),
 ]
+_ADDRESSES = ["Mirzacho‘l tumani, Markaziy ko‘cha 12", "Mirzacho‘l tumani, Navoiy ko‘chasi 45", "Mirzacho‘l tumani, Bog‘ishamol mahallasi 7", "Mirzacho‘l tumani, Yoshlik ko‘chasi 3",
+              "Mirzacho‘l tumani, Sharq ko‘chasi 21", "Mirzacho‘l tumani, Istiqlol ko‘chasi 9", "Mirzacho‘l tumani, Do‘stlik ko‘chasi 30", "Mirzacho‘l tumani, Gulzor mahallasi 14"]
+
+
+def _fill_institution_details(institutions):
+    """Fictitious address, phone, e-mail, text and numbers so the public catalogue pages are not empty."""
+    for k, inst in enumerate(institutions):
+        if inst.address:
+            continue
+        inst.address = _ADDRESSES[k % len(_ADDRESSES)]
+        inst.phone = f"+998 71 200 {10 + k:02d} {20 + k:02d}"
+        inst.email = f"maktab{k + 1}@example.uz"
+        inst.students_count = 380 + (k * 97) % 900
+        inst.description = ("Muassasada zamonaviy o‘quv xonalari, kompyuter sinfi, kutubxona va sport zali mavjud. Ta’lim sifatli o‘qituvchilar tomonidan olib boriladi, "
+                            "o‘quvchilar fan olimpiadalari va ijodiy tanlovlarda muntazam ishtirok etadi. (Namunaviy ma’lumot, haqiqiy emas.)")
+        inst.save()
 
 STAFF = [  # last, first, middle, position, school index (0-based into the schools list), phone tail
     ("Karimova", "Gulnora", "Akbarovna", "O‘qituvchi", 0), ("Rahimov", "Bekzod", "Olimovich", "Direktor o‘rinbosari (o‘quv ishlari bo‘yicha)", 0),
@@ -147,6 +163,7 @@ def _staff_cards(schools):
             position=Position.objects.filter(name=pos).first(), status=Employee.Status.ACTIVE, work_phone=f"+998 00 000 {10 + i:02d} {20 + i:02d}",
             hired_at=datetime.date(2015 + i % 9, 1 + i % 12, 1 + i % 27),
         )
+        emp.show_on_site = institution is not None  # school staff appear on the public «Ustozlar» page
         emp.photo.save(new_storage_name("jpg"), ContentFile(art.portrait_jpeg(100 + i, female=_is_female(middle))), save=True)
         made += 1
     for k, emp in enumerate(Employee.objects.filter(user__isnull=False, photo="")):  # demo accounts get portraits too
@@ -321,10 +338,34 @@ def _notifications(users, directors):
     return made
 
 
+def _appeals(users):
+    from apps.appeals.models import Appeal
+
+    rows = [
+        ("Karimov Anvar Rustamovich", "+998 90 111 22 33", "suggestion", "new", "Maktab hovlisiga bolalar uchun qo‘shimcha o‘yin maydonchasi qurilishini so‘rayman. Mahalla aholisi bu taklifni qo‘llab-quvvatlaydi.", ""),
+        ("Yusupova Malika Azizovna", "+998 93 222 33 44", "enrolment", "answered", "Farzandimni 1-sinfga qabul qilish uchun qaysi hujjatlar kerak va ariza qachongacha qabul qilinadi?",
+         "Assalomu alaykum! Ariza 1-iyundan 31-avgustgacha qabul qilinadi. Kerakli hujjatlar: tug‘ilganlik haqida guvohnoma, tibbiy ma’lumotnoma va ota-onaning pasporti. (Namunaviy javob.)"),
+        ("Tursunov Bobur", "+998 97 333 44 55", "complaint", "in_progress", "Maktab oshxonasidagi ovqat sifati bo‘yicha ota-onalar yig‘ilishida muammo ko‘tarilgan edi, ammo hali choralar ko‘rilmadi.", ""),
+        ("Rahimova Nigora", "+998 94 444 55 66", "general", "answered", "Yangi o‘quv yilida darsliklar qayerdan olinadi?", "Darsliklar maktab kutubxonasidan bepul beriladi. Batafsil ma’lumotni maktab direktoridan bilib olishingiz mumkin. (Namunaviy javob.)"),
+    ]
+    made = 0
+    admin = users.get("demo_admin") if isinstance(users, dict) else None
+    for name, phone, subject, status, message, answer in rows:
+        if Appeal.objects.filter(full_name=name).exists():
+            continue
+        a = Appeal.objects.create(full_name=name, phone=phone, subject=subject, status=status, message=message, answer=answer)
+        if answer:
+            a.answered_by, a.answered_at = admin, timezone.now()
+            a.save(update_fields=["answered_by", "answered_at"])
+        made += 1
+    return made
+
+
 def seed_rich(admin, users, schools, directors, stdout=None):
     """Add the large demo content. `schools` = the three base schools; the extra ones are created here."""
     extra = [Institution.objects.get_or_create(name=n, defaults={"kind": k, "head_name": h, "is_published": p})[0] for n, k, h, p in MORE_SCHOOLS]
     all_schools = list(schools) + extra
+    _fill_institution_details(all_schools)
     counts = {
         "staff cards/portraits": _staff_cards(all_schools),
         "news": _news(admin),
@@ -334,6 +375,7 @@ def seed_rich(admin, users, schools, directors, stdout=None):
         "tasks": _tasks(admin, users, directors),
         "chats": _chat(users, directors),
         "notifications": _notifications(users, directors),
+        "appeals": _appeals(users),
     }
     if stdout is not None:
         stdout.write("Rich content added: " + ", ".join(f"{k}: {v}" for k, v in counts.items()))

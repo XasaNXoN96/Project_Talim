@@ -4045,3 +4045,228 @@ msgstr "Muqova rasmini olib tashlash"
 
 msgid "Xaritada ochish"
 msgstr "Xaritada ochish"
+
+msgid "Rasmlar"
+msgstr "Rasmlar"
+
+msgid "Ko‘rish qulayligi"
+msgstr "Ko‘rish qulayligi"
+
+msgid "Matnni kattalashtirish"
+msgstr "Matnni kattalashtirish"
+
+msgid "Yuqori kontrast"
+msgstr "Yuqori kontrast"
+
+msgid "Asl holatiga qaytarish"
+msgstr "Asl holatiga qaytarish"
+
+msgid "Tumandagi maktablar va bog‘chalar: manzil, rahbar va aloqa ma’lumotlari."
+msgstr "Tumandagi maktablar va bog‘chalar: manzil, rahbar va aloqa ma’lumotlari."
+
+msgid "Nomi yoki manzil bo‘yicha qidirish"
+msgstr "Nomi yoki manzil bo‘yicha qidirish"
+
+msgid "o‘quvchi"
+msgstr "o‘quvchi"
+
+msgid "Qidiruv shartlarini o‘zgartirib ko‘ring."
+msgstr "Qidiruv shartlarini o‘zgartirib ko‘ring."
+
+msgid "Umumiy ma’lumot"
+msgstr "Umumiy ma’lumot"
+
+msgid "Manzil"
+msgstr "Manzil"
+
+msgid "Telefon"
+msgstr "Telefon"
+
+msgid "O‘quvchilar soni"
+msgstr "O‘quvchilar soni"
+
+msgid "Tuman ta’lim tizimining o‘qituvchilari va mutaxassislari."
+msgstr "Tuman ta’lim tizimining o‘qituvchilari va mutaxassislari."
+
+msgid "Ism yoki lavozim bo‘yicha qidirish"
+msgstr "Ism yoki lavozim bo‘yicha qidirish"
+
+msgid "Sayt bo‘yicha qidirish"
+msgstr "Sayt bo‘yicha qidirish"
+
+msgid "Nima qidiryapsiz?"
+msgstr "Nima qidiryapsiz?"
+
+msgid "Boshqa so‘z bilan urinib ko‘ring."
+msgstr "Boshqa so‘z bilan urinib ko‘ring."
+
+msgid "manzil"
+msgstr "manzil"
+
+msgid "telefon"
+msgstr "telefon"
+
+msgid "e-pochta"
+msgstr "e-pochta"
+
+msgid "qisqacha ma’lumot"
+msgstr "qisqacha ma’lumot"
+
+msgid "o‘quvchilar soni"
+msgstr "o‘quvchilar soni"
+
+msgid "«Ustozlar» bo‘limida ko‘rsatish"
+msgstr "«Ustozlar» bo‘limida ko‘rsatish"
+
+msgid "Murojaat yuborish"
+msgstr "Murojaat yuborish"
+
+msgid "Murojaat"
+msgstr "Murojaat"
+
+msgid "Murojaatlar"
+msgstr "Murojaatlar"
+
+msgid "Savol, taklif yoki shikoyatingizni yozing. Murojaat kodi beriladi, javob holatini shu kod bilan kuzatasiz."
+msgstr "Savol, taklif yoki shikoyatingizni yozing. Murojaat kodi beriladi, javob holatini shu kod bilan kuzatasiz."
+
+msgid "Ma’lumotlaringiz faqat murojaatni ko‘rib chiqish uchun ishlatiladi va uchinchi shaxslarga berilmaydi."
+msgstr "Ma’lumotlaringiz faqat murojaatni ko‘rib chiqish uchun ishlatiladi va uchinchi shaxslarga berilmaydi."
+
+msgid "Murojaat holatini tekshirish"
+msgstr "Murojaat holatini tekshirish"
+
+msgid "Qanday ishlaydi"
+msgstr "Qanday ishlaydi"
+
+msgid "Shaklni to‘ldiring va yuboring."
+msgstr "Shaklni to‘ldiring va yuboring."
+
+msgid "Murojaat kodini saqlab qo‘ying."
+msgstr "Murojaat kodini saqlab qo‘ying."
+
+msgid "Kod va telefonning oxirgi 4 raqami bilan javobni kuzating."
+msgstr "Kod va telefonning oxirgi 4 raqami bilan javobni kuzating."
+
+msgid "Murojaat qabul qilindi"
+msgstr "Murojaat qabul qilindi"
+
+msgid "Murojaatingiz uchun rahmat. Kodingizni saqlab qo‘ying:"
+msgstr "Murojaatingiz uchun rahmat. Kodingizni saqlab qo‘ying:"
+
+msgid "Javob holatini kod va telefon raqamingizning oxirgi 4 raqami bilan tekshirasiz."
+msgstr "Javob holatini kod va telefon raqamingizning oxirgi 4 raqami bilan tekshirasiz."
+
+msgid "Holatni tekshirish"
+msgstr "Holatni tekshirish"
+
+msgid "Murojaat holati"
+msgstr "Murojaat holati"
+
+msgid "Holati"
+msgstr "Holati"
+
+msgid "Sizning murojaatingiz"
+msgstr "Sizning murojaatingiz"
+
+msgid "Javob"
+msgstr "Javob"
+
+msgid "Murojaatingiz ko‘rib chiqilmoqda. Javob tayyor bo‘lganda shu sahifada ko‘rinadi."
+msgstr "Murojaatingiz ko‘rib chiqilmoqda. Javob tayyor bo‘lganda shu sahifada ko‘rinadi."
+
+msgid "Boshqa murojaat"
+msgstr "Boshqa murojaat"
+
+msgid "Murojaat kodi"
+msgstr "Murojaat kodi"
+
+msgid "Telefonning oxirgi 4 raqami"
+msgstr "Telefonning oxirgi 4 raqami"
+
+msgid "Tekshirish"
+msgstr "Tekshirish"
+
+msgid "Fuqarolarning sayt orqali yuborgan murojaatlari."
+msgstr "Fuqarolarning sayt orqali yuborgan murojaatlari."
+
+msgid "Kod, ism yoki matn"
+msgstr "Kod, ism yoki matn"
+
+msgid "Kod"
+msgstr "Kod"
+
+msgid "Mavzu"
+msgstr "Mavzu"
+
+msgid "Murojaatlar yo‘q"
+msgstr "Murojaatlar yo‘q"
+
+msgid "Yangi murojaatlar shu yerda ko‘rinadi."
+msgstr "Yangi murojaatlar shu yerda ko‘rinadi."
+
+msgid "Murojaat matni"
+msgstr "Murojaat matni"
+
+msgid "Javob matni (fuqaro ko‘radi)"
+msgstr "Javob matni (fuqaro ko‘radi)"
+
+msgid "Umumiy savol"
+msgstr "Umumiy savol"
+
+msgid "Taklif"
+msgstr "Taklif"
+
+msgid "Shikoyat"
+msgstr "Shikoyat"
+
+msgid "Qabul va o‘qishga oid"
+msgstr "Qabul va o‘qishga oid"
+
+msgid "Ko‘rib chiqilmoqda"
+msgstr "Ko‘rib chiqilmoqda"
+
+msgid "Javob berildi"
+msgstr "Javob berildi"
+
+msgid "mavzu"
+msgstr "mavzu"
+
+msgid "murojaat matni"
+msgstr "murojaat matni"
+
+msgid "javob"
+msgstr "javob"
+
+msgid "Ism-familiyangizni to‘liq kiriting."
+msgstr "Ism-familiyangizni to‘liq kiriting."
+
+msgid "Telefon raqamini to‘g‘ri kiriting, masalan: +998 90 123 45 67."
+msgstr "Telefon raqamini to‘g‘ri kiriting, masalan: +998 90 123 45 67."
+
+msgid "Murojaat matni kamida 10 ta belgidan iborat bo‘lsin."
+msgstr "Murojaat matni kamida 10 ta belgidan iborat bo‘lsin."
+
+msgid "Javob matnini kiriting."
+msgstr "Javob matnini kiriting."
+
+msgid "Javob saqlandi."
+msgstr "Javob saqlandi."
+
+msgid "Juda ko‘p murojaat yuborildi. Iltimos, birozdan keyin urinib ko‘ring."
+msgstr "Juda ko‘p murojaat yuborildi. Iltimos, birozdan keyin urinib ko‘ring."
+
+msgid "Juda ko‘p urinish. Iltimos, birozdan keyin urinib ko‘ring."
+msgstr "Juda ko‘p urinish. Iltimos, birozdan keyin urinib ko‘ring."
+
+msgid "Bunday murojaat topilmadi. Kod va telefonning oxirgi 4 raqamini tekshiring."
+msgstr "Bunday murojaat topilmadi. Kod va telefonning oxirgi 4 raqamini tekshiring."
+
+msgid "murojaat"
+msgstr "murojaat"
+
+msgid "murojaatlar"
+msgstr "murojaatlar"
+
+msgid "Bu so‘rovni ko‘rishga ruxsatingiz yo‘q."
+msgstr "Bu so‘rovni ko‘rishga ruxsatingiz yo‘q."

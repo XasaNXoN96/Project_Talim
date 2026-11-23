@@ -1,0 +1,18 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{{ appeal.code }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="crumbs"><a href="{% url 'appeals_admin:list' %}">{% translate "Murojaatlar" %}</a></div><h1>{{ appeal.code }}</h1></div><span class="badge b-info plain">{{ appeal.get_status_display }}</span></div>
+<div class="stack" style="max-width:820px">
+  <section class="card card-pad"><dl class="facts"><div><dt>{% translate "F.I.Sh." %}</dt><dd>{{ appeal.full_name }}</dd></div><div><dt>{% translate "Telefon" %}</dt><dd>{{ appeal.phone }}</dd></div>{% if appeal.email %}<div><dt>{% translate "E-pochta" %}</dt><dd>{{ appeal.email }}</dd></div>{% endif %}<div><dt>{% translate "Mavzu" %}</dt><dd>{{ appeal.get_subject_display }}</dd></div><div><dt>{% translate "Sana" %}</dt><dd>{{ appeal.created_at|date:"d.m.Y H:i" }}</dd></div></dl>
+    <h3 style="margin:16px 0 6px;font-size:15px">{% translate "Murojaat matni" %}</h3><p>{{ appeal.message|linebreaksbr }}</p></section>
+  {% if can_answer %}
+  <form method="post" class="card card-pad" style="display:grid;gap:14px" novalidate>{% csrf_token %}
+    <h3 style="font-size:16px">{% translate "Javob" %}</h3>
+    <div class="field"><label for="{{ form.status.id_for_label }}">{% translate "Holat" %}</label>{{ form.status }}</div>
+    <div class="field"><label for="{{ form.answer.id_for_label }}">{% translate "Javob matni (fuqaro ko‘radi)" %}</label>{{ form.answer }}{% for e in form.answer.errors %}<div class="err-text" role="alert">{{ e }}</div>{% endfor %}</div>
+    <div class="row"><button class="btn btn-primary" type="submit">{% translate "Saqlash" %}</button><a class="btn btn-secondary" href="{% url 'appeals_admin:list' %}">{% translate "Orqaga" %}</a></div>
+  </form>
+  {% elif appeal.answer %}<section class="card card-pad"><h3>{% translate "Javob" %}</h3><p>{{ appeal.answer|linebreaksbr }}</p></section>{% endif %}
+</div>
+{% endblock %}

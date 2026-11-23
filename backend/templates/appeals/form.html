@@ -1,0 +1,20 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+{% block title %}{% translate "Murojaat yuborish" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><span>{% translate "Murojaat" %}</span></div><h1>{% translate "Murojaat yuborish" %}</h1><p>{% translate "Savol, taklif yoki shikoyatingizni yozing. Murojaat kodi beriladi, javob holatini shu kod bilan kuzatasiz." %}</p></div></section>
+<div class="container pub-body appeal-wrap">
+  <form method="post" class="card card-pad appeal-form" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="alert err" role="alert"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}
+    <div class="form-grid">
+      {% for field in form %}{% if field.name != "website" %}<div class="field{% if field.name == 'message' %} full{% endif %}"><label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} *{% endif %}</label>{{ field }}{% for e in field.errors %}<div class="err-text" role="alert">{{ e }}</div>{% endfor %}</div>{% endif %}{% endfor %}
+    </div>
+    <div class="hp" aria-hidden="true">{{ form.website }}</div>
+    <p class="xs muted">{% translate "Ma’lumotlaringiz faqat murojaatni ko‘rib chiqish uchun ishlatiladi va uchinchi shaxslarga berilmaydi." %}</p>
+    <div class="row wrap"><button class="btn btn-primary btn-lg" type="submit"><span data-i="msg" data-c="sm"></span> {% translate "Yuborish" %}</button><a class="btn btn-secondary btn-lg" href="{% url 'appeals:status' %}">{% translate "Murojaat holatini tekshirish" %}</a></div>
+  </form>
+  <aside class="card card-pad appeal-side"><div class="ic-chip c-blue" data-i="f-doc"></div><h3>{% translate "Qanday ishlaydi" %}</h3>
+    <ol><li>{% translate "Shaklni to‘ldiring va yuboring." %}</li><li>{% translate "Murojaat kodini saqlab qo‘ying." %}</li><li>{% translate "Kod va telefonning oxirgi 4 raqami bilan javobni kuzating." %}</li></ol></aside>
+</div>
+{% endblock %}

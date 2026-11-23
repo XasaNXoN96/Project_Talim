@@ -1,0 +1,13 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+{% block title %}{% translate "Murojaat qabul qilindi" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><h1>{% translate "Murojaat qabul qilindi" %}</h1></div></section>
+<div class="container pub-body"><div class="card card-pad" style="max-width:640px;margin-inline:auto;text-align:center">
+  <div class="ic-chip c-green" data-i="f-doc" style="margin:0 auto 12px;width:56px;height:56px"></div>
+  <p>{% translate "Murojaatingiz uchun rahmat. Kodingizni saqlab qo‘ying:" %}</p>
+  <p class="appeal-code">{{ appeal.code }}</p>
+  <p class="muted">{% translate "Javob holatini kod va telefon raqamingizning oxirgi 4 raqami bilan tekshirasiz." %}</p>
+  <div class="row wrap" style="justify-content:center"><a class="btn btn-primary" href="{% url 'appeals:status' %}?code={{ appeal.code }}">{% translate "Holatni tekshirish" %}</a><a class="btn btn-secondary" href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a></div>
+</div></div>
+{% endblock %}

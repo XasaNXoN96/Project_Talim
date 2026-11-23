@@ -4045,3 +4045,228 @@ msgstr "Убрать обложку"
 
 msgid "Xaritada ochish"
 msgstr "Открыть на карте"
+
+msgid "Rasmlar"
+msgstr "Фотографии"
+
+msgid "Ko‘rish qulayligi"
+msgstr "Версия для слабовидящих"
+
+msgid "Matnni kattalashtirish"
+msgstr "Увеличить текст"
+
+msgid "Yuqori kontrast"
+msgstr "Высокая контрастность"
+
+msgid "Asl holatiga qaytarish"
+msgstr "Вернуть обычный вид"
+
+msgid "Tumandagi maktablar va bog‘chalar: manzil, rahbar va aloqa ma’lumotlari."
+msgstr "Школы и детские сады района: адрес, руководитель и контакты."
+
+msgid "Nomi yoki manzil bo‘yicha qidirish"
+msgstr "Поиск по названию или адресу"
+
+msgid "o‘quvchi"
+msgstr "учеников"
+
+msgid "Qidiruv shartlarini o‘zgartirib ko‘ring."
+msgstr "Попробуйте изменить условия поиска."
+
+msgid "Umumiy ma’lumot"
+msgstr "Общие сведения"
+
+msgid "Manzil"
+msgstr "Адрес"
+
+msgid "Telefon"
+msgstr "Телефон"
+
+msgid "O‘quvchilar soni"
+msgstr "Число учеников"
+
+msgid "Tuman ta’lim tizimining o‘qituvchilari va mutaxassislari."
+msgstr "Учителя и специалисты системы образования района."
+
+msgid "Ism yoki lavozim bo‘yicha qidirish"
+msgstr "Поиск по имени или должности"
+
+msgid "Sayt bo‘yicha qidirish"
+msgstr "Поиск по сайту"
+
+msgid "Nima qidiryapsiz?"
+msgstr "Что вы ищете?"
+
+msgid "Boshqa so‘z bilan urinib ko‘ring."
+msgstr "Попробуйте другое слово."
+
+msgid "manzil"
+msgstr "адрес"
+
+msgid "telefon"
+msgstr "телефон"
+
+msgid "e-pochta"
+msgstr "эл. почта"
+
+msgid "qisqacha ma’lumot"
+msgstr "краткие сведения"
+
+msgid "o‘quvchilar soni"
+msgstr "число учеников"
+
+msgid "«Ustozlar» bo‘limida ko‘rsatish"
+msgstr "Показывать в разделе «Учителя»"
+
+msgid "Murojaat yuborish"
+msgstr "Отправить обращение"
+
+msgid "Murojaat"
+msgstr "Обращение"
+
+msgid "Murojaatlar"
+msgstr "Обращения"
+
+msgid "Savol, taklif yoki shikoyatingizni yozing. Murojaat kodi beriladi, javob holatini shu kod bilan kuzatasiz."
+msgstr "Напишите вопрос, предложение или жалобу. Вам выдадут код обращения, по нему вы будете следить за ответом."
+
+msgid "Ma’lumotlaringiz faqat murojaatni ko‘rib chiqish uchun ishlatiladi va uchinchi shaxslarga berilmaydi."
+msgstr "Ваши данные используются только для рассмотрения обращения и не передаются третьим лицам."
+
+msgid "Murojaat holatini tekshirish"
+msgstr "Проверить статус обращения"
+
+msgid "Qanday ishlaydi"
+msgstr "Как это работает"
+
+msgid "Shaklni to‘ldiring va yuboring."
+msgstr "Заполните форму и отправьте её."
+
+msgid "Murojaat kodini saqlab qo‘ying."
+msgstr "Сохраните код обращения."
+
+msgid "Kod va telefonning oxirgi 4 raqami bilan javobni kuzating."
+msgstr "Следите за ответом по коду и последним 4 цифрам телефона."
+
+msgid "Murojaat qabul qilindi"
+msgstr "Обращение принято"
+
+msgid "Murojaatingiz uchun rahmat. Kodingizni saqlab qo‘ying:"
+msgstr "Спасибо за обращение. Сохраните ваш код:"
+
+msgid "Javob holatini kod va telefon raqamingizning oxirgi 4 raqami bilan tekshirasiz."
+msgstr "Статус ответа проверяется по коду и последним 4 цифрам вашего телефона."
+
+msgid "Holatni tekshirish"
+msgstr "Проверить статус"
+
+msgid "Murojaat holati"
+msgstr "Статус обращения"
+
+msgid "Holati"
+msgstr "Статус"
+
+msgid "Sizning murojaatingiz"
+msgstr "Ваше обращение"
+
+msgid "Javob"
+msgstr "Ответ"
+
+msgid "Murojaatingiz ko‘rib chiqilmoqda. Javob tayyor bo‘lganda shu sahifada ko‘rinadi."
+msgstr "Ваше обращение рассматривается. Ответ появится на этой странице."
+
+msgid "Boshqa murojaat"
+msgstr "Другое обращение"
+
+msgid "Murojaat kodi"
+msgstr "Код обращения"
+
+msgid "Telefonning oxirgi 4 raqami"
+msgstr "Последние 4 цифры телефона"
+
+msgid "Tekshirish"
+msgstr "Проверить"
+
+msgid "Fuqarolarning sayt orqali yuborgan murojaatlari."
+msgstr "Обращения граждан, отправленные через сайт."
+
+msgid "Kod, ism yoki matn"
+msgstr "Код, имя или текст"
+
+msgid "Kod"
+msgstr "Код"
+
+msgid "Mavzu"
+msgstr "Тема"
+
+msgid "Murojaatlar yo‘q"
+msgstr "Обращений нет"
+
+msgid "Yangi murojaatlar shu yerda ko‘rinadi."
+msgstr "Новые обращения появятся здесь."
+
+msgid "Murojaat matni"
+msgstr "Текст обращения"
+
+msgid "Javob matni (fuqaro ko‘radi)"
+msgstr "Текст ответа (видит гражданин)"
+
+msgid "Umumiy savol"
+msgstr "Общий вопрос"
+
+msgid "Taklif"
+msgstr "Предложение"
+
+msgid "Shikoyat"
+msgstr "Жалоба"
+
+msgid "Qabul va o‘qishga oid"
+msgstr "Приём и обучение"
+
+msgid "Ko‘rib chiqilmoqda"
+msgstr "Рассматривается"
+
+msgid "Javob berildi"
+msgstr "Ответ дан"
+
+msgid "mavzu"
+msgstr "тема"
+
+msgid "murojaat matni"
+msgstr "текст обращения"
+
+msgid "javob"
+msgstr "ответ"
+
+msgid "Ism-familiyangizni to‘liq kiriting."
+msgstr "Введите имя и фамилию полностью."
+
+msgid "Telefon raqamini to‘g‘ri kiriting, masalan: +998 90 123 45 67."
+msgstr "Введите номер телефона верно, например: +998 90 123 45 67."
+
+msgid "Murojaat matni kamida 10 ta belgidan iborat bo‘lsin."
+msgstr "Текст обращения — не менее 10 символов."
+
+msgid "Javob matnini kiriting."
+msgstr "Введите текст ответа."
+
+msgid "Javob saqlandi."
+msgstr "Ответ сохранён."
+
+msgid "Juda ko‘p murojaat yuborildi. Iltimos, birozdan keyin urinib ko‘ring."
+msgstr "Отправлено слишком много обращений. Попробуйте чуть позже."
+
+msgid "Juda ko‘p urinish. Iltimos, birozdan keyin urinib ko‘ring."
+msgstr "Слишком много попыток. Попробуйте чуть позже."
+
+msgid "Bunday murojaat topilmadi. Kod va telefonning oxirgi 4 raqamini tekshiring."
+msgstr "Такое обращение не найдено. Проверьте код и последние 4 цифры телефона."
+
+msgid "murojaat"
+msgstr "обращение"
+
+msgid "murojaatlar"
+msgstr "обращения"
+
+msgid "Bu so‘rovni ko‘rishga ruxsatingiz yo‘q."
+msgstr "У вас нет права просматривать этот запрос."

@@ -1,0 +1,15 @@
+{% extends "base_public.html" %}
+{% load i18n static %}
+{% block title %}{% translate "Ustozlar" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><span>{% translate "Ustozlar" %}</span></div><h1>{% translate "Ustozlar" %}</h1><p>{% translate "Tuman ta’lim tizimining o‘qituvchilari va mutaxassislari." %}</p></div></section>
+<div class="container pub-body">
+  <form class="row wrap filter-bar" method="get" role="search"><input class="input" type="search" name="q" value="{{ q }}" maxlength="80" placeholder="{% translate 'Ism yoki lavozim bo‘yicha qidirish' %}" aria-label="{% translate 'Qidirish' %}" style="flex:1;min-width:200px">
+    <select class="input" name="inst" aria-label="{% translate 'Ta’lim muassasasi' %}" style="max-width:320px"><option value="">{% translate "Barcha muassasalar" %}</option>{% for i in institutions %}<option value="{{ i.pk }}"{% if i.pk|stringformat:'s' == inst %} selected{% endif %}>{{ i.name }}</option>{% endfor %}</select>
+    <button class="btn btn-primary" type="submit">{% translate "Qidirish" %}</button></form>
+  {% if people %}
+  <div class="people-grid">{% for p in people %}<div class="card teacher person-card"><div class="av av-photo"><img src="{% url 'content:teacher_photo' p.pk %}" alt="{{ p.last_name }} {{ p.first_name }}" loading="lazy"></div><b>{{ p.last_name }} {{ p.first_name }}</b><span class="xs muted">{{ p.position.name|default:"" }}</span>{% if p.institution %}<span class="xs muted">{{ p.institution.name }}</span>{% endif %}</div>{% endfor %}</div>
+  {% include "includes/pagination.html" %}
+  {% else %}<div class="card empty"><div class="ic-chip c-blue" data-i="users"></div><h3>{% translate "Hech narsa topilmadi" %}</h3><p>{% translate "Qidiruv shartlarini o‘zgartirib ko‘ring." %}</p></div>{% endif %}
+</div>
+{% endblock %}

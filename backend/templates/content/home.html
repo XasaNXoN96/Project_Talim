@@ -1,8 +1,10 @@
 {% extends "base_public.html" %}
 {% load i18n static %}
 {% block content %}
-<section class="hero" id="top">
-  <img class="hero-photo" src="{% static 'img/hero.jpg' %}" alt="">
+<section class="hero" id="top" data-slider>
+  <img class="hero-photo is-active" src="{% static 'img/hero.jpg' %}" alt="" fetchpriority="high">
+  <img class="hero-photo" src="{% static 'img/slide-2.jpg' %}" alt="" loading="lazy"><img class="hero-photo" src="{% static 'img/slide-3.jpg' %}" alt="" loading="lazy"><img class="hero-photo" src="{% static 'img/slide-4.jpg' %}" alt="" loading="lazy">
+  <div class="hero-dots" aria-label="{% translate 'Rasmlar' %}"></div>
   <div class="container">
     <div>
       <h1>{{ SITE_DISTRICT }}<br>{{ SITE_SHORT }}</h1>
@@ -16,11 +18,11 @@
 
 <div class="container">
   <div class="stats" id="statistika" aria-label="{% translate 'Statistika (namunaviy qiymatlar)' %}">
-    <div class="card stat"><div class="ic-chip c-blue" data-i="f-school"></div><div><div class="n">48</div><div class="l">{% translate "Ta’lim muassasalari" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-blue" data-i="f-users"></div><div><div class="n">2 850</div><div class="l">{% translate "O‘qituvchilar va xodimlar" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-blue" data-i="f-cap"></div><div><div class="n">42 300</div><div class="l">{% translate "O‘quvchilar" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-green" data-i="f-book"></div><div><div class="n">120+</div><div class="l">{% translate "To‘garak va loyihalar" %}</div></div></div>
-    <div class="card stat"><div class="ic-chip c-orange" data-i="f-trophy"></div><div><div class="n">250+</div><div class="l">{% translate "Ustozlar yutuqlari" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-blue" data-i="f-school"></div><div><div class="n" data-count="48">48</div><div class="l">{% translate "Ta’lim muassasalari" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-blue" data-i="f-users"></div><div><div class="n" data-count="2850">2 850</div><div class="l">{% translate "O‘qituvchilar va xodimlar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-blue" data-i="f-cap"></div><div><div class="n" data-count="42300">42 300</div><div class="l">{% translate "O‘quvchilar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-green" data-i="f-book"></div><div><div class="n" data-count="120" data-suffix="+">120+</div><div class="l">{% translate "To‘garak va loyihalar" %}</div></div></div>
+    <div class="card stat"><div class="ic-chip c-orange" data-i="f-trophy"></div><div><div class="n" data-count="250" data-suffix="+">250+</div><div class="l">{% translate "Ustozlar yutuqlari" %}</div></div></div>
   </div>
   <p class="xs muted" style="margin-top:8px"><span class="demo-tag">{% translate "Maket" %}</span> {% translate "Raqamlar haqiqiy ma’lumot bilan almashtiriladi." %}</p>
 
@@ -48,6 +50,7 @@
       <a class="lk" href="#hujjatlar"><span class="ic-chip c-green" data-i="file"></span>{% translate "Normativ-huquqiy hujjatlar" %}<span data-i="right" data-c="sm"></span></a>
       <a class="lk" href="{% url 'content:news_list' %}"><span class="ic-chip c-violet" data-i="news"></span>{% translate "Yangiliklar arxivi" %}<span data-i="right" data-c="sm"></span></a>
       <a class="lk" href="#yutuqlar"><span class="ic-chip c-orange" data-i="trophy"></span>{% translate "Ustozlar yutuqlari" %}<span data-i="right" data-c="sm"></span></a>
+      <a class="lk" href="{% url 'appeals:create' %}"><span class="ic-chip c-violet" data-i="msg"></span>{% translate "Murojaat yuborish" %}<span data-i="right" data-c="sm"></span></a>
       <a class="lk" href="#boglanish"><span class="ic-chip c-blue" data-i="phone"></span>{% translate "Bog‘lanish" %}<span data-i="right" data-c="sm"></span></a>
     </section>
   </div>

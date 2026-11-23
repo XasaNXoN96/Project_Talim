@@ -20,7 +20,7 @@ class EmployeeForm(forms.ModelForm):
         model = Employee
         fields = [
             "last_name", "first_name", "middle_name", "department", "position", "institution", "status",
-            "work_phone", "work_email", "hired_at", "personal_phone", "birth_date", "user",
+            "work_phone", "work_email", "hired_at", "personal_phone", "birth_date", "show_on_site", "user",
         ]
         widgets = {
             "hired_at": forms.DateInput(attrs={**INPUT, "type": "date"}, format="%Y-%m-%d"),
@@ -136,11 +136,11 @@ class PositionForm(forms.ModelForm):
 class InstitutionForm(forms.ModelForm):
     class Meta:
         model = Institution
-        fields = ["name", "kind", "head_name", "is_published"]
+        fields = ["name", "kind", "head_name", "address", "phone", "email", "description", "students_count", "is_published"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for name in ("name", "kind", "head_name"):
+        for name in ("name", "kind", "head_name", "address", "phone", "email", "description", "students_count"):
             self.fields[name].widget.attrs["class"] = "input"
 
     def clean_name(self):

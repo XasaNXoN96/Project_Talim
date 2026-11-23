@@ -1,0 +1,21 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+{% block title %}{% translate "Murojaat holati" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><a href="{% url 'appeals:create' %}">{% translate "Murojaat" %}</a><span data-i="right" data-c="sm"></span><span>{% translate "Holati" %}</span></div><h1>{% translate "Murojaat holati" %}</h1></div></section>
+<div class="container pub-body"><div class="card card-pad" style="max-width:640px;margin-inline:auto">
+  {% if appeal %}
+    <p class="appeal-code" style="margin-top:0">{{ appeal.code }}</p>
+    <p><span class="badge {% if appeal.status == 'answered' %}b-ok{% elif appeal.status == 'rejected' %}b-err{% elif appeal.status == 'in_progress' %}b-warn{% else %}b-info{% endif %}">{{ appeal.get_status_display }}</span> <span class="xs muted">{{ appeal.created_at|date:"d.m.Y H:i" }} · {{ appeal.get_subject_display }}</span></p>
+    <h3 style="margin:16px 0 6px;font-size:15px">{% translate "Sizning murojaatingiz" %}</h3><p>{{ appeal.message|linebreaksbr }}</p>
+    {% if appeal.answer %}<h3 style="margin:16px 0 6px;font-size:15px">{% translate "Javob" %}</h3><div class="alert ok"><span>{{ appeal.answer|linebreaksbr }}</span></div><p class="xs muted">{{ appeal.answered_at|date:"d.m.Y H:i" }}</p>
+    {% else %}<p class="muted">{% translate "Murojaatingiz ko‘rib chiqilmoqda. Javob tayyor bo‘lganda shu sahifada ko‘rinadi." %}</p>{% endif %}
+    <a class="btn btn-secondary" href="{% url 'appeals:status' %}">{% translate "Boshqa murojaat" %}</a>
+  {% else %}
+  <form method="post" novalidate>{% csrf_token %}
+    {% if form.non_field_errors %}<div class="alert err" role="alert"><span>{{ form.non_field_errors.0 }}</span></div>{% endif %}
+    <div class="form-grid"><div class="field"><label for="{{ form.code.id_for_label }}">{% translate "Murojaat kodi" %}</label>{{ form.code }}</div><div class="field"><label for="{{ form.phone_tail.id_for_label }}">{% translate "Telefonning oxirgi 4 raqami" %}</label>{{ form.phone_tail }}</div></div>
+    <button class="btn btn-primary" type="submit" style="margin-top:14px">{% translate "Tekshirish" %}</button>
+  </form>{% endif %}
+</div></div>
+{% endblock %}

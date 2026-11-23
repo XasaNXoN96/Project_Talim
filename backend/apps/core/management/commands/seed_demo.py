@@ -81,7 +81,7 @@ class Command(BaseCommand):
                                         status=Employee.Status.ACTIVE, work_email=user.email, work_phone="+998 00 000 00 00")
             if username == "demo_admin":
                 admin = user
-        schools = [Institution.objects.get_or_create(name=f"DEMO {i}-maktab", defaults={"kind": "school", "head_name": f"Namuna Direktor {i}", "is_published": i < 3})[0] for i in (1, 2, 3)]
+        schools = [Institution.objects.get_or_create(name=f"{i}-sonli umumiy o‘rta ta’lim maktabi", defaults={"kind": "school", "head_name": f"Namunaviy Direktor {i}", "is_published": i < 3})[0] for i in (1, 2, 3)]
         directors = []
         for i, school in enumerate(schools[:2], 1):
             username = f"demo_director{i}"

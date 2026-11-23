@@ -1,0 +1,13 @@
+{% extends "base_portal.html" %}
+{% load i18n %}
+{% block title %}{% translate "Murojaatlar" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Murojaatlar" %}</h1><p>{% translate "Fuqarolarning sayt orqali yuborgan murojaatlari." %}</p></div><span class="badge b-info plain">{% translate "Yangi" %}: {{ counts.new }} · {% translate "Jami" %}: {{ counts.total }}</span></div>
+<form method="get" class="row wrap" style="margin-bottom:16px"><input class="input" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Kod, ism yoki matn' %}" style="max-width:320px">
+  <select class="input" name="status" style="max-width:240px"><option value="">{% translate "Barcha holatlar" %}</option>{% for code, name in statuses %}<option value="{{ code }}"{% if code == status %} selected{% endif %}>{{ name }}</option>{% endfor %}</select><button class="btn btn-secondary" type="submit">{% translate "Qidirish" %}</button></form>
+{% if appeals %}
+<div class="table-wrap"><table class="t stack-m"><thead><tr><th>{% translate "Kod" %}</th><th>{% translate "F.I.Sh." %}</th><th>{% translate "Mavzu" %}</th><th>{% translate "Sana" %}</th><th>{% translate "Holat" %}</th><th></th></tr></thead><tbody>
+{% for a in appeals %}<tr><td><b>{{ a.code }}</b></td><td>{{ a.full_name }}</td><td>{{ a.get_subject_display }}</td><td class="nw">{{ a.created_at|date:"d.m.Y H:i" }}</td><td><span class="badge {% if a.status == 'answered' %}b-ok{% elif a.status == 'rejected' %}b-err{% elif a.status == 'in_progress' %}b-warn{% else %}b-info{% endif %}">{{ a.get_status_display }}</span></td><td class="nw"><a class="btn btn-secondary btn-sm" href="{% url 'appeals_admin:detail' a.pk %}">{% translate "Ochish" %}</a></td></tr>{% endfor %}</tbody></table></div>
+{% include "includes/pagination.html" %}
+{% else %}<div class="card empty"><div class="ic-chip c-blue" data-i="f-doc"></div><h3>{% translate "Murojaatlar yo‘q" %}</h3><p>{% translate "Yangi murojaatlar shu yerda ko‘rinadi." %}</p></div>{% endif %}
+{% endblock %}

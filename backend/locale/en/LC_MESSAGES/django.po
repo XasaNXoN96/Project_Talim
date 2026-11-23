@@ -4045,3 +4045,228 @@ msgstr "Remove the cover picture"
 
 msgid "Xaritada ochish"
 msgstr "Open in maps"
+
+msgid "Rasmlar"
+msgstr "Pictures"
+
+msgid "Ko‘rish qulayligi"
+msgstr "Accessibility"
+
+msgid "Matnni kattalashtirish"
+msgstr "Larger text"
+
+msgid "Yuqori kontrast"
+msgstr "High contrast"
+
+msgid "Asl holatiga qaytarish"
+msgstr "Reset"
+
+msgid "Tumandagi maktablar va bog‘chalar: manzil, rahbar va aloqa ma’lumotlari."
+msgstr "Schools and kindergartens of the district: address, head and contacts."
+
+msgid "Nomi yoki manzil bo‘yicha qidirish"
+msgstr "Search by name or address"
+
+msgid "o‘quvchi"
+msgstr "students"
+
+msgid "Qidiruv shartlarini o‘zgartirib ko‘ring."
+msgstr "Try changing the search terms."
+
+msgid "Umumiy ma’lumot"
+msgstr "About"
+
+msgid "Manzil"
+msgstr "Address"
+
+msgid "Telefon"
+msgstr "Phone"
+
+msgid "O‘quvchilar soni"
+msgstr "Students"
+
+msgid "Tuman ta’lim tizimining o‘qituvchilari va mutaxassislari."
+msgstr "Teachers and specialists of the district education system."
+
+msgid "Ism yoki lavozim bo‘yicha qidirish"
+msgstr "Search by name or position"
+
+msgid "Sayt bo‘yicha qidirish"
+msgstr "Search the site"
+
+msgid "Nima qidiryapsiz?"
+msgstr "What are you looking for?"
+
+msgid "Boshqa so‘z bilan urinib ko‘ring."
+msgstr "Try another word."
+
+msgid "manzil"
+msgstr "address"
+
+msgid "telefon"
+msgstr "phone"
+
+msgid "e-pochta"
+msgstr "e-mail"
+
+msgid "qisqacha ma’lumot"
+msgstr "short description"
+
+msgid "o‘quvchilar soni"
+msgstr "number of students"
+
+msgid "«Ustozlar» bo‘limida ko‘rsatish"
+msgstr "Show in the «Teachers» section"
+
+msgid "Murojaat yuborish"
+msgstr "Send an appeal"
+
+msgid "Murojaat"
+msgstr "Appeal"
+
+msgid "Murojaatlar"
+msgstr "Appeals"
+
+msgid "Savol, taklif yoki shikoyatingizni yozing. Murojaat kodi beriladi, javob holatini shu kod bilan kuzatasiz."
+msgstr "Write your question, suggestion or complaint. You get an appeal code to follow the answer."
+
+msgid "Ma’lumotlaringiz faqat murojaatni ko‘rib chiqish uchun ishlatiladi va uchinchi shaxslarga berilmaydi."
+msgstr "Your data is used only to handle the appeal and is not given to third parties."
+
+msgid "Murojaat holatini tekshirish"
+msgstr "Check appeal status"
+
+msgid "Qanday ishlaydi"
+msgstr "How it works"
+
+msgid "Shaklni to‘ldiring va yuboring."
+msgstr "Fill in the form and send it."
+
+msgid "Murojaat kodini saqlab qo‘ying."
+msgstr "Keep the appeal code."
+
+msgid "Kod va telefonning oxirgi 4 raqami bilan javobni kuzating."
+msgstr "Follow the answer with the code and the last 4 digits of the phone."
+
+msgid "Murojaat qabul qilindi"
+msgstr "Appeal received"
+
+msgid "Murojaatingiz uchun rahmat. Kodingizni saqlab qo‘ying:"
+msgstr "Thank you for your appeal. Keep your code:"
+
+msgid "Javob holatini kod va telefon raqamingizning oxirgi 4 raqami bilan tekshirasiz."
+msgstr "Check the status with the code and the last 4 digits of your phone."
+
+msgid "Holatni tekshirish"
+msgstr "Check status"
+
+msgid "Murojaat holati"
+msgstr "Appeal status"
+
+msgid "Holati"
+msgstr "Status"
+
+msgid "Sizning murojaatingiz"
+msgstr "Your appeal"
+
+msgid "Javob"
+msgstr "Answer"
+
+msgid "Murojaatingiz ko‘rib chiqilmoqda. Javob tayyor bo‘lganda shu sahifada ko‘rinadi."
+msgstr "Your appeal is being reviewed. The answer will appear on this page."
+
+msgid "Boshqa murojaat"
+msgstr "Another appeal"
+
+msgid "Murojaat kodi"
+msgstr "Appeal code"
+
+msgid "Telefonning oxirgi 4 raqami"
+msgstr "Last 4 digits of the phone"
+
+msgid "Tekshirish"
+msgstr "Check"
+
+msgid "Fuqarolarning sayt orqali yuborgan murojaatlari."
+msgstr "Appeals sent by citizens through the site."
+
+msgid "Kod, ism yoki matn"
+msgstr "Code, name or text"
+
+msgid "Kod"
+msgstr "Code"
+
+msgid "Mavzu"
+msgstr "Subject"
+
+msgid "Murojaatlar yo‘q"
+msgstr "No appeals"
+
+msgid "Yangi murojaatlar shu yerda ko‘rinadi."
+msgstr "New appeals appear here."
+
+msgid "Murojaat matni"
+msgstr "Appeal text"
+
+msgid "Javob matni (fuqaro ko‘radi)"
+msgstr "Answer text (the citizen sees it)"
+
+msgid "Umumiy savol"
+msgstr "General question"
+
+msgid "Taklif"
+msgstr "Suggestion"
+
+msgid "Shikoyat"
+msgstr "Complaint"
+
+msgid "Qabul va o‘qishga oid"
+msgstr "Admission and study"
+
+msgid "Ko‘rib chiqilmoqda"
+msgstr "In review"
+
+msgid "Javob berildi"
+msgstr "Answered"
+
+msgid "mavzu"
+msgstr "subject"
+
+msgid "murojaat matni"
+msgstr "appeal text"
+
+msgid "javob"
+msgstr "answer"
+
+msgid "Ism-familiyangizni to‘liq kiriting."
+msgstr "Enter your full name."
+
+msgid "Telefon raqamini to‘g‘ri kiriting, masalan: +998 90 123 45 67."
+msgstr "Enter a valid phone number, e.g. +998 90 123 45 67."
+
+msgid "Murojaat matni kamida 10 ta belgidan iborat bo‘lsin."
+msgstr "The appeal text must have at least 10 characters."
+
+msgid "Javob matnini kiriting."
+msgstr "Enter the answer text."
+
+msgid "Javob saqlandi."
+msgstr "Answer saved."
+
+msgid "Juda ko‘p murojaat yuborildi. Iltimos, birozdan keyin urinib ko‘ring."
+msgstr "Too many appeals were sent. Please try again later."
+
+msgid "Juda ko‘p urinish. Iltimos, birozdan keyin urinib ko‘ring."
+msgstr "Too many attempts. Please try again later."
+
+msgid "Bunday murojaat topilmadi. Kod va telefonning oxirgi 4 raqamini tekshiring."
+msgstr "Appeal not found. Check the code and the last 4 digits of the phone."
+
+msgid "murojaat"
+msgstr "appeal"
+
+msgid "murojaatlar"
+msgstr "appeals"
+
+msgid "Bu so‘rovni ko‘rishga ruxsatingiz yo‘q."
+msgstr "You are not allowed to view this request."

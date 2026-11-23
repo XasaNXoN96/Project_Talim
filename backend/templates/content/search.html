@@ -1,0 +1,17 @@
+{% extends "base_public.html" %}
+{% load i18n static %}
+{% block title %}{% translate "Qidirish" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><span>{% translate "Qidirish" %}</span></div><h1>{% translate "Sayt bo‘yicha qidirish" %}</h1></div></section>
+<div class="container pub-body">
+  <form class="row filter-bar" method="get" role="search"><input class="input" type="search" name="q" value="{{ q }}" maxlength="80" autofocus placeholder="{% translate 'Nima qidiryapsiz?' %}" aria-label="{% translate 'Qidirish' %}" style="flex:1"><button class="btn btn-primary" type="submit"><span data-i="search" data-c="sm"></span> {% translate "Qidirish" %}</button></form>
+  {% if q and q|length >= 2 %}
+    {% if found %}
+      {% if news %}<section class="sec"><div class="sec-head"><h2>{% translate "Yangiliklar" %}</h2></div><div class="auto-grid">{% for item in news %}{% include "includes/news_card.html" %}{% endfor %}</div></section>{% endif %}
+      {% if achievements %}<section class="sec"><div class="sec-head"><h2>{% translate "Yutuqlar" %}</h2></div><div class="teachers">{% for a in achievements %}<a class="card teacher" href="{% url 'achievements_public:detail' a.slug %}" style="color:inherit">{% with im=a.images.all.0 %}{% if im %}<div class="av av-photo"><img src="{% url 'achievements_public:image' im.pk %}" alt="" loading="lazy"></div>{% endif %}{% endwith %}<b>{{ a.person_name }}</b><span class="xs muted">{{ a.title }}</span></a>{% endfor %}</div></section>{% endif %}
+      {% if institutions %}<section class="sec"><div class="sec-head"><h2>{% translate "Ta’lim muassasalari" %}</h2></div><div class="list-rows">{% for i in institutions %}<a class="li" href="{% url 'content:institution' i.pk %}" style="text-decoration:none"><span class="ic-chip c-blue" data-i="f-school"></span><span class="t1 grow">{{ i.name }}</span><span class="date">{{ i.get_kind_display }}</span></a>{% endfor %}</div></section>{% endif %}
+      {% if people %}<section class="sec"><div class="sec-head"><h2>{% translate "Ustozlar" %}</h2></div><div class="people-grid">{% for p in people %}<div class="card teacher person-card"><div class="av av-photo"><img src="{% url 'content:teacher_photo' p.pk %}" alt="" loading="lazy"></div><b>{{ p.last_name }} {{ p.first_name }}</b><span class="xs muted">{{ p.position.name|default:"" }}</span></div>{% endfor %}</div></section>{% endif %}
+    {% else %}<div class="card empty"><div class="ic-chip c-blue" data-i="search"></div><h3>{% translate "Hech narsa topilmadi" %}</h3><p>{% translate "Boshqa so‘z bilan urinib ko‘ring." %}</p></div>{% endif %}
+  {% elif q %}<p class="muted">{% translate "Kamida 2 ta belgi kiriting." %}</p>{% endif %}
+</div>
+{% endblock %}

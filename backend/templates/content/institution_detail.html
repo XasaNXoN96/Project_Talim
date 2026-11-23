@@ -1,0 +1,21 @@
+{% extends "base_public.html" %}
+{% load i18n static %}
+{% block title %}{{ inst.name }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><a href="{% url 'content:institutions' %}">{% translate "Ta’lim muassasalari" %}</a><span data-i="right" data-c="sm"></span><span>{{ inst.name }}</span></div><h1>{{ inst.name }}</h1><p>{{ inst.get_kind_display }}</p></div></section>
+<div class="container pub-body">
+  <div class="inst-detail">
+    <section class="card card-pad"><h2 style="font-size:18px;margin-bottom:10px">{% translate "Umumiy ma’lumot" %}</h2>
+      {% if inst.description %}<p>{{ inst.description|linebreaksbr }}</p>{% endif %}
+      <dl class="facts">
+        {% if inst.head_name %}<div><dt>{% translate "Rahbar" %}</dt><dd>{{ inst.head_name }}</dd></div>{% endif %}
+        {% if inst.address %}<div><dt>{% translate "Manzil" %}</dt><dd>{{ inst.address }}</dd></div>{% endif %}
+        {% if inst.phone %}<div><dt>{% translate "Telefon" %}</dt><dd>{{ inst.phone }}</dd></div>{% endif %}
+        {% if inst.email %}<div><dt>{% translate "E-pochta" %}</dt><dd>{{ inst.email }}</dd></div>{% endif %}
+        {% if inst.students_count %}<div><dt>{% translate "O‘quvchilar soni" %}</dt><dd>{{ inst.students_count }}</dd></div>{% endif %}
+      </dl></section>
+    {% if achievements %}<section><div class="sec-head"><h2>{% translate "Yutuqlar" %}</h2></div><div class="teachers">{% for a in achievements %}<a class="card teacher" href="{% url 'achievements_public:detail' a.slug %}" style="color:inherit">{% with im=a.images.all.0 %}{% if im %}<div class="av av-photo"><img src="{% url 'achievements_public:image' im.pk %}" alt="" loading="lazy"></div>{% endif %}{% endwith %}<b>{{ a.person_name }}</b><span class="xs muted">{{ a.title }}</span></a>{% endfor %}</div></section>{% endif %}
+    {% if teachers %}<section><div class="sec-head"><h2>{% translate "Ustozlar" %}</h2></div><div class="teachers">{% for p in teachers %}<div class="card teacher person-card"><div class="av av-photo"><img src="{% url 'content:teacher_photo' p.pk %}" alt="{{ p.last_name }} {{ p.first_name }}" loading="lazy"></div><b>{{ p.last_name }} {{ p.first_name }}</b><span class="xs muted">{{ p.position.name|default:"" }}</span></div>{% endfor %}</div></section>{% endif %}
+  </div>
+</div>
+{% endblock %}

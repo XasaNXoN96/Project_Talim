@@ -64,6 +64,7 @@ class Employee(TimeStampedModel):
     )
     # Profile photo: re-encoded JPEG in the private storage, served only through the permission-checked photo view.
     photo = models.FileField(storage=PrivateStorage(), max_length=120, blank=True)
+    show_on_site = models.BooleanField(_("«Ustozlar» bo‘limida ko‘rsatish"), default=False)
 
     class Meta:
         verbose_name = _("xodim")
@@ -93,6 +94,11 @@ class Institution(TimeStampedModel):
     kind = models.CharField(_("turi"), max_length=16, choices=Kind.choices)
     head_name = models.CharField(_("rahbar"), max_length=200, blank=True)
     is_published = models.BooleanField(_("saytda ko‘rsatish"), default=False)
+    address = models.CharField(_("manzil"), max_length=250, blank=True)
+    phone = models.CharField(_("telefon"), max_length=32, blank=True)
+    email = models.EmailField(_("e-pochta"), blank=True)
+    description = models.TextField(_("qisqacha ma’lumot"), max_length=2000, blank=True)
+    students_count = models.PositiveIntegerField(_("o‘quvchilar soni"), null=True, blank=True)
 
     class Meta:
         verbose_name = _("ta’lim muassasasi")

@@ -1,0 +1,20 @@
+{% extends "base_public.html" %}
+{% load i18n static %}
+{% block title %}{% translate "Ta’lim muassasalari" %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="pub-page-head"><div class="container"><div class="crumbs"><a href="{% url 'content:home' %}">{% translate "Bosh sahifa" %}</a><span data-i="right" data-c="sm"></span><span>{% translate "Ta’lim muassasalari" %}</span></div><h1>{% translate "Ta’lim muassasalari" %}</h1><p>{% translate "Tumandagi maktablar va bog‘chalar: manzil, rahbar va aloqa ma’lumotlari." %}</p></div></section>
+<div class="container pub-body">
+  <form class="row wrap filter-bar" method="get" role="search"><input class="input" type="search" name="q" value="{{ q }}" maxlength="80" placeholder="{% translate 'Nomi yoki manzil bo‘yicha qidirish' %}" aria-label="{% translate 'Qidirish' %}" style="flex:1;min-width:200px">
+    <select class="input" name="kind" aria-label="{% translate 'Turi' %}" style="max-width:320px"><option value="">{% translate "Barcha turlar" %}</option>{% for code, name in kinds %}<option value="{{ code }}"{% if code == kind %} selected{% endif %}>{{ name }}</option>{% endfor %}</select>
+    <button class="btn btn-primary" type="submit">{% translate "Qidirish" %}</button></form>
+  {% if institutions %}
+  <div class="inst-grid">{% for i in institutions %}
+    <a class="card inst-card" href="{% url 'content:institution' i.pk %}">{% cycle 'img/inst-1.jpg' 'img/inst-2.jpg' 'img/inst-3.jpg' 'img/inst-4.jpg' as instimg silent %}<img src="{% static instimg %}" alt="" loading="lazy" class="inst-img">
+      <div class="body"><span class="badge plain b-info">{{ i.get_kind_display }}</span><h3>{{ i.name }}</h3>
+        {% if i.head_name %}<p class="xs muted"><span data-i="user" data-c="sm"></span> {{ i.head_name }}</p>{% endif %}
+        {% if i.address %}<p class="xs muted"><span data-i="pin" data-c="sm"></span> {{ i.address }}</p>{% endif %}
+        {% if i.students_count %}<p class="xs muted"><span data-i="users" data-c="sm"></span> {{ i.students_count }} {% translate "o‘quvchi" %}</p>{% endif %}</div></a>{% endfor %}</div>
+  {% include "includes/pagination.html" %}
+  {% else %}<div class="card empty"><div class="ic-chip c-blue" data-i="school"></div><h3>{% translate "Hech narsa topilmadi" %}</h3><p>{% translate "Qidiruv shartlarini o‘zgartirib ko‘ring." %}</p></div>{% endif %}
+</div>
+{% endblock %}
