@@ -1,10 +1,9 @@
 {% extends "base_public.html" %}
 {% load i18n static %}
 {% block content %}
-<section class="hero" id="top" data-slider>
+<section class="hero" id="top">
   <img class="hero-photo is-active" src="{% static 'img/hero.jpg' %}" alt="" fetchpriority="high">
-  <img class="hero-photo" src="{% static 'img/slide-2.jpg' %}" alt="" loading="lazy"><img class="hero-photo" src="{% static 'img/slide-3.jpg' %}" alt="" loading="lazy"><img class="hero-photo" src="{% static 'img/slide-4.jpg' %}" alt="" loading="lazy">
-  <div class="hero-dots" aria-label="{% translate 'Rasmlar' %}"></div>
+  
   <div class="container">
     <div>
       <h1>{{ SITE_DISTRICT }}<br>{{ SITE_SHORT }}</h1>

@@ -322,7 +322,8 @@ form.card-pad, .stack { grid-template-columns: minmax(0, 1fr); }
 html.a11y-lg body { zoom: 1.12; } html.a11y-xl body { zoom: 1.25; }
 html.a11y-hc { --bg: #fff; --surface: #fff; --surface-2: #fff; --text: #000; --text-2: #000; --text-3: #1a1a1a; --border: #000; --brand-500: #0030d0; --brand-600: #0030d0; --brand-700: #001f8a; }
 html.a11y-hc body { filter: contrast(1.12); } html.a11y-hc a { text-decoration: underline; } html.a11y-hc .hero::after { background: rgba(0,0,0,.7); }
-@media (min-width: 1100px) and (max-width: 1599px) { .a11y [data-a11y="reset"] { display: none; } .pub-nav a { padding: 8px 5px; } .pub-header .container { gap: 8px; } .pub-actions { gap: 6px; } }
+@media (min-width: 1100px) and (max-width: 1365px) { .a11y [data-a11y="reset"] { display: none; } }
+@media (min-width: 1100px) and (max-width: 1599px) { .pub-nav a { padding: 8px 5px; } .pub-header .container { gap: 8px; } .pub-actions { gap: 6px; } }
 @media (min-width: 1600px) { .pub-nav a { padding: 8px 6px; } }
 
 /* ---- Public directory pages: institutions, teachers, search ---- */
@@ -366,3 +367,10 @@ table.t.stack-m td a, table.t.stack-m td b, table.t.stack-m td span:not(.badge) 
 .ach-card .ach-img.ach-person { aspect-ratio: 4 / 5; object-position: center top; }
 .teacher .av.av-photo img, .person-card .av.av-photo img { object-position: center top; }
 img.av { object-fit: cover; object-position: center 12%; }
+
+/* ---- Wider page on big screens; header buttons never wrap; the original building photo in full ---- */
+.container { width: min(1680px, 100% - 64px); }
+.pub-actions { flex-wrap: nowrap; flex: none; } .a11y { flex-wrap: nowrap; flex: none; } .a11y button { flex: none; white-space: nowrap; }
+.hero .hero-photo { opacity: 1 !important; object-position: center 30%; }
+@media (min-width: 1100px) { .hero { min-height: clamp(440px, 40vw, 720px); } }
+@media (max-width: 1099px) { .container { width: min(1680px, 100% - 32px); } }

@@ -4,8 +4,8 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:,">
 <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
-<link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
-<link rel="stylesheet" href="{% static 'css/backend.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/styles.css' %}?v={{ ASSET_V }}">
+<link rel="stylesheet" href="{% static 'css/backend.css' %}?v={{ ASSET_V }}">
 </head>
 <body>
 <a class="sr-only" href="#main">{% translate "Asosiy mazmunga o‘tish" %}</a>
@@ -54,8 +54,8 @@
     <div class="copy"><span>© {% now "Y" %} {{ SITE_NAME }}</span><span>{% translate "Ishlab chiqish bosqichi" %}</span></div>
   </div>
 </footer>
-<script src="{% static 'assets/js/app.js' %}"></script>
-<script src="{% static 'js/gallery.js' %}"></script>
-<script src="{% static 'js/site.js' %}"></script>
+<script src="{% static 'assets/js/app.js' %}?v={{ ASSET_V }}"></script>
+<script src="{% static 'js/gallery.js' %}?v={{ ASSET_V }}"></script>
+<script src="{% static 'js/site.js' %}?v={{ ASSET_V }}"></script>
 </body>
 </html>
