@@ -296,7 +296,7 @@ def portrait_photo(seed, kind="adult", female=None):
 
 def portrait_jpeg(seed, kind="adult", female=None):
     im = portrait_photo(seed, kind, female) or portrait(seed, 720)
-    return jpeg(im.resize((480, 480), Image.Resampling.LANCZOS), 82)
+    return jpeg(im.resize((480, 600) if im.height > im.width else (480, 480), Image.Resampling.LANCZOS), 82)
 
 
 def _star(d, cx, cy, r, fill):
